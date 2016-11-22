@@ -264,6 +264,7 @@ namespace RainbowMage.HtmlRenderer
 
                 var cefSettings = new CefSettings
                 {
+                    CachePath = "cache",
                     SingleProcess = true,
                     MultiThreadedMessageLoop = true,
                     LogSeverity = CefLogSeverity.Disable
