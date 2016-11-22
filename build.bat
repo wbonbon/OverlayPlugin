@@ -8,7 +8,7 @@ if not exist "%~dp0\Thirdparty\ACT\Advanced Combat Tracker.exe" (
 
 set DOTNET_PATH=%windir%\Microsoft.NET\Framework\v4.0.30319
 if not exist %DOTNET_PATH% (
-	echo Error: Couldn't find .NET Framework directory, To execute the build, .NET Framework 4.5.1 or higher must be installed.
+	echo Error: Couldn't find .NET Framework directory. To execute the build, .NET Framework 4.5.1 or higher must be installed.
 	goto END
 )
 
