@@ -196,7 +196,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             var json = overlay.CreateJsonData();
             if (!string.IsNullOrWhiteSpace(json))
             {
-                Clipboard.SetText("var ActXiv = " + json + ";");
+                Clipboard.SetText(json);
             }
         }
 
