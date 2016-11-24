@@ -266,7 +266,7 @@ namespace RainbowMage.HtmlRenderer
                 var cefApp = new App();
                 if (CefRuntime.ExecuteProcess(cefMainArgs, cefApp, IntPtr.Zero) != -1)
                 {
-                    Console.Error.WriteLine("Could not the secondary process.");
+                    Console.Error.WriteLine("Couldn't execute secondary process.");
                 }
 
                 var cefSettings = new CefSettings
