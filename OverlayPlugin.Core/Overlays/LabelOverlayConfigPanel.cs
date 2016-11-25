@@ -139,6 +139,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.overlay.Navigate(this.config.Url);
         }
 
+        private void buttonOpenDevTools_Click(object sender, EventArgs e)
+        {
+            this.overlay.Overlay.Renderer.showDevTools();
+        }
+
         private void buttonCopyActXiv_Click(object sender, EventArgs e)
         {
             var json = overlay.CreateJson();
