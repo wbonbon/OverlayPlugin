@@ -191,6 +191,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             }
         }
 
+        private void buttonMiniParseOpenDevTools_Click(object sender, EventArgs e)
+        {
+            this.overlay.Overlay.Renderer.showDevTools();
+        }
+
         private void buttonCopyActXiv_Click(object sender, EventArgs e)
         {
             var json = overlay.CreateJsonData();
