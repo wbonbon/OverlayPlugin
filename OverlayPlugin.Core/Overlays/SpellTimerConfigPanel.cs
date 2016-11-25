@@ -150,6 +150,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             }
         }
 
+        private void buttonOpenDevTools_Click(object sender, EventArgs e)
+        {
+            this.overlay.Overlay.Renderer.showDevTools();
+        }
+
         private void buttonSpellTimerReloadBrowser_Click(object sender, EventArgs e)
         {
             this.overlay.Navigate(this.config.Url);
