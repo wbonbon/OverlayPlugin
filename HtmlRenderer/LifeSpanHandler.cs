@@ -10,6 +10,7 @@ namespace RainbowMage.HtmlRenderer
     class LifeSpanHandler : CefLifeSpanHandler
     {
         private readonly Renderer renderer;
+        private bool isFirstBrowser = true;
 
         public LifeSpanHandler(Renderer renderer)
         {
@@ -20,7 +21,12 @@ namespace RainbowMage.HtmlRenderer
         {
             base.OnAfterCreated(browser);
 
-            this.renderer.OnCreated(browser);
+            // When second (or more) window are created, this caused update
+            // Renderer's Browser object to new Window's Browser.
+            if(this.isFirstBrowser)
+                this.renderer.OnCreated(browser);
+
+           this.isFirstBrowser = false;
         }
     }
 }
