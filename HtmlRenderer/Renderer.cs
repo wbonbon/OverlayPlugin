@@ -18,6 +18,7 @@ namespace RainbowMage.HtmlRenderer
         public static event EventHandler<SendMessageEventArgs> SendMessage;
 
         public CefBrowser Browser { get; private set; }
+        public CefBrowser LastBrowser { get; private set; }
         private Client Client { get; set; }
 
         private int clickCount;
@@ -52,8 +53,27 @@ namespace RainbowMage.HtmlRenderer
 
         public void EndRender()
         {
-            if (this.Browser != null)
+            if (this.LastBrowser != null)
             {
+                if (this.Browser == this.LastBrowser)
+                {
+                    // not needed to dispose browser twice; skip
+                    this.Browser = null;
+                }
+
+                // dispose LastBrowser (as things worked before)
+                var host = LastBrowser.GetHost();
+                if (host != null)
+                {
+                    host.CloseBrowser(true);
+                    host.Dispose();
+                }
+                this.LastBrowser.Dispose();
+                this.LastBrowser = null;
+            }
+
+            if (this.Browser != null) {
+                // also dispose first Browser, if not disposed
                 var host = Browser.GetHost();
                 if (host != null)
                 {
@@ -145,18 +165,18 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendActivate()
         {
-            if (this.Browser != null)
+            if (this.LastBrowser != null)
             {
-                var host = this.Browser.GetHost();
+                var host = this.LastBrowser.GetHost();
                 host.SendFocusEvent(true);
             }
         }
 
         public void SendDeactivate()
         {
-            if (this.Browser != null)
+            if (this.LastBrowser != null)
             {
-                var host = this.Browser.GetHost();
+                var host = this.LastBrowser.GetHost();
                 host.SendFocusEvent(false);
             }
         }
@@ -198,7 +218,11 @@ namespace RainbowMage.HtmlRenderer
 
         internal void OnCreated(CefBrowser browser)
         {
-            this.Browser = browser;
+            if (this.Browser == null)
+            {
+                this.Browser = browser;
+            }
+            this.LastBrowser = browser;
         }
 
         internal void OnPaint(CefBrowser browser, IntPtr buffer, int width, int height, CefRectangle[] dirtyRects)
