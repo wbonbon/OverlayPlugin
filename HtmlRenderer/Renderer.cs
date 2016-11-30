@@ -209,11 +209,15 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        public void showDevTools()
+        public void showDevTools(bool firstWindow = true)
         {
-            CefWindowInfo wi = CefWindowInfo.Create();
-            wi.SetAsPopup(this.Browser.GetHost().GetWindowHandle(), "DevTools");
-            this.Browser.GetHost().ShowDevTools(wi, this.Client, new CefBrowserSettings(), new CefPoint());
+            if (this.Browser != null)
+            {
+                CefBrowser b = firstWindow ? this.Browser : this.LastBrowser;
+                CefWindowInfo wi = CefWindowInfo.Create();
+                wi.SetAsPopup(b.GetHost().GetWindowHandle(), "DevTools");
+                b.GetHost().ShowDevTools(wi, this.Client, new CefBrowserSettings(), new CefPoint());
+            }
         }
 
         internal void OnCreated(CefBrowser browser)

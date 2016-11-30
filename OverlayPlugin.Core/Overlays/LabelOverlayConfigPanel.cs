@@ -144,6 +144,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.overlay.Overlay.Renderer.showDevTools();
         }
 
+        private void buttonOpenDevTools_RClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+                this.overlay.Overlay.Renderer.showDevTools(false);
+        }
+
         private void buttonCopyActXiv_Click(object sender, EventArgs e)
         {
             var json = overlay.CreateJson();

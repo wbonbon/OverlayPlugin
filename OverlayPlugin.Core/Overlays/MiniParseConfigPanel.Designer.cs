@@ -166,6 +166,7 @@
             this.buttonMiniParseOpenDevTools.Name = "buttonMiniParseOpenDevTools";
             this.buttonMiniParseOpenDevTools.UseVisualStyleBackColor = true;
             this.buttonMiniParseOpenDevTools.Click += new System.EventHandler(this.buttonMiniParseOpenDevTools_Click);
+            this.buttonMiniParseOpenDevTools.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonMiniParseOpenDevTools_RClick);
             // 
             // buttonMiniParseReloadBrowser
             // 
