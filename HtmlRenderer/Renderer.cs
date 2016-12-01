@@ -17,8 +17,25 @@ namespace RainbowMage.HtmlRenderer
         public static event EventHandler<BroadcastMessageEventArgs> BroadcastMessage;
         public static event EventHandler<SendMessageEventArgs> SendMessage;
 
-        public CefBrowser Browser { get; private set; }
-        public CefBrowser LastBrowser { get; private set; }
+        public List<CefBrowser> Browsers { get; private set; }
+        public CefBrowser Browser
+        {
+            get
+            {
+                if (this.Browsers == null || this.Browsers.Count == 0)
+                    return null;
+                return this.Browsers[0];
+            }
+        }
+        private CefBrowser LastBrowser
+        {
+            get
+            {
+                if (this.Browsers == null || this.Browsers.Count == 0)
+                    return null;
+                return this.Browsers[this.Browsers.Count - 1];
+            }
+        }
         private Client Client { get; set; }
 
         private int clickCount;
@@ -53,35 +70,23 @@ namespace RainbowMage.HtmlRenderer
 
         public void EndRender()
         {
-            if (this.LastBrowser != null)
+            if (this.Browsers != null)
             {
-                if (this.Browser == this.LastBrowser)
+                this.Browsers.ForEach((browser) =>
                 {
-                    // not needed to dispose browser twice; skip
-                    this.Browser = null;
-                }
-
-                // dispose LastBrowser (as things worked before)
-                var host = LastBrowser.GetHost();
-                if (host != null)
-                {
-                    host.CloseBrowser(true);
-                    host.Dispose();
-                }
-                this.LastBrowser.Dispose();
-                this.LastBrowser = null;
-            }
-
-            if (this.Browser != null) {
-                // also dispose first Browser, if not disposed
-                var host = Browser.GetHost();
-                if (host != null)
-                {
-                    host.CloseBrowser(true);
-                    host.Dispose();
-                }
-                this.Browser.Dispose();
-                this.Browser = null;
+                    if (browser != null)
+                    {
+                        var host = browser.GetHost();
+                        if (host != null)
+                        {
+                            host.CloseBrowser(true);
+                            host.Dispose();
+                        }
+                        browser.Dispose();
+                        browser = null;
+                    }
+                });
+                this.Browsers = null;
             }
         }
 
@@ -222,11 +227,11 @@ namespace RainbowMage.HtmlRenderer
 
         internal void OnCreated(CefBrowser browser)
         {
-            if (this.Browser == null)
+            if (this.Browsers == null)
             {
-                this.Browser = browser;
+                this.Browsers = new List<CefBrowser>();
             }
-            this.LastBrowser = browser;
+            this.Browsers.Add(browser);
         }
 
         internal void OnPaint(CefBrowser browser, IntPtr buffer, int width, int height, CefRectangle[] dirtyRects)
@@ -332,7 +337,7 @@ namespace RainbowMage.HtmlRenderer
             this.Url = url;
         }
     }
-
+    
     public class BrowserLoadEventArgs : EventArgs
     {
         public int HttpStatusCode { get; private set; }
