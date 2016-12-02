@@ -17,7 +17,7 @@ namespace RainbowMage.OverlayPlugin
         private KeyboardHook hook = new KeyboardHook();
         protected System.Timers.Timer timer;
         protected System.Timers.Timer xivWindowTimer;
-
+        Timer tTimer;
         /// <summary>
         /// オーバーレイがログを出力したときに発生します。
         /// </summary>
@@ -76,6 +76,10 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         protected virtual void InitializeOverlay()
         {
+            tTimer = new Timer();
+            tTimer.Tick += TTimer_Tick;
+            tTimer.Interval = 1000;
+            tTimer.Enabled = false;
             try
             {
                 this.Overlay = new OverlayForm("about:blank", this.Config.MaxFrameRate);
@@ -128,6 +132,7 @@ namespace RainbowMage.OverlayPlugin
                 if (CheckUrl(this.Config.Url))
                 {
                     Navigate(this.Config.Url);
+                    tTimer.Enabled = true;
                 }
                 else
                 {
@@ -144,6 +149,12 @@ namespace RainbowMage.OverlayPlugin
             {
                 Log(LogLevel.Error, "InitializeOverlay: {0}", this.Name, ex);
             }
+        }
+
+        private void TTimer_Tick(object sender, EventArgs e)
+        {
+            Navigate(Config.Url);
+            tTimer.Enabled = false;
         }
 
         private ModifierKeys GetModifierKey(Keys modifier)
