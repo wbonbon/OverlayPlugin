@@ -306,6 +306,18 @@ namespace RainbowMage.HtmlRenderer
                 CefRuntime.Shutdown();
             }
         }
+
+        public void ExecuteScript(string script)
+        {
+            this.Browsers.ForEach((b) =>
+            {
+                foreach (var frameId in b.GetFrameIdentifiers())
+                {
+                    var frame = b.GetFrame(frameId);
+                    frame.ExecuteJavaScript(script, null, 0);
+                }
+            });
+        }
     }
 
     public class BrowserErrorEventArgs : EventArgs
