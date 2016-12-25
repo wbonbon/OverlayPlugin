@@ -16,6 +16,7 @@ namespace RainbowMage.HtmlRenderer
 
         public static event EventHandler<BroadcastMessageEventArgs> BroadcastMessage;
         public static event EventHandler<SendMessageEventArgs> SendMessage;
+        public static event EventHandler<RendererFeatureRequestEventArgs> RendererFeatureRequest;
 
         public List<CefBrowser> Browsers { get; private set; }
         public CefBrowser Browser
@@ -265,6 +266,14 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        internal static void OnRendererFeatureRequest(object sender, RendererFeatureRequestEventArgs e)
+        {
+            if (RendererFeatureRequest != null)
+            {
+                RendererFeatureRequest(sender, e);
+            }
+        }
+
         public void Dispose()
         {
             this.EndRender();
@@ -354,6 +363,15 @@ namespace RainbowMage.HtmlRenderer
             this.Message = message;
             this.Source = source;
             this.Line = line;
+        }
+    }
+
+    public class RendererFeatureRequestEventArgs : EventArgs
+    {
+        public string Request { get; private set; }
+        public RendererFeatureRequestEventArgs(string request)
+        {
+            this.Request = request;
         }
     }
 }
