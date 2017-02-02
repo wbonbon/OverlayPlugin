@@ -218,6 +218,14 @@ namespace RainbowMage.HtmlRenderer
             browser.GetHost().SendFocusEvent(true);
         }
 
+        internal void OnBeforeClose(CefBrowser browser)
+        {
+            if (this.Browsers != null)
+            {
+                this.Browsers.Remove(this.Browsers.FindLast(b => b.IsSame(browser)));
+            }
+        }
+
         internal void OnPaint(CefBrowser browser, IntPtr buffer, int width, int height, CefRectangle[] dirtyRects)
         {
             if (Render != null)
