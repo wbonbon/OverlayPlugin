@@ -54,17 +54,17 @@ namespace RainbowMage.HtmlRenderer
                     apiObject.SetValue(
                         BuiltinFunctionHandler.BroadcastMessageFunctionName,
                         broadcastMessageFunction,
-                        CefV8PropertyAttribute.None);
+                        CefV8PropertyAttribute.ReadOnly);
                     apiObject.SetValue(
                         BuiltinFunctionHandler.SendMessageFunctionName,
                         sendMessageFunction,
-                        CefV8PropertyAttribute.None);
+                        CefV8PropertyAttribute.ReadOnly);
                     apiObject.SetValue(
                         BuiltinFunctionHandler.EndEncounterFunctionName,
                         endEncounterFunction,
-                        CefV8PropertyAttribute.None);
+                        CefV8PropertyAttribute.ReadOnly);
 
-                    frame.V8Context.GetGlobal().SetValue("OverlayPluginApi", apiObject, CefV8PropertyAttribute.None);
+                    frame.V8Context.GetGlobal().SetValue("OverlayPluginApi", apiObject, CefV8PropertyAttribute.ReadOnly);
 
                     frame.V8Context.Exit();
                 }
