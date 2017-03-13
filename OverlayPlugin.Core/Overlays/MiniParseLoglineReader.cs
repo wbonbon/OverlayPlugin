@@ -84,7 +84,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 message["type"] = type;
                 message["message"] = text;
                 this.Overlay.Renderer.ExecuteScript(
-                    "document.dispatchEvent(new CustomEvent('onEcho', { detail: " + message.ToString() + " } ));"
+                    "document.dispatchEvent(new CustomEvent('onLogLine', { detail: " + message.ToString() + " } ));"
                 );
             }
         }
