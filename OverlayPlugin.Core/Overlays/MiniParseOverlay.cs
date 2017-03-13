@@ -12,11 +12,13 @@ using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
-    public class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
+    public partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
     {
         private string prevEncounterId { get; set; }
         private DateTime prevEndDateTime { get; set; }
         private bool prevEncounterActive { get; set; }
+
+        private Timer LogLineInit;
 
         private static string updateStringCache = "";
         private static DateTime updateStringCacheLastUpdate;
@@ -25,6 +27,16 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public MiniParseOverlay(MiniParseOverlayConfig config)
             : base(config, config.Name)
         {
+            Log(LogLevel.Trace, "asdf");
+            LogLineInit = new Timer();
+            LogLineInit.Tick += (sender, e) =>
+            {
+                Log(LogLevel.Trace, "Start listening logline");
+                ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
+                LogLineInit.Enabled = false;
+            };
+            LogLineInit.Interval = 3000;
+            LogLineInit.Enabled = true;
         }
 
         public override void Navigate(string url)
@@ -103,8 +115,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
             JObject obj = new JObject();
 
-            obj.Add("Encounter", JObject.FromObject(encounter));
-            obj.Add("Combatant", new JObject());
+            obj["Encounter"] = JObject.FromObject(encounter);
+            obj["Combatant"] = new JObject();
             
             foreach (var pair in combatant)
             {
