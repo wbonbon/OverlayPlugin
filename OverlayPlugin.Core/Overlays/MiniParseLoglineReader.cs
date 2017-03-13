@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
-    partial class MiniParseOverlay
+    partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
     {
         // Part of ACTWebSocket
         // Copyright (c) 2016 ZCube; Licensed under MIT license.
@@ -54,7 +55,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             }
 
             MessageType type = (MessageType)Convert.ToInt32(d[0]);
-
+            
             switch(type)
             {
                 case MessageType.LogLine:
@@ -62,23 +63,28 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     {
                         break;
                     }
+                    int logType = Convert.ToInt32(d[2], 16);
 
-                    if (Convert.ToInt32(d[2], 16) == 56) // type:echo
+                    if (logType == 56) // type:echo
                     {
-                        sendEchoEvent(d[4]);
+                        sendEchoEvent(isImported, "echo", d[4]);
                     }
                     break;
             }
         }
 
-        private void sendEchoEvent(string text)
+        private void sendEchoEvent(bool isImported, string type, string text)
         {
             if (this.Overlay != null &&
                 this.Overlay.Renderer != null &&
                 this.Overlay.Renderer.Browser != null)
             {
+                JObject message = new JObject();
+                message["isImported"] = isImported;
+                message["type"] = type;
+                message["message"] = text;
                 this.Overlay.Renderer.ExecuteScript(
-                    "document.dispatchEvent(new CustomEvent('onEcho', { detail: { message: \"" + Util.CreateJsonSafeString(text) + "\" } } ));"
+                    "document.dispatchEvent(new CustomEvent('onEcho', { detail: " + message.ToString() + " } ));"
                 );
             }
         }

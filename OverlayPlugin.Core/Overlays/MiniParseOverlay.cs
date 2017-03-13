@@ -18,8 +18,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private DateTime prevEndDateTime { get; set; }
         private bool prevEncounterActive { get; set; }
 
-        private Timer LogLineInit;
-
         private static string updateStringCache = "";
         private static DateTime updateStringCacheLastUpdate;
         private static readonly TimeSpan updateStringCacheExpireInterval = new TimeSpan(0, 0, 0, 0, 500); // 500 msec
@@ -27,16 +25,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public MiniParseOverlay(MiniParseOverlayConfig config)
             : base(config, config.Name)
         {
-            Log(LogLevel.Trace, "asdf");
-            LogLineInit = new Timer();
-            LogLineInit.Tick += (sender, e) =>
-            {
-                Log(LogLevel.Trace, "Start listening logline");
-                ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
-                LogLineInit.Enabled = false;
-            };
-            LogLineInit.Interval = 3000;
-            LogLineInit.Enabled = true;
+            ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
         }
 
         public override void Navigate(string url)
