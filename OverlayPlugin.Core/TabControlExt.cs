@@ -18,11 +18,11 @@ namespace RainbowMage.OverlayPlugin
             {
                 Color fore = Color.Black;
                 Font fontF = Font;
-                // Font fontFSmall = new Font(Font.FontFamily, (float)0.75);
+                Font fontFSmall = new Font(Font.FontFamily, (float)(Font.Size * 0.85));
                 Rectangle tabrect = GetTabRect(inc);
                 Rectangle rect = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 2);
-                Rectangle textrect1 = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 8);
-                // Rectangle textrect2 = new Rectangle(tabrect.X + 4, tabrect.Y + 22, tabrect.Width - 8, tabrect.Height - 22);
+                Rectangle textrect1 = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 20);
+                Rectangle textrect2 = new Rectangle(tabrect.X + 4, tabrect.Y + 20, tabrect.Width - 8, tabrect.Height - 20);
 
                 StringFormat sf = new StringFormat();
                 sf.LineAlignment = StringAlignment.Center;
@@ -39,8 +39,8 @@ namespace RainbowMage.OverlayPlugin
                     e.Graphics.FillRectangle(Brushes.White, rect);
                 }
 
-                e.Graphics.DrawString(tp.Text, fontF, new SolidBrush(fore), textrect1, sf);
-                // e.Graphics.DrawString(tp.SecondText, fontFSmall, new SolidBrush(fore), textrect2, sf);
+                e.Graphics.DrawString(tp.Name, fontF, new SolidBrush(fore), textrect1, sf);
+                e.Graphics.DrawString(tp.Text, fontFSmall, new SolidBrush(fore), textrect2, sf);
                 inc++;
             }
         }
@@ -63,21 +63,9 @@ namespace RainbowMage.OverlayPlugin
 
             DoubleBuffered = true;
 
-            ItemSize = new Size(32, 140);
+            ItemSize = new Size(46, 140);
             SizeMode = TabSizeMode.Fixed;
             BackColor = Color.Transparent;
         }
     }
-
-    /*
-    public class TabPageExt : TabPage
-    {
-        public string SecondText;
-
-        public TabPageExt() : base()
-        {
-            SecondText = "";
-        }
-    }
-    */
 }

@@ -56,7 +56,7 @@ namespace RainbowMage.OverlayPlugin
             var tabPage = new TabPage
             {
                 Name = overlay.Name,
-                Text = overlay.Name
+                Text = overlay.GetType().Name
             };
 
             var addon = pluginMain.Addons.FirstOrDefault(x => x.OverlayType == overlay.GetType());
