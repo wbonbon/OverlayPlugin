@@ -232,7 +232,7 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Transparent;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.splitContainer1);
             this.Name = "ControlPanel";
             this.splitContainer1.Panel1.ResumeLayout(false);

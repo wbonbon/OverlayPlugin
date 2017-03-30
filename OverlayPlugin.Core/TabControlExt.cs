@@ -9,8 +9,8 @@ namespace RainbowMage.OverlayPlugin
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            //e.Graphics.Clear(Parent.BackColor);
-            e.Graphics.FillRectangle(Brushes.White, 4, 4, ItemSize.Height - 4, Height - 8);
+            e.Graphics.Clear(SystemColors.ControlLightLight);
+            e.Graphics.FillRectangle(SystemBrushes.ControlLight, 4, 4, ItemSize.Height - 4, Height - 8);
 
             int inc = 0;
 
@@ -18,7 +18,11 @@ namespace RainbowMage.OverlayPlugin
             {
                 Color fore = Color.Black;
                 Font fontF = Font;
-                Rectangle tabrect = GetTabRect(inc), rect = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 2), textrect = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 4);
+                // Font fontFSmall = new Font(Font.FontFamily, (float)0.75);
+                Rectangle tabrect = GetTabRect(inc);
+                Rectangle rect = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 2);
+                Rectangle textrect1 = new Rectangle(tabrect.X + 4, tabrect.Y + 4, tabrect.Width - 8, tabrect.Height - 8);
+                // Rectangle textrect2 = new Rectangle(tabrect.X + 4, tabrect.Y + 22, tabrect.Width - 8, tabrect.Height - 22);
 
                 StringFormat sf = new StringFormat();
                 sf.LineAlignment = StringAlignment.Center;
@@ -35,7 +39,8 @@ namespace RainbowMage.OverlayPlugin
                     e.Graphics.FillRectangle(Brushes.White, rect);
                 }
 
-                e.Graphics.DrawString(tp.Text, fontF, new SolidBrush(fore), textrect, sf);
+                e.Graphics.DrawString(tp.Text, fontF, new SolidBrush(fore), textrect1, sf);
+                // e.Graphics.DrawString(tp.SecondText, fontFSmall, new SolidBrush(fore), textrect2, sf);
                 inc++;
             }
         }
@@ -58,9 +63,21 @@ namespace RainbowMage.OverlayPlugin
 
             DoubleBuffered = true;
 
-            ItemSize = new Size(30, 110);
+            ItemSize = new Size(32, 140);
             SizeMode = TabSizeMode.Fixed;
             BackColor = Color.Transparent;
         }
     }
+
+    /*
+    public class TabPageExt : TabPage
+    {
+        public string SecondText;
+
+        public TabPageExt() : base()
+        {
+            SecondText = "";
+        }
+    }
+    */
 }
