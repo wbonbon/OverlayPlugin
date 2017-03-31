@@ -123,14 +123,8 @@
   <data name="buttonNewOverlay.Text" xml:space="preserve">
     <value>追加</value>
   </data>
-  <data name="columnHeader4.Text" xml:space="preserve">
-    <value>名前</value>
-  </data>
-  <data name="columnHeader5.Text" xml:space="preserve">
-    <value>種類</value>
-  </data>
-  <data name="groupBox2.Text" xml:space="preserve">
-    <value>オーバーレイの管理</value>
+  <data name="label_ListEmpty.Text" xml:space="preserve">
+    <value>[追加] バートンを押して、オーバーレイを設定してください</value>
   </data>
   <data name="checkBoxAutoHide.Text" xml:space="preserve">
     <value>非アクティブのときに自動的にオーバーレイを隠す</value>
