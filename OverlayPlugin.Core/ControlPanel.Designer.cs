@@ -116,7 +116,7 @@ namespace RainbowMage.OverlayPlugin
             // 
             resources.ApplyResources(this.tabPageMain, "tabPageMain");
             this.tabPageMain.Controls.Add(this.label_ListEmpty);
-            this.tabPageMain.Name = "tabPageMain";
+            this.tabPageMain.Name = "OverlayPlugin";
             this.tabPageMain.UseVisualStyleBackColor = true;
             //
             // label_ListEmpty
