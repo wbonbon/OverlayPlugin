@@ -65,6 +65,7 @@ namespace RainbowMage.OverlayPlugin
                 if (control != null)
                 {
                     control.Dock = DockStyle.Fill;
+                    control.BackColor = SystemColors.ControlLightLight;
                     tabPage.Controls.Add(control);
 
                     this.tabControl.TabPages.Add(tabPage);
