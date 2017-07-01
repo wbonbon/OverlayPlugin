@@ -304,6 +304,7 @@ namespace RainbowMage.HtmlRenderer
 
                 var cefSettings = new CefSettings
                 {
+                    Locale = System.Globalization.CultureInfo.CurrentCulture.Name,
                     CachePath = "cache",
                     SingleProcess = true,
                     MultiThreadedMessageLoop = true,
