@@ -56,6 +56,8 @@
             this.textGlobalHotkey = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.checkLock = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.comboHotkeyType = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -75,17 +77,19 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseVisible, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseClickthru, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.comboMiniParseSortType, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label13, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.label13, 1, 10);
             this.tableLayoutPanel1.Controls.Add(this.label7, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label8, 0, 8);
             this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 8);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkLock, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 9);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -140,9 +144,9 @@
             // 
             // panel1
             // 
+            resources.ApplyResources(this.panel1, "panel1");
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
             this.panel1.Controls.Add(this.tableLayoutPanel3);
-            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // tableLayoutPanel3
@@ -264,6 +268,17 @@
             this.checkLock.UseVisualStyleBackColor = true;
             this.checkLock.CheckedChanged += new System.EventHandler(this.checkLock_CheckedChanged);
             // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // comboHotkeyType
+            // 
+            resources.ApplyResources(this.comboHotkeyType, "comboHotkeyType");
+            this.comboHotkeyType.FormattingEnabled = true;
+            this.comboHotkeyType.Name = "comboHotkeyType";
+            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -311,5 +326,7 @@
         private System.Windows.Forms.TextBox textGlobalHotkey;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox checkLock;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox comboHotkeyType;
     }
 }

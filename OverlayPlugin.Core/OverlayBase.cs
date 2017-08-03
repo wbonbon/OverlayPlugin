@@ -89,9 +89,25 @@ namespace RainbowMage.OverlayPlugin
                 {
                     var modifierKeys = GetModifierKey(this.Config.GlobalHotkeyModifiers);
                     var key = this.Config.GlobalHotkey;
+                    var hotkeyType = this.Config.GlobalHotkeyType;
                     if (key != Keys.None)
                     {
-                        hook.KeyPressed += (o, e) => this.Config.IsVisible = !this.Config.IsVisible;
+                        switch (hotkeyType)
+                        {
+                            case GlobalHotkeyType.ToggleVisible:
+                                hook.KeyPressed += (o, e) => this.Config.IsVisible = !this.Config.IsVisible;
+                                break;
+                            case GlobalHotkeyType.ToggleClickthru:
+                                hook.KeyPressed += (o, e) => this.Config.IsClickThru = !this.Config.IsClickThru;
+                                break;
+                            case GlobalHotkeyType.ToggleLock:
+                                hook.KeyPressed += (o, e) => this.Config.IsLocked = !this.Config.IsLocked;
+                                break;
+                            default:
+                                hook.KeyPressed += (o, e) => this.Config.IsVisible = !this.Config.IsVisible;
+                                break;
+                        }
+
                         hook.RegisterHotKey(modifierKeys, key);
                     }
                 }

@@ -15,6 +15,13 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private SpellTimerOverlay overlay;
         private SpellTimerOverlayConfig config;
 
+        static readonly List<KeyValuePair<string, GlobalHotkeyType>> hotkeyTypeDict = new List<KeyValuePair<string, GlobalHotkeyType>>()
+        {
+            new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleVisible), GlobalHotkeyType.ToggleVisible),
+            new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleClickthru), GlobalHotkeyType.ToggleClickthru),
+            new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleLock), GlobalHotkeyType.ToggleLock)
+        };
+
         public SpellTimerConfigPanel(SpellTimerOverlay overlay)
         {
             InitializeComponent();
@@ -36,6 +43,17 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkEnableGlobalHotkey.Checked = config.GlobalHotkeyEnabled;
             this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
             this.textGlobalHotkey.Text = Util.GetHotkeyString(config.GlobalHotkeyModifiers, config.GlobalHotkey);
+            this.comboHotkeyType.DisplayMember = "Key";
+            this.comboHotkeyType.ValueMember = "Value";
+            this.comboHotkeyType.DataSource = hotkeyTypeDict;
+            this.comboHotkeyType.SelectedValue = config.GlobalHotkeyType;
+            this.comboHotkeyType.SelectedIndexChanged += ComboHotkeyMode_SelectedIndexChanged;
+        }
+
+        private void ComboHotkeyMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var value = (GlobalHotkeyType)this.comboHotkeyType.SelectedValue;
+            this.config.GlobalHotkeyType = value;
         }
 
         private void SetupConfigEventHandlers()

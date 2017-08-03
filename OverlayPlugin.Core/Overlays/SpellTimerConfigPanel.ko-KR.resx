@@ -126,17 +126,14 @@
   <data name="label9.Text" xml:space="preserve">
     <value>오버레이 표시</value>
   </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>URL</value>
-  </data>
-  <data name="buttonReloadBrowser.Text" xml:space="preserve">
-    <value>새로고침</value>
+  <data name="buttonCopyVariable.Text" xml:space="preserve">
+    <value>업데이트 값 복사</value>
   </data>
   <data name="buttonOpenDevTools.Text" xml:space="preserve">
     <value>개발자 도구 열기</value>
   </data>
-  <data name="buttonCopyVariable.Text" xml:space="preserve">
-    <value>업데이트 값 복사</value>
+  <data name="buttonReloadBrowser.Text" xml:space="preserve">
+    <value>새로고침</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
     <value>※ 프레임 레이트나 핫 키 설정을 적용하려면 플러그인을 다시 시작해야 합니다.</value>
