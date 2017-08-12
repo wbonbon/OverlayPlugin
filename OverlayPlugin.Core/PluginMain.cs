@@ -207,6 +207,7 @@ namespace RainbowMage.OverlayPlugin
                 this.Addons.Add(new MiniParseOverlayAddon());
                 this.Addons.Add(new SpellTimerOverlayAddon());
                 this.Addons.Add(new LabelOverlayAddon());
+                this.Addons.Add(new LogParseOverlayAddon());
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
 
