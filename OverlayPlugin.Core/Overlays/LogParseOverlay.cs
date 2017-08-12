@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,7 +26,45 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public LogParseOverlay(LogParseOverlayConfig config)
             : base(config, config.Name)
         {
-            ActGlobals.oFormActMain.OnLogLineRead += LogLineReader;
+            // https://github.com/anoyetta/ACT.SpecialSpellTimer/blob/master/ACT.SpecialSpellTimer/LogBuffer.cs
+            try
+            {
+                var fi = ActGlobals.oFormActMain.GetType().GetField(
+                    "BeforeLogLineRead",
+                    BindingFlags.NonPublic |
+                    BindingFlags.Instance |
+                    BindingFlags.GetField |
+                    BindingFlags.Public |
+                    BindingFlags.Static);
+
+                var beforeLogLineReadDelegate =
+                    fi.GetValue(ActGlobals.oFormActMain)
+                    as Delegate;
+
+                if (beforeLogLineReadDelegate != null)
+                {
+                    var handlers = beforeLogLineReadDelegate.GetInvocationList();
+
+                    // 全てのイベントハンドラを一度解除する
+                    foreach (var handler in handlers)
+                    {
+                        ActGlobals.oFormActMain.BeforeLogLineRead -= (LogLineEventDelegate)handler;
+                    }
+
+                    // スペスペのイベントハンドラを最初に登録する
+                    ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
+
+                    // 解除したイベントハンドラを登録し直す
+                    foreach (var handler in handlers)
+                    {
+                        ActGlobals.oFormActMain.BeforeLogLineRead += (LogLineEventDelegate)handler;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(LogLevel.Error, "AddOnBeforeLogLineRead error:", ex);
+            }
         }
 
         public override void Navigate(string url)
