@@ -171,9 +171,15 @@
     <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.ja-JP.resx" />
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.ko-KR.resx" />
-    <EmbeddedResource Include="Overlays\LogParseConfigPanel.resx" />
+    <EmbeddedResource Include="Overlays\LogParseConfigPanel.ja-JP.resx">
+      <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\LogParseConfigPanel.ko-KR.resx">
+      <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\LogParseConfigPanel.resx">
+      <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Overlays\MiniParseConfigPanel.ja-JP.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
