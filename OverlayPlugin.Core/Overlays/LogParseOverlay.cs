@@ -104,9 +104,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private string CreateEventDispatcherScript()
         {
-            // why???
-            return "var ActXiv = " + this.CreateJsonData() + ";\n" +
-                   "document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: ActXiv }));";
+            return "document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + this.CreateJsonData() + " }));";
         }
 
         internal string CreateJsonData()
