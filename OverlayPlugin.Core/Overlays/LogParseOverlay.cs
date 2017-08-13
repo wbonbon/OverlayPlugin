@@ -26,7 +26,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public LogParseOverlay(LogParseOverlayConfig config)
             : base(config, config.Name)
         {
-            // https://github.com/anoyetta/ACT.SpecialSpellTimer/blob/master/ACT.SpecialSpellTimer/LogBuffer.cs
+            // Part of ACT.SpecialSpellTimer: https://github.com/anoyetta/ACT.SpecialSpellTimer/blob/master/ACT.SpecialSpellTimer/LogBuffer.cs
+            // Copyright (c) 2014 anoyetta; Licensed under BSD-3-Clause license.
             try
             {
                 var fi = ActGlobals.oFormActMain.GetType().GetField(
