@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogParseConfigPanel));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            //this.label5 = new System.Windows.Forms.Label();
+            //this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -66,9 +66,9 @@
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
+            //this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
+            //this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
@@ -76,16 +76,16 @@
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseClickthru, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label13, 1, 10);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label13, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkLock, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -95,13 +95,13 @@
             // 
             // label5
             // 
-            resources.ApplyResources(this.label5, "label5");
-            this.label5.Name = "label5";
+            //resources.ApplyResources(this.label5, "label5");
+            //this.label5.Name = "label5";
             // 
             // label4
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            //resources.ApplyResources(this.label4, "label4");
+            //this.label4.Name = "label4";
             // 
             // label2
             // 
@@ -285,8 +285,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        //private System.Windows.Forms.Label label5;
+        //private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
