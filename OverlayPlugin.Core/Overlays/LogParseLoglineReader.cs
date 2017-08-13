@@ -74,7 +74,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     );
                 }
             }
-            catch (Exception ex) { }
+            catch { }
         }
         
     }
