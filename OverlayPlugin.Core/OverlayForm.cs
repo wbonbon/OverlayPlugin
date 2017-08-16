@@ -283,7 +283,6 @@ namespace RainbowMage.OverlayPlugin
             this.IsLoaded = true;
 
             UpdateMouseClickThru();
-            UpdateRender();
 
             zorderCorrector = new System.Threading.Timer((state) =>
             {
