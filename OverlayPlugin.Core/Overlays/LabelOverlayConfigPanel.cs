@@ -146,8 +146,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void buttonOpenDevTools_RClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-                this.overlay.Overlay.Renderer.showDevTools(false);
+            this.overlay.Overlay.Renderer.showDevTools();
         }
 
         private void buttonCopyActXiv_Click(object sender, EventArgs e)

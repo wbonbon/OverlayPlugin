@@ -18,23 +18,23 @@ namespace RainbowMage.HtmlRenderer
         public static event EventHandler<SendMessageEventArgs> SendMessage;
         public static event EventHandler<RendererFeatureRequestEventArgs> RendererFeatureRequest;
 
-        public List<CefBrowser> Browsers { get; private set; }
+        // Guards access to the |browser| across threads.
+        private System.Threading.SemaphoreSlim browserSemaphore = new System.Threading.SemaphoreSlim(1);
+        // Set to null on the main thread, and to non-null on the Cef thread.
+        private CefBrowser browser = null;
+
+        // When a navigation occurs, the Browser is destroyed and recreated. The Browser becomes
+        // null immediately on the addon main thread, and will become non-null later on the Cef
+        // thread. Once it becomes non-null, the pointer will not change until another
+        // navigation.
         public CefBrowser Browser
         {
             get
             {
-                if (this.Browsers == null || this.Browsers.Count == 0)
-                    return null;
-                return this.Browsers[0];
-            }
-        }
-        private CefBrowser LastBrowser
-        {
-            get
-            {
-                if (this.Browsers == null || this.Browsers.Count == 0)
-                    return null;
-                return this.Browsers[this.Browsers.Count - 1];
+                browserSemaphore.Wait();
+                CefBrowser b = this.browser;
+                browserSemaphore.Release();
+                return b;
             }
         }
         private Client Client { get; set; }
@@ -71,24 +71,21 @@ namespace RainbowMage.HtmlRenderer
 
         public void EndRender()
         {
-            if (this.Browsers != null)
+            // We hold the semaphore and reset |this.browser| to null immediately on the main
+            // thread. It may later become non-null on the Cef thread.
+            this.browserSemaphore.Wait();
+            if (this.browser != null)
             {
-                this.Browsers.ForEach((browser) =>
+                var host = this.browser.GetHost();
+                if (host != null)
                 {
-                    if (browser != null)
-                    {
-                        var host = browser.GetHost();
-                        if (host != null)
-                        {
-                            host.CloseBrowser(true);
-                            host.Dispose();
-                        }
-                        browser.Dispose();
-                        browser = null;
-                    }
-                });
-                this.Browsers = null;
+                    host.CloseBrowser(true);
+                    host.Dispose();
+                }
+                this.browser.Dispose();
+                this.browser = null;
             }
+            this.browserSemaphore.Release();
         }
 
         public void Reload()
@@ -197,11 +194,11 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        public void showDevTools(bool firstWindow = true)
+        public void showDevTools()
         {
             if (this.Browser != null)
             {
-                CefBrowser b = firstWindow ? this.Browser : this.LastBrowser;
+                CefBrowser b = this.Browser;
                 CefWindowInfo wi = CefWindowInfo.Create();
                 wi.SetAsPopup(b.GetHost().GetWindowHandle(), "DevTools");
                 b.GetHost().ShowDevTools(wi, this.Client, new CefBrowserSettings(), new CefPoint());
@@ -210,20 +207,14 @@ namespace RainbowMage.HtmlRenderer
 
         internal void OnCreated(CefBrowser browser)
         {
-            if (this.Browsers == null)
-            {
-                this.Browsers = new List<CefBrowser>();
-            }
-            this.Browsers.Add(browser);
             browser.GetHost().SendFocusEvent(true);
+            this.browserSemaphore.Wait();
+            this.browser = browser;
+            this.browserSemaphore.Release();
         }
 
         internal void OnBeforeClose(CefBrowser browser)
         {
-            if (this.Browsers != null)
-            {
-                this.Browsers.Remove(this.Browsers.FindLast(b => b.IsSame(browser)));
-            }
         }
 
         internal void OnPaint(CefBrowser browser, IntPtr buffer, int width, int height, CefRectangle[] dirtyRects)
@@ -327,14 +318,14 @@ namespace RainbowMage.HtmlRenderer
 
         public void ExecuteScript(string script)
         {
-            this.Browsers.ForEach((b) =>
+            if (this.Browser != null)
             {
-                foreach (var frameId in b.GetFrameIdentifiers())
+                foreach (var frameId in this.Browser.GetFrameIdentifiers())
                 {
-                    var frame = b.GetFrame(frameId);
+                    var frame = this.browser.GetFrame(frameId);
                     frame.ExecuteJavaScript(script, null, 0);
                 }
-            });
+            }
         }
     }
 
