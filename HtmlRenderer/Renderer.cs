@@ -18,10 +18,15 @@ namespace RainbowMage.HtmlRenderer
         public static event EventHandler<SendMessageEventArgs> SendMessage;
         public static event EventHandler<RendererFeatureRequestEventArgs> RendererFeatureRequest;
 
-        // Guards access to the |browser| across threads.
-        private System.Threading.SemaphoreSlim browserSemaphore = new System.Threading.SemaphoreSlim(1);
-        // Set to null on the main thread, and to non-null on the Cef thread.
-        private CefBrowser browser = null;
+        // Guards access to |allBrowsers| across threads.
+        private System.Threading.SemaphoreSlim allBrowsersSemaphore = new System.Threading.SemaphoreSlim(1);
+        // Set to empty on the main thread, and to non-empty on the Cef thread. When an addon opens a window
+        // via javascript it is added to this list on the Cef thread, and it is removed there when the window
+        // is closed. The first browser in this list is stable and can be accessed from the main thread, since
+        // it will only be destroyed/removed on the main thread. Any other browser in the list can only be
+        // accessed while the |allBrowsersSemaphore| semaphore is held, so we do not provide a way to read
+        // or copy this list directly to clients.
+        private List<CefBrowser> allBrowsers = new List<CefBrowser>();
 
         // When a navigation occurs, the Browser is destroyed and recreated. The Browser becomes
         // null immediately on the addon main thread, and will become non-null later on the Cef
@@ -31,12 +36,13 @@ namespace RainbowMage.HtmlRenderer
         {
             get
             {
-                browserSemaphore.Wait();
-                CefBrowser b = this.browser;
-                browserSemaphore.Release();
+                allBrowsersSemaphore.Wait();
+                CefBrowser b = this.allBrowsers.FirstOrDefault();
+                allBrowsersSemaphore.Release();
                 return b;
             }
         }
+
         private Client Client { get; set; }
 
         private int clickCount;
@@ -71,21 +77,24 @@ namespace RainbowMage.HtmlRenderer
 
         public void EndRender()
         {
-            // We hold the semaphore and reset |this.browser| to null immediately on the main
-            // thread. It may later become non-null on the Cef thread.
-            this.browserSemaphore.Wait();
-            if (this.browser != null)
+            // We hold the semaphore and clear |this.allBrowsers| to ensure the first browser in the
+            // list is gone immediately on the main thread. It may later be added on the Cef thread.
+            this.allBrowsersSemaphore.Wait();
+            if (this.allBrowsers.Count > 0)
             {
-                var host = this.browser.GetHost();
-                if (host != null)
+                foreach (var browser in this.allBrowsers)
                 {
-                    host.CloseBrowser(true);
-                    host.Dispose();
+                    var host = browser.GetHost();
+                    if (host != null)
+                    {
+                        host.CloseBrowser(true);
+                        host.Dispose();
+                    }
+                    browser.Dispose();
                 }
-                this.browser.Dispose();
-                this.browser = null;
+                this.allBrowsers.Clear();
             }
-            this.browserSemaphore.Release();
+            this.allBrowsersSemaphore.Release();
         }
 
         public void Reload()
@@ -194,27 +203,39 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        public void showDevTools()
+        public void showDevTools(bool firstwindow = true)
         {
-            if (this.Browser != null)
+            this.allBrowsersSemaphore.Wait();
+            if (this.allBrowsers.Count > 0)
             {
-                CefBrowser b = this.Browser;
+                CefBrowser b = firstwindow ? this.allBrowsers.First() : this.allBrowsers.Last();
                 CefWindowInfo wi = CefWindowInfo.Create();
                 wi.SetAsPopup(b.GetHost().GetWindowHandle(), "DevTools");
                 b.GetHost().ShowDevTools(wi, this.Client, new CefBrowserSettings(), new CefPoint());
             }
+            this.allBrowsersSemaphore.Release();
         }
 
+        // Runs on the Cef thread.
         internal void OnCreated(CefBrowser browser)
         {
             browser.GetHost().SendFocusEvent(true);
-            this.browserSemaphore.Wait();
-            this.browser = browser;
-            this.browserSemaphore.Release();
+            this.allBrowsersSemaphore.Wait();
+            this.allBrowsers.Add(browser);
+            this.allBrowsersSemaphore.Release();
         }
 
+        // Runs on the Cef thread.
         internal void OnBeforeClose(CefBrowser browser)
         {
+          this.allBrowsersSemaphore.Wait();
+          int index = this.allBrowsers.FindIndex((b) => b.Identifier == browser.Identifier);
+          if (index > 0) {
+            // The first browser window is only removed from the list on the main thread.
+            System.Diagnostics.Debug.Assert(index > 0);
+            this.allBrowsers.RemoveAt(index);
+          }
+          this.allBrowsersSemaphore.Release();
         }
 
         internal void OnPaint(CefBrowser browser, IntPtr buffer, int width, int height, CefRectangle[] dirtyRects)
@@ -318,14 +339,16 @@ namespace RainbowMage.HtmlRenderer
 
         public void ExecuteScript(string script)
         {
-            if (this.Browser != null)
+            this.allBrowsersSemaphore.Wait();
+            foreach (var browser in this.allBrowsers)
             {
-                foreach (var frameId in this.Browser.GetFrameIdentifiers())
+                foreach (var frameId in browser.GetFrameIdentifiers())
                 {
-                    var frame = this.browser.GetFrame(frameId);
+                    var frame = browser.GetFrame(frameId);
                     frame.ExecuteJavaScript(script, null, 0);
                 }
             }
+            this.allBrowsersSemaphore.Release();
         }
     }
 
