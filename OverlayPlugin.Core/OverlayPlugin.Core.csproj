@@ -58,7 +58,9 @@
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Overlays\LogParseConfigPanel.Designer.cs" />
+    <Compile Include="Overlays\LogParseConfigPanel.Designer.cs">
+      <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Overlays\LogParseLoglineReader.cs" />
     <Compile Include="Overlays\LogParseOverlay.cs" />
     <Compile Include="Overlays\LogParseOverlayAddon.cs" />
