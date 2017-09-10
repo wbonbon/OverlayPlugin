@@ -159,4 +159,13 @@
   <data name="label10.Text" xml:space="preserve">
     <value>ホットキータイプ</value>
   </data>
+  <data name="checkIncludeEchoes.Text" xml:space="preserve">
+    <value>/echo</value>
+  </data>
+  <data name="checkIncludeChat.Text" xml:space="preserve">
+    <value>残りの会話</value>
+  </data>
+  <data name="checkIncludeCombatLog.Text" xml:space="preserve">
+    <value>残りのログ</value>
+  </data>
 </root>
