@@ -77,7 +77,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                this.Overlay = new OverlayForm("about:blank", this.Config.MaxFrameRate);
+                this.Overlay = new OverlayForm(this.Name, "about:blank", this.Config.MaxFrameRate);
 
                 // グローバルホットキーを設定
                 if (this.Config.GlobalHotkeyEnabled)
@@ -382,6 +382,10 @@ namespace RainbowMage.OverlayPlugin
             {
                 this.Overlay.Renderer.ExecuteScript(script);
             }
+        }
+
+        public virtual void OverlayMessage(string message)
+        {
         }
     }
 }

@@ -22,6 +22,10 @@ namespace RainbowMage.HtmlRenderer
             {
                 Renderer.OnSendMessage(o, e);
             };
+            this.builtinFunctionHandler.OverlayMessage += (o, e) =>
+            {
+                Renderer.OnOverlayMessage(o, e);
+            };
             this.builtinFunctionHandler.EndEncounter += (o, e) =>
             {
                 Renderer.OnRendererFeatureRequest(o, new RendererFeatureRequestEventArgs("EndEncounter"));
@@ -35,6 +39,7 @@ namespace RainbowMage.HtmlRenderer
                 // 対象のフレームを取得
                 var frameName = message.Arguments.GetString(0);
                 var frame = GetFrameByName(browser, frameName);
+                var overlayName = message.Arguments.GetString(1);
 
                 // API を設定
                 if (frame != null && frame.V8Context.Enter())
@@ -47,9 +52,14 @@ namespace RainbowMage.HtmlRenderer
                     var sendMessageFunction = CefV8Value.CreateFunction(
                          BuiltinFunctionHandler.SendMessageFunctionName,
                          builtinFunctionHandler);
+                    var overlayMessageFunction = CefV8Value.CreateFunction(
+                         BuiltinFunctionHandler.OverlayMessageFunctionName,
+                         builtinFunctionHandler);
                     var endEncounterFunction = CefV8Value.CreateFunction(
                          BuiltinFunctionHandler.EndEncounterFunctionName,
                          builtinFunctionHandler);
+
+                    apiObject.SetValue("overlayName", CefV8Value.CreateString(overlayName), CefV8PropertyAttribute.ReadOnly);
 
                     apiObject.SetValue(
                         BuiltinFunctionHandler.BroadcastMessageFunctionName,
@@ -58,6 +68,10 @@ namespace RainbowMage.HtmlRenderer
                     apiObject.SetValue(
                         BuiltinFunctionHandler.SendMessageFunctionName,
                         sendMessageFunction,
+                        CefV8PropertyAttribute.ReadOnly);
+                    apiObject.SetValue(
+                        BuiltinFunctionHandler.OverlayMessageFunctionName,
+                        overlayMessageFunction,
                         CefV8PropertyAttribute.ReadOnly);
                     apiObject.SetValue(
                         BuiltinFunctionHandler.EndEncounterFunctionName,

@@ -16,6 +16,7 @@ namespace RainbowMage.HtmlRenderer
 
         public static event EventHandler<BroadcastMessageEventArgs> BroadcastMessage;
         public static event EventHandler<SendMessageEventArgs> SendMessage;
+        public static event EventHandler<SendMessageEventArgs> OverlayMessage;
         public static event EventHandler<RendererFeatureRequestEventArgs> RendererFeatureRequest;
 
         // Guards access to |allBrowsers| across threads.
@@ -43,6 +44,10 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        public string OverlayName {
+          get { return overlayName; }
+        }
+
         private Client Client { get; set; }
 
         private int clickCount;
@@ -50,10 +55,11 @@ namespace RainbowMage.HtmlRenderer
         private DateTime lastClickTime;
         private int lastClickPosX;
         private int lastClickPosY;
+        private string overlayName;
 
-        public Renderer()
+        public Renderer(string overlayName)
         {
-            
+            this.overlayName = overlayName;
         }
 
         public void BeginRender(int width, int height, string url, int maxFrameRate = 30)
@@ -283,6 +289,12 @@ namespace RainbowMage.HtmlRenderer
             if (SendMessage != null)
             {
                 SendMessage(sender, e);
+            }
+        }
+
+        internal static void OnOverlayMessage(object sender, SendMessageEventArgs e) {
+            if (OverlayMessage != null) {
+                OverlayMessage(sender, e);
             }
         }
 
