@@ -77,7 +77,8 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                this.Overlay = new OverlayForm(this.Name, "about:blank", this.Config.MaxFrameRate);
+                // FIXME: is this *really* correct way to get version of current assembly?
+                this.Overlay = new OverlayForm(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), this.Name, "about:blank", this.Config.MaxFrameRate);
 
                 // グローバルホットキーを設定
                 if (this.Config.GlobalHotkeyEnabled)

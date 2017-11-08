@@ -40,6 +40,7 @@ namespace RainbowMage.HtmlRenderer
                 var frameName = message.Arguments.GetString(0);
                 var frame = GetFrameByName(browser, frameName);
                 var overlayName = message.Arguments.GetString(1);
+                var overlayVersion = message.Arguments.GetString(2);
 
                 // API を設定
                 if (frame != null && frame.V8Context.Enter())
@@ -59,6 +60,7 @@ namespace RainbowMage.HtmlRenderer
                          BuiltinFunctionHandler.EndEncounterFunctionName,
                          builtinFunctionHandler);
 
+                    apiObject.SetValue("version", CefV8Value.CreateString(overlayVersion), CefV8PropertyAttribute.ReadOnly);
                     apiObject.SetValue("overlayName", CefV8Value.CreateString(overlayName), CefV8PropertyAttribute.ReadOnly);
 
                     apiObject.SetValue(

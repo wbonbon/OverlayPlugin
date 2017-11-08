@@ -44,6 +44,10 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        public string OverlayVersion {
+            get { return overlayVersion; }
+        }
+
         public string OverlayName {
           get { return overlayName; }
         }
@@ -55,10 +59,12 @@ namespace RainbowMage.HtmlRenderer
         private DateTime lastClickTime;
         private int lastClickPosX;
         private int lastClickPosY;
+        private string overlayVersion;
         private string overlayName;
 
-        public Renderer(string overlayName)
+        public Renderer(string overlayVersion, string overlayName)
         {
+            this.overlayVersion = overlayVersion;
             this.overlayName = overlayName;
         }
 
