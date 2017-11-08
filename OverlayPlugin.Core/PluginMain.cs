@@ -84,6 +84,16 @@ namespace RainbowMage.OverlayPlugin
                         }
                     });
                 };
+                RainbowMage.HtmlRenderer.Renderer.OverlayMessage += (o, e) =>
+                {
+                    Task.Run(() =>
+                    {
+                        var targetOverlay = this.Overlays.FirstOrDefault(x => x.Name == e.Target);
+                        if (targetOverlay != null) {
+                            targetOverlay.OverlayMessage(e.Message);
+                        }
+                    });
+                };
                 RainbowMage.HtmlRenderer.Renderer.RendererFeatureRequest += (o, e) =>
                 {
                     Task.Run(() =>

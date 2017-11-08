@@ -61,13 +61,13 @@ namespace RainbowMage.OverlayPlugin
 
         public bool Locked { get; set; }
 
-        public OverlayForm(string url, int maxFrameRate = 30)
+        public OverlayForm(string overlayName, string url, int maxFrameRate = 30)
         {
             InitializeComponent();
             Renderer.Initialize();
 
             this.maxFrameRate = maxFrameRate;
-            this.Renderer = new Renderer();
+            this.Renderer = new Renderer(overlayName);
             this.Renderer.Render += renderer_Render;
             this.MouseWheel += OverlayForm_MouseWheel;
 
