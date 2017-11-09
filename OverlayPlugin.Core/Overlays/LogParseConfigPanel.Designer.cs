@@ -272,27 +272,30 @@
             //
             // flowLayoutPanel1
             //
-            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-
             this.flowLayoutPanel1.Controls.Add(this.checkIncludeEchoes);
             this.flowLayoutPanel1.Controls.Add(this.checkIncludeChat);
             this.flowLayoutPanel1.Controls.Add(this.checkIncludeCombatLog);
+
+            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             //
             // checkIncludeEchoes
             //
             resources.ApplyResources(this.checkIncludeEchoes, "checkIncludeEchoes");
             this.checkIncludeEchoes.Name = "checkIncludeEchoes";
+            this.checkIncludeCombatLog.CheckedChanged += new System.EventHandler(checkIncludeEchoes_CheckedChanged);
             //
             // checkIncludeChat
             //
             resources.ApplyResources(this.checkIncludeChat, "checkIncludeChat");
             this.checkIncludeChat.Name = "checkIncludeChat";
+            this.checkIncludeCombatLog.CheckedChanged += new System.EventHandler(checkIncludeChat_CheckedChanged);
             //
             // checkIncludeCombatLog
             //
             resources.ApplyResources(this.checkIncludeCombatLog, "checkIncludeCombatLog");
             this.checkIncludeCombatLog.Name = "checkIncludeCombatLog";
+            this.checkIncludeCombatLog.CheckedChanged += new System.EventHandler(checkIncludeCombatLog_CheckedChanged);
             // 
             // LogParseConfigPanel
             // 
@@ -303,6 +306,8 @@
             this.Name = "LogParseConfigPanel";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

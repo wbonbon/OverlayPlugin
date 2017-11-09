@@ -41,6 +41,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.textLogParseUrl.Text = config.Url;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;
             this.checkEnableGlobalHotkey.Checked = config.GlobalHotkeyEnabled;
+            this.checkIncludeEchoes.Checked = config.IncludeEcho;
+            this.checkIncludeChat.Checked = config.IncludeChat;
+            this.checkIncludeCombatLog.Checked = config.IncludeCombatLog;
             this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
             this.textGlobalHotkey.Text = Util.GetHotkeyString(config.GlobalHotkeyModifiers, config.GlobalHotkey);
             this.comboHotkeyType.DisplayMember = "Key";
@@ -114,6 +117,27 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.InvokeIfRequired(() =>
                 {
                     this.comboHotkeyType.SelectedValue = e.NewHotkeyType;
+                });
+            };
+            this.config.IncludeEchoChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.checkIncludeEchoes.Checked = e.Include;
+                });
+            };
+            this.config.IncludeChatChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.checkIncludeChat.Checked = e.Include;
+                });
+            };
+            this.config.IncludeCombatLogChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.checkIncludeCombatLog.Checked = e.Include;
                 });
             };
         }
@@ -213,6 +237,21 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void checkLock_CheckedChanged(object sender, EventArgs e)
         {
             this.config.IsLocked = this.checkLock.Checked;
+        }
+
+        private void checkIncludeEchoes_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.IncludeEcho = this.checkIncludeEchoes.Checked;
+        }
+
+        private void checkIncludeChat_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.IncludeChat = this.checkIncludeChat.Checked;
+        }
+
+        private void checkIncludeCombatLog_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.IncludeCombatLog = this.checkIncludeCombatLog.Checked;
         }
     }
 }
