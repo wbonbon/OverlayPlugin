@@ -473,31 +473,33 @@ namespace RainbowMage.OverlayPlugin
         {
             lock (xivProcLocker)
             {
-                // プロセスがすでに終了してるならプロセス情報をクリア
-                if (xivProc != null && xivProc.HasExited)
+                try
                 {
-                    xivProc = null;
-                }
-
-                // プロセス情報がなく、tryIntervalよりも時間が経っているときは新たに取得を試みる
-                if (xivProc == null && DateTime.Now - lastTry > tryInterval)
-                {
-                    xivProc = Process.GetProcessesByName("ffxiv").FirstOrDefault();
-                    if (xivProc == null)
+                    // プロセスがすでに終了してるならプロセス情報をクリア
+                    if (xivProc != null && xivProc.HasExited)
                     {
-                        xivProc = Process.GetProcessesByName("ffxiv_dx11").FirstOrDefault();
+                        xivProc = null;
                     }
-                    lastTry = DateTime.Now;
-                }
 
-                if (xivProc != null)
-                {
-                    return xivProc.MainWindowHandle;
+                    // プロセス情報がなく、tryIntervalよりも時間が経っているときは新たに取得を試みる
+                    if (xivProc == null && DateTime.Now - lastTry > tryInterval)
+                    {
+                        xivProc = Process.GetProcessesByName("ffxiv").FirstOrDefault();
+                        if (xivProc == null)
+                        {
+                            xivProc = Process.GetProcessesByName("ffxiv_dx11").FirstOrDefault();
+                        }
+                        lastTry = DateTime.Now;
+                    }
+
+                    if (xivProc != null)
+                    {
+                        return xivProc.MainWindowHandle;
+                    }
                 }
-                else
-                {
-                    return IntPtr.Zero;
-                }
+                catch (System.ComponentModel.Win32Exception) { }
+
+                return IntPtr.Zero;
             }
         }
 
