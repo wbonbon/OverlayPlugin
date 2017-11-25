@@ -125,6 +125,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             // this.sortKey = "encdps";
             // this.sortType = LogParseSortType.NumericDescending;
+            this.IncludeChat = true;
+            this.IncludeEcho = true;
+            this.IncludeCombatLog = true;
         }
 
         // XmlSerializer用

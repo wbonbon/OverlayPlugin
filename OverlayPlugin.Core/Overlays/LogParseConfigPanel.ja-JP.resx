@@ -124,7 +124,7 @@
     <value>ソートタイプ</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>ソートキー</value>
+    <value>含めるログ</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>クリックを透過させる</value>
