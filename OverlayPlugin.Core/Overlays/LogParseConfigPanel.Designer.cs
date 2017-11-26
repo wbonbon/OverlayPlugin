@@ -32,7 +32,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             //this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            //this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,27 +56,19 @@
             this.checkLock = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboHotkeyType = new System.Windows.Forms.ComboBox();
-
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.checkIncludeEchoes = new System.Windows.Forms.CheckBox();
-            this.checkIncludeChat = new System.Windows.Forms.CheckBox();
-            this.checkIncludeCombatLog = new System.Windows.Forms.CheckBox();
-
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxFrameRate)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
             //this.tableLayoutPanel1.Controls.Add(this.label5, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 4);
+            //this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
@@ -84,16 +76,16 @@
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseClickthru, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label13, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label13, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkLock, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 7);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -108,8 +100,8 @@
             // 
             // label4
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            //resources.ApplyResources(this.label4, "label4");
+            //this.label4.Name = "label4";
             // 
             // label2
             // 
@@ -269,33 +261,6 @@
             resources.ApplyResources(this.comboHotkeyType, "comboHotkeyType");
             this.comboHotkeyType.FormattingEnabled = true;
             this.comboHotkeyType.Name = "comboHotkeyType";
-            //
-            // flowLayoutPanel1
-            //
-            this.flowLayoutPanel1.Controls.Add(this.checkIncludeEchoes);
-            this.flowLayoutPanel1.Controls.Add(this.checkIncludeChat);
-            this.flowLayoutPanel1.Controls.Add(this.checkIncludeCombatLog);
-
-            resources.ApplyResources(this.flowLayoutPanel1, "flowLayoutPanel1");
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            //
-            // checkIncludeEchoes
-            //
-            resources.ApplyResources(this.checkIncludeEchoes, "checkIncludeEchoes");
-            this.checkIncludeEchoes.Name = "checkIncludeEchoes";
-            this.checkIncludeCombatLog.CheckedChanged += new System.EventHandler(checkIncludeEchoes_CheckedChanged);
-            //
-            // checkIncludeChat
-            //
-            resources.ApplyResources(this.checkIncludeChat, "checkIncludeChat");
-            this.checkIncludeChat.Name = "checkIncludeChat";
-            this.checkIncludeCombatLog.CheckedChanged += new System.EventHandler(checkIncludeChat_CheckedChanged);
-            //
-            // checkIncludeCombatLog
-            //
-            resources.ApplyResources(this.checkIncludeCombatLog, "checkIncludeCombatLog");
-            this.checkIncludeCombatLog.Name = "checkIncludeCombatLog";
-            this.checkIncludeCombatLog.CheckedChanged += new System.EventHandler(checkIncludeCombatLog_CheckedChanged);
             // 
             // LogParseConfigPanel
             // 
@@ -306,8 +271,6 @@
             this.Name = "LogParseConfigPanel";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -323,7 +286,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label6;
         //private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
+        //private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
@@ -346,10 +309,5 @@
         private System.Windows.Forms.CheckBox checkLock;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox comboHotkeyType;
-
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.CheckBox checkIncludeEchoes;
-        private System.Windows.Forms.CheckBox checkIncludeChat;
-        private System.Windows.Forms.CheckBox checkIncludeCombatLog;
     }
 }
