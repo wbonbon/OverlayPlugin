@@ -16,14 +16,14 @@ namespace RainbowMage.HtmlRenderer
             this.renderer = renderer;
         }
         
-        protected override void OnAfterCreated(CefBrowser browser)
+        protected override void OnAfterCreated(ChromiumWebBrowser browser)
         {
             base.OnAfterCreated(browser);
 
             this.renderer.OnCreated(browser);
         }
 
-        protected override void OnBeforeClose(CefBrowser browser)
+        protected override void OnBeforeClose(ChromiumWebBrowser browser)
         {
             base.OnBeforeClose(browser);
 

@@ -58,6 +58,7 @@
             this.checkLock = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboHotkeyType = new System.Windows.Forms.ComboBox();
+            this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -144,9 +145,9 @@
             // 
             // panel1
             // 
-            resources.ApplyResources(this.panel1, "panel1");
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
             this.panel1.Controls.Add(this.tableLayoutPanel3);
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Name = "panel1";
             // 
             // tableLayoutPanel3
@@ -155,6 +156,7 @@
             this.tableLayoutPanel3.Controls.Add(this.buttonMiniParseCopyActXiv, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonMiniParseOpenDevTools, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonMiniParseReloadBrowser, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.buttonResetOverlayPosition, 3, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             // 
             // buttonMiniParseCopyActXiv
@@ -279,6 +281,13 @@
             this.comboHotkeyType.FormattingEnabled = true;
             this.comboHotkeyType.Name = "comboHotkeyType";
             // 
+            // buttonResetOverlayPosition
+            // 
+            resources.ApplyResources(this.buttonResetOverlayPosition, "buttonResetOverlayPosition");
+            this.buttonResetOverlayPosition.Name = "buttonResetOverlayPosition";
+            this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
+            this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
+            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -328,5 +337,6 @@
         private System.Windows.Forms.CheckBox checkLock;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox comboHotkeyType;
+        private System.Windows.Forms.Button buttonResetOverlayPosition;
     }
 }

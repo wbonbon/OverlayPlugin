@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xilium.CefGlue;
+using CefSharp.WinForms;
 
 namespace RainbowMage.HtmlRenderer
 {
-    class BuiltinFunctionHandler : CefV8Handler 
+    class BuiltinFunctionHandler
     {
         public event EventHandler<BroadcastMessageEventArgs> BroadcastMessage;
         public event EventHandler<SendMessageEventArgs> SendMessage;
@@ -19,68 +19,24 @@ namespace RainbowMage.HtmlRenderer
         public const string OverlayMessageFunctionName = "overlayMessage";
         public const string EndEncounterFunctionName = "endEncounter";
 
-        protected override bool Execute(string name, CefV8Value obj, CefV8Value[] arguments, out CefV8Value returnValue, out string exception)
+        public void broadcastMessage(string msg)
         {
-            exception = "";
-            returnValue = CefV8Value.CreateUndefined();
+            HtmlRenderer.Renderer.TriggerBroadcastMessage(this, new BroadcastMessageEventArgs(msg));
+        }
 
-            if (name == BroadcastMessageFunctionName)
-            {
-                if (arguments.Length > 0)
-                {
-                    if (BroadcastMessage != null)
-                    {
-                        BroadcastMessage(obj, new BroadcastMessageEventArgs(arguments[0].GetStringValue()));
-                    }
-                }
-                else
-                {
-                    exception = "Invalid argument count.";
-                }
+        public void sendMessage(string target, string msg)
+        {
+            HtmlRenderer.Renderer.TriggerSendMessage(this, new SendMessageEventArgs(target, msg));
+        }
 
-                return true;
-            }
-            else if (name == SendMessageFunctionName)
-            {
-                if (arguments.Length > 1)
-                {
-                    if (SendMessage != null)
-                    {
-                        SendMessage(obj, new SendMessageEventArgs(arguments[0].GetStringValue(), arguments[1].GetStringValue()));
-                    }
-                }
-                else
-                {
-                    exception = "Invalid argument count.";
-                }
+        public void overlayMessage(string target, string msg)
+        {
+            HtmlRenderer.Renderer.TriggerOverlayMessage(this, new SendMessageEventArgs(target, msg));
+        }
 
-                return true;
-            }
-            else if (name == OverlayMessageFunctionName)
-            {
-                if (arguments.Length > 1)
-                {
-                    if (OverlayMessage != null)
-                    {
-                        OverlayMessage(obj, new SendMessageEventArgs(arguments[0].GetStringValue(), arguments[1].GetStringValue()));
-                    }
-                }
-                else
-                {
-                    exception = "Invalid argument count.";
-                }
-
-                return true;
-            }
-            else if (name == EndEncounterFunctionName)
-            {
-                if (EndEncounter != null)
-                {
-                    EndEncounter(obj, new EndEncounterEventArgs());
-                }
-            }
-
-            return false;
+        public void endEncounter()
+        {
+            HtmlRenderer.Renderer.TriggerRendererFeatureRequest(this, new RendererFeatureRequestEventArgs("EndEncounter"));
         }
     }
 

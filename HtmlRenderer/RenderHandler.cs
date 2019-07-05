@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xilium.CefGlue;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -21,19 +20,19 @@ namespace RainbowMage.HtmlRenderer
             this.Height = windowHeight;
         }
 
-        protected override bool GetRootScreenRect(CefBrowser browser, ref CefRectangle rect)
+        protected override bool GetRootScreenRect(ChromiumWebBrowser browser, ref CefRectangle rect)
         {
             return GetViewRect(browser, ref rect);
         }
 
-        protected override bool GetScreenPoint(CefBrowser browser, int viewX, int viewY, ref int screenX, ref int screenY)
+        protected override bool GetScreenPoint(ChromiumWebBrowser browser, int viewX, int viewY, ref int screenX, ref int screenY)
         {
             screenX = viewX;
             screenY = viewY;
             return true;
         }
 
-        protected override bool GetViewRect(CefBrowser browser, ref CefRectangle rect)
+        protected override bool GetViewRect(ChromiumWebBrowser browser, ref CefRectangle rect)
         {
             rect.X = 0;
             rect.Y = 0;
@@ -42,26 +41,26 @@ namespace RainbowMage.HtmlRenderer
             return true;
         }
 
-        protected override bool GetScreenInfo(CefBrowser browser, CefScreenInfo screenInfo)
+        protected override bool GetScreenInfo(ChromiumWebBrowser browser, CefScreenInfo screenInfo)
         {
             return false;
         }
 
-        protected override void OnPopupSize(CefBrowser browser, CefRectangle rect)
+        protected override void OnPopupSize(ChromiumWebBrowser browser, CefRectangle rect)
         {
         }
 
-        protected override void OnPaint(CefBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr buffer, int width, int height)
+        protected override void OnPaint(ChromiumWebBrowser browser, CefPaintElementType type, CefRectangle[] dirtyRects, IntPtr buffer, int width, int height)
         {
             renderer.OnPaint(browser, buffer, width, height, dirtyRects);
         }
 
-        protected override void OnCursorChange(CefBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
+        protected override void OnCursorChange(ChromiumWebBrowser browser, IntPtr cursorHandle, CefCursorType type, CefCursorInfo customCursorInfo)
         {
 
         }
 
-        protected override void OnScrollOffsetChanged(CefBrowser browser, double x, double y)
+        protected override void OnScrollOffsetChanged(ChromiumWebBrowser browser, double x, double y)
         {
 
         }

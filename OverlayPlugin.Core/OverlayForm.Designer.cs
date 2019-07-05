@@ -19,9 +19,9 @@
             // 
             // OverlayForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 242);
+            this.ClientSize = new System.Drawing.Size(394, 262);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -34,10 +34,7 @@
             this.Load += new System.EventHandler(this.OverlayForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OverlayForm_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OverlayForm_KeyUp);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OverlayForm_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OverlayForm_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OverlayForm_MouseUp);
-            this.Resize += new System.EventHandler(this.OverlayForm_Resize);
             this.ResumeLayout(false);
 
         }

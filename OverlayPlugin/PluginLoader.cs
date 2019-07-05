@@ -26,6 +26,7 @@ namespace RainbowMage.OverlayPlugin
             var directories = new List<string>();
             directories.Add(pluginDirectory);
             directories.Add(Path.Combine(pluginDirectory, "addon"));
+            directories.Add(Path.Combine(pluginDirectory, Environment.Is64BitProcess ? "x64" : "x86"));
             asmResolver = new AssemblyResolver(directories);
 
             Initialize(pluginScreenSpace, pluginStatusText);

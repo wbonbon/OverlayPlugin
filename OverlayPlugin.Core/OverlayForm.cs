@@ -12,7 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Xilium.CefGlue;
+using CefSharp.OffScreen;
+using CefSharp;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -36,7 +37,7 @@ namespace RainbowMage.OverlayPlugin
             set
             {
                 this.url = value;
-                UpdateRender();
+                this.Renderer.Load(value);
             }
         }
 
@@ -61,15 +62,21 @@ namespace RainbowMage.OverlayPlugin
 
         public bool Locked { get; set; }
 
-        public OverlayForm(string overlayVersion,string overlayName, string url, int maxFrameRate = 30)
+        public OverlayForm(string overlayVersion, string overlayName, string url, int maxFrameRate = 30)
         {
+            Renderer.Initialize(PluginMain.PluginDirectory);
             InitializeComponent();
-            Renderer.Initialize();
 
             this.maxFrameRate = maxFrameRate;
             this.Renderer = new Renderer(overlayVersion, overlayName);
             this.Renderer.Render += renderer_Render;
             this.MouseWheel += OverlayForm_MouseWheel;
+            this.MouseDown += OverlayForm_MouseDown;
+            this.MouseUp += OverlayForm_MouseUp;
+            this.MouseMove += OverlayForm_MouseMove;
+            this.KeyDown += OverlayForm_KeyDown;
+            this.KeyUp += OverlayForm_KeyUp;
+            this.Resize += OverlayForm_Resize;
 
             this.url = url;
 
@@ -240,7 +247,7 @@ namespace RainbowMage.OverlayPlugin
 
         #endregion
 
-        void renderer_Render(object sender, RenderEventArgs e)
+        void renderer_Render(object sender, OnPaintEventArgs e)
         {
             if (!this.terminated)
             {
@@ -259,13 +266,13 @@ namespace RainbowMage.OverlayPlugin
                     }
 
                     // TODO: DirtyRect に対応
-                    surfaceBuffer.SetSurfaceData(e.Buffer, (uint)(e.Width * e.Height * 4));
+                    surfaceBuffer.SetSurfaceData(e.BufferHandle, (uint)(e.Width * e.Height * 4));
 
                     UpdateLayeredWindowBitmap();
                 }
                 catch
                 {
-                    
+
                 }
             }
         }
@@ -313,16 +320,12 @@ namespace RainbowMage.OverlayPlugin
                 zorderCorrector.Dispose();
             }
 
-            if (this.Renderer != null)
-            {
-                this.Renderer.Dispose();
-                this.Renderer = null;
-            }
-
+            
             if (this.surfaceBuffer != null)
             {
                 this.surfaceBuffer.Dispose();
             }
+            
 
             if (disposing && (components != null))
             {
@@ -361,6 +364,8 @@ namespace RainbowMage.OverlayPlugin
                 this.Location = new Point(
                     screenPosition.X - offset.X,
                     screenPosition.Y - offset.Y);
+
+                offset = e.Location;
             }
             else
             {
@@ -382,23 +387,23 @@ namespace RainbowMage.OverlayPlugin
             this.Renderer.SendMouseWheel(e.X, e.Y, e.Delta, shiftKeyPressed);
         }
 
-        private CefMouseButtonType GetMouseButtonType(MouseEventArgs e)
+        private MouseButtonType GetMouseButtonType(MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                return Xilium.CefGlue.CefMouseButtonType.Left;
+                return MouseButtonType.Left;
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Middle)
             {
-                return Xilium.CefGlue.CefMouseButtonType.Middle;
+                return MouseButtonType.Middle;
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
-                return Xilium.CefGlue.CefMouseButtonType.Right;
+                return MouseButtonType.Right;
             }
             else
             {
-                return CefMouseButtonType.Left; // 非対応のボタンは左クリックとして扱う
+                return MouseButtonType.Left; // 非対応のボタンは左クリックとして扱う
             }
         }
 
@@ -508,7 +513,6 @@ namespace RainbowMage.OverlayPlugin
             this.altKeyPressed = e.Alt;
             this.shiftKeyPressed = e.Shift;
             this.controlKeyPressed = e.Control;
-
         }
 
         private void OverlayForm_KeyUp(object sender, KeyEventArgs e)
@@ -521,7 +525,7 @@ namespace RainbowMage.OverlayPlugin
         private void OnKeyEvent(ref Message m)
         {
 
-            var keyEvent = new CefKeyEvent();
+            var keyEvent = new KeyEvent();
             keyEvent.WindowsKeyCode = m.WParam.ToInt32();
             keyEvent.NativeKeyCode = (int)m.LParam.ToInt64();
             keyEvent.IsSystemKey = m.Msg == NativeMethods.WM_SYSCHAR ||
@@ -530,15 +534,15 @@ namespace RainbowMage.OverlayPlugin
 
             if (m.Msg == NativeMethods.WM_KEYDOWN || m.Msg == NativeMethods.WM_SYSKEYDOWN)
             {
-                keyEvent.EventType = CefKeyEventType.RawKeyDown;
+                keyEvent.Type = KeyEventType.RawKeyDown;
             }
             else if (m.Msg == NativeMethods.WM_KEYUP || m.Msg == NativeMethods.WM_SYSKEYUP)
             {
-                keyEvent.EventType = CefKeyEventType.KeyUp;
+                keyEvent.Type = KeyEventType.KeyUp;
             }
             else
             {
-                keyEvent.EventType = CefKeyEventType.Char;
+                keyEvent.Type = KeyEventType.Char;
             }
             keyEvent.Modifiers = GetKeyboardModifiers(ref m);
 

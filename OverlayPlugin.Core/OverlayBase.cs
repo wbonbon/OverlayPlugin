@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Xilium.CefGlue;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -78,7 +77,8 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 // FIXME: is this *really* correct way to get version of current assembly?
-                this.Overlay = new OverlayForm(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(), this.Name, "about:blank", this.Config.MaxFrameRate);
+                this.Overlay = new OverlayForm(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                    this.Name, "about:blank", this.Config.MaxFrameRate);
 
                 // グローバルホットキーを設定
                 if (this.Config.GlobalHotkeyEnabled)

@@ -254,5 +254,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             this.config.IsLocked = this.checkLock.Checked;
         }
+
+        private void buttonResetOverlayPosition_Click(object sender, EventArgs e)
+        {
+            this.overlay.Overlay.Location = new Point(10, 10);
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xilium.CefGlue;
+using CefSharp;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -32,7 +32,7 @@ namespace RainbowMage.HtmlRenderer
             };
         }
 
-        protected override bool OnProcessMessageReceived(CefBrowser browser, CefProcessId sourceProcess, CefProcessMessage message)
+        protected override bool OnProcessMessageReceived(ChromiumWebBrowser browser, CefProcessId sourceProcess, CefProcessMessage message)
         {
             if (message.Name == "SetOverlayAPI")
             {
@@ -90,7 +90,7 @@ namespace RainbowMage.HtmlRenderer
             return base.OnProcessMessageReceived(browser, sourceProcess, message);
         }
 
-        private CefFrame GetFrameByName(CefBrowser browser, string frameName)
+        private CefFrame GetFrameByName(ChromiumWebBrowser browser, string frameName)
         {
             CefFrame frame = null;
             if (frameName == null)

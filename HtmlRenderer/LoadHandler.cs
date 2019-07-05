@@ -16,7 +16,7 @@ namespace RainbowMage.HtmlRenderer
             this.renderer = renderer;
         }
 
-        protected override void OnLoadStart(CefBrowser browser, CefFrame frame)
+        protected override void OnLoadStart(ChromiumWebBrowser browser, CefFrame frame)
         {
             base.OnLoadStart(browser, frame);
 
@@ -27,14 +27,14 @@ namespace RainbowMage.HtmlRenderer
             browser.SendProcessMessage(CefProcessId.Renderer, message);
         }
 
-        protected override void OnLoadError(CefBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
+        protected override void OnLoadError(ChromiumWebBrowser browser, CefFrame frame, CefErrorCode errorCode, string errorText, string failedUrl)
         {
             base.OnLoadError(browser, frame, errorCode, errorText, failedUrl);
 
             this.renderer.OnError(errorCode, errorText, failedUrl);
         }
 
-        protected override void OnLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode)
+        protected override void OnLoadEnd(ChromiumWebBrowser browser, CefFrame frame, int httpStatusCode)
         {
             base.OnLoadEnd(browser, frame, httpStatusCode);
 
