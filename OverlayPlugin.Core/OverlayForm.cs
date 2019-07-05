@@ -347,7 +347,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void OverlayForm_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!this.Locked)
+            if (!this.Locked && !isDragging)
             {
                 isDragging = true;
                 offset = e.Location;
@@ -360,12 +360,9 @@ namespace RainbowMage.OverlayPlugin
         {
             if (isDragging)
             {
-                var screenPosition = PointToScreen(e.Location);
                 this.Location = new Point(
-                    screenPosition.X - offset.X,
-                    screenPosition.Y - offset.Y);
-
-                offset = e.Location;
+                    e.X - offset.X + this.Location.X,
+                    e.Y - offset.Y + this.Location.Y);
             }
             else
             {

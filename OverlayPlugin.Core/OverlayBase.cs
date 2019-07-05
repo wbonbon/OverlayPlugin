@@ -104,7 +104,14 @@ namespace RainbowMage.OverlayPlugin
                                 break;
                         }
 
-                        hook.RegisterHotKey(modifierKeys, key);
+                        try
+                        {
+                            hook.RegisterHotKey(modifierKeys, key);
+                        }
+                        catch (Exception e)
+                        {
+                            Log(LogLevel.Error, "Failed to register hotkey: {0}", e.Message);
+                        }
                     }
                 }
 
@@ -339,9 +346,9 @@ namespace RainbowMage.OverlayPlugin
 
         protected void Log(LogLevel level, string message)
         {
-            if (OnLog != null)
+            if (PluginMain.Logger != null)
             {
-                OnLog(this, new LogEventArgs(level, string.Format("{0}: {1}", this.Name, message)));
+                PluginMain.Logger.Log(level, "{0}: {1}", this.Name, message);
             }
         }
 

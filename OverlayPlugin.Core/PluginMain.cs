@@ -26,13 +26,13 @@ namespace RainbowMage.OverlayPlugin
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
         internal List<IOverlayAddon> Addons { get; set; }
-        internal Logger Logger { get; set; }
+        public static Logger Logger { get; private set; }
         internal static string PluginDirectory { get; private set; }
 
         public PluginMain(string pluginDirectory, Logger logger)
         {
             PluginDirectory = pluginDirectory;
-            this.Logger = logger;
+            Logger = logger;
         }
 
         /// <summary>

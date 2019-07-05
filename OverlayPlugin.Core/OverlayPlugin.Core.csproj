@@ -60,6 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigEventArgs.cs" />
+    <Compile Include="Overlays\FakeWSConfigPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Overlays\FakeWSConfigPanel.Designer.cs">
+      <DependentUpon>FakeWSConfigPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -168,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewOverlayDialog.ko-KR.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\FakeWSConfigPanel.resx">
+      <DependentUpon>FakeWSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.ja-JP.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>

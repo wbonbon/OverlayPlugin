@@ -44,6 +44,7 @@
             this.buttonMiniParseCopyActXiv = new System.Windows.Forms.Button();
             this.buttonMiniParseOpenDevTools = new System.Windows.Forms.Button();
             this.buttonMiniParseReloadBrowser = new System.Windows.Forms.Button();
+            this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.textMiniParseUrl = new System.Windows.Forms.TextBox();
             this.buttonMiniParseSelectFile = new System.Windows.Forms.Button();
@@ -58,7 +59,6 @@
             this.checkLock = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboHotkeyType = new System.Windows.Forms.ComboBox();
-            this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -181,6 +181,13 @@
             this.buttonMiniParseReloadBrowser.UseVisualStyleBackColor = true;
             this.buttonMiniParseReloadBrowser.Click += new System.EventHandler(this.buttonReloadBrowser_Click);
             // 
+            // buttonResetOverlayPosition
+            // 
+            resources.ApplyResources(this.buttonResetOverlayPosition, "buttonResetOverlayPosition");
+            this.buttonResetOverlayPosition.Name = "buttonResetOverlayPosition";
+            this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
+            this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
+            // 
             // tableLayoutPanel2
             // 
             resources.ApplyResources(this.tableLayoutPanel2, "tableLayoutPanel2");
@@ -280,13 +287,6 @@
             resources.ApplyResources(this.comboHotkeyType, "comboHotkeyType");
             this.comboHotkeyType.FormattingEnabled = true;
             this.comboHotkeyType.Name = "comboHotkeyType";
-            // 
-            // buttonResetOverlayPosition
-            // 
-            resources.ApplyResources(this.buttonResetOverlayPosition, "buttonResetOverlayPosition");
-            this.buttonResetOverlayPosition.Name = "buttonResetOverlayPosition";
-            this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
-            this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
             // 
             // MiniParseConfigPanel
             // 

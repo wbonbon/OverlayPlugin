@@ -277,6 +277,7 @@ namespace RainbowMage.HtmlRenderer
                 
                 var cefSettings = new CefSettings
                 {
+                    WindowlessRenderingEnabled = true,
                     Locale = System.Globalization.CultureInfo.CurrentCulture.Name,
                     CachePath = Path.Combine(pluginDirectory, "Cache"),
                     MultiThreadedMessageLoop = true,
