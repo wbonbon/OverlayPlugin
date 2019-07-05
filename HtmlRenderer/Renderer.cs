@@ -95,7 +95,26 @@ namespace RainbowMage.HtmlRenderer
             var initScript = @"(async () => {
                 await CefSharp.BindObjectAsync('OverlayPluginApi');
                 OverlayPluginApi.overlayName = " + JsonConvert.SerializeObject(this.overlayName) + @";
-            })();";
+            })();
+
+            (function() {
+                var realWS = window.WebSocket;
+                window.__OverlayPlugin_ws_faker = null;
+
+                window.WebSocket = function(url) {
+                    if (url.indexOf('ws://fake.ws/') > -1)
+                    {
+                        window.__OverlayPlugin_ws_faker = (msg) => {
+                            if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
+                        };
+                    }
+                    else
+                    {
+                        return new realWS(url);
+                    }
+                };
+            })();
+            ";
             e.Frame.ExecuteJavaScriptAsync(initScript);
 
             foreach (var item in this.scriptQueue)

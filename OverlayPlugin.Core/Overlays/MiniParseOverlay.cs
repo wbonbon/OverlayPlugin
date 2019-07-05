@@ -64,7 +64,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private string CreateEventDispatcherScript()
         {
-            return "document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + this.CreateJsonData() + " }));";
+            return @"(function () { 
+                var detail = " + this.CreateJsonData() + @"
+                if (window.__OverlayPlugin_ws_faker) {
+                    __OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg': detail });
+                } else {
+                    document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail }));
+                }
+            })();
+            ";
         }
 
         internal string CreateJsonData()
