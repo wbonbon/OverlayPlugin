@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CefSharp.OffScreen;
 using CefSharp;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -22,9 +23,8 @@ namespace RainbowMage.HtmlRenderer
 
         public event EventHandler<OnPaintEventArgs> Render;
 
-        // Guards access to |allBrowsers| across threads.
-        private System.Threading.SemaphoreSlim allBrowsersSemaphore = new System.Threading.SemaphoreSlim(1);
         public ChromiumWebBrowser Browser;
+        private List<String> scriptQueue = new List<string>();
         
         public string OverlayVersion {
             get { return overlayVersion; }
@@ -92,7 +92,17 @@ namespace RainbowMage.HtmlRenderer
 
         private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
         {
-            e.Frame.ExecuteJavaScriptAsync("CefSharp.BindObjectAsync('OverlayPluginApi')");
+            var initScript = @"(async () => {
+                await CefSharp.BindObjectAsync('OverlayPluginApi');
+                OverlayPluginApi.overlayName = " + JsonConvert.SerializeObject(this.overlayName) + @";
+            })();";
+            e.Frame.ExecuteJavaScriptAsync(initScript);
+
+            foreach (var item in this.scriptQueue)
+            {
+                e.Frame.ExecuteJavaScriptAsync(item);
+            }
+            this.scriptQueue.Clear();
         }
 
         private void Browser_LoadError(object sender, LoadErrorEventArgs e)
@@ -296,6 +306,10 @@ namespace RainbowMage.HtmlRenderer
             {
                 var frame = Browser.GetMainFrame();
                 frame.ExecuteJavaScriptAsync(script);
+            }
+            else
+            {
+                this.scriptQueue.Add(script);
             }
         }
     }
