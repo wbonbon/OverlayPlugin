@@ -40,11 +40,18 @@ namespace RainbowMage.OverlayPlugin
 
         private Assembly CustomAssemblyResolve(object sender, ResolveEventArgs e)
         {
+            var match = assemblyNameParser.Match(e.Name);
+
+            if ((match.Success && match.Groups["name"].Value == "Xilium.CefGlue" ) || e.Name == "Xilium.CefGlue")
+            {
+                return CustomAssemblyResolve(sender, new ResolveEventArgs("CefSharp.OffScreen"));
+            }
+
             // Directories プロパティで指定されたディレクトリを基準にアセンブリを検索する
             foreach (var directory in this.Directories)
             {
                 var asmPath = "";
-                var match = assemblyNameParser.Match(e.Name);
+                
                 if (match.Success)
                 {
                     var asmFileName = match.Groups["name"].Value + ".dll";

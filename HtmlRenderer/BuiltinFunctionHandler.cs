@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CefSharp.WinForms;
 
 namespace RainbowMage.HtmlRenderer
 {
     class BuiltinFunctionHandler
     {
-        public event EventHandler<BroadcastMessageEventArgs> BroadcastMessage;
-        public event EventHandler<SendMessageEventArgs> SendMessage;
-        public event EventHandler<SendMessageEventArgs> OverlayMessage;
-        public event EventHandler<EndEncounterEventArgs> EndEncounter;
-
         public const string BroadcastMessageFunctionName = "broadcastMessage";
         public const string SendMessageFunctionName = "sendMessage";
         public const string OverlayMessageFunctionName = "overlayMessage";

@@ -55,6 +55,14 @@ namespace RainbowMage.OverlayPlugin
 
                 Logger.Log(LogLevel.Info, "InitPlugin: PluginDirectory = {0}", PluginDirectory);
 
+                try
+                {
+                    Renderer.Initialize(PluginMain.PluginDirectory);
+                }
+                catch(Exception e)
+                {
+                    Logger.Log(LogLevel.Error, "InitPlugin: {0}", e);
+                }
 
                 // プラグイン読み込み
                 LoadAddons();
@@ -227,6 +235,22 @@ namespace RainbowMage.OverlayPlugin
                 this.Addons.Add(new LogParseOverlayAddon());
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
+
+                foreach (var plugin in ActGlobals.oFormActMain.ActPlugins)
+                {
+                    try
+                    {
+                        var iface = plugin.pluginObj.GetType().GetInterface(typeof(IOverlayAddon).FullName);
+                        if (iface != null)
+                        {
+                            this.Addons.Add((IOverlayAddon) plugin.pluginObj);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle, e);
+                    }
+                }
 
                 foreach (var pluginFile in Directory.GetFiles(directory, "*.dll"))
                 {

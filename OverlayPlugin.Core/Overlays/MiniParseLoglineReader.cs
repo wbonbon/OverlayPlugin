@@ -76,8 +76,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void sendEchoEvent(bool isImported, string type, string text)
         {
             if (this.Overlay != null &&
-                this.Overlay.Renderer != null &&
-                this.Overlay.Renderer.Browser != null)
+                this.Overlay.Renderer != null)
             {
                 JObject message = new JObject();
                 message["isImported"] = isImported;

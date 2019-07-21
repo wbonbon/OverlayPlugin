@@ -371,8 +371,7 @@ namespace RainbowMage.OverlayPlugin
                 this.Config.IsLocked ? "true" : "false");
 
             if (this.Overlay != null &&
-                this.Overlay.Renderer != null &&
-                this.Overlay.Renderer.Browser != null)
+                this.Overlay.Renderer != null)
             {
                 this.Overlay.Renderer.ExecuteScript(updateScript);
             }
@@ -385,8 +384,7 @@ namespace RainbowMage.OverlayPlugin
                 Util.CreateJsonSafeString(message));
 
             if (this.Overlay != null &&
-                this.Overlay.Renderer != null &&
-                this.Overlay.Renderer.Browser != null)
+                this.Overlay.Renderer != null)
             {
                 this.Overlay.Renderer.ExecuteScript(script);
             }

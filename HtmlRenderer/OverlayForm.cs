@@ -12,8 +12,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CefSharp.OffScreen;
 using CefSharp;
+using CefSharp.OffScreen;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -64,7 +64,6 @@ namespace RainbowMage.OverlayPlugin
 
         public OverlayForm(string overlayVersion, string overlayName, string url, int maxFrameRate = 30)
         {
-            Renderer.Initialize(PluginMain.PluginDirectory);
             InitializeComponent();
 
             this.maxFrameRate = maxFrameRate;
@@ -81,7 +80,18 @@ namespace RainbowMage.OverlayPlugin
             this.url = url;
 
             // Alt+Tab を押したときに表示されるプレビューから除外する
-            Util.HidePreview(this);
+            HidePreview();
+        }
+
+        /// <summary>
+        /// 指定されたフォームを Windows の Alt+Tab の切り替え候補から除外します。
+        /// </summary>
+        /// <param name="form"></param>
+        public void HidePreview()
+        {
+            int ex = NativeMethods.GetWindowLong(Handle, NativeMethods.GWL_EXSTYLE);
+            ex |= NativeMethods.WS_EX_TOOLWINDOW;
+            NativeMethods.SetWindowLongA(Handle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
         }
 
         public void Reload()

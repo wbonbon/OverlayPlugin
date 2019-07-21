@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CefSharp.OffScreen;
 using CefSharp;
-using System.IO;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -336,12 +333,12 @@ namespace RainbowMage.HtmlRenderer
 
     public class BrowserErrorEventArgs : EventArgs
     {
-        public CefErrorCode ErrorCode { get; private set; }
+        public string ErrorCode { get; private set; }
         public string ErrorText { get; private set; }
         public string Url { get; private set; }
         public BrowserErrorEventArgs(CefErrorCode errorCode, string errorText, string url)
         {
-            this.ErrorCode = errorCode;
+            this.ErrorCode = errorCode.ToString();
             this.ErrorText = errorText;
             this.Url = url;
         }
