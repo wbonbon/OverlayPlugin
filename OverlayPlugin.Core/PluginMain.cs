@@ -23,6 +23,9 @@ namespace RainbowMage.OverlayPlugin
         Label label;
         ControlPanel controlPanel;
 
+        TabPage wsTabPage;
+        WSConfigPanel wsConfigPanel;
+
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
         internal List<IOverlayAddon> Addons { get; set; }
@@ -70,6 +73,18 @@ namespace RainbowMage.OverlayPlugin
                 // コンフィグ系読み込み
                 LoadConfig();
 
+                if (Config.WSServerRunning)
+                {
+                    try
+                    {
+                        WSServer.Initialize(Config);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Log(LogLevel.Error, "InitPlugin: {0}", e);
+                    }
+                }
+
                 // プラグイン間のメッセージ関連
                 RainbowMage.HtmlRenderer.Renderer.BroadcastMessage += (o, e) =>
                 {
@@ -113,20 +128,20 @@ namespace RainbowMage.OverlayPlugin
                     });
                 };
 
-
-                // ACT 終了時に CEF をシャットダウン（ゾンビ化防止）
-                Application.ApplicationExit += (o, e) =>
-                {
-                    try { Renderer.Shutdown(); }
-                    catch { }
-                };
-
                 InitializeOverlays();
 
                 // コンフィグUI系初期化
                 this.controlPanel = new ControlPanel(this, this.Config);
                 this.controlPanel.Dock = DockStyle.Fill;
                 this.tabPage.Controls.Add(this.controlPanel);
+                this.tabPage.Name = "OverlayPlugin";
+
+                this.wsConfigPanel = new WSConfigPanel(this.Config);
+                this.wsConfigPanel.Dock = DockStyle.Fill;
+
+                this.wsTabPage = new TabPage("OverlayPlugin WSServer");
+                this.wsTabPage.Controls.Add(wsConfigPanel);
+                ((TabControl)this.tabPage.Parent).TabPages.Add(this.wsTabPage);
 
                 Logger.Log(LogLevel.Info, "InitPlugin: Initialized.");
                 this.label.Text = "Initialized.";
@@ -201,6 +216,14 @@ namespace RainbowMage.OverlayPlugin
                 addon.Dispose();
             }
 
+            try { Renderer.Shutdown(); }
+            catch { }
+
+            try { WSServer.Stop(); }
+            catch { }
+
+            ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
+
             Logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
             this.label.Text = "Finalized.";
         }
@@ -238,6 +261,8 @@ namespace RainbowMage.OverlayPlugin
 
                 foreach (var plugin in ActGlobals.oFormActMain.ActPlugins)
                 {
+                    if (plugin.pluginObj == null) continue;
+
                     try
                     {
                         var iface = plugin.pluginObj.GetType().GetInterface(typeof(IOverlayAddon).FullName);

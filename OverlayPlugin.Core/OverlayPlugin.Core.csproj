@@ -52,6 +52,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp, Version=1.0.2.32519, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebSocketSharp-NonPreRelease.1.0.0\lib\net35\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigEventArgs.cs" />
@@ -123,6 +126,13 @@
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Util.cs" />
+    <Compile Include="WSConfigPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WSConfigPanel.Designer.cs">
+      <DependentUpon>WSConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WSServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\label.html">
@@ -199,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WSConfigPanel.resx">
+      <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

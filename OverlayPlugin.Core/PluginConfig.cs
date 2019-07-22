@@ -180,6 +180,18 @@ namespace RainbowMage.OverlayPlugin
         [XmlElement("HideOverlaysWhenNotActive")]
         public bool HideOverlaysWhenNotActive { get; set; }
 
+        [XmlElement("WSServerIP")]
+        public string WSServerIP { get; set; }
+
+        [XmlElement("WSServerPort")]
+        public int WSServerPort { get; set; }
+
+        [XmlElement("WSServerSSL")]
+        public bool WSServerSSL { get; set; }
+
+        [XmlElement("WSServerRunning")]
+        public bool WSServerRunning { get; set; }
+
         /// <summary>
         /// 設定ファイルを生成したプラグインのバージョンを取得または設定します。
         /// 設定が新規に作成された場合、またはバージョン0.3未満では null が設定されます。
@@ -244,6 +256,11 @@ namespace RainbowMage.OverlayPlugin
             this.FollowLatestLog = false;
             this.HideOverlaysWhenNotActive = false;
             this.IsFirstLaunch = true;
+
+            this.WSServerIP = "127.0.0.1";
+            this.WSServerPort = 10501;
+            this.WSServerRunning = false;
+            this.WSServerSSL = false;
         }
 
         /// <summary>

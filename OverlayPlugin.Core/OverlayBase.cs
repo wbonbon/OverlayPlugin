@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -165,7 +166,7 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception ex)
             {
-                Log(LogLevel.Error, "InitializeOverlay: {0}", this.Name, ex);
+                Log(LogLevel.Error, "InitializeOverlay: {0} {1}", this.Name, ex);
             }
         }
 
@@ -364,30 +365,38 @@ namespace RainbowMage.OverlayPlugin
             this.Config.Size = this.Overlay.Size;
         }
 
-        private void NotifyOverlayState()
+        public void ExecuteScript(string script)
         {
-            var updateScript = string.Format(
-                "document.dispatchEvent(new CustomEvent('onOverlayStateUpdate', {{ detail: {{ isLocked: {0} }} }}));",
-                this.Config.IsLocked ? "true" : "false");
-
-            if (this.Overlay != null &&
-                this.Overlay.Renderer != null)
-            {
-                this.Overlay.Renderer.ExecuteScript(updateScript);
-            }
-        }
-
-        public void SendMessage(string message)
-        {
-            var script = string.Format(
-                "document.dispatchEvent(new CustomEvent('onBroadcastMessageReceive', {{ detail: {{ message: \"{0}\" }} }}));",
-                Util.CreateJsonSafeString(message));
-
             if (this.Overlay != null &&
                 this.Overlay.Renderer != null)
             {
                 this.Overlay.Renderer.ExecuteScript(script);
             }
+        }
+
+        private void NotifyOverlayState()
+        {
+            ExecuteScript(string.Format(
+                "document.dispatchEvent(new CustomEvent('onOverlayStateUpdate', {{ detail: {{ isLocked: {0} }} }}));",
+                this.Config.IsLocked ? "true" : "false"));
+        }
+
+        public void SendMessage(string message)
+        {
+            ExecuteScript(string.Format(
+                "document.dispatchEvent(new CustomEvent('onBroadcastMessageReceive', {{ detail: {{ message: \"{0}\" }} }}));",
+                Util.CreateJsonSafeString(message)));
+        }
+
+        public void SendWSMessage(object data)
+        {
+            SendWSMessage(JsonConvert.SerializeObject(data));
+        }
+
+        public void SendWSMessage(string message)
+        {
+            ExecuteScript("document.dispatchEvent(new CustomEvent('onWebSocketMessage', " + message + "));");
+            WSServer.Broadcast(message);
         }
 
         public virtual void OverlayMessage(string message)

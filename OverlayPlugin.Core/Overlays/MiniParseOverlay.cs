@@ -52,27 +52,20 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.prevEndDateTime = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime;
                 this.prevEncounterActive = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active;
 
-                var updateScript = CreateEventDispatcherScript();
+                var encounter = this.CreateJsonData();
+                var updateScript = @"(function () { 
+                    var detail = " + encounter + @"
+                    if (window.__OverlayPlugin_ws_faker) {
+                        __OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg': detail });
+                    } else {
+                        document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail }));
+                    }
+                })();
+                ";
 
-                if (this.Overlay != null &&
-                    this.Overlay.Renderer != null)
-                {
-                    this.Overlay.Renderer.ExecuteScript(updateScript);
-                }
+                ExecuteScript(updateScript);
+                SendWSMessage("{\"type\":\"broadcast\",\"msgtype\":\"CombatData\",\"msg\":" + encounter + "}");
             }
-        }
-
-        private string CreateEventDispatcherScript()
-        {
-            return @"(function () { 
-                var detail = " + this.CreateJsonData() + @"
-                if (window.__OverlayPlugin_ws_faker) {
-                    __OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg': detail });
-                } else {
-                    document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail }));
-                }
-            })();
-            ";
         }
 
         internal string CreateJsonData()

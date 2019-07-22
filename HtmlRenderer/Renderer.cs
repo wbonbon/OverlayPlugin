@@ -20,7 +20,7 @@ namespace RainbowMage.HtmlRenderer
 
         public event EventHandler<OnPaintEventArgs> Render;
 
-        public ChromiumWebBrowser Browser;
+        private ChromiumWebBrowser Browser;
         private List<String> scriptQueue = new List<string>();
         
         public string OverlayVersion {
@@ -319,7 +319,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void ExecuteScript(string script)
         {
-            if (Browser != null)
+            if (Browser != null && Browser.IsBrowserInitialized)
             {
                 var frame = Browser.GetMainFrame();
                 frame.ExecuteJavaScriptAsync(script);
