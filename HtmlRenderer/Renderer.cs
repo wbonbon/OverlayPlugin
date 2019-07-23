@@ -20,7 +20,7 @@ namespace RainbowMage.HtmlRenderer
 
         public event EventHandler<OnPaintEventArgs> Render;
 
-        private ChromiumWebBrowser Browser;
+        private ChromiumWebBrowser _browser;
         private List<String> scriptQueue = new List<string>();
         
         public string OverlayVersion {
@@ -46,15 +46,15 @@ namespace RainbowMage.HtmlRenderer
             this.overlayVersion = overlayVersion;
             this.overlayName = overlayName;
 
-            this.Browser = new ChromiumWebBrowser("about:blank");
-            Browser.FrameLoadStart += Browser_FrameLoadStart;
-            Browser.FrameLoadEnd += Browser_FrameLoadEnd;
-            Browser.LoadError += Browser_LoadError;
-            Browser.ConsoleMessage += Browser_ConsoleMessage;
-            Browser.Paint += Browser_Paint;
+            this._browser = new ChromiumWebBrowser("about:blank");
+            _browser.FrameLoadStart += Browser_FrameLoadStart;
+            _browser.FrameLoadEnd += Browser_FrameLoadEnd;
+            _browser.LoadError += Browser_LoadError;
+            _browser.ConsoleMessage += Browser_ConsoleMessage;
+            _browser.Paint += Browser_Paint;
 
-            Browser.JavascriptObjectRepository.Register("OverlayPluginApi", new BuiltinFunctionHandler(), isAsync: true);
-            Browser.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
+            _browser.JavascriptObjectRepository.Register("OverlayPluginApi", new BuiltinFunctionHandler(), isAsync: true);
+            _browser.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
         }
 
         private void JavascriptObjectRepository_ObjectBoundInJavascript(object sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
@@ -138,9 +138,9 @@ namespace RainbowMage.HtmlRenderer
 
         public void Load(string url)
         {
-            if (this.Browser != null)
+            if (this._browser != null && _browser.IsBrowserInitialized)
             {
-                this.Browser.Load(url);
+                this._browser.Load(url);
             }
         }
 
@@ -155,7 +155,7 @@ namespace RainbowMage.HtmlRenderer
 
             var cefBrowserSettings = new BrowserSettings();
             cefBrowserSettings.WindowlessFrameRate = maxFrameRate;
-            Browser.CreateBrowser(cefWindowInfo, cefBrowserSettings);
+            _browser.CreateBrowser(cefWindowInfo, cefBrowserSettings);
         }
 
         public void EndRender()
@@ -165,25 +165,25 @@ namespace RainbowMage.HtmlRenderer
 
         public void Reload()
         {
-            if (this.Browser != null)
+            if (this._browser != null)
             {
-                this.Browser.Reload();
+                this._browser.Reload();
             }
         }
 
         public void Resize(int width, int height)
         {
-            if (this.Browser != null)
+            if (this._browser != null)
             {
-                this.Browser.Size = new System.Drawing.Size(width, height);
+                this._browser.Size = new System.Drawing.Size(width, height);
             }
         }
 
         public void SendMouseMove(int x, int y, MouseButtonType button)
         {
-            if (this.Browser != null)
+            if (this._browser != null)
             {
-                var host = this.Browser.GetBrowserHost();
+                var host = this._browser.GetBrowserHost();
                 var modifiers = CefEventFlags.None;
                 if (button == MouseButtonType.Left)
                 {
@@ -205,9 +205,9 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendMouseUpDown(int x, int y, MouseButtonType button, bool isMouseUp)
         {
-            if (this.Browser != null)
+            if (this._browser != null)
             {
-                var host = this.Browser.GetBrowserHost();
+                var host = this._browser.GetBrowserHost();
 
                 if (!isMouseUp)
                 {
@@ -233,9 +233,9 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendMouseWheel(int x, int y, int delta, bool isVertical)
         {
-            if (this.Browser != null)
+            if (this._browser != null)
             {
-                var host = this.Browser.GetBrowserHost();
+                var host = this._browser.GetBrowserHost();
                 var mouseEvent = new MouseEvent(x, y, CefEventFlags.None);
                 host.SendMouseWheelEvent(mouseEvent, isVertical ? delta : 0, !isVertical ? delta : 0);
             }
@@ -261,9 +261,9 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendKeyEvent(KeyEvent keyEvent)
         {
-            if (this.Browser != null)
+            if (this._browser != null)
             {
-                var host = this.Browser.GetBrowserHost();
+                var host = this._browser.GetBrowserHost();
 
                 host.SendKeyEvent(keyEvent);
             }
@@ -271,11 +271,11 @@ namespace RainbowMage.HtmlRenderer
 
         public void showDevTools(bool firstwindow = true)
         {
-            if (Browser != null)
+            if (_browser != null)
             {
                 WindowInfo wi = new WindowInfo();
-                wi.SetAsPopup(Browser.GetBrowserHost().GetWindowHandle(), "DevTools");
-                Browser.GetBrowserHost().ShowDevTools(wi);
+                wi.SetAsPopup(_browser.GetBrowserHost().GetWindowHandle(), "DevTools");
+                _browser.GetBrowserHost().ShowDevTools(wi);
             }
         }
 
@@ -319,9 +319,9 @@ namespace RainbowMage.HtmlRenderer
 
         public void ExecuteScript(string script)
         {
-            if (Browser != null && Browser.IsBrowserInitialized)
+            if (_browser != null && _browser.IsBrowserInitialized)
             {
-                var frame = Browser.GetMainFrame();
+                var frame = _browser.GetMainFrame();
                 frame.ExecuteJavaScriptAsync(script);
             }
             else

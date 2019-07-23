@@ -145,7 +145,7 @@ namespace RainbowMage.OverlayPlugin
 
                 DataReceivedEventHandler showLine = (sender, e) =>
                 {
-                    if (e.Data != null) logDisplay.AppendText(e.Data.Replace("\n", "\r\n"));
+                    if (e.Data != null) logDisplay.AppendText(e.Data.Replace("\n", "\r\n") + "\r\n");
                 };
 
                 p.OutputDataReceived += showLine;

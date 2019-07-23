@@ -15,7 +15,7 @@ using System.Windows.Forms;
 using CefSharp;
 using CefSharp.OffScreen;
 
-namespace RainbowMage.OverlayPlugin
+namespace RainbowMage.HtmlRenderer
 {
     public partial class OverlayForm : Form
     {

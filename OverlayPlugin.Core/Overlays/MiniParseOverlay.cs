@@ -100,6 +100,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 });
             Task.WaitAll(encounterTask, combatantTask);
 
+            if (encounter == null || combatant == null) return "{}";
+
             JObject obj = new JObject();
 
             obj["Encounter"] = JObject.FromObject(encounter);

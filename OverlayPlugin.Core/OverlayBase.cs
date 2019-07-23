@@ -15,6 +15,8 @@ namespace RainbowMage.OverlayPlugin
         where TConfig: OverlayConfigBase
     {
         private KeyboardHook hook = new KeyboardHook();
+        private bool disableLog = false;
+
         protected System.Timers.Timer timer;
         protected System.Timers.Timer xivWindowTimer;
         /// <summary>
@@ -253,7 +255,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 try
                 {
-                    if (Config.IsVisible && PluginConfig.HideOverlaysWhenNotActive)
+                    if (Config.IsVisible && PluginConfig.HideOverlaysWhenNotActive && this.Overlay != null)
                     {
                         uint pid;
                         var hWndFg = NativeMethods.GetForegroundWindow();
@@ -290,16 +292,16 @@ namespace RainbowMage.OverlayPlugin
         {
             this.Config.VisibleChanged += (o, e) =>
             {
-                this.Overlay.Visible = e.IsVisible;
+                if (this.Overlay != null) this.Overlay.Visible = e.IsVisible;
             };
 
             this.Config.ClickThruChanged += (o, e) =>
             {
-                this.Overlay.IsClickThru = e.IsClickThru;
+                if (this.Overlay != null) this.Overlay.IsClickThru = e.IsClickThru;
             };
             this.Config.LockChanged += (o, e) =>
             {
-                this.Overlay.Locked = e.IsLocked;
+                if (this.Overlay != null) this.Overlay.Locked = e.IsLocked;
                 NotifyOverlayState();
             };
         }
@@ -342,13 +344,23 @@ namespace RainbowMage.OverlayPlugin
 
         public virtual void Navigate(string url)
         {
+            if (this.Overlay != null)
+            {
                 this.Overlay.Url = url;
+            }
         }
 
         protected void Log(LogLevel level, string message)
         {
-            if (PluginMain.Logger != null)
+            if (PluginMain.Logger != null && !disableLog)
             {
+                if (message.Contains("Xilium.CefGlue"))
+                {
+                    Log(LogLevel.Error, string.Format("Detected incompatible addon {0}. Please update as soon as possible!!", this));
+                    Stop();
+                    disableLog = true;
+                }
+
                 PluginMain.Logger.Log(level, "{0}: {1}", this.Name, message);
             }
         }

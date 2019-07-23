@@ -285,6 +285,12 @@ namespace RainbowMage.OverlayPlugin
 
                         // アセンブリが見つかったら読み込む
                         var asm = Assembly.LoadFrom(pluginFile);
+                        var incompatible = asm.GetReferencedAssemblies().Where(a => a.FullName != null && a.FullName.StartsWith("Xilium.CefGlue")).Count() > 0;
+                        if (incompatible)
+                        {
+                            Logger.Log(LogLevel.Error, "LoadAddons: Skipped {0} because it's incompatible with this version of OverlayPlugin.", asm.FullName);
+                            continue;
+                        }
 
                         // アセンブリから IOverlayAddon を実装した public クラスを列挙し...
                         var types = asm.GetExportedTypes().Where(t => 

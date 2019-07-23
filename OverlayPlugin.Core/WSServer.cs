@@ -99,13 +99,13 @@ namespace RainbowMage.OverlayPlugin
                 };
 
                 _server.Start();
-                OnStateChanged(this, new StateChangedArgs(true, false));
+                if (OnStateChanged != null) OnStateChanged(this, new StateChangedArgs(true, false));
             }
             catch(Exception e)
             {
                 _failed = true;
                 Log(LogLevel.Error, "WS: Failed to start: {0}", e);
-                OnStateChanged(this, new StateChangedArgs(false, true));
+                if (OnStateChanged != null) OnStateChanged(this, new StateChangedArgs(false, true));
             }
         }
 
@@ -126,7 +126,7 @@ namespace RainbowMage.OverlayPlugin
 
         public static void Broadcast(string msg)
         {
-            _inst._server.WebSocketServices.Broadcast(msg);
+            if (IsRunning()) _inst._server.WebSocketServices.Broadcast(msg);
         }
 
         private class SocketHandler : WebSocketBehavior

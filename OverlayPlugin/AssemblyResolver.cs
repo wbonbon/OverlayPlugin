@@ -42,11 +42,6 @@ namespace RainbowMage.OverlayPlugin
         {
             var match = assemblyNameParser.Match(e.Name);
 
-            if ((match.Success && match.Groups["name"].Value == "Xilium.CefGlue" ) || e.Name == "Xilium.CefGlue")
-            {
-                return CustomAssemblyResolve(sender, new ResolveEventArgs("CefSharp.OffScreen"));
-            }
-
             // Directories プロパティで指定されたディレクトリを基準にアセンブリを検索する
             foreach (var directory in this.Directories)
             {

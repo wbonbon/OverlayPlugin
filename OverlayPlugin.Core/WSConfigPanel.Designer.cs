@@ -100,16 +100,16 @@
             // 
             // logDisplay
             // 
-            this.logDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.logDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.logDisplay.BackColor = System.Drawing.SystemColors.Control;
-            this.logDisplay.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.logDisplay.Location = new System.Drawing.Point(21, 153);
+            this.logDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.logDisplay.Location = new System.Drawing.Point(21, 164);
             this.logDisplay.Multiline = true;
             this.logDisplay.Name = "logDisplay";
             this.logDisplay.ReadOnly = true;
-            this.logDisplay.Size = new System.Drawing.Size(489, 167);
+            this.logDisplay.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.logDisplay.Size = new System.Drawing.Size(572, 182);
             this.logDisplay.TabIndex = 6;
             this.logDisplay.Text = resources.GetString("logDisplay.Text");
             // 
@@ -153,8 +153,7 @@
             // 
             // WSConfigPanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.stopBtn);
@@ -167,7 +166,7 @@
             this.Controls.Add(this.portTxt);
             this.Controls.Add(this.ipTxt);
             this.Name = "WSConfigPanel";
-            this.Size = new System.Drawing.Size(559, 357);
+            this.Size = new System.Drawing.Size(619, 408);
             this.ResumeLayout(false);
             this.PerformLayout();
 

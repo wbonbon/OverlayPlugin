@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RainbowMage.OverlayPlugin
+namespace RainbowMage.HtmlRenderer
 {
     /// <summary>
     /// デバイス独立ビットマップを表現するクラス。
