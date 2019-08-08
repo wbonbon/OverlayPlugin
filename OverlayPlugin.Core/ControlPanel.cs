@@ -100,24 +100,30 @@ namespace RainbowMage.OverlayPlugin
                 return;
             };
 
-            var log = PluginMain.Logger.Logs[e.ItemIndex];
-            e.Item = new ListViewItem(log.Time.ToString());
-            e.Item.UseItemStyleForSubItems = true;
-            e.Item.SubItems.Add(log.Level.ToString());
-            e.Item.SubItems.Add(log.Message);
+            try
+            {
+                var log = PluginMain.Logger.Logs[e.ItemIndex];
+                e.Item = new ListViewItem(log.Time.ToString());
+                e.Item.UseItemStyleForSubItems = true;
+                e.Item.SubItems.Add(log.Level.ToString());
+                e.Item.SubItems.Add(log.Message ?? "Null");
 
-            e.Item.ForeColor = Color.Black;
-            if (log.Level == LogLevel.Warning)
+                e.Item.ForeColor = Color.Black;
+                if (log.Level == LogLevel.Warning)
+                {
+                    e.Item.BackColor = Color.LightYellow;
+                }
+                else if (log.Level == LogLevel.Error)
+                {
+                    e.Item.BackColor = Color.LightPink;
+                }
+                else
+                {
+                    e.Item.BackColor = Color.White;
+                }
+            } catch(NullReferenceException)
             {
-                e.Item.BackColor = Color.LightYellow;
-            }
-            else if (log.Level == LogLevel.Error)
-            {
-                e.Item.BackColor = Color.LightPink;
-            }
-            else
-            {
-                e.Item.BackColor = Color.White;
+                // We should log this but can't since it'd spam the log like crazy.
             }
         }
 

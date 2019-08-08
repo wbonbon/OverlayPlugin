@@ -216,8 +216,8 @@ namespace RainbowMage.OverlayPlugin
                 addon.Dispose();
             }
 
-            try { Renderer.Shutdown(); }
-            catch { }
+            this.Overlays.Clear();
+            this.Addons.Clear();
 
             try { WSServer.Stop(); }
             catch { }

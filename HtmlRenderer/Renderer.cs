@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using CefSharp.OffScreen;
+using CefSharp.Structs;
+using CefSharp.Enums;
 using CefSharp;
+using CefSharp.Internals;
 using Newtonsoft.Json;
 using System.IO;
+using System.Windows.Forms;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -18,10 +22,11 @@ namespace RainbowMage.HtmlRenderer
         public static event EventHandler<SendMessageEventArgs> OverlayMessage;
         public static event EventHandler<RendererFeatureRequestEventArgs> RendererFeatureRequest;
 
-        public event EventHandler<OnPaintEventArgs> Render;
+        public Func<OnPaintEventArgs, object> Render = null;
 
         private ChromiumWebBrowser _browser;
         private List<String> scriptQueue = new List<string>();
+        private string urlToLoad = null;
         
         public string OverlayVersion {
             get { return overlayVersion; }
@@ -31,8 +36,6 @@ namespace RainbowMage.HtmlRenderer
           get { return overlayName; }
         }
 
-        //private Client Client { get; set; }
-
         private int clickCount;
         private MouseButtonType lastClickButton;
         private DateTime lastClickTime;
@@ -41,17 +44,16 @@ namespace RainbowMage.HtmlRenderer
         private string overlayVersion;
         private string overlayName;
 
-        public Renderer(string overlayVersion, string overlayName)
+        public Renderer(string overlayVersion, string overlayName, OverlayForm form)
         {
             this.overlayVersion = overlayVersion;
             this.overlayName = overlayName;
 
-            this._browser = new ChromiumWebBrowser("about:blank");
+            this._browser = new BrowserWrapper("about:blank", automaticallyCreateBrowser: false, form: form);
             _browser.FrameLoadStart += Browser_FrameLoadStart;
             _browser.FrameLoadEnd += Browser_FrameLoadEnd;
             _browser.LoadError += Browser_LoadError;
             _browser.ConsoleMessage += Browser_ConsoleMessage;
-            _browser.Paint += Browser_Paint;
 
             _browser.JavascriptObjectRepository.Register("OverlayPluginApi", new BuiltinFunctionHandler(), isAsync: true);
             _browser.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
@@ -59,7 +61,7 @@ namespace RainbowMage.HtmlRenderer
 
         private void JavascriptObjectRepository_ObjectBoundInJavascript(object sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
         {
-            BrowserConsoleLog(sender, new BrowserConsoleLogEventArgs("Object " + e.ObjectName + " succesfully bound.", "internal", 1));
+            // BrowserConsoleLog(sender, new BrowserConsoleLogEventArgs("Object " + e.ObjectName + " succesfully bound.", "internal", 1));
         }
 
         public static void TriggerBroadcastMessage(object sender, BroadcastMessageEventArgs e)
@@ -82,11 +84,6 @@ namespace RainbowMage.HtmlRenderer
             RendererFeatureRequest(sender, e);
         }
 
-        private void Browser_Paint(object sender, OnPaintEventArgs e)
-        {
-            Render(sender, e);
-        }
-
         private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
         {
             var initScript = @"(async () => {
@@ -104,6 +101,7 @@ namespace RainbowMage.HtmlRenderer
                         window.__OverlayPlugin_ws_faker = (msg) => {
                             if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
                         };
+                        console.log('ACTWS compatibility shim enabled.');
                     }
                     else
                     {
@@ -123,17 +121,23 @@ namespace RainbowMage.HtmlRenderer
 
         private void Browser_LoadError(object sender, LoadErrorEventArgs e)
         {
-            BrowserError(sender, new BrowserErrorEventArgs(e.ErrorCode, e.ErrorText, e.FailedUrl));
+            BrowserError?.Invoke(sender, new BrowserErrorEventArgs(e.ErrorCode, e.ErrorText, e.FailedUrl));
         }
 
         private void Browser_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
         {
-            BrowserConsoleLog(sender, new BrowserConsoleLogEventArgs(e.Message, e.Source, e.Line));
+            BrowserConsoleLog?.Invoke(sender, new BrowserConsoleLogEventArgs(e.Message, e.Source, e.Line));
         }
 
         private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-            BrowserLoad(sender, new BrowserLoadEventArgs(e.HttpStatusCode, e.Url));
+            if (urlToLoad != null)
+            {
+                _browser.Load(urlToLoad);
+                urlToLoad = null;
+            }
+
+            BrowserLoad?.Invoke(sender, new BrowserLoadEventArgs(e.HttpStatusCode, e.Url));
         }
 
         public void Load(string url)
@@ -141,6 +145,9 @@ namespace RainbowMage.HtmlRenderer
             if (this._browser != null && _browser.IsBrowserInitialized)
             {
                 this._browser.Load(url);
+            } else
+            {
+                urlToLoad = url;
             }
         }
 
@@ -156,11 +163,21 @@ namespace RainbowMage.HtmlRenderer
             var cefBrowserSettings = new BrowserSettings();
             cefBrowserSettings.WindowlessFrameRate = maxFrameRate;
             _browser.CreateBrowser(cefWindowInfo, cefBrowserSettings);
+
+            urlToLoad = url;
         }
 
         public void EndRender()
         {
             
+        }
+
+        public void SetMaxFramerate(int fps)
+        {
+            if (_browser != null && _browser.IsBrowserInitialized)
+            {
+                _browser.GetBrowserHost().WindowlessFrameRate = fps;
+            }
         }
 
         public void Reload()
@@ -176,6 +193,22 @@ namespace RainbowMage.HtmlRenderer
             if (this._browser != null)
             {
                 this._browser.Size = new System.Drawing.Size(width, height);
+            }
+        }
+
+        public void NotifyMoveStarted()
+        {
+            if (this._browser != null && this._browser.IsBrowserInitialized)
+            {
+                this._browser.GetBrowserHost().NotifyMoveOrResizeStarted();
+            }
+        }
+
+        public void SetVisible(bool visible)
+        {
+            if (this._browser != null && this._browser.IsBrowserInitialized)
+            {
+                this._browser.GetBrowserHost().WasHidden(!visible);
             }
         }
 
@@ -281,6 +314,8 @@ namespace RainbowMage.HtmlRenderer
 
         public void Dispose()
         {
+            this._browser.Dispose();
+            this._browser = null;
         }
 
         static bool initialized = false;
@@ -302,6 +337,14 @@ namespace RainbowMage.HtmlRenderer
                                            Environment.Is64BitProcess ? "x64" : "x86",
                                            "CefSharp.BrowserSubprocess.exe"),
                 };
+
+                // Necessary to avoid input lag with a framerate limit below 60.
+                cefSettings.CefCommandLineArgs["enable-begin-frame-scheduling"] = "1";
+
+                cefSettings.EnableAudio();
+
+                // Enables software compositing instead of GPU compositing -> less CPU load but no WebGL
+                cefSettings.SetOffScreenRenderingBestPerformanceArgs();
 
                 Cef.Initialize(cefSettings, performDependencyCheck: true, browserProcessHandler: null);
 
@@ -374,6 +417,28 @@ namespace RainbowMage.HtmlRenderer
         public RendererFeatureRequestEventArgs(string request)
         {
             this.Request = request;
+        }
+    }
+
+    public class BrowserWrapper : ChromiumWebBrowser, IRenderWebBrowser
+    {
+        OverlayForm form;
+
+        public BrowserWrapper(string address = "", BrowserSettings browserSettings = null,
+            RequestContext requestContext = null, bool automaticallyCreateBrowser = true, OverlayForm form = null) :
+            base(address, browserSettings, requestContext, automaticallyCreateBrowser)
+        {
+            this.form = form;
+        }
+
+        void IRenderWebBrowser.OnPaint(PaintElementType type, Rect dirtyRect, IntPtr buffer, int width, int height)
+        {
+            form.RenderFrame(dirtyRect, buffer, width, height);
+        }
+
+        void IRenderWebBrowser.OnCursorChange(IntPtr cursor, CursorType type, CursorInfo customCursorInfo)
+        {
+            form.Cursor = new Cursor(cursor);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RainbowMage.HtmlRenderer;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -42,12 +43,20 @@ namespace RainbowMage.OverlayPlugin
             asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, "AssemblyResolver: Loaded: {0}", e.LoadedAssembly.FullName);
             pluginMain = new PluginMain(pluginDirectory, logger);
             pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+
+            // We can't re-init use CEF after shutting it down. Let's only do that when ACT closes.
+            ActGlobals.oFormActMain.Disposed += ShutdownRenderer;
         }
 
         public void DeInitPlugin()
         {
             pluginMain.DeInitPlugin();
             asmResolver.Dispose();
+        }
+
+        public void ShutdownRenderer(object sender, EventArgs e)
+        {
+            Renderer.Shutdown();
         }
 
         private string GetPluginDirectory()

@@ -67,7 +67,9 @@ namespace RainbowMage.HtmlRenderer
                 out biBits,
                 IntPtr.Zero,
                 0);
+
             this.Bits = biBits;
+            NativeMethods.SelectObject(this.DeviceContext, this.Handle);
         }
 
         /// <summary>

@@ -56,6 +56,7 @@ namespace RainbowMage.HtmlRenderer
             uint dwFlags);
 
         public const int ULW_ALPHA = 2;
+        public const int SRCCOPY = 0xcc0020;
 
         [DllImport("gdi32")]
         public static extern IntPtr SelectObject(
@@ -72,8 +73,14 @@ namespace RainbowMage.HtmlRenderer
         [DllImport("gdi32")]
         public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 
+        [DllImport("user32")]
+        public static extern IntPtr GetDC(IntPtr hwnd);
+
         [DllImport("gdi32")]
         public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int nWidth, int nHeight);
+
+        [DllImport("gdi32")]
+        public static extern bool BitBlt(IntPtr hdc, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, uint rop);
 
         [StructLayoutAttribute(LayoutKind.Sequential)]
         public struct BitmapInfo

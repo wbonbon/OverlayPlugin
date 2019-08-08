@@ -163,8 +163,8 @@ namespace RainbowMage.OverlayPlugin
                 this.Overlay.Show();
 
                 this.Overlay.Visible = this.Config.IsVisible;
-
                 this.Overlay.Locked = this.Config.IsLocked;
+                this.Overlay.MaxFrameRate = this.Config.MaxFrameRate;
             }
             catch (Exception ex)
             {
@@ -201,6 +201,8 @@ namespace RainbowMage.OverlayPlugin
         /// <returns></returns>
         private bool CheckUrl(string url)
         {
+            if (url == "") return false;
+
             try
             {
                 var uri = new System.Uri(url);
@@ -303,6 +305,10 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (this.Overlay != null) this.Overlay.Locked = e.IsLocked;
                 NotifyOverlayState();
+            };
+            this.Config.MaxFrameRateChanged += (o, e) =>
+            {
+                if (this.Overlay != null) this.Overlay.MaxFrameRate = this.Config.MaxFrameRate;
             };
         }
 

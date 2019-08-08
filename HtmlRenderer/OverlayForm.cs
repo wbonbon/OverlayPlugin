@@ -13,7 +13,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp;
-using CefSharp.OffScreen;
+using CefSharp.Structs;
+using CefSharp.Enums;
+using Point = System.Drawing.Point;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -21,7 +23,6 @@ namespace RainbowMage.HtmlRenderer
     {
         private DIBitmap surfaceBuffer;
         private object surfaceBufferLocker = new object();
-        private int maxFrameRate;
         private System.Threading.Timer zorderCorrector;
         private bool terminated = false;
         private bool shiftKeyPressed = false;
@@ -58,6 +59,20 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        private int maxFrameRate;
+        public int MaxFrameRate
+        {
+            get
+            {
+                return this.maxFrameRate;
+            }
+            set
+            {
+                this.maxFrameRate = value;
+                this.Renderer.SetMaxFramerate(value);
+            }
+        }
+
         public bool IsLoaded { get; private set; }
 
         public bool Locked { get; set; }
@@ -67,8 +82,7 @@ namespace RainbowMage.HtmlRenderer
             InitializeComponent();
 
             this.maxFrameRate = maxFrameRate;
-            this.Renderer = new Renderer(overlayVersion, overlayName);
-            this.Renderer.Render += renderer_Render;
+            this.Renderer = new Renderer(overlayVersion, overlayName, this);
             this.MouseWheel += OverlayForm_MouseWheel;
             this.MouseDown += OverlayForm_MouseDown;
             this.MouseUp += OverlayForm_MouseUp;
@@ -76,11 +90,13 @@ namespace RainbowMage.HtmlRenderer
             this.KeyDown += OverlayForm_KeyDown;
             this.KeyUp += OverlayForm_KeyUp;
             this.Resize += OverlayForm_Resize;
+            this.VisibleChanged += OverlayForm_VisibleChanged;
 
             this.url = url;
+            UpdateRender();
 
             // Alt+Tab を押したときに表示されるプレビューから除外する
-            HidePreview();
+            //HidePreview();
         }
 
         /// <summary>
@@ -154,70 +170,61 @@ namespace RainbowMage.HtmlRenderer
         {
             if (surfaceBuffer.IsDisposed || this.terminated) { return; }
 
-            using (var gScreen = Graphics.FromHwnd(IntPtr.Zero))
+            var blend = new NativeMethods.BlendFunction
             {
-                var hScreenDC = gScreen.GetHdc();
-                var hOldBitmap = NativeMethods.SelectObject(surfaceBuffer.DeviceContext, surfaceBuffer.Handle);
+                BlendOp = NativeMethods.AC_SRC_OVER,
+                BlendFlags = 0,
+                SourceConstantAlpha = 255,
+                AlphaFormat = NativeMethods.AC_SRC_ALPHA
+            };
+            var windowPosition = new NativeMethods.Point
+            {
+                X = this.Left,
+                Y = this.Top
+            };
+            var surfaceSize = new NativeMethods.Size
+            {
+                Width = surfaceBuffer.Width,
+                Height = surfaceBuffer.Height
+            };
+            var surfacePosition = new NativeMethods.Point
+            {
+                X = 0,
+                Y = 0
+            };
 
-                var blend = new NativeMethods.BlendFunction
+            IntPtr handle = IntPtr.Zero;
+            try
+            {
+                if (!this.terminated)
                 {
-                    BlendOp = NativeMethods.AC_SRC_OVER,
-                    BlendFlags = 0,
-                    SourceConstantAlpha = 255,
-                    AlphaFormat = NativeMethods.AC_SRC_ALPHA
-                };
-                var windowPosition = new NativeMethods.Point
-                {
-                    X = this.Left,
-                    Y = this.Top
-                };
-                var surfaceSize = new NativeMethods.Size
-                {
-                    Width = surfaceBuffer.Width,
-                    Height = surfaceBuffer.Height
-                };
-                var surfacePosition = new NativeMethods.Point
-                {
-                    X = 0,
-                    Y = 0
-                };
-
-                IntPtr handle = IntPtr.Zero;
-                try
-                {
-                    if (!this.terminated)
+                    if (this.InvokeRequired)
                     {
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new Action(() =>
-                            {
-                                handle = this.Handle;
-                            }));
-                        }
-                        else
+                        this.Invoke(new Action(() =>
                         {
                             handle = this.Handle;
-                        }
-
-                        NativeMethods.UpdateLayeredWindow(
-                            handle,
-                            hScreenDC,
-                            ref windowPosition,
-                            ref surfaceSize,
-                            surfaceBuffer.DeviceContext, //hBitmap,
-                            ref surfacePosition,
-                            0,
-                            ref blend,
-                            NativeMethods.ULW_ALPHA);
+                        }));
                     }
-                }
-                catch (ObjectDisposedException)
-                {
-                    return;
-                }
+                    else
+                    {
+                        handle = this.Handle;
+                    }
 
-                NativeMethods.SelectObject(surfaceBuffer.DeviceContext, hOldBitmap);
-                gScreen.ReleaseHdc(hScreenDC);
+                    NativeMethods.UpdateLayeredWindow(
+                        handle,
+                        IntPtr.Zero,
+                        ref windowPosition,
+                        ref surfaceSize,
+                        surfaceBuffer.DeviceContext,
+                        ref surfacePosition,
+                        0,
+                        ref blend,
+                        NativeMethods.ULW_ALPHA);
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                return;
             }
         }
         #endregion
@@ -257,14 +264,14 @@ namespace RainbowMage.HtmlRenderer
 
         #endregion
 
-        void renderer_Render(object sender, OnPaintEventArgs e)
+        public void RenderFrame(Rect dirtyRect, IntPtr buffer, int width, int height)
         {
             if (!this.terminated)
             {
                 try
                 {
                     if (surfaceBuffer != null &&
-                        (surfaceBuffer.Width != e.Width || surfaceBuffer.Height != e.Height))
+                        (surfaceBuffer.Width != width || surfaceBuffer.Height != height))
                     {
                         surfaceBuffer.Dispose();
                         surfaceBuffer = null;
@@ -272,11 +279,11 @@ namespace RainbowMage.HtmlRenderer
 
                     if (surfaceBuffer == null)
                     {
-                        surfaceBuffer = new DIBitmap(e.Width, e.Height);
+                        surfaceBuffer = new DIBitmap(width, height);
                     }
 
                     // TODO: DirtyRect に対応
-                    surfaceBuffer.SetSurfaceData(e.BufferHandle, (uint)(e.Width * e.Height * 4));
+                    surfaceBuffer.SetSurfaceData(buffer, (uint)(width * height * 4));
 
                     UpdateLayeredWindowBitmap();
                 }
@@ -301,16 +308,19 @@ namespace RainbowMage.HtmlRenderer
 
             UpdateMouseClickThru();
 
-            zorderCorrector = new System.Threading.Timer((state) =>
+            if (zorderCorrector == null)
             {
-                if (this.Visible)
+                zorderCorrector = new System.Threading.Timer((state) =>
                 {
-                    if (!this.IsOverlaysGameWindow())
+                    if (this.Visible)
                     {
-                        this.EnsureTopMost();
+                        if (!this.IsOverlaysGameWindow())
+                        {
+                            this.EnsureTopMost();
+                        }
                     }
-                }
-            }, null, 0, 1000);
+                }, null, 0, 1000);
+            }
         }
 
         private void OverlayForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -329,13 +339,16 @@ namespace RainbowMage.HtmlRenderer
             {
                 zorderCorrector.Dispose();
             }
-
             
             if (this.surfaceBuffer != null)
             {
                 this.surfaceBuffer.Dispose();
             }
-            
+
+            if (this.Renderer != null)
+            {
+                this.Renderer.Dispose();
+            }
 
             if (disposing && (components != null))
             {
@@ -352,7 +365,16 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        private void OverlayForm_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Renderer != null)
+            {
+                this.Renderer.SetVisible(this.Visible);
+            }
+        }
+
         bool isDragging;
+        bool hasDragged;
         Point offset;
 
         private void OverlayForm_MouseDown(object sender, MouseEventArgs e)
@@ -360,6 +382,7 @@ namespace RainbowMage.HtmlRenderer
             if (!this.Locked && !isDragging)
             {
                 isDragging = true;
+                hasDragged = false;
                 offset = e.Location;
             }
 
@@ -370,6 +393,13 @@ namespace RainbowMage.HtmlRenderer
         {
             if (isDragging)
             {
+                if (!hasDragged)
+                {
+                    // Only notify once
+                    hasDragged = true;
+                    this.Renderer.NotifyMoveStarted();
+                }
+
                 this.Location = new Point(
                     e.X - offset.X + this.Location.X,
                     e.Y - offset.Y + this.Location.Y);
