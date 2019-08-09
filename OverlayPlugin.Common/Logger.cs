@@ -39,7 +39,10 @@ namespace RainbowMage.OverlayPlugin
             System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}: {2}", level, DateTime.Now, message));
 #endif
 
-            this.Logs.Add(new LogEntry(level, DateTime.Now, message));
+            lock (Logs)
+            {
+                Logs.Add(new LogEntry(level, DateTime.Now, message));
+            }
         }
 
         /// <summary>

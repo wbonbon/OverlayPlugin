@@ -7,78 +7,43 @@ using System.Xml.Serialization;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
-    [Serializable]
     public class MiniParseOverlayConfig : OverlayConfigBase
     {
-        public event EventHandler<SortKeyChangedEventArgs> SortKeyChanged;
-        public event EventHandler<SortTypeChangedEventArgs> SortTypeChanged;
+        public override Type OverlayType => typeof(MiniParseOverlay);
 
-        private string sortKey;
-        [XmlElement("SortKey")]
-        public string SortKey
+        [XmlElement("Compatibility")]
+        private string compatibility = "legacy";
+        public string Compatibility
         {
             get
             {
-                return this.sortKey;
+                return this.compatibility;
             }
             set
             {
-                if (this.sortKey != value)
-                {
-                    this.sortKey = value;
-                    if (SortKeyChanged != null)
-                    {
-                        SortKeyChanged(this, new SortKeyChangedEventArgs(this.sortKey));
-                    }
-                }
+                this.compatibility = value;
+                CompatibilityChanged?.Invoke(this, new CompatbilityChangedArgs(value));
             }
         }
 
-        private MiniParseSortType sortType;
-        [XmlElement("SortType")]
-        public MiniParseSortType SortType
-        {
-            get
-            {
-                return this.sortType;
-            }
-            set
-            {
-                if (this.sortType != value)
-                {
-                    this.sortType = value;
-                    if (SortTypeChanged != null)
-                    {
-                        SortTypeChanged(this, new SortTypeChangedEventArgs(this.sortType));
-                    }
-                }
-            }
-        }
+        public event EventHandler<CompatbilityChangedArgs> CompatibilityChanged;
+
 
         public MiniParseOverlayConfig(string name) : base(name)
         {
-            this.sortKey = "encdps";
-            this.sortType = MiniParseSortType.NumericDescending;
+
         }
 
-        // XmlSerializer用
-        private MiniParseOverlayConfig() : base(null)
+        public MiniParseOverlayConfig() : base(null) { }
+
+        public class CompatbilityChangedArgs : EventArgs
         {
+            public string Compatibility { get; private set; }
 
+            public CompatbilityChangedArgs(string c)
+            {
+                Compatibility = c;
+            }
         }
-
-        public override Type OverlayType
-        {
-            get { return typeof(MiniParseOverlay); }
-        }
-    }
-
-    public enum MiniParseSortType
-    {
-        None,
-        StringAscending,
-        StringDescending,
-        NumericAscending,
-        NumericDescending
     }
 }

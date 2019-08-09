@@ -314,8 +314,11 @@ namespace RainbowMage.HtmlRenderer
 
         public void Dispose()
         {
-            this._browser.Dispose();
-            this._browser = null;
+            if (this._browser != null)
+            {
+                this._browser.Dispose();
+                this._browser = null;
+            }
         }
 
         static bool initialized = false;

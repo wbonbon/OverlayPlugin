@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
-    partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
+    partial class MiniParseEventSource : EventSourceBase
     {
         // Part of ACTWebSocket
         // Copyright (c) 2016 ZCube; Licensed under MIT license.
@@ -75,17 +75,16 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void sendEchoEvent(bool isImported, string type, string text)
         {
-            if (this.Overlay != null &&
-                this.Overlay.Renderer != null)
-            {
-                JObject message = new JObject();
-                message["isImported"] = isImported;
-                message["type"] = type;
-                message["message"] = text;
-                this.Overlay.Renderer.ExecuteScript(
-                    "document.dispatchEvent(new CustomEvent('onLogLine', { detail: " + message.ToString() + " } ));"
-                );
-            }
+            JObject message = new JObject();
+            message["isImported"] = isImported;
+            message["type"] = type;
+            message["message"] = text;
+
+            JObject e = new JObject();
+            e["type"] = "LogLine";
+            e["detail"] = message;
+
+            DispatchEvent(e);
         }
     }
 }

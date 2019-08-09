@@ -8,10 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public abstract class OverlayBase<TConfig> : IOverlay
+    public abstract class OverlayBase<TConfig> : IOverlay, IEventReceiver
         where TConfig: OverlayConfigBase
     {
         private KeyboardHook hook = new KeyboardHook();
@@ -57,7 +58,7 @@ namespace RainbowMage.OverlayPlugin
         /// <summary>
         /// オーバーレイの更新を開始します。
         /// </summary>
-        public void Start()
+        public virtual void Start()
         {
             timer.Start();
             xivWindowTimer.Start();
@@ -66,7 +67,7 @@ namespace RainbowMage.OverlayPlugin
         /// <summary>
         /// オーバーレイの更新を停止します。
         /// </summary>
-        public void Stop()
+        public virtual void Stop()
         {
             timer.Stop();
             xivWindowTimer.Stop();
@@ -324,6 +325,8 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
+                EventDispatcher.UnsubscribeAll(this);
+
                 if (this.timer != null)
                 {
                     this.timer.Stop();
@@ -406,19 +409,30 @@ namespace RainbowMage.OverlayPlugin
                 Util.CreateJsonSafeString(message)));
         }
 
-        public void SendWSMessage(object data)
-        {
-            SendWSMessage(JsonConvert.SerializeObject(data));
-        }
-
-        public void SendWSMessage(string message)
-        {
-            ExecuteScript("document.dispatchEvent(new CustomEvent('onWebSocketMessage', " + message + "));");
-            WSServer.Broadcast(message);
-        }
-
         public virtual void OverlayMessage(string message)
         {
+        }
+
+        // Event Source stuff
+
+        public virtual void HandleEvent(JObject e)
+        {
+            ExecuteScript("document.dispatchEvent(new CustomEvent('OverlayEvent', " + e.ToString(Formatting.None) + "));");
+        }
+
+        public void Subscribe(string eventType)
+        {
+            EventDispatcher.Subscribe(eventType, this);
+        }
+
+        public void Unsubscribe(string eventType)
+        {
+            EventDispatcher.Unsubscribe(eventType, this);
+        }
+
+        public void UnsubscribeAll()
+        {
+            EventDispatcher.UnsubscribeAll(this);
         }
     }
 }

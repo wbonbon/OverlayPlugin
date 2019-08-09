@@ -8,6 +8,8 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using WebSocketSharp;
 using WebSocketSharp.Server;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 
 namespace RainbowMage.OverlayPlugin
@@ -17,14 +19,15 @@ namespace RainbowMage.OverlayPlugin
         HttpServer _server;
         static bool _failed = false;
         static WSServer _inst = null;
-        static public EventHandler<StateChangedArgs> OnStateChanged;
 
-        static public void Initialize(PluginConfig cfg)
+        public static EventHandler<StateChangedArgs> OnStateChanged;
+
+        public static void Initialize(PluginConfig cfg)
         {
             _inst = new WSServer(cfg);
         }
 
-        static public void Stop()
+        public static void Stop()
         {
             if (_inst != null)
             {
@@ -43,17 +46,17 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        static public bool IsRunning()
+        public static bool IsRunning()
         {
             return _inst != null && _inst._server != null && _inst._server.IsListening;
         }
 
-        static public bool IsFailed()
+        public static bool IsFailed()
         {
             return _failed;
         }
 
-        static public bool IsSSLPossible()
+        public static bool IsSSLPossible()
         {
             return File.Exists(GetCertPath());
         }
@@ -83,7 +86,8 @@ namespace RainbowMage.OverlayPlugin
                     _server.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls11 | System.Security.Authentication.SslProtocols.Tls12;
                 }
 
-                _server.AddWebSocketService<SocketHandler>("/MiniParse");
+                _server.AddWebSocketService<LegacyHandler>("/MiniParse");
+                _server.AddWebSocketService<SocketHandler>("/ws");
 
                 _server.OnGet += (object sender, HttpRequestEventArgs e) =>
                 {
@@ -99,13 +103,13 @@ namespace RainbowMage.OverlayPlugin
                 };
 
                 _server.Start();
-                if (OnStateChanged != null) OnStateChanged(this, new StateChangedArgs(true, false));
+                OnStateChanged?.Invoke(this, new StateChangedArgs(true, false));
             }
             catch(Exception e)
             {
                 _failed = true;
                 Log(LogLevel.Error, "WS: Failed to start: {0}", e);
-                if (OnStateChanged != null) OnStateChanged(this, new StateChangedArgs(false, true));
+                OnStateChanged?.Invoke(this, new StateChangedArgs(false, true));
             }
         }
 
@@ -124,14 +128,108 @@ namespace RainbowMage.OverlayPlugin
             PluginMain.Logger.Log(level, msg, args);
         }
 
-        public static void Broadcast(string msg)
+        public class SocketHandler : WebSocketBehavior, IEventReceiver
         {
-            if (IsRunning()) _inst._server.WebSocketServices.Broadcast(msg);
+            public void HandleEvent(JObject e)
+            {
+                SendAsync(e.ToString(Formatting.None), (success) =>
+                {
+                    if (!success)
+                    {
+                        Log(LogLevel.Error, "Failed to send message: {0}", e);
+                    }
+                });
+            }
+
+            protected override void OnOpen()
+            {
+
+            }
+
+            protected override void OnMessage(MessageEventArgs e)
+            {
+                JObject data = null;
+
+                try
+                {
+                    data = JObject.Parse(e.Data);
+                }
+                catch(JsonException ex)
+                {
+                    Log(LogLevel.Error, "Invalid data received: {0}; {1}", ex, e.Data);
+                    return;
+                }
+
+                if (!data.ContainsKey("type")) return;
+
+                var msgType = data["type"].ToString();
+                if (msgType == "subscribe")
+                {
+                    try
+                    {
+                        foreach (var item in data["events"].ToList())
+                        {
+                            EventDispatcher.Subscribe(item.ToString(), this);
+                        }
+                    } catch(Exception ex)
+                    {
+                        Log(LogLevel.Error, "Failed to process new subscription: {0}", ex);
+                    }
+
+                    return;
+                } else if (msgType == "unsubscribe")
+                {
+                    try
+                    {
+                        foreach (var item in data["events"].ToList())
+                        {
+                            EventDispatcher.Unsubscribe(item.ToString(), this);
+                        }
+                    } catch (Exception ex)
+                    {
+                        Log(LogLevel.Error, "Failed to process unsubscription: {0}", ex);
+                    }
+                    return;
+                }
+
+                try
+                {
+                    EventDispatcher.CallHandler(data, (response) =>
+                    {
+                        Send(response.ToString(Formatting.None));
+                    });
+                } catch(Exception ex)
+                {
+                    Log(LogLevel.Error, "WS: Handler call failed: {0}", ex);
+                }
+            }
+
+            protected override void OnClose(CloseEventArgs e)
+            {
+                EventDispatcher.UnsubscribeAll(this);
+            }
         }
 
-        private class SocketHandler : WebSocketBehavior
+        private class LegacyHandler : WebSocketBehavior, IEventReceiver
         {
+            protected override void OnOpen()
+            {
+                base.OnOpen();
 
+                EventDispatcher.Subscribe("CombatData", this);
+            }
+
+            protected override void OnClose(CloseEventArgs e)
+            {
+                base.OnClose(e);
+
+                EventDispatcher.UnsubscribeAll(this);
+            }
+
+            public void HandleEvent(JObject e)
+            {
+                Send("{\"type\":\"broadcast\",\"msgtype\":\"CombatData\",\"msg\":" + e.ToString(Formatting.None) + "}");
+            }
         }
 
         public class StateChangedArgs : EventArgs

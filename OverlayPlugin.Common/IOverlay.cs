@@ -65,8 +65,5 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         /// <param name="message">A string message created by the plugin javascript.</param>
         void OverlayMessage(string message);
-
-        void SendWSMessage(object data);
-        void SendWSMessage(string message);
     }
 }

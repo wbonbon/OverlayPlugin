@@ -122,9 +122,6 @@
     <value>3, 4, 3, 4</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="tableLayoutPanel0.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
   <data name="tableLayoutPanel0.ColumnCount" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
@@ -141,59 +138,8 @@
   <data name="tabControl.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
   </data>
-  <data name="tabControl.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>0, 200</value>
-  </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>671, 299</value>
-  </data>
-  <data name="buttonNewOverlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 4</value>
-  </data>
-  <data name="buttonNewOverlay.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="buttonNewOverlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 29</value>
-  </data>
-  <data name="buttonNewOverlay.Text" xml:space="preserve">
-    <value>追加</value>
-  </data>
-  <data name="checkBoxAutoHide.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxAutoHide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>96, 4</value>
-  </data>
-  <data name="checkBoxAutoHide.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="checkBoxAutoHide.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 29</value>
-  </data>
-  <data name="checkBoxAutoHide.Text" xml:space="preserve">
-    <value>非アクティブのときに自動的にオーバーレイを隠す</value>
-  </data>
-  <data name="buttonRemoveOverlay.Location" type="System.Drawing.Point, System.Drawing">
-    <value>351, 4</value>
-  </data>
-  <data name="buttonRemoveOverlay.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="buttonRemoveOverlay.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 29</value>
-  </data>
-  <data name="buttonRemoveOverlay.Text" xml:space="preserve">
-    <value>削除</value>
-  </data>
-  <data name="flowLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="flowLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 0, 3, 0</value>
-  </data>
-  <data name="flowLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>671, 35</value>
+    <value>671, 334</value>
   </data>
   <data name="tableLayoutPanel0.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -202,7 +148,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="tableLayoutPanel0.RowCount" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="tableLayoutPanel0.Size" type="System.Drawing.Size, System.Drawing">
     <value>677, 342</value>
@@ -217,7 +163,7 @@
     <value>メッセージ</value>
   </data>
   <data name="columnHeader3.Width" type="System.Int32, mscorlib">
-    <value>16959</value>
+    <value>999</value>
   </data>
   <data name="menuCopyLogAll.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
@@ -270,9 +216,6 @@
   <data name="label_ListEmpty.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="label_ListEmpty.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="label_ListEmpty.Size" type="System.Drawing.Size, System.Drawing">
     <value>566, 242</value>
   </data>
@@ -284,6 +227,9 @@
   </data>
   <data name="tabPageMain.Text" xml:space="preserve">
     <value>設定</value>
+  </data>
+  <data name="groupBox2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
   </data>
   <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>

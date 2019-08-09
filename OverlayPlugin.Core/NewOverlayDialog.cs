@@ -17,7 +17,7 @@ namespace RainbowMage.OverlayPlugin
         public ValidateNameDelegate NameValidator { get; set; }
 
         public string OverlayName { get; set; }
-        public IOverlayAddon SelectedOverlayType { get; set; }
+        public IOverlayAddonV2 SelectedOverlayType { get; set; }
 
         private PluginMain pluginMain;
 
@@ -52,7 +52,7 @@ namespace RainbowMage.OverlayPlugin
                 else
                 {
                     this.OverlayName = textBox1.Text;
-                    this.SelectedOverlayType = (IOverlayAddon)comboBox1.SelectedItem;
+                    this.SelectedOverlayType = (IOverlayAddonV2)comboBox1.SelectedItem;
                 }
             }
             else

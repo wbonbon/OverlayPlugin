@@ -15,20 +15,19 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private MiniParseOverlayConfig config;
         private MiniParseOverlay overlay;
 
-        static readonly List<KeyValuePair<string, MiniParseSortType>> sortTypeDict = new List<KeyValuePair<string, MiniParseSortType>>()
-        {
-            new KeyValuePair<string, MiniParseSortType>(Localization.GetText(TextItem.DoNotSort), MiniParseSortType.None),
-            new KeyValuePair<string, MiniParseSortType>(Localization.GetText(TextItem.SortStringAscending), MiniParseSortType.StringAscending),
-            new KeyValuePair<string, MiniParseSortType>(Localization.GetText(TextItem.SortStringDescending), MiniParseSortType.StringDescending),
-            new KeyValuePair<string, MiniParseSortType>(Localization.GetText(TextItem.SortNumberAscending), MiniParseSortType.NumericAscending),
-            new KeyValuePair<string, MiniParseSortType>(Localization.GetText(TextItem.SortNumberDescending), MiniParseSortType.NumericDescending)
-        };
-
         static readonly List<KeyValuePair<string, GlobalHotkeyType>> hotkeyTypeDict = new List<KeyValuePair<string, GlobalHotkeyType>>()
         {
             new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleVisible), GlobalHotkeyType.ToggleVisible),
             new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleClickthru), GlobalHotkeyType.ToggleClickthru),
             new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleLock), GlobalHotkeyType.ToggleLock)
+        };
+
+        //static readonly Dictionary<string,string> compOptions = new Dictionary<string, string>()
+        static readonly List<KeyValuePair<string, string>> compOptions = new List<KeyValuePair<string, string>>()
+        {
+            new KeyValuePair<string, string>("OverlayPlugin (Old & New)", "legacy"),
+            new KeyValuePair<string, string>("ACTWebSocket", "actws"),
+            new KeyValuePair<string, string>("OverlayPlugin (New only)", "overlay"),
         };
 
         public MiniParseConfigPanel(MiniParseOverlay overlay)
@@ -48,12 +47,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkMiniParseClickthru.Checked = config.IsClickThru;
             this.checkLock.Checked = config.IsLocked;
             this.textMiniParseUrl.Text = config.Url;
-            this.textMiniParseSortKey.Text = config.SortKey;
-            this.comboMiniParseSortType.DisplayMember = "Key";
-            this.comboMiniParseSortType.ValueMember = "Value";
-            this.comboMiniParseSortType.DataSource = sortTypeDict;
-            this.comboMiniParseSortType.SelectedValue = config.SortType;
-            this.comboMiniParseSortType.SelectedIndexChanged += comboSortType_SelectedIndexChanged;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;
             this.checkEnableGlobalHotkey.Checked = config.GlobalHotkeyEnabled;
             this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
@@ -63,6 +56,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.comboHotkeyType.DataSource = hotkeyTypeDict;
             this.comboHotkeyType.SelectedValue = config.GlobalHotkeyType;
             this.comboHotkeyType.SelectedIndexChanged += ComboHotkeyMode_SelectedIndexChanged;
+            this.comboCompatibility.DisplayMember = "Key";
+            this.comboCompatibility.ValueMember = "Value";
+            this.comboCompatibility.DataSource = compOptions;
+            this.comboCompatibility.SelectedValue = config.Compatibility;
         }
 
         private void SetupConfigEventHandlers()
@@ -86,20 +83,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.InvokeIfRequired(() =>
                 {
                     this.textMiniParseUrl.Text = e.NewUrl;
-                });
-            };
-            this.config.SortKeyChanged += (o, e) =>
-            {
-                this.InvokeIfRequired(() =>
-                {
-                    this.textMiniParseSortKey.Text = e.NewSortKey;
-                });
-            };
-            this.config.SortTypeChanged += (o, e) =>
-            {
-                this.InvokeIfRequired(() =>
-                {
-                    this.comboMiniParseSortType.SelectedValue = e.NewSortType;
                 });
             };
             this.config.MaxFrameRateChanged += (o, e) =>
@@ -145,6 +128,13 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     this.comboHotkeyType.SelectedValue = e.NewHotkeyType;
                 });
             };
+            this.config.CompatibilityChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.comboCompatibility.SelectedValue = e.Compatibility;
+                });
+            };
         }
 
         private void InvokeIfRequired(Action action)
@@ -177,17 +167,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void textMiniParseUrl_Leave(object sender, EventArgs e)
         {
             this.config.Url = textMiniParseUrl.Text;
-        }
-
-        private void textSortKey_TextChanged(object sender, EventArgs e)
-        {
-            this.config.SortKey = this.textMiniParseSortKey.Text;
-        }
-
-        private void comboSortType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var value = (MiniParseSortType)this.comboMiniParseSortType.SelectedValue;
-            this.config.SortType = value;
         }
 
         private void ComboHotkeyMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -227,15 +206,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.overlay.Overlay.Renderer.showDevTools(false);
         }
 
-        private void buttonCopyActXiv_Click(object sender, EventArgs e)
-        {
-            var json = overlay.CreateJsonData();
-            if (!string.IsNullOrWhiteSpace(json))
-            {
-                Clipboard.SetText(json);
-            }
-        }
-
         private void checkBoxEnableGlobalHotkey_CheckedChanged(object sender, EventArgs e)
         {
             this.config.GlobalHotkeyEnabled = this.checkEnableGlobalHotkey.Checked;
@@ -258,6 +228,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void buttonResetOverlayPosition_Click(object sender, EventArgs e)
         {
             this.overlay.Overlay.Location = new Point(10, 10);
+        }
+
+        private void boxCompatibility_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.config.Compatibility = (string) comboCompatibility.SelectedValue;
         }
     }
 }

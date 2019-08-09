@@ -11,7 +11,7 @@ namespace RainbowMage.OverlayPlugin
     /// OverlayPlugin のアドオンに必要な機能を定義します。
     /// このインターフェイスを実装したクラスを含むアセンブリを addon フォルダに配置すると、自動的にアドオンとして認識されます。
     /// </summary>
-    public interface IOverlayAddon : IDisposable
+    public interface IOverlayAddonV2 : IDisposable
     {
         /// <summary>
         /// アドオンで追加されるオーバーレイの名前を取得します。
@@ -53,5 +53,13 @@ namespace RainbowMage.OverlayPlugin
         /// <param name="overlay">CreateOverlayInstance メソッドにより作成された IOverlay インスタンス。</param>
         /// <returns></returns>
         Control CreateOverlayConfigControlInstance(IOverlay overlay);
+
+        Type EventSourceType { get; }
+
+        IEventSourceConfig CreateEventSourceConfigInstance();
+
+        IEventSource CreateEventSourceInstance(IEventSourceConfig config);
+
+        Control CreateEventSourceControlInstance(IEventSource source);
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
-    public class LabelOverlayAddon : IOverlayAddon
+    public class LabelOverlayAddon : IOverlayAddonV2
     {
         public string Name
         {
@@ -33,6 +34,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             get { return typeof(LabelOverlayConfigPanel); }
         }
 
+        public Type EventSourceType => null;
+
         public IOverlay CreateOverlayInstance(IOverlayConfig config)
         {
             return new LabelOverlay((LabelOverlayConfig)config);
@@ -51,6 +54,21 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public void Dispose()
         {
 
+        }
+
+        public IEventSourceConfig CreateEventSourceConfigInstance()
+        {
+            return null;
+        }
+
+        public IEventSource CreateEventSourceInstance(IEventSourceConfig config)
+        {
+            return null;
+        }
+
+        public Control CreateEventSourceControlInstance(IEventSource source)
+        {
+            return null;
         }
     }
 }

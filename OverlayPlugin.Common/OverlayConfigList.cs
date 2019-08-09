@@ -12,7 +12,7 @@ namespace RainbowMage.OverlayPlugin
     /// XmlSerializer でシリアライズ可能な IOverlayConfig のコレクション。
     /// </summary>
     [Serializable]
-    public class OverlayConfigList : Collection<IOverlayConfig>, IXmlSerializable
+    public class OverlayConfigList<T> : Collection<T>, IXmlSerializable
     {
         public System.Xml.Schema.XmlSchema GetSchema()
         {
@@ -38,7 +38,7 @@ namespace RainbowMage.OverlayPlugin
                 if (type != null)
                 {
                     var serializer = new XmlSerializer(type);
-                    var config = (IOverlayConfig)serializer.Deserialize(reader);
+                    var config = (T)serializer.Deserialize(reader);
                     this.Add(config);
                 }
 

@@ -20,6 +20,7 @@ namespace RainbowMage.OverlayPlugin
         public ControlPanel(PluginMain pluginMain, PluginConfig config)
         {
             InitializeComponent();
+            tableLayoutPanel0.PerformLayout();
 
             this.pluginMain = pluginMain;
             this.config = config;
@@ -44,9 +45,19 @@ namespace RainbowMage.OverlayPlugin
 
         private void InitializeOverlayConfigTabs()
         {
+            foreach (var source in this.pluginMain.EventSources)
+            {
+                AddConfigTab(source);
+            }
+
             foreach (var overlay in this.pluginMain.Overlays)
             {
                 AddConfigTab(overlay);
+            }
+
+            if (tabControl.TabCount == 0)
+            {
+                tabControl.TabPages.Add(this.tabPageMain);
             }
         }
 
@@ -69,7 +80,31 @@ namespace RainbowMage.OverlayPlugin
                     tabPage.Controls.Add(control);
 
                     this.tabControl.TabPages.Add(tabPage);
-                    this.tabControl.SelectTab(tabPage);
+                    //this.tabControl.SelectTab(tabPage);
+                }
+            }
+        }
+
+        private void AddConfigTab(IEventSource source)
+        {
+            var tabPage = new TabPage
+            {
+                Name = source.Name,
+                Text = "Event Source " + source.GetType().Name
+            };
+
+            var addon = pluginMain.Addons.FirstOrDefault(x => x.EventSourceType == source.GetType());
+            if (addon != null)
+            {
+                var control = addon.CreateEventSourceControlInstance(source);
+                if (control != null)
+                {
+                    control.Dock = DockStyle.Fill;
+                    control.BackColor = SystemColors.ControlLightLight;
+                    tabPage.Controls.Add(control);
+
+                    this.tabControl.TabPages.Add(tabPage);
+                    //this.tabControl.SelectTab(tabPage);
                 }
             }
         }
@@ -187,7 +222,7 @@ namespace RainbowMage.OverlayPlugin
             newOverlayDialog.Dispose();
         }
 
-        private IOverlay CreateAndRegisterOverlay(IOverlayAddon overlayType, string name)
+        private IOverlay CreateAndRegisterOverlay(IOverlayAddonV2 overlayType, string name)
         {
             var config = overlayType.CreateOverlayConfigInstance(name);
             this.config.Overlays.Add(config);
@@ -207,7 +242,13 @@ namespace RainbowMage.OverlayPlugin
 
             if (tabControl.SelectedTab == null) // ???
                 tabControl.SelectedTab = tabControl.TabPages[0];
-            
+
+            var subLabel = tabControl.SelectedTab.Text;
+            if (subLabel.Length > 13 && subLabel.Substring(0, 13) == "Event Source ")
+            {
+                return;
+            }
+
             string selectedOverlayName = tabControl.SelectedTab.Name;
             int selectedOverlayIndex = tabControl.TabPages.IndexOf(tabControl.SelectedTab);
 

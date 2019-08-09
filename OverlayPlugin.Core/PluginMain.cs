@@ -26,9 +26,13 @@ namespace RainbowMage.OverlayPlugin
         TabPage wsTabPage;
         WSConfigPanel wsConfigPanel;
 
+        TabPage sourcesTabPage;
+        SourcesPanel sourcesPanel;
+
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
-        internal List<IOverlayAddon> Addons { get; set; }
+        internal List<IOverlayAddonV2> Addons { get; set; }
+        internal List<IEventSource> EventSources { get; private set; }
         public static Logger Logger { get; private set; }
         internal static string PluginDirectory { get; private set; }
 
@@ -128,6 +132,7 @@ namespace RainbowMage.OverlayPlugin
                     });
                 };
 
+                InitializeEventSources();
                 InitializeOverlays();
 
                 // コンフィグUI系初期化
@@ -173,6 +178,30 @@ namespace RainbowMage.OverlayPlugin
                 else
                 {
                     Logger.Log(LogLevel.Error, "InitPlugin: Could not find addon for {0}.", overlayConfig.Name);
+                }
+            }
+        }
+
+        private void InitializeEventSources()
+        {
+            this.EventSources = new List<IEventSource>();
+            foreach (var addon in this.Addons)
+            {
+                var config = this.Config.EventSources.FirstOrDefault(x => x.SourceType == addon.EventSourceType);
+
+                if (config == null)
+                {
+                    config = addon.CreateEventSourceConfigInstance();
+                    if (config != null) this.Config.EventSources.Add(config);
+                }
+
+                var source = addon.CreateEventSourceInstance(config);
+                if (source != null)
+                {
+                    source.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
+                    this.EventSources.Add(source);
+
+                    source.Start();
                 }
             }
         }
@@ -249,7 +278,7 @@ namespace RainbowMage.OverlayPlugin
                     }
                 }
 
-                this.Addons = new List<IOverlayAddon>();
+                this.Addons = new List<IOverlayAddonV2>();
 
                 // 内蔵アドオンを追加
                 this.Addons.Add(new MiniParseOverlayAddon());
@@ -265,10 +294,10 @@ namespace RainbowMage.OverlayPlugin
 
                     try
                     {
-                        var iface = plugin.pluginObj.GetType().GetInterface(typeof(IOverlayAddon).FullName);
+                        var iface = plugin.pluginObj.GetType().GetInterface(typeof(IOverlayAddonV2).FullName);
                         if (iface != null)
                         {
-                            this.Addons.Add((IOverlayAddon) plugin.pluginObj);
+                            this.Addons.Add((IOverlayAddonV2) plugin.pluginObj);
                         }
                     }
                     catch (Exception e)
@@ -294,13 +323,13 @@ namespace RainbowMage.OverlayPlugin
 
                         // アセンブリから IOverlayAddon を実装した public クラスを列挙し...
                         var types = asm.GetExportedTypes().Where(t => 
-                                t.GetInterface(typeof(IOverlayAddon).FullName) != null && t.IsClass);
+                                t.GetInterface(typeof(IOverlayAddonV2).FullName) != null && t.IsClass);
                         foreach (var type in types)
                         {
                             try
                             {
                                 // プラグインのインスタンスを生成し、アドオンリストに追加する
-                                var addon = (IOverlayAddon)asm.CreateInstance(type.FullName);
+                                var addon = (IOverlayAddonV2)asm.CreateInstance(type.FullName);
                                 this.Addons.Add(addon);
 
                                 Logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", type.FullName);
@@ -359,6 +388,7 @@ namespace RainbowMage.OverlayPlugin
             catch (Exception e)
             {
                 Logger.Log(LogLevel.Error, "SaveConfig: {0}", e);
+                MessageBox.Show(e.ToString());
             }
         }
 
