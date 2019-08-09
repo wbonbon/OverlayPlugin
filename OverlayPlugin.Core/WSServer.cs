@@ -160,9 +160,9 @@ namespace RainbowMage.OverlayPlugin
                     return;
                 }
 
-                if (!data.ContainsKey("type")) return;
+                if (!data.ContainsKey("call")) return;
 
-                var msgType = data["type"].ToString();
+                var msgType = data["call"].ToString();
                 if (msgType == "subscribe")
                 {
                     try
@@ -192,17 +192,25 @@ namespace RainbowMage.OverlayPlugin
                     return;
                 }
 
-                try
-                {
-                    EventDispatcher.CallHandler(data, (response) =>
+                new Task(async () => {
+                    try
                     {
+                        var response = await EventDispatcher.CallHandler(data);
+
+                        if (response != null) {
+                            if (data.ContainsKey("rseq")) {
+                                response["rseq"] = data["rseq"];
+                            }
+                        }
+
                         Send(response.ToString(Formatting.None));
-                    });
-                } catch(Exception ex)
-                {
-                    Log(LogLevel.Error, "WS: Handler call failed: {0}", ex);
-                }
+                    } catch(Exception ex)
+                    {
+                        Log(LogLevel.Error, "WS: Handler call failed: {0}", ex);
+                    }
+                }).Start();
             }
+
 
             protected override void OnClose(CloseEventArgs e)
             {

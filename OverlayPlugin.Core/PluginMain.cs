@@ -26,13 +26,12 @@ namespace RainbowMage.OverlayPlugin
         TabPage wsTabPage;
         WSConfigPanel wsConfigPanel;
 
-        TabPage sourcesTabPage;
-        SourcesPanel sourcesPanel;
-
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
         internal List<IOverlayAddonV2> Addons { get; set; }
         internal List<IEventSource> EventSources { get; private set; }
+        public static event EventHandler<AddonRegisteredEventArgs> AddonRegistered;
+
         public static Logger Logger { get; private set; }
         internal static string PluginDirectory { get; private set; }
 
@@ -62,20 +61,35 @@ namespace RainbowMage.OverlayPlugin
 
                 Logger.Log(LogLevel.Info, "InitPlugin: PluginDirectory = {0}", PluginDirectory);
 
+#if DEBUG
+                Stopwatch watch = new Stopwatch();
+                watch.Start();
+#endif
+
                 try
                 {
                     Renderer.Initialize(PluginMain.PluginDirectory);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Logger.Log(LogLevel.Error, "InitPlugin: {0}", e);
                 }
+
+#if DEBUG
+                Logger.Log(LogLevel.Debug, "CEF init took {0}s.", watch.Elapsed.TotalSeconds);
+                watch.Reset();
+#endif
 
                 // プラグイン読み込み
                 LoadAddons();
 
                 // コンフィグ系読み込み
                 LoadConfig();
+
+#if DEBUG
+                Logger.Log(LogLevel.Debug, "Plugin and config load took {0}s.", watch.Elapsed.TotalSeconds);
+                watch.Reset();
+#endif
 
                 if (Config.WSServerRunning)
                 {
@@ -90,7 +104,7 @@ namespace RainbowMage.OverlayPlugin
                 }
 
                 // プラグイン間のメッセージ関連
-                RainbowMage.HtmlRenderer.Renderer.BroadcastMessage += (o, e) =>
+                OverlayApi.BroadcastMessage += (o, e) =>
                 {
                     Task.Run(() =>
                     {
@@ -100,7 +114,7 @@ namespace RainbowMage.OverlayPlugin
                         }
                     });
                 };
-                RainbowMage.HtmlRenderer.Renderer.SendMessage += (o, e) =>
+                OverlayApi.SendMessage += (o, e) =>
                 {
                     Task.Run(() =>
                     {
@@ -111,29 +125,28 @@ namespace RainbowMage.OverlayPlugin
                         }
                     });
                 };
-                RainbowMage.HtmlRenderer.Renderer.OverlayMessage += (o, e) =>
+                OverlayApi.OverlayMessage += (o, e) =>
                 {
                     Task.Run(() =>
                     {
                         var targetOverlay = this.Overlays.FirstOrDefault(x => x.Name == e.Target);
-                        if (targetOverlay != null) {
+                        if (targetOverlay != null)
+                        {
                             targetOverlay.OverlayMessage(e.Message);
                         }
                     });
                 };
-                RainbowMage.HtmlRenderer.Renderer.RendererFeatureRequest += (o, e) =>
-                {
-                    Task.Run(() =>
-                    {
-                        if (e.Request == "EndEncounter")
-                        {
-                            ActGlobals.oFormActMain.EndCombat(true);
-                        }
-                    });
-                };
 
+#if DEBUG
+                watch.Reset();
+#endif
                 InitializeEventSources();
                 InitializeOverlays();
+
+#if DEBUG
+                Logger.Log(LogLevel.Debug, "ES and overlay init took {0}", watch.Elapsed.TotalSeconds);
+                watch.Stop();
+#endif
 
                 // コンフィグUI系初期化
                 this.controlPanel = new ControlPanel(this, this.Config);
@@ -147,7 +160,7 @@ namespace RainbowMage.OverlayPlugin
                 this.wsTabPage = new TabPage("OverlayPlugin WSServer");
                 this.wsTabPage.Controls.Add(wsConfigPanel);
                 ((TabControl)this.tabPage.Parent).TabPages.Add(this.wsTabPage);
-
+                
                 Logger.Log(LogLevel.Info, "InitPlugin: Initialized.");
                 this.label.Text = "Initialized.";
             }
@@ -187,6 +200,13 @@ namespace RainbowMage.OverlayPlugin
             this.EventSources = new List<IEventSource>();
             foreach (var addon in this.Addons)
             {
+                InitEventSource(addon);
+            }
+        }
+
+        private void InitEventSource(IOverlayAddonV2 addon)
+        {
+            try {
                 var config = this.Config.EventSources.FirstOrDefault(x => x.SourceType == addon.EventSourceType);
 
                 if (config == null)
@@ -200,9 +220,12 @@ namespace RainbowMage.OverlayPlugin
                 {
                     source.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
                     this.EventSources.Add(source);
-
+                
                     source.Start();
                 }
+            } catch(Exception e)
+            {
+                Logger.Log(LogLevel.Error, $"Failed to initialize {addon.Name}: {e}!");
             }
         }
 
@@ -352,6 +375,14 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public void RegisterAddon(IOverlayAddonV2 addon)
+        {
+            this.Addons.Add(addon);
+            InitEventSource(addon);
+
+            AddonRegistered(this, new AddonRegisteredEventArgs());
+        }
+
         /// <summary>
         /// 設定を読み込みます。
         /// </summary>
@@ -405,5 +436,10 @@ namespace RainbowMage.OverlayPlugin
 
             return path;
         }
+    }
+
+    public class AddonRegisteredEventArgs : EventArgs
+    {
+
     }
 }

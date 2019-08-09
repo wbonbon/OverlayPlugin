@@ -60,6 +60,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.comboCompatibility.ValueMember = "Value";
             this.comboCompatibility.DataSource = compOptions;
             this.comboCompatibility.SelectedValue = config.Compatibility;
+            // We can't set this up before this because setting DataSource already triggers this event and
+            // would overwrite our configuration.
+            this.comboCompatibility.SelectedValueChanged += boxCompatibility_SelectedIndexChanged;
         }
 
         private void SetupConfigEventHandlers()
@@ -182,7 +185,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void buttonReloadBrowser_Click(object sender, EventArgs e)
         {
-            this.overlay.Navigate(this.config.Url);
+            this.overlay.Overlay.Reload();
         }
 
         private void buttonSelectFile_Click(object sender, EventArgs e)

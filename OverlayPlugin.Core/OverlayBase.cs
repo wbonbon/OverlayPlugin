@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RainbowMage.HtmlRenderer;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -82,7 +83,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 // FIXME: is this *really* correct way to get version of current assembly?
                 this.Overlay = new OverlayForm(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-                    this.Name, "about:blank", this.Config.MaxFrameRate);
+                    this.Name, "about:blank", this.Config.MaxFrameRate, new OverlayApi(this));
 
                 // グローバルホットキーを設定
                 if (this.Config.GlobalHotkeyEnabled)
@@ -137,6 +138,11 @@ namespace RainbowMage.OverlayPlugin
                 this.Overlay.Renderer.BrowserError += (o, e) =>
                 {
                     Log(LogLevel.Error, "BrowserError: {0}, {1}, {2}", e.ErrorCode, e.ErrorText, e.Url);
+                };
+                this.Overlay.Renderer.BrowserStartLoading += (o, e) =>
+                {
+                    // Drop the event subscriptions from the previous page.
+                    UnsubscribeAll();
                 };
                 this.Overlay.Renderer.BrowserLoad += (o, e) =>
                 {
@@ -417,7 +423,7 @@ namespace RainbowMage.OverlayPlugin
 
         public virtual void HandleEvent(JObject e)
         {
-            ExecuteScript("document.dispatchEvent(new CustomEvent('OverlayEvent', " + e.ToString(Formatting.None) + "));");
+            ExecuteScript("document.dispatchEvent(new CustomEvent('OverlayEvent', { detail: " + e.ToString(Formatting.None) + " }));");
         }
 
         public void Subscribe(string eventType)

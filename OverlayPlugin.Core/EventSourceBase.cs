@@ -36,17 +36,17 @@ namespace RainbowMage.OverlayPlugin
             OnLog?.Invoke(this, new LogEventArgs(level, string.Format(message, args)));
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             timer?.Dispose();
         }
 
-        public void Start()
+        public virtual void Start()
         {
             timer.Start();
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             timer.Stop();
         }
@@ -58,7 +58,7 @@ namespace RainbowMage.OverlayPlugin
             EventDispatcher.RegisterEventTypes(types);
         }
 
-        protected void RegisterEventHandler(string name, Action<JObject, Action<JObject>> handler)
+        protected void RegisterEventHandler(string name, Func<JObject, Task<JObject>> handler)
         {
             EventDispatcher.RegisterHandler(name, handler);
         }

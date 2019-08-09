@@ -256,7 +256,6 @@
             this.comboCompatibility.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboCompatibility.FormattingEnabled = true;
             this.comboCompatibility.Name = "comboCompatibility";
-            this.comboCompatibility.SelectedIndexChanged += new System.EventHandler(this.boxCompatibility_SelectedIndexChanged);
             // 
             // MiniParseConfigPanel
             // 

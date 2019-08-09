@@ -11,13 +11,13 @@ namespace RainbowMage.OverlayPlugin.Overlays
     {
         public override Type OverlayType => typeof(MiniParseOverlay);
 
+        private string compatibility;
         [XmlElement("Compatibility")]
-        private string compatibility = "legacy";
         public string Compatibility
         {
             get
             {
-                return this.compatibility;
+                return this.compatibility ?? "legacy";
             }
             set
             {

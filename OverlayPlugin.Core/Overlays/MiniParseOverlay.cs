@@ -21,6 +21,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 Navigate(Overlay.Url);
             };
+
+            // Subscriptions are cleared on page navigation so we have to restore this after every load.
+            Overlay.Renderer.BrowserLoad += (o, e) =>
+            {
+                Subscribe("CombatData");
+            };
         }
 
         public override void Navigate(string url)
@@ -38,28 +44,34 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void Start()
         {
-            Subscribe("CombatData");
+            
         }
 
         public override void Stop()
         {
-            Unsubscribe("CombatData");
+            
         }
 
         public override void HandleEvent(JObject e)
         {
-            switch(Config.Compatibility)
+            if (e["type"].ToString() == "CombatData")
             {
-                case "overlay":
-                    base.HandleEvent(e);
-                    break;
-                case "legacy":
-                    base.HandleEvent(e);
-                    ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
-                    break;
-                case "actws":
-                    ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg': detail: " + e.ToString(Formatting.None) + " });");
-                    break;
+                switch(Config.Compatibility)
+                {
+                    case "overlay":
+                        base.HandleEvent(e);
+                        break;
+                    case "legacy":
+                        base.HandleEvent(e);
+                        ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
+                        break;
+                    case "actws":
+                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg':  " + e.ToString(Formatting.None) + " });");
+                        break;
+                }
+            } else
+            {
+                base.HandleEvent(e);
             }
         }
 

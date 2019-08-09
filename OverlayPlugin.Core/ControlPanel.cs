@@ -28,7 +28,11 @@ namespace RainbowMage.OverlayPlugin
             this.checkBoxAutoHide.Checked = this.config.HideOverlaysWhenNotActive;
 
             this.menuFollowLatestLog.Checked = this.config.FollowLatestLog;
+
+            this.listViewLog.Columns[0].Width = 130;
+            this.listViewLog.Columns[2].Width = 9999;
             this.listViewLog.VirtualListSize = PluginMain.Logger.Logs.Count;
+
             PluginMain.Logger.Logs.ListChanged += (o, e) =>
             {
                 this.listViewLog.BeginUpdate();
@@ -40,11 +44,14 @@ namespace RainbowMage.OverlayPlugin
                 this.listViewLog.EndUpdate();
             };
 
+            PluginMain.AddonRegistered += (o, e) => InitializeOverlayConfigTabs();
             InitializeOverlayConfigTabs();
         }
 
         private void InitializeOverlayConfigTabs()
         {
+            tabControl.TabPages.Clear();
+
             foreach (var source in this.pluginMain.EventSources)
             {
                 AddConfigTab(source);
@@ -132,6 +139,9 @@ namespace RainbowMage.OverlayPlugin
             if (e.ItemIndex >= PluginMain.Logger.Logs.Count) 
             {
                 e.Item = new ListViewItem();
+                e.Item.SubItems.Add("");
+                e.Item.SubItems.Add("");
+                e.Item.SubItems.Add("");
                 return;
             };
 

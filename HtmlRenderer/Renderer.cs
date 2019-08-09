@@ -6,6 +6,7 @@ using CefSharp.Enums;
 using CefSharp;
 using CefSharp.Internals;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,13 +15,9 @@ namespace RainbowMage.HtmlRenderer
     public class Renderer : IDisposable
     {
         public event EventHandler<BrowserErrorEventArgs> BrowserError;
+        public event EventHandler<BrowserLoadEventArgs> BrowserStartLoading;
         public event EventHandler<BrowserLoadEventArgs> BrowserLoad;
         public event EventHandler<BrowserConsoleLogEventArgs> BrowserConsoleLog;
-
-        public static event EventHandler<BroadcastMessageEventArgs> BroadcastMessage;
-        public static event EventHandler<SendMessageEventArgs> SendMessage;
-        public static event EventHandler<SendMessageEventArgs> OverlayMessage;
-        public static event EventHandler<RendererFeatureRequestEventArgs> RendererFeatureRequest;
 
         public Func<OnPaintEventArgs, object> Render = null;
 
@@ -44,7 +41,7 @@ namespace RainbowMage.HtmlRenderer
         private string overlayVersion;
         private string overlayName;
 
-        public Renderer(string overlayVersion, string overlayName, OverlayForm form)
+        public Renderer(string overlayVersion, string overlayName, OverlayForm form, object api)
         {
             this.overlayVersion = overlayVersion;
             this.overlayName = overlayName;
@@ -55,33 +52,16 @@ namespace RainbowMage.HtmlRenderer
             _browser.LoadError += Browser_LoadError;
             _browser.ConsoleMessage += Browser_ConsoleMessage;
 
-            _browser.JavascriptObjectRepository.Register("OverlayPluginApi", new BuiltinFunctionHandler(), isAsync: true);
-            _browser.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
+            if (api != null)
+            {
+                _browser.JavascriptObjectRepository.Register("OverlayPluginApi", api, isAsync: true);
+                _browser.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
+            }
         }
 
         private void JavascriptObjectRepository_ObjectBoundInJavascript(object sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
         {
             // BrowserConsoleLog(sender, new BrowserConsoleLogEventArgs("Object " + e.ObjectName + " succesfully bound.", "internal", 1));
-        }
-
-        public static void TriggerBroadcastMessage(object sender, BroadcastMessageEventArgs e)
-        {
-            BroadcastMessage(sender, e);
-        }
-
-        public static void TriggerSendMessage(object sender, SendMessageEventArgs e)
-        {
-            SendMessage(sender, e);
-        }
-
-        public static void TriggerOverlayMessage(object sender, SendMessageEventArgs e)
-        {
-            OverlayMessage(sender, e);
-        }
-
-        public static void TriggerRendererFeatureRequest(object sender, RendererFeatureRequestEventArgs e)
-        {
-            RendererFeatureRequest(sender, e);
         }
 
         private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
@@ -117,6 +97,8 @@ namespace RainbowMage.HtmlRenderer
                 e.Frame.ExecuteJavaScriptAsync(item);
             }
             this.scriptQueue.Clear();
+
+            BrowserStartLoading(this, new BrowserLoadEventArgs(0, e.Url));
         }
 
         private void Browser_LoadError(object sender, LoadErrorEventArgs e)
@@ -420,6 +402,17 @@ namespace RainbowMage.HtmlRenderer
         public RendererFeatureRequestEventArgs(string request)
         {
             this.Request = request;
+        }
+    }
+
+    public class HandlerCallEventArgs : EventArgs
+    {
+        public JObject Payload { get; private set; }
+        public Action<JObject> Callback { get; private set; }
+        public HandlerCallEventArgs(JObject payload, Action<JObject> callback)
+        {
+            this.Payload = payload;
+            this.Callback = callback;
         }
     }
 

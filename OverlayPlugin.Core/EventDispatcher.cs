@@ -10,7 +10,7 @@ namespace RainbowMage.OverlayPlugin
 {
     class EventDispatcher
     {
-        static Dictionary<string, Action<JObject, Action<JObject>>> handlers = new Dictionary<string, Action<JObject, Action<JObject>>>();
+        static Dictionary<string, Func<JObject, Task<JObject>>> handlers = new Dictionary<string, Func<JObject, Task<JObject>>>();
         static Dictionary<string, List<IEventReceiver>> eventFilter = new Dictionary<string, List<IEventReceiver>>();
 
         private static void Log(LogLevel level, string message, params object[] args)
@@ -18,7 +18,7 @@ namespace RainbowMage.OverlayPlugin
             PluginMain.Logger.Log(level, string.Format(message, args));
         }
 
-        public static void RegisterHandler(string name, Action<JObject, Action<JObject>> handler)
+        public static void RegisterHandler(string name, Func<JObject, Task<JObject>> handler)
         {
             if (handlers.ContainsKey(name))
             {
@@ -68,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
             var eventType = e["type"].ToString();
             if (!eventFilter.ContainsKey(eventType))
             {
-                throw new Exception(string.Format("Tried to dispatch unregistered event type \"{0\"!", eventType));
+                throw new Exception(string.Format("Tried to dispatch unregistered event type \"{0}\"!", eventType));
             }
 
             var data = e.ToString(Formatting.None);
@@ -84,7 +84,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static void CallHandler(JObject e, Action<JObject> callback)
+        public static Task<JObject> CallHandler(JObject e)
         {
             var handlerName = e["call"].ToString();
             if (!handlers.ContainsKey(handlerName))
@@ -92,7 +92,7 @@ namespace RainbowMage.OverlayPlugin
                 throw new Exception(string.Format("Tried to call missing handler \"{0\"!", handlerName));
             }
 
-            handlers[handlerName](e, callback);
+            return handlers[handlerName](e);
         }
     }
 }

@@ -77,12 +77,12 @@ namespace RainbowMage.HtmlRenderer
 
         public bool Locked { get; set; }
 
-        public OverlayForm(string overlayVersion, string overlayName, string url, int maxFrameRate = 30)
+        public OverlayForm(string overlayVersion, string overlayName, string url, int maxFrameRate = 30, object api = null)
         {
             InitializeComponent();
 
             this.maxFrameRate = maxFrameRate;
-            this.Renderer = new Renderer(overlayVersion, overlayName, this);
+            this.Renderer = new Renderer(overlayVersion, overlayName, this, api);
             this.MouseWheel += OverlayForm_MouseWheel;
             this.MouseDown += OverlayForm_MouseDown;
             this.MouseUp += OverlayForm_MouseUp;

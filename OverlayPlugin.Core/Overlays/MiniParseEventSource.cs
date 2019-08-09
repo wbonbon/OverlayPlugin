@@ -33,7 +33,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             if (CheckIsActReady())
             {
-                // 最終更新時刻に変化がないなら更新を行わない
+                /* // 最終更新時刻に変化がないなら更新を行わない
                 if (this.prevEncounterId == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EncId &&
                     this.prevEndDateTime == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime &&
                     this.prevEncounterActive == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active)
@@ -44,7 +44,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.prevEncounterId = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EncId;
                 this.prevEndDateTime = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime;
                 this.prevEncounterActive = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active;
-
+                */
                 DispatchEvent(this.CreateJsonData());
             }
         }

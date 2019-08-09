@@ -57,19 +57,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SourcesPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SourcesPanel.Designer.cs">
-      <DependentUpon>SourcesPanel.cs</DependentUpon>
-    </Compile>
+    <Compile Include="OverlayApi.cs" />
     <Compile Include="EventDispatcher.cs" />
     <Compile Include="IEventReceiver.cs" />
     <Compile Include="EventSourceBase.cs" />
     <Compile Include="ConfigEventArgs.cs" />
-    <Compile Include="OverlayForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -172,15 +164,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SourcesPanel.ja-JP.resx">
-      <DependentUpon>SourcesPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SourcesPanel.ko-KR.resx">
-      <DependentUpon>SourcesPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SourcesPanel.resx">
-      <DependentUpon>SourcesPanel.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ControlPanel.ja-JP.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>

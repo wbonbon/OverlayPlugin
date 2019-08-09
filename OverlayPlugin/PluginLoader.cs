@@ -54,6 +54,11 @@ namespace RainbowMage.OverlayPlugin
             asmResolver.Dispose();
         }
 
+        public void RegisterAddon(IOverlayAddonV2 addon)
+        {
+            pluginMain.RegisterAddon(addon);
+        }
+
         public void ShutdownRenderer(object sender, EventArgs e)
         {
             Renderer.Shutdown();
