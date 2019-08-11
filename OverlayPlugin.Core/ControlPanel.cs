@@ -16,6 +16,7 @@ namespace RainbowMage.OverlayPlugin
     {
         PluginMain pluginMain;
         PluginConfig config;
+        DateTime lastLogUpdate;
 
         public ControlPanel(PluginMain pluginMain, PluginConfig config)
         {
@@ -31,17 +32,21 @@ namespace RainbowMage.OverlayPlugin
 
             this.listViewLog.Columns[0].Width = 130;
             this.listViewLog.Columns[2].Width = 9999;
-            this.listViewLog.VirtualListSize = PluginMain.Logger.Logs.Count;
 
+            lastLogUpdate = DateTime.Now;
+            
             PluginMain.Logger.Logs.ListChanged += (o, e) =>
             {
-                this.listViewLog.BeginUpdate();
-                this.listViewLog.VirtualListSize = PluginMain.Logger.Logs.Count;
-                if (this.config.FollowLatestLog && this.listViewLog.VirtualListSize > 0)
+                if (lastLogUpdate != null && DateTime.Now.Subtract(lastLogUpdate).TotalSeconds < 2) return;
+                lastLogUpdate = null;
+
+                listViewLog.BeginUpdate();
+                listViewLog.VirtualListSize = PluginMain.Logger.Logs.Count;
+                if (config.FollowLatestLog && listViewLog.VirtualListSize > 0)
                 {
-                    this.listViewLog.EnsureVisible(this.listViewLog.VirtualListSize - 1);
+                    listViewLog.EnsureVisible(listViewLog.VirtualListSize - 1);
                 }
-                this.listViewLog.EndUpdate();
+                listViewLog.EndUpdate();
             };
 
             PluginMain.AddonRegistered += (o, e) => InitializeOverlayConfigTabs();
@@ -138,8 +143,7 @@ namespace RainbowMage.OverlayPlugin
         {
             if (e.ItemIndex >= PluginMain.Logger.Logs.Count) 
             {
-                e.Item = new ListViewItem();
-                e.Item.SubItems.Add("");
+                e.Item = new ListViewItem("");
                 e.Item.SubItems.Add("");
                 e.Item.SubItems.Add("");
                 return;
@@ -148,9 +152,9 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 var log = PluginMain.Logger.Logs[e.ItemIndex];
-                e.Item = new ListViewItem(log.Time.ToString());
+                e.Item = new ListViewItem(log.Time.ToString() ?? "");
                 e.Item.UseItemStyleForSubItems = true;
-                e.Item.SubItems.Add(log.Level.ToString());
+                e.Item.SubItems.Add(log.Level.ToString() ?? "");
                 e.Item.SubItems.Add(log.Message ?? "Null");
 
                 e.Item.ForeColor = Color.Black;
@@ -166,7 +170,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     e.Item.BackColor = Color.White;
                 }
-            } catch(NullReferenceException)
+            } catch(Exception)
             {
                 // We should log this but can't since it'd spam the log like crazy.
             }

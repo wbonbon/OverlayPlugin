@@ -76,7 +76,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Log(LogLevel.Info, "WS: {0}: {1} {2}", d.Level.ToString(), d.Message, msg);
                 };
-                _server.Log.Level = WebSocketSharp.LogLevel.Trace;
+                _server.Log.Level = WebSocketSharp.LogLevel.Debug;
 
                 if (secure)
                 {

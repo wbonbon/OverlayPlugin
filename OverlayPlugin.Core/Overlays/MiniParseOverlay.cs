@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RainbowMage.HtmlRenderer;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -22,35 +23,55 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 Navigate(Overlay.Url);
             };
 
-            Overlay.Renderer.BrowserStartLoading += (o, e) =>
+            Overlay.Renderer.BrowserStartLoading += PrepareWebsite;
+            Overlay.Renderer.BrowserLoad += FinishLoading;
+        }
+
+        private void FinishLoading(object sender, BrowserLoadEventArgs e)
+        {
+            if (Config.Compatibility == "actws")
             {
-                if (Config.Compatibility == "actws")
-                {
-                    // Install a fake WebSocket so we can directly call the event handler.
-                    ExecuteScript(@"(function() {
-                        var realWS = window.WebSocket;
-                        window.__OverlayPlugin_ws_faker = null;
+                var charName = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerName() ?? "YOU");
+                var charID = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerID());
+                
+                ExecuteScript("__OverlayPlugin_ws_faker({ msgtype: 'SendCharName', msg: { charName: " + charName + ", charID: " + charID + " }});");
+            }
+        }
 
-                        window.WebSocket = function(url) {
-                            if (url.indexOf('ws://fake.ws/') > -1)
-                            {
-                                window.__OverlayPlugin_ws_faker = (msg) => {
-                                    if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
-                                };
-                                console.log('ACTWS compatibility shim enabled.');
-                            }
-                            else
-                            {
-                                return new realWS(url);
-                            }
-                        };
-                    })();");
-                } else if (Config.Compatibility == "legacy") {
-                    // Subscriptions are cleared on page navigation so we have to restore this after every load.
+        private void PrepareWebsite(object sender, BrowserLoadEventArgs e)
+        {
+            if (Config.Compatibility == "actws")
+            {
+                // Install a fake WebSocket so we can directly call the event handler.
+                ExecuteScript(@"(function() {
+                    var realWS = window.WebSocket;
+                    var queue = [];
+                    window.__OverlayPlugin_ws_faker = (msg) => queue.push(msg);
 
-                    Subscribe("CombatData");
-                }
-            };
+                    window.WebSocket = function(url) {
+                        if (url.indexOf('ws://fake.ws/') > -1)
+                        {
+                            window.__OverlayPlugin_ws_faker = (msg) => {
+                                if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
+                            };
+                            console.log('ACTWS compatibility shim enabled.');
+
+                            setTimeout(() => {
+                                queue.forEach(__OverlayPlugin_ws_faker);
+                                queue = null;
+                            }, 100);
+                        }
+                        else
+                        {
+                            return new realWS(url);
+                        }
+                    };
+                })();");
+            } else if (Config.Compatibility == "legacy") {
+                // Subscriptions are cleared on page navigation so we have to restore this after every load.
+
+                Subscribe("CombatData");
+            }
         }
 
         public override void Navigate(string url)
