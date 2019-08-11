@@ -15,15 +15,6 @@ namespace RainbowMage.OverlayPlugin
     public class PluginConfig : IPluginConfig
     {
         /// <summary>
-        /// オーバーレイ設定のリスト。
-        /// </summary>
-        [XmlElement("Overlays")]
-        public OverlayConfigList<IOverlayConfig> Overlays { get; set; }
-
-        [XmlElement("EventSources")]
-        public OverlayConfigList<IEventSourceConfig> EventSources { get; set; }
-
-        /// <summary>
         /// 設定タブのログにおいて、常に最新のログ行を表示するかどうかを取得または設定します。
         /// </summary>
         [XmlElement("FollowLatestLog")]
@@ -86,6 +77,15 @@ namespace RainbowMage.OverlayPlugin
         [XmlIgnore]
         public bool IsFirstLaunch { get; set; }
 
+        /// <summary>
+        /// オーバーレイ設定のリスト。
+        /// </summary>
+        [XmlElement("Overlays")]
+        public OverlayConfigList<IOverlayConfig> Overlays { get; set; }
+
+        [XmlElement("EventSources")]
+        public OverlayConfigList<IEventSourceConfig> EventSources { get; set; }
+
         internal const string DefaultMiniParseOverlayName = "Mini Parse";
         internal const string DefaultSpellTimerOverlayName = "Spell Timer";
 
@@ -97,11 +97,6 @@ namespace RainbowMage.OverlayPlugin
             this.FollowLatestLog = false;
             this.HideOverlaysWhenNotActive = false;
             this.IsFirstLaunch = true;
-
-            this.WSServerIP = "127.0.0.1";
-            this.WSServerPort = 10501;
-            this.WSServerRunning = false;
-            this.WSServerSSL = false;
         }
 
         /// <summary>
@@ -170,6 +165,11 @@ namespace RainbowMage.OverlayPlugin
             this.Overlays = new OverlayConfigList<IOverlayConfig>();
             this.Overlays.Add(miniparseOverlayConfig);
             this.Overlays.Add(spellTimerOverlayConfig);
+
+            this.WSServerIP = "127.0.0.1";
+            this.WSServerPort = 10501;
+            this.WSServerRunning = false;
+            this.WSServerSSL = false;
         }
 
         private void UpdateFromVersion0_3_4_0OrBelow()

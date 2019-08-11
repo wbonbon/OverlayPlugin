@@ -423,7 +423,7 @@ namespace RainbowMage.OverlayPlugin
 
         public virtual void HandleEvent(JObject e)
         {
-            ExecuteScript("document.dispatchEvent(new CustomEvent('OverlayEvent', { detail: " + e.ToString(Formatting.None) + " }));");
+            ExecuteScript("if(window.__OverlayCallback) __OverlayCallback(" + e.ToString(Formatting.None) + ");");
         }
 
         public void Subscribe(string eventType)

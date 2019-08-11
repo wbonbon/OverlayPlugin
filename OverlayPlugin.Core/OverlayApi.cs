@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
+using RainbowMage.HtmlRenderer;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -41,54 +42,56 @@ namespace RainbowMage.OverlayPlugin
             ActGlobals.oFormActMain.EndCombat(true);
         }
 
-        // Also handles (unc)subscription to make switching between this and WS easier.
-        public Task<JObject> callHandler(string data)
+        // Also handles (un)subscription to make switching between this and WS easier.
+        public void callHandler(string data, object callback)
         {
-            try
-            {
-                var message = JObject.Parse(data);
-                if (!message.ContainsKey("call"))
+            Task.Run(() => {
+                try
                 {
-                    PluginMain.Logger.Log(LogLevel.Error, $"Received invalid handler call: {data}");
-                    return null;
-                }
+                    var message = JObject.Parse(data);
+                    if (!message.ContainsKey("call"))
+                    {
+                        PluginMain.Logger.Log(LogLevel.Error, $"Received invalid handler call: {data}");
+                        return;
+                    }
                 
-                var handler = message["call"].ToString();
-                if (handler == "subscribe")
-                {
-                    if (!message.ContainsKey("events"))
+                    var handler = message["call"].ToString();
+                    if (handler == "subscribe")
                     {
-                        PluginMain.Logger.Log(LogLevel.Error, $"Missing events field in subscribe call: {data}!");
-                        return null;
+                        if (!message.ContainsKey("events"))
+                        {
+                            PluginMain.Logger.Log(LogLevel.Error, $"Missing events field in subscribe call: {data}!");
+                            return;
+                        }
+
+                        foreach (var name in message["events"].ToList())
+                        {
+                            EventDispatcher.Subscribe(name.ToString(), receiver);
+                        }
+                        return;
+                    } else if (handler == "unsubscribe")
+                    {
+                        if (!message.ContainsKey("events"))
+                        {
+                            PluginMain.Logger.Log(LogLevel.Error, $"Missing events field in unsubscribe call: {data}!");
+                            return;
+                        }
+
+                        foreach (var name in message["events"].ToList())
+                        {
+                            EventDispatcher.Unsubscribe(name.ToString(), receiver);
+                        }
+                        return;
                     }
 
-                    foreach (var name in message["events"].ToList())
-                    {
-                        EventDispatcher.Subscribe(name.ToString(), receiver);
-                    }
-                    return null;
-                } else if (handler == "unsubscribe")
-                {
-                    if (!message.ContainsKey("events"))
-                    {
-                        PluginMain.Logger.Log(LogLevel.Error, $"Missing events field in unsubscribe call: {data}!");
-                        return null;
-                    }
-
-                    foreach (var name in message["events"].ToList())
-                    {
-                        EventDispatcher.Unsubscribe(name.ToString(), receiver);
-                    }
-                    return null;
+                    var result = EventDispatcher.CallHandler(message);
+                    Renderer.ExecuteCallback(callback, result == null ? null : result.ToString(Newtonsoft.Json.Formatting.None));
                 }
-
-                return EventDispatcher.CallHandler(message);
-            }
-            catch (Exception e)
-            {
-                PluginMain.Logger.Log(LogLevel.Error, $"JS Handler call failed: {e}");
-                return null;
-            }
+                catch (Exception e)
+                {
+                    PluginMain.Logger.Log(LogLevel.Error, $"JS Handler call failed: {e}");
+                }
+            });
         }
     }
 

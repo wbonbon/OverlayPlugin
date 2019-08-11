@@ -37,12 +37,11 @@ namespace RainbowMage.OverlayPlugin
         {
             startBtn.Enabled = true;
             stopBtn.Enabled = false;
-            Config.WSServerRunning = e.Running;
 
             if (e.Running)
             {
                 statusLabel.Text = "Running";
-                statusLabel.ForeColor = Color.DarkSeaGreen;
+                statusLabel.ForeColor = Color.ForestGreen;
 
                 startBtn.Enabled = false;
                 stopBtn.Enabled = true;
@@ -61,11 +60,13 @@ namespace RainbowMage.OverlayPlugin
 
         private void startBtn_Click(object sender, EventArgs e)
         {
+            Config.WSServerRunning = true;
             WSServer.Initialize(Config);
         }
 
         private void stopBtn_Click(object sender, EventArgs e)
         {
+            Config.WSServerRunning = false;
             WSServer.Stop();
         }
 
@@ -124,6 +125,8 @@ namespace RainbowMage.OverlayPlugin
                 logDisplay.AppendText("\r\nDone.\r\n");
 
                 sslBox.Enabled = WSServer.IsSSLPossible();
+                sslBox.Checked = sslBox.Enabled;
+                Config.WSServerSSL = sslBox.Enabled;
                 genSslBtn.Enabled = true;
             }
             catch (Exception e)

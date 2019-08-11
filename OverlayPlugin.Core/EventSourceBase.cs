@@ -58,7 +58,7 @@ namespace RainbowMage.OverlayPlugin
             EventDispatcher.RegisterEventTypes(types);
         }
 
-        protected void RegisterEventHandler(string name, Func<JObject, Task<JObject>> handler)
+        protected void RegisterEventHandler(string name, Func<JObject, JObject> handler)
         {
             EventDispatcher.RegisterHandler(name, handler);
         }

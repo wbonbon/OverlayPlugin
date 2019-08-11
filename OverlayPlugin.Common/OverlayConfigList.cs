@@ -37,9 +37,15 @@ namespace RainbowMage.OverlayPlugin
 
                 if (type != null)
                 {
-                    var serializer = new XmlSerializer(type);
-                    var config = (T)serializer.Deserialize(reader);
-                    this.Add(config);
+                    try
+                    {
+                        var serializer = new XmlSerializer(type);
+                        var config = (T)serializer.Deserialize(reader);
+                        this.Add(config);
+                    } catch (Exception e)
+                    {
+                        System.Diagnostics.Trace.WriteLine(e);
+                    }
                 }
 
             } while (reader.ReadToNextSibling("Overlay"));

@@ -10,7 +10,7 @@ namespace RainbowMage.OverlayPlugin
 {
     class EventDispatcher
     {
-        static Dictionary<string, Func<JObject, Task<JObject>>> handlers = new Dictionary<string, Func<JObject, Task<JObject>>>();
+        static Dictionary<string, Func<JObject, JObject>> handlers = new Dictionary<string, Func<JObject, JObject>>();
         static Dictionary<string, List<IEventReceiver>> eventFilter = new Dictionary<string, List<IEventReceiver>>();
 
         private static void Log(LogLevel level, string message, params object[] args)
@@ -18,7 +18,7 @@ namespace RainbowMage.OverlayPlugin
             PluginMain.Logger.Log(level, string.Format(message, args));
         }
 
-        public static void RegisterHandler(string name, Func<JObject, Task<JObject>> handler)
+        public static void RegisterHandler(string name, Func<JObject, JObject> handler)
         {
             if (handlers.ContainsKey(name))
             {
@@ -84,12 +84,12 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static Task<JObject> CallHandler(JObject e)
+        public static JObject CallHandler(JObject e)
         {
             var handlerName = e["call"].ToString();
             if (!handlers.ContainsKey(handlerName))
             {
-                throw new Exception(string.Format("Tried to call missing handler \"{0\"!", handlerName));
+                throw new Exception(string.Format("Tried to call missing handler \"{0}\"!", handlerName));
             }
 
             return handlers[handlerName](e);

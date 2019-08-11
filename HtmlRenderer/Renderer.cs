@@ -69,32 +69,12 @@ namespace RainbowMage.HtmlRenderer
             var initScript = @"(async () => {
                 await CefSharp.BindObjectAsync('OverlayPluginApi');
                 OverlayPluginApi.overlayName = " + JsonConvert.SerializeObject(this.overlayName) + @";
-            })();
-
-            (function() {
-                var realWS = window.WebSocket;
-                window.__OverlayPlugin_ws_faker = null;
-
-                window.WebSocket = function(url) {
-                    if (url.indexOf('ws://fake.ws/') > -1)
-                    {
-                        window.__OverlayPlugin_ws_faker = (msg) => {
-                            if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
-                        };
-                        console.log('ACTWS compatibility shim enabled.');
-                    }
-                    else
-                    {
-                        return new realWS(url);
-                    }
-                };
-            })();
-            ";
-            e.Frame.ExecuteJavaScriptAsync(initScript);
+            })();";
+            e.Frame.ExecuteJavaScriptAsync(initScript, "init");
 
             foreach (var item in this.scriptQueue)
             {
-                e.Frame.ExecuteJavaScriptAsync(item);
+                e.Frame.ExecuteJavaScriptAsync(item, "injectOnLoad");
             }
             this.scriptQueue.Clear();
 
@@ -350,11 +330,31 @@ namespace RainbowMage.HtmlRenderer
             if (_browser != null && _browser.IsBrowserInitialized)
             {
                 var frame = _browser.GetMainFrame();
-                frame.ExecuteJavaScriptAsync(script);
+                frame.ExecuteJavaScriptAsync(script, "injected");
             }
             else
             {
                 this.scriptQueue.Add(script);
+            }
+        }
+
+        // IJavascriptCallback can't be used outside HtmlRenderer. This helper allows other code
+        // to invoke callbacks regardless.
+
+        public static void ExecuteCallback(object callback, object param)
+        {
+            if (callback.GetType().GetInterface("IJavascriptCallback") == null)
+            {
+                throw new Exception("Invalid parameter passed for callback!");
+            }
+
+            var cb = (IJavascriptCallback) callback;
+            using (cb)
+            {
+                if (cb.CanExecute)
+                {
+                    cb.ExecuteAsync(param);
+                }
             }
         }
     }

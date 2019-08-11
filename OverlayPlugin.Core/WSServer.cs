@@ -86,8 +86,9 @@ namespace RainbowMage.OverlayPlugin
                     _server.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls11 | System.Security.Authentication.SslProtocols.Tls12;
                 }
 
-                _server.AddWebSocketService<LegacyHandler>("/MiniParse");
                 _server.AddWebSocketService<SocketHandler>("/ws");
+                _server.AddWebSocketService<LegacyHandler>("/MiniParse");
+                _server.AddWebSocketService<LegacyHandler>("/BeforeLogLineRead");
 
                 _server.OnGet += (object sender, HttpRequestEventArgs e) =>
                 {
@@ -192,15 +193,18 @@ namespace RainbowMage.OverlayPlugin
                     return;
                 }
 
-                new Task(async () => {
+                Task.Run(() => {
                     try
                     {
-                        var response = await EventDispatcher.CallHandler(data);
+                        var response = EventDispatcher.CallHandler(data);
 
-                        if (response != null) {
-                            if (data.ContainsKey("rseq")) {
-                                response["rseq"] = data["rseq"];
-                            }
+                        if (response == null) {
+                            response = new JObject();
+                            response["$isNull"] = true;
+                        }
+
+                        if (data.ContainsKey("rseq")) {
+                            response["rseq"] = data["rseq"];
                         }
 
                         Send(response.ToString(Formatting.None));
@@ -208,7 +212,7 @@ namespace RainbowMage.OverlayPlugin
                     {
                         Log(LogLevel.Error, "WS: Handler call failed: {0}", ex);
                     }
-                }).Start();
+                });
             }
 
 

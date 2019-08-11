@@ -22,10 +22,34 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 Navigate(Overlay.Url);
             };
 
-            // Subscriptions are cleared on page navigation so we have to restore this after every load.
-            Overlay.Renderer.BrowserLoad += (o, e) =>
+            Overlay.Renderer.BrowserStartLoading += (o, e) =>
             {
-                Subscribe("CombatData");
+                if (Config.Compatibility == "actws")
+                {
+                    // Install a fake WebSocket so we can directly call the event handler.
+                    ExecuteScript(@"(function() {
+                        var realWS = window.WebSocket;
+                        window.__OverlayPlugin_ws_faker = null;
+
+                        window.WebSocket = function(url) {
+                            if (url.indexOf('ws://fake.ws/') > -1)
+                            {
+                                window.__OverlayPlugin_ws_faker = (msg) => {
+                                    if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
+                                };
+                                console.log('ACTWS compatibility shim enabled.');
+                            }
+                            else
+                            {
+                                return new realWS(url);
+                            }
+                        };
+                    })();");
+                } else if (Config.Compatibility == "legacy") {
+                    // Subscriptions are cleared on page navigation so we have to restore this after every load.
+
+                    Subscribe("CombatData");
+                }
             };
         }
 
