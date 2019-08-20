@@ -1,0 +1,1 @@
+You need to place the FFXIV_ACT_Plugin.dll and its SDK folder inside this directory.

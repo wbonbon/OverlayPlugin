@@ -19,8 +19,6 @@ namespace RainbowMage.HtmlRenderer
         public event EventHandler<BrowserLoadEventArgs> BrowserLoad;
         public event EventHandler<BrowserConsoleLogEventArgs> BrowserConsoleLog;
 
-        public Func<OnPaintEventArgs, object> Render = null;
-
         private ChromiumWebBrowser _browser;
         private List<String> scriptQueue = new List<string>();
         private string urlToLoad = null;
@@ -78,7 +76,7 @@ namespace RainbowMage.HtmlRenderer
             }
             this.scriptQueue.Clear();
 
-            BrowserStartLoading(this, new BrowserLoadEventArgs(0, e.Url));
+            BrowserStartLoading?.Invoke(this, new BrowserLoadEventArgs(0, e.Url));
         }
 
         private void Browser_LoadError(object sender, LoadErrorEventArgs e)
@@ -144,7 +142,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void Reload()
         {
-            if (this._browser != null)
+            if (this._browser != null && _browser.IsBrowserInitialized)
             {
                 this._browser.Reload();
             }
@@ -152,7 +150,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void Resize(int width, int height)
         {
-            if (this._browser != null)
+            if (this._browser != null)  // && _browser.IsBrowserInitialized)
             {
                 this._browser.Size = new System.Drawing.Size(width, height);
             }
@@ -176,7 +174,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendMouseMove(int x, int y, MouseButtonType button)
         {
-            if (this._browser != null)
+            if (this._browser != null && this._browser.IsBrowserInitialized)
             {
                 var host = this._browser.GetBrowserHost();
                 var modifiers = CefEventFlags.None;
@@ -200,7 +198,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendMouseUpDown(int x, int y, MouseButtonType button, bool isMouseUp)
         {
-            if (this._browser != null)
+            if (this._browser != null && this._browser.IsBrowserInitialized)
             {
                 var host = this._browser.GetBrowserHost();
 
@@ -228,7 +226,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendMouseWheel(int x, int y, int delta, bool isVertical)
         {
-            if (this._browser != null)
+            if (this._browser != null && this._browser.IsBrowserInitialized)
             {
                 var host = this._browser.GetBrowserHost();
                 var mouseEvent = new MouseEvent(x, y, CefEventFlags.None);
@@ -297,7 +295,11 @@ namespace RainbowMage.HtmlRenderer
                     Locale = System.Globalization.CultureInfo.CurrentCulture.Name,
                     CachePath = Path.Combine(pluginDirectory, "Cache"),
                     MultiThreadedMessageLoop = true,
+#if DEBUG
+                    LogSeverity = LogSeverity.Info,
+#else
                     LogSeverity = LogSeverity.Disable,
+#endif
                     BrowserSubprocessPath = Path.Combine(pluginDirectory,
                                            Environment.Is64BitProcess ? "x64" : "x86",
                                            "CefSharp.BrowserSubprocess.exe"),

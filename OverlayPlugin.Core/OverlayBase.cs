@@ -167,6 +167,7 @@ namespace RainbowMage.OverlayPlugin
                     Navigate("about:blank");
                 }
 
+                this.Overlay.UpdateRender();
                 this.Overlay.Show();
 
                 this.Overlay.Visible = this.Config.IsVisible;

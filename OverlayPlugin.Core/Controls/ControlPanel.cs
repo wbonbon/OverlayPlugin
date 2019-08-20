@@ -16,7 +16,6 @@ namespace RainbowMage.OverlayPlugin
     {
         PluginMain pluginMain;
         PluginConfig config;
-        DateTime lastLogUpdate;
 
         public ControlPanel(PluginMain pluginMain, PluginConfig config)
         {
@@ -27,30 +26,16 @@ namespace RainbowMage.OverlayPlugin
             this.config = config;
 
             this.checkBoxAutoHide.Checked = this.config.HideOverlaysWhenNotActive;
-
             this.menuFollowLatestLog.Checked = this.config.FollowLatestLog;
-
-            this.listViewLog.Columns[0].Width = 130;
-            this.listViewLog.Columns[2].Width = 9999;
-
-            lastLogUpdate = DateTime.Now;
             
-            PluginMain.Logger.Logs.ListChanged += (o, e) =>
-            {
-                if (lastLogUpdate != null && DateTime.Now.Subtract(lastLogUpdate).TotalSeconds < 2) return;
-                lastLogUpdate = null;
-
-                listViewLog.BeginUpdate();
-                listViewLog.VirtualListSize = PluginMain.Logger.Logs.Count;
-                if (config.FollowLatestLog && listViewLog.VirtualListSize > 0)
-                {
-                    listViewLog.EnsureVisible(listViewLog.VirtualListSize - 1);
-                }
-                listViewLog.EndUpdate();
-            };
-
+            PluginMain.Logger.RegisterListener(addLogEntry);
             PluginMain.AddonRegistered += (o, e) => InitializeOverlayConfigTabs();
             InitializeOverlayConfigTabs();
+        }
+
+        private void addLogEntry(LogEntry entry)
+        {
+            logBox.AppendText($"[{entry.Time}] {entry.Level}: {entry.Message}\r\n");
         }
 
         private void InitializeOverlayConfigTabs()
@@ -121,9 +106,10 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+
         private void menuLogCopy_Click(object sender, EventArgs e)
         {
-            if (listViewLog.SelectedIndices.Count > 0)
+            /*if (listViewLog.SelectedIndices.Count > 0)
             {
                 var sb = new StringBuilder();
                 foreach (int index in listViewLog.SelectedIndices)
@@ -136,9 +122,10 @@ namespace RainbowMage.OverlayPlugin
                     sb.AppendLine();
                 }
                 Clipboard.SetText(sb.ToString());
-            }
+            }*/
         }
 
+        /*
         private void listViewLog_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
             if (e.ItemIndex >= PluginMain.Logger.Logs.Count) 
@@ -174,7 +161,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 // We should log this but can't since it'd spam the log like crazy.
             }
-        }
+        }*/
 
         private void menuFollowLatestLog_Click(object sender, EventArgs e)
         {

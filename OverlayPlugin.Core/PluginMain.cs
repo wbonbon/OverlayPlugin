@@ -68,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
 
                 try
                 {
-                    Renderer.Initialize(PluginMain.PluginDirectory);
+                    Renderer.Initialize(PluginDirectory);
                 }
                 catch (Exception e)
                 {
@@ -144,7 +144,7 @@ namespace RainbowMage.OverlayPlugin
                 InitializeOverlays();
 
 #if DEBUG
-                Logger.Log(LogLevel.Debug, "ES and overlay init took {0}", watch.Elapsed.TotalSeconds);
+                Logger.Log(LogLevel.Debug, "ES and overlay init took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Stop();
 #endif
 

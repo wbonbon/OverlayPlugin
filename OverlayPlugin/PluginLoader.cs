@@ -44,7 +44,7 @@ namespace RainbowMage.OverlayPlugin
             pluginMain = new PluginMain(pluginDirectory, logger);
             pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
 
-            // We can't re-init use CEF after shutting it down. Let's only do that when ACT closes.
+            // We can't re-init CEF after shutting it down. Let's only do that when ACT closes.
             ActGlobals.oFormActMain.Disposed += ShutdownRenderer;
         }
 

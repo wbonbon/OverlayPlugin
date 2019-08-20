@@ -25,6 +25,8 @@ bld/
 [Oo]bj/
 [Bb]uildX86/
 [Bb]uildX64/
+*.dll
+*.exe
 
 # Roslyn cache directories
 *.ide/

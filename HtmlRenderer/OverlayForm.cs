@@ -93,8 +93,7 @@ namespace RainbowMage.HtmlRenderer
             this.VisibleChanged += OverlayForm_VisibleChanged;
 
             this.url = url;
-            UpdateRender();
-
+            
             // Alt+Tab を押したときに表示されるプレビューから除外する
             //HidePreview();
         }
@@ -294,7 +293,7 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        private void UpdateRender()
+        public void UpdateRender()
         {
             if (this.Renderer != null)
             {

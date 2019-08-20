@@ -44,8 +44,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 // Install a fake WebSocket so we can directly call the event handler.
                 ExecuteScript(@"(function() {
-                    var realWS = window.WebSocket;
-                    var queue = [];
+                    let realWS = window.WebSocket;
+                    let queue = [];
                     window.__OverlayPlugin_ws_faker = (msg) => queue.push(msg);
 
                     window.WebSocket = function(url) {

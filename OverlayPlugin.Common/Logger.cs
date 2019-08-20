@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin
@@ -16,6 +17,7 @@ namespace RainbowMage.OverlayPlugin
         /// 記録されたログを取得します。
         /// </summary>
         public BindingList<LogEntry> Logs { get; private set; }
+        private Action<LogEntry> listener = null;
 
         public Logger()
         {
@@ -39,9 +41,19 @@ namespace RainbowMage.OverlayPlugin
             System.Diagnostics.Trace.WriteLine(string.Format("{0}: {1}: {2}", level, DateTime.Now, message));
 #endif
 
+            var entry = new LogEntry(level, DateTime.Now, message);
+
             lock (Logs)
             {
-                Logs.Add(new LogEntry(level, DateTime.Now, message));
+                
+                if (listener != null)
+                {
+                    listener(entry);
+                }
+                else
+                {
+                    Logs.Add(entry);
+                }
             }
         }
 
@@ -54,6 +66,20 @@ namespace RainbowMage.OverlayPlugin
         public void Log(LogLevel level, string format, params object[] args)
         {
             Log(level, string.Format(format, args));
+        }
+
+        public void RegisterListener(Action<LogEntry> listener)
+        {
+            lock (Logs)
+            {
+                foreach (var entry in Logs)
+                {
+                    listener(entry);
+                }
+
+                this.listener = listener;
+                this.Logs.Clear();
+            }
         }
     }
 

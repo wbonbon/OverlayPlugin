@@ -32,12 +32,16 @@ namespace RainbowMage.OverlayPlugin
 
             foreach (var addon in pluginMain.Addons)
             {
-                comboBox1.Items.Add(addon);
+                if (addon.OverlayType != null) {
+                    comboBox1.Items.Add(addon);
+                }
             }
 
             //comboBox1.ValueMember = "OverlayType";
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
+
+            textBox1.Focus();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

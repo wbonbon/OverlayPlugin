@@ -82,6 +82,9 @@
       <Name>OverlayPlugin.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if $(Platform) == x86 xcopy /Y /R /S "$(SolutionDir)Thirdparty\CefBinary_x86\*" "$(TargetDir)"
