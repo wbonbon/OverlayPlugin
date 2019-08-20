@@ -48,14 +48,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEventSourceConfig.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IOverlay.cs" />
     <Compile Include="IOverlayAddonV2.cs" />
     <Compile Include="IOverlayConfig.cs" />
     <Compile Include="IEventSource.cs" />
     <Compile Include="IPluginConfig.cs" />
-    <Compile Include="Logger.cs" />
     <Compile Include="OverlayConfigList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registry.cs" />
     <Compile Include="TinyIoC.cs" />
   </ItemGroup>
   <ItemGroup>

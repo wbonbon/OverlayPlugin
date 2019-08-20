@@ -264,6 +264,36 @@
   <data name="&gt;&gt;checkBoxAutoHide.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="checkBoxFollowLog.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxFollowLog.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkBoxFollowLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>367, 3</value>
+  </data>
+  <data name="checkBoxFollowLog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 31</value>
+  </data>
+  <data name="checkBoxFollowLog.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="checkBoxFollowLog.Text" xml:space="preserve">
+    <value>Autoscroll the log</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFollowLog.Name" xml:space="preserve">
+    <value>checkBoxFollowLog</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFollowLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFollowLog.Parent" xml:space="preserve">
+    <value>flowLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFollowLog.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
   <data name="flowLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>

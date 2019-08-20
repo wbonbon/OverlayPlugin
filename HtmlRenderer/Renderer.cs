@@ -67,6 +67,7 @@ namespace RainbowMage.HtmlRenderer
             var initScript = @"(async () => {
                 await CefSharp.BindObjectAsync('OverlayPluginApi');
                 OverlayPluginApi.overlayName = " + JsonConvert.SerializeObject(this.overlayName) + @";
+                OverlayPluginApi.ready = true;
             })();";
             e.Frame.ExecuteJavaScriptAsync(initScript, "init");
 
@@ -307,6 +308,9 @@ namespace RainbowMage.HtmlRenderer
 
                 // Necessary to avoid input lag with a framerate limit below 60.
                 cefSettings.CefCommandLineArgs["enable-begin-frame-scheduling"] = "1";
+
+                // Allow websites to play sound even if the user never interacted with that site (pretty common for our overlays)
+                cefSettings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
 
                 cefSettings.EnableAudio();
 

@@ -25,6 +25,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
             Overlay.Renderer.BrowserStartLoading += PrepareWebsite;
             Overlay.Renderer.BrowserLoad += FinishLoading;
+            Overlay.Renderer.BrowserConsoleLog += Renderer_BrowserConsoleLog;
+        }
+
+        private void Renderer_BrowserConsoleLog(object sender, BrowserConsoleLogEventArgs e)
+        {
+            if (Config.Compatibility == "actws" && e.Message.Contains("ws://127.0.0.1/fake/") && (e.Message.Contains("SecurityError:") || e.Message.Contains("ERR_CONNECTION_")))
+            {
+                Overlay.Reload();
+            }
         }
 
         private void FinishLoading(object sender, BrowserLoadEventArgs e)
@@ -49,7 +58,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     window.__OverlayPlugin_ws_faker = (msg) => queue.push(msg);
 
                     window.WebSocket = function(url) {
-                        if (url.indexOf('ws://fake.ws/') > -1)
+                        if (url.indexOf('ws://127.0.0.1/fake/') > -1)
                         {
                             window.__OverlayPlugin_ws_faker = (msg) => {
                                 if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
@@ -78,7 +87,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             if (Config.Compatibility == "actws" && !url.Contains("HOST_PORT="))
             {
-                url += "?HOST_PORT=ws://fake.ws/";
+                url += "?HOST_PORT=ws://127.0.0.1/fake/";
             }
 
             if (url != Overlay.Url)

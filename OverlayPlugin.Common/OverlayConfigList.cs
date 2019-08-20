@@ -14,6 +14,8 @@ namespace RainbowMage.OverlayPlugin
     [Serializable]
     public class OverlayConfigList<T> : Collection<T>, IXmlSerializable
     {
+        public int MissingTypes { get; private set; }
+
         public System.Xml.Schema.XmlSchema GetSchema()
         {
             return null;
@@ -21,6 +23,8 @@ namespace RainbowMage.OverlayPlugin
 
         public void ReadXml(System.Xml.XmlReader reader)
         {
+            MissingTypes = 0;
+
             if (reader.IsEmptyElement)
             {
                 return;
@@ -45,7 +49,12 @@ namespace RainbowMage.OverlayPlugin
                     } catch (Exception e)
                     {
                         System.Diagnostics.Trace.WriteLine(e);
+                        Registry.Resolve<ILogger>().Log(LogLevel.Error, e.ToString());
                     }
+                } else
+                {
+                    reader.Skip();
+                    MissingTypes++;
                 }
 
             } while (reader.ReadToNextSibling("Overlay"));

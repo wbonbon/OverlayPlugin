@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin
 {
     /// <summary>
     /// ログを記録する機能を提供するクラス。
     /// </summary>
-    public class Logger
+    public class Logger : ILogger
     {
         /// <summary>
         /// 記録されたログを取得します。
@@ -22,6 +17,7 @@ namespace RainbowMage.OverlayPlugin
         public Logger()
         {
             this.Logs = new BindingList<LogEntry>();
+            Registry.Register<ILogger>(this);
         }
 
         /// <summary>
@@ -81,39 +77,5 @@ namespace RainbowMage.OverlayPlugin
                 this.Logs.Clear();
             }
         }
-    }
-
-    public class LogEntry
-    {
-        public string Message { get; set; }
-        public LogLevel Level { get; set; }
-        public DateTime Time { get; set; }
-
-        public LogEntry(LogLevel level, DateTime time, string message)
-        {
-            this.Message = message;
-            this.Level = level;
-            this.Time = time;
-        }
-    }
-
-    public class LogEventArgs : EventArgs
-    {
-        public string Message { get; private set; }
-        public LogLevel Level { get; private set; }
-        public LogEventArgs(LogLevel level, string message)
-        {
-            this.Message = message;
-            this.Level = level;
-        }
-    }
-
-    public enum LogLevel
-    {
-        Trace,
-        Debug,
-        Info,
-        Warning,
-        Error
     }
 }

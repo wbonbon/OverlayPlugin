@@ -50,6 +50,7 @@ namespace RainbowMage.OverlayPlugin
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.label_ListEmpty = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -93,6 +94,7 @@ namespace RainbowMage.OverlayPlugin
             this.flowLayoutPanel.Controls.Add(this.buttonNewOverlay);
             this.flowLayoutPanel.Controls.Add(this.buttonRemoveOverlay);
             this.flowLayoutPanel.Controls.Add(this.checkBoxAutoHide);
+            this.flowLayoutPanel.Controls.Add(this.checkBoxFollowLog);
             resources.ApplyResources(this.flowLayoutPanel, "flowLayoutPanel");
             this.flowLayoutPanel.Name = "flowLayoutPanel";
             // 
@@ -190,6 +192,13 @@ namespace RainbowMage.OverlayPlugin
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
+            // checkBoxFollowLog
+            // 
+            resources.ApplyResources(this.checkBoxFollowLog, "checkBoxFollowLog");
+            this.checkBoxFollowLog.Name = "checkBoxFollowLog";
+            this.checkBoxFollowLog.UseVisualStyleBackColor = true;
+            this.checkBoxFollowLog.CheckedChanged += new System.EventHandler(this.CheckBoxFollowLog_CheckedChanged);
+            // 
             // ControlPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -231,5 +240,6 @@ namespace RainbowMage.OverlayPlugin
         private FlowLayoutPanel flowLayoutPanel;
         private Label label_ListEmpty;
         private TextBox logBox;
+        private CheckBox checkBoxFollowLog;
     }
 }

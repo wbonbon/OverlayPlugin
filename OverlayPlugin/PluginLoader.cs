@@ -38,10 +38,14 @@ namespace RainbowMage.OverlayPlugin
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void Initialize(TabPage pluginScreenSpace, Label pluginStatusText)
         {
+            // Prevent a stack overflow in the assembly loaded handler by loading the logger interface early.
+            var dummy = typeof(ILogger);
+
             logger = new Logger();
             asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, "AssemblyResolver: Error: {0}", e.Exception);
             asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, "AssemblyResolver: Loaded: {0}", e.LoadedAssembly.FullName);
             pluginMain = new PluginMain(pluginDirectory, logger);
+
             pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
 
             // We can't re-init CEF after shutting it down. Let's only do that when ACT closes.

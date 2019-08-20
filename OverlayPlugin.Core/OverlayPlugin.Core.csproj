@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FFXIVRepository.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="OverlayApi.cs" />
     <Compile Include="EventDispatcher.cs" />
     <Compile Include="IEventReceiver.cs" />
@@ -87,13 +88,13 @@
     </Compile>
     <Compile Include="Overlays\MiniParseEventSource.cs" />
     <Compile Include="Overlays\MiniParseOverlayConfig.cs" />
-    <Compile Include="TabControlExt.cs">
+    <Compile Include="Controls\TabControlExt.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ControlPanel.cs">
+    <Compile Include="Controls\ControlPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ControlPanel.Designer.cs">
+    <Compile Include="Controls\ControlPanel.Designer.cs">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="KeyboardHook.cs" />
@@ -117,10 +118,10 @@
     <Compile Include="Overlays\MiniParseOverlayAddon.cs" />
     <Compile Include="Overlays\MiniParseEventSourceConfig.cs" />
     <Compile Include="NativeMethods.cs" />
-    <Compile Include="NewOverlayDialog.cs">
+    <Compile Include="Controls\NewOverlayDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewOverlayDialog.Designer.cs">
+    <Compile Include="Controls\NewOverlayDialog.Designer.cs">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="OverlayBase.cs" />
@@ -145,10 +146,10 @@
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Util.cs" />
-    <Compile Include="WSConfigPanel.cs">
+    <Compile Include="Controls\WSConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WSConfigPanel.Designer.cs">
+    <Compile Include="Controls\WSConfigPanel.Designer.cs">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="WSServer.cs" />
@@ -171,19 +172,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ControlPanel.ja-JP.resx">
+    <EmbeddedResource Include="Controls\ControlPanel.ja-JP.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ControlPanel.ko-KR.resx">
+    <EmbeddedResource Include="Controls\ControlPanel.ko-KR.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ControlPanel.resx">
+    <EmbeddedResource Include="Controls\ControlPanel.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewOverlayDialog.ja-JP.resx">
+    <EmbeddedResource Include="Controls\NewOverlayDialog.ja-JP.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewOverlayDialog.ko-KR.resx">
+    <EmbeddedResource Include="Controls\NewOverlayDialog.ko-KR.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.ja-JP.resx">
@@ -222,7 +223,7 @@
     <EmbeddedResource Include="Overlays\MiniParseConfigPanel.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewOverlayDialog.resx">
+    <EmbeddedResource Include="Controls\NewOverlayDialog.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.ko-KR.resx">
@@ -238,7 +239,7 @@
     <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WSConfigPanel.resx">
+    <EmbeddedResource Include="Controls\WSConfigPanel.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -256,9 +257,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

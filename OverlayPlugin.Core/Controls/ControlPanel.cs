@@ -26,7 +26,8 @@ namespace RainbowMage.OverlayPlugin
             this.config = config;
 
             this.checkBoxAutoHide.Checked = this.config.HideOverlaysWhenNotActive;
-            this.menuFollowLatestLog.Checked = this.config.FollowLatestLog;
+            //this.menuFollowLatestLog.Checked = this.config.FollowLatestLog;
+            this.checkBoxFollowLog.Checked = this.config.FollowLatestLog;
             
             PluginMain.Logger.RegisterListener(addLogEntry);
             PluginMain.AddonRegistered += (o, e) => InitializeOverlayConfigTabs();
@@ -35,7 +36,38 @@ namespace RainbowMage.OverlayPlugin
 
         private void addLogEntry(LogEntry entry)
         {
-            logBox.AppendText($"[{entry.Time}] {entry.Level}: {entry.Message}\r\n");
+            var msg = $"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine;
+
+            if (checkBoxFollowLog.Checked)
+            {
+                logBox.AppendText(msg);
+            }
+            else
+            {
+                // This is based on https://stackoverflow.com/q/1743448
+                bool bottomFlag = false;
+                int sbOffset;
+                int savedVpos;
+
+                // Win32 magic to keep the textbox scrolling to the newest append to the textbox unless
+                // the user has moved the scrollbox up
+                sbOffset = (int)((logBox.ClientSize.Height - SystemInformation.HorizontalScrollBarHeight) / (logBox.Font.Height));
+                savedVpos = NativeMethods.GetScrollPos(logBox.Handle, NativeMethods.SB_VERT);
+                NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out int VSmax);
+
+                if (savedVpos >= (VSmax - sbOffset - 1))
+                    bottomFlag = true;
+
+                logBox.AppendText(msg);
+
+                if (bottomFlag)
+                {
+                    NativeMethods.GetScrollRange(logBox.Handle, NativeMethods.SB_VERT, out _, out VSmax);
+                    savedVpos = VSmax - sbOffset;
+                }
+                NativeMethods.SetScrollPos(logBox.Handle, NativeMethods.SB_VERT, savedVpos, true);
+                NativeMethods.PostMessageA(logBox.Handle, NativeMethods.WM_VSCROLL, NativeMethods.SB_THUMBPOSITION + 0x10000 * savedVpos, 0);
+            }
         }
 
         private void InitializeOverlayConfigTabs()
@@ -292,6 +324,11 @@ namespace RainbowMage.OverlayPlugin
         private void checkBoxAutoHide_CheckedChanged(object sender, EventArgs e)
         {
             config.HideOverlaysWhenNotActive = checkBoxAutoHide.Checked;
+        }
+
+        private void CheckBoxFollowLog_CheckedChanged(object sender, EventArgs e)
+        {
+            config.FollowLatestLog = checkBoxFollowLog.Checked;
         }
     }
 }

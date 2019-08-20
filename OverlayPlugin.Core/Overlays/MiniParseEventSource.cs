@@ -57,8 +57,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             }
 
 #if DEBUG
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //var stopwatch = new Stopwatch();
+            //stopwatch.Start();
 #endif
 
             var allies = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.GetAllies();
@@ -97,8 +97,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             obj["isActive"] = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active ? "true" : "false";
 
 #if DEBUG
-            stopwatch.Stop();
-            Log(LogLevel.Trace, "CreateUpdateScript: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
+            //stopwatch.Stop();
+            //Log(LogLevel.Trace, "CreateUpdateScript: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
             return obj;
         }
@@ -106,8 +106,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private List<KeyValuePair<CombatantData, Dictionary<string, string>>> GetCombatantList(List<CombatantData> allies)
         {
 #if DEBUG
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //var stopwatch = new Stopwatch();
+            //stopwatch.Start();
 #endif
 
             var combatantList = new List<KeyValuePair<CombatantData, Dictionary<string, string>>>();
@@ -158,8 +158,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             );
 
 #if DEBUG
-            stopwatch.Stop();
-            Log(LogLevel.Trace, "GetCombatantList: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
+            //stopwatch.Stop();
+            //Log(LogLevel.Trace, "GetCombatantList: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
 
             return combatantList;
@@ -168,12 +168,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private Dictionary<string, string> GetEncounterDictionary(List<CombatantData> allies)
         {
 #if DEBUG
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+            //var stopwatch = new Stopwatch();
+            //stopwatch.Start();
 #endif
 
             var encounterDict = new Dictionary<string, string>();
-            //Parallel.ForEach(EncounterData.ExportVariables, (exportValuePair) =>
             foreach (var exportValuePair in EncounterData.ExportVariables)
             {
                 try
@@ -206,11 +205,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     Log(LogLevel.Debug, "GetEncounterDictionary: {0}: {1}", exportValuePair.Key, e);
                 }
             }
-            //);
 
 #if DEBUG
-            stopwatch.Stop();
-            Log(LogLevel.Trace, "GetEncounterDictionary: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
+            //stopwatch.Stop();
+            //Log(LogLevel.Trace, "GetEncounterDictionary: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
 
             return encounterDict;

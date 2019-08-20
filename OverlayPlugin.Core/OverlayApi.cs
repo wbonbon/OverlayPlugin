@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using RainbowMage.HtmlRenderer;
+using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -67,6 +68,7 @@ namespace RainbowMage.OverlayPlugin
                         foreach (var name in message["events"].ToList())
                         {
                             EventDispatcher.Subscribe(name.ToString(), receiver);
+                            PluginMain.Logger.Log(LogLevel.Info, "{0}: Subscribed to {1}", ((OverlayBase<MiniParseOverlayConfig>)receiver).Name, name.ToString());
                         }
                         return;
                     } else if (handler == "unsubscribe")
