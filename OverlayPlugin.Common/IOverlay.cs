@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -21,10 +22,9 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         string Name { get; }
 
-        /// <summary>
-        /// プラグインの設定を取得します。
-        /// </summary>
-        IPluginConfig PluginConfig { get; set; }
+        IOverlayConfig Config { get; set; }
+
+        Control CreateConfigControl();
 
         /// <summary>
         /// オーバーレイがログを出力したときに発生します。

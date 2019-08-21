@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -15,11 +11,6 @@ namespace RainbowMage.OverlayPlugin
         string Name { get; }
 
         /// <summary>
-        /// オーバーレイがログを出力したときに発生します。
-        /// </summary>
-        event EventHandler<LogEventArgs> OnLog;
-
-        /// <summary>
         /// オーバーレイの更新を開始します。
         /// </summary>
         void Start();
@@ -28,5 +19,9 @@ namespace RainbowMage.OverlayPlugin
         /// オーバーレイの更新を停止します。
         /// </summary>
         void Stop();
+
+        Control CreateConfigControl();
+
+        void LoadConfig(IPluginConfig config);
     }
 }

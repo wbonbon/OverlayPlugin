@@ -77,5 +77,13 @@ namespace RainbowMage.OverlayPlugin
                 this.Logs.Clear();
             }
         }
+
+        public void ClearListener()
+        {
+            lock (Logs)
+            {
+                this.listener = null;
+            }
+        }
     }
 }

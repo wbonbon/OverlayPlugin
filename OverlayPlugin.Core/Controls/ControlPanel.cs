@@ -26,12 +26,23 @@ namespace RainbowMage.OverlayPlugin
             this.config = config;
 
             this.checkBoxAutoHide.Checked = this.config.HideOverlaysWhenNotActive;
-            //this.menuFollowLatestLog.Checked = this.config.FollowLatestLog;
             this.checkBoxFollowLog.Checked = this.config.FollowLatestLog;
             
             PluginMain.Logger.RegisterListener(addLogEntry);
-            PluginMain.AddonRegistered += (o, e) => InitializeOverlayConfigTabs();
-            InitializeOverlayConfigTabs();
+            Registry.AddonRegistered += InitializeOverlayConfigTabs;
+            InitializeOverlayConfigTabs(null, null);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null) components.Dispose();
+                Registry.AddonRegistered -= InitializeOverlayConfigTabs;
+                PluginMain.Logger.ClearListener();
+            }
+
+            base.Dispose(disposing);
         }
 
         private void addLogEntry(LogEntry entry)
@@ -70,11 +81,11 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private void InitializeOverlayConfigTabs()
+        private void InitializeOverlayConfigTabs(object sender, EventArgs e)
         {
             tabControl.TabPages.Clear();
 
-            foreach (var source in this.pluginMain.EventSources)
+            foreach (var source in Registry.EventSources)
             {
                 AddConfigTab(source);
             }
@@ -98,19 +109,14 @@ namespace RainbowMage.OverlayPlugin
                 Text = overlay.GetType().Name
             };
 
-            var addon = pluginMain.Addons.FirstOrDefault(x => x.OverlayType == overlay.GetType());
-            if (addon != null)
+            var control = overlay.CreateConfigControl();
+            if (control != null)
             {
-                var control = addon.CreateOverlayConfigControlInstance(overlay);
-                if (control != null)
-                {
-                    control.Dock = DockStyle.Fill;
-                    control.BackColor = SystemColors.ControlLightLight;
-                    tabPage.Controls.Add(control);
+                control.Dock = DockStyle.Fill;
+                control.BackColor = SystemColors.ControlLightLight;
+                tabPage.Controls.Add(control);
 
-                    this.tabControl.TabPages.Add(tabPage);
-                    //this.tabControl.SelectTab(tabPage);
-                }
+                this.tabControl.TabPages.Add(tabPage);
             }
         }
 
@@ -122,102 +128,15 @@ namespace RainbowMage.OverlayPlugin
                 Text = "Event Source " + source.GetType().Name
             };
 
-            var addon = pluginMain.Addons.FirstOrDefault(x => x.EventSourceType == source.GetType());
-            if (addon != null)
+            var control = source.CreateConfigControl();
+            if (control != null)
             {
-                var control = addon.CreateEventSourceControlInstance(source);
-                if (control != null)
-                {
-                    control.Dock = DockStyle.Fill;
-                    control.BackColor = SystemColors.ControlLightLight;
-                    tabPage.Controls.Add(control);
+                control.Dock = DockStyle.Fill;
+                control.BackColor = SystemColors.ControlLightLight;
+                tabPage.Controls.Add(control);
 
-                    this.tabControl.TabPages.Add(tabPage);
-                    //this.tabControl.SelectTab(tabPage);
-                }
+                this.tabControl.TabPages.Add(tabPage);
             }
-        }
-
-
-        private void menuLogCopy_Click(object sender, EventArgs e)
-        {
-            /*if (listViewLog.SelectedIndices.Count > 0)
-            {
-                var sb = new StringBuilder();
-                foreach (int index in listViewLog.SelectedIndices)
-                {
-                    sb.AppendFormat(
-                        "{0}: {1}: {2}",
-                        PluginMain.Logger.Logs[index].Time,
-                        PluginMain.Logger.Logs[index].Level,
-                        PluginMain.Logger.Logs[index].Message);
-                    sb.AppendLine();
-                }
-                Clipboard.SetText(sb.ToString());
-            }*/
-        }
-
-        /*
-        private void listViewLog_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
-        {
-            if (e.ItemIndex >= PluginMain.Logger.Logs.Count) 
-            {
-                e.Item = new ListViewItem("");
-                e.Item.SubItems.Add("");
-                e.Item.SubItems.Add("");
-                return;
-            };
-
-            try
-            {
-                var log = PluginMain.Logger.Logs[e.ItemIndex];
-                e.Item = new ListViewItem(log.Time.ToString() ?? "");
-                e.Item.UseItemStyleForSubItems = true;
-                e.Item.SubItems.Add(log.Level.ToString() ?? "");
-                e.Item.SubItems.Add(log.Message ?? "Null");
-
-                e.Item.ForeColor = Color.Black;
-                if (log.Level == LogLevel.Warning)
-                {
-                    e.Item.BackColor = Color.LightYellow;
-                }
-                else if (log.Level == LogLevel.Error)
-                {
-                    e.Item.BackColor = Color.LightPink;
-                }
-                else
-                {
-                    e.Item.BackColor = Color.White;
-                }
-            } catch(Exception)
-            {
-                // We should log this but can't since it'd spam the log like crazy.
-            }
-        }*/
-
-        private void menuFollowLatestLog_Click(object sender, EventArgs e)
-        {
-            this.config.FollowLatestLog = menuFollowLatestLog.Checked;
-        }
-
-        private void menuClearLog_Click(object sender, EventArgs e)
-        {
-            PluginMain.Logger.Logs.Clear();
-        }
-
-        private void menuCopyLogAll_Click(object sender, EventArgs e)
-        {
-            var sb = new StringBuilder();
-            foreach (var log in PluginMain.Logger.Logs)
-            {
-                sb.AppendFormat(
-                    "{0}: {1}: {2}",
-                    log.Time,
-                    log.Level,
-                    log.Message);
-                sb.AppendLine();
-            }
-            Clipboard.SetText(sb.ToString());
         }
 
         private void buttonNewOverlay_Click(object sender, EventArgs e)
@@ -255,12 +174,15 @@ namespace RainbowMage.OverlayPlugin
             newOverlayDialog.Dispose();
         }
 
-        private IOverlay CreateAndRegisterOverlay(IOverlayAddonV2 overlayType, string name)
+        private IOverlay CreateAndRegisterOverlay(Type overlayType, string name)
         {
-            var config = overlayType.CreateOverlayConfigInstance(name);
-            this.config.Overlays.Add(config);
+            var parameters = new NamedParameterOverloads();
+            parameters["config"] = null;
+            parameters["name"] = name;
 
-            var overlay = overlayType.CreateOverlayInstance(config);
+            var overlay = (IOverlay) Registry.Container.Resolve(overlayType, parameters);
+
+            config.Overlays.Add(overlay.Config);
             pluginMain.RegisterOverlay(overlay);
 
             AddConfigTab(overlay);

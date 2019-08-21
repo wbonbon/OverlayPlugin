@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -19,7 +20,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         
         public MiniParseEventSourceConfig Config { get; set; }
 
-        public MiniParseEventSource(MiniParseEventSourceConfig Config) : base()
+        public MiniParseEventSource(MiniParseEventSourceConfig config, ILogger logger) : base(logger)
         {
             this.Name = "MiniParse";
             this.Config = Config;
@@ -27,6 +28,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
             RegisterEventTypes(new List<string> { "CombatData", "LogLine" });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
+        }
+
+        public override Control CreateConfigControl()
+        {
+            return new MiniParseEventSourceConfigPanel(this);
+        }
+
+        public override void LoadConfig(IPluginConfig config)
+        {
         }
 
         protected override void Update()

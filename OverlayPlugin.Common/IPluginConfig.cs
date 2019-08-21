@@ -14,5 +14,6 @@ namespace RainbowMage.OverlayPlugin
         bool HideOverlaysWhenNotActive { get; set; }
         Version Version { get; set; }
         bool IsFirstLaunch { get; set; }
+        Dictionary<string, object> EventSourceConfigs { get; set; }
     }
 }

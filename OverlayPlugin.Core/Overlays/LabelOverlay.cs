@@ -29,6 +29,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             };
         }
 
+        public override System.Windows.Forms.Control CreateConfigControl()
+        {
+            return new LabelOverlayConfigPanel(this);
+        }
+
         private void UpdateOverlayText()
         {
             try

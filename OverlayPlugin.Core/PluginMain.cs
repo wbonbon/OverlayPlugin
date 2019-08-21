@@ -28,9 +28,6 @@ namespace RainbowMage.OverlayPlugin
 
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
-        internal List<IOverlayAddonV2> Addons { get; set; }
-        internal List<IEventSource> EventSources { get; private set; }
-        public static event EventHandler<AddonRegisteredEventArgs> AddonRegistered;
 
         public static Logger Logger { get; private set; }
         internal static string PluginDirectory { get; private set; }
@@ -140,7 +137,6 @@ namespace RainbowMage.OverlayPlugin
 #if DEBUG
                 watch.Reset();
 #endif
-                InitializeEventSources();
                 InitializeOverlays();
 
 #if DEBUG
@@ -182,50 +178,19 @@ namespace RainbowMage.OverlayPlugin
             this.Overlays = new List<IOverlay>();
             foreach (var overlayConfig in this.Config.Overlays)
             {
-                var addon = this.Addons.FirstOrDefault(x => x.OverlayType == overlayConfig.OverlayType);
-                if (addon != null)
+                var parameters = new NamedParameterOverloads();
+                parameters["config"] = overlayConfig;
+                parameters["name"] = overlayConfig.Name;
+
+                var overlay = (IOverlay) Registry.Container.Resolve(overlayConfig.OverlayType, parameters);
+                if (overlay != null)
                 {
-                    var overlay = addon.CreateOverlayInstance(overlayConfig);
                     RegisterOverlay(overlay);
                 }
                 else
                 {
                     Logger.Log(LogLevel.Error, "InitPlugin: Could not find addon for {0}.", overlayConfig.Name);
                 }
-            }
-        }
-
-        private void InitializeEventSources()
-        {
-            this.EventSources = new List<IEventSource>();
-            foreach (var addon in this.Addons)
-            {
-                InitEventSource(addon);
-            }
-        }
-
-        private void InitEventSource(IOverlayAddonV2 addon)
-        {
-            try {
-                var config = this.Config.EventSources.FirstOrDefault(x => x.SourceType == addon.EventSourceType);
-
-                if (config == null)
-                {
-                    config = addon.CreateEventSourceConfigInstance();
-                    if (config != null) this.Config.EventSources.Add(config);
-                }
-
-                var source = addon.CreateEventSourceInstance(config);
-                if (source != null)
-                {
-                    source.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
-                    this.EventSources.Add(source);
-                
-                    source.Start();
-                }
-            } catch(Exception e)
-            {
-                Logger.Log(LogLevel.Error, $"Failed to initialize {addon.Name}: {e}!");
             }
         }
 
@@ -236,7 +201,6 @@ namespace RainbowMage.OverlayPlugin
         internal void RegisterOverlay(IOverlay overlay)
         {
             overlay.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
-            overlay.PluginConfig = (IPluginConfig)Config;
             overlay.Start();
             this.Overlays.Add(overlay);
         }
@@ -258,18 +222,14 @@ namespace RainbowMage.OverlayPlugin
         {
             SaveConfig();
 
+            controlPanel.Dispose();
+
             foreach (var overlay in this.Overlays)
             {
                 overlay.Dispose();
             }
 
-            foreach (var addon in this.Addons)
-            {
-                addon.Dispose();
-            }
-
             this.Overlays.Clear();
-            this.Addons.Clear();
 
             try { WSServer.Stop(); }
             catch { }
@@ -301,13 +261,13 @@ namespace RainbowMage.OverlayPlugin
                     }
                 }
 
-                this.Addons = new List<IOverlayAddonV2>();
+                var Addons = new List<IOverlayAddonV2>();
 
-                // 内蔵アドオンを追加
-                this.Addons.Add(new MiniParseOverlayAddon());
-                this.Addons.Add(new SpellTimerOverlayAddon());
-                this.Addons.Add(new LabelOverlayAddon());
-                this.Addons.Add(new LogParseOverlayAddon());
+                Registry.RegisterOverlay<MiniParseOverlay>();
+                Registry.RegisterOverlay<SpellTimerOverlay>();
+                Registry.RegisterOverlay<LabelOverlay>();
+
+                Registry.RegisterEventSource<MiniParseEventSource>();
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
 
@@ -317,15 +277,25 @@ namespace RainbowMage.OverlayPlugin
 
                     try
                     {
-                        var iface = plugin.pluginObj.GetType().GetInterface(typeof(IOverlayAddonV2).FullName);
-                        if (iface != null)
+                        if (plugin.pluginObj.GetType().GetInterface(typeof(IOverlayAddonV2).FullName) != null)
                         {
-                            this.Addons.Add((IOverlayAddonV2) plugin.pluginObj);
+                            try
+                            {
+                                // プラグインのインスタンスを生成し、アドオンリストに追加する
+                                var addon = (IOverlayAddonV2)plugin.pluginObj;
+                                addon.Init();
+
+                                Logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", plugin.lblPluginTitle.Text);
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
+                            }
                         }
                     }
                     catch (Exception e)
                     {
-                        Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle, e);
+                        Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
                     }
                 }
 
@@ -353,7 +323,7 @@ namespace RainbowMage.OverlayPlugin
                             {
                                 // プラグインのインスタンスを生成し、アドオンリストに追加する
                                 var addon = (IOverlayAddonV2)asm.CreateInstance(type.FullName);
-                                this.Addons.Add(addon);
+                                addon.Init();
 
                                 Logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", type.FullName);
                             }
@@ -375,14 +345,6 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public void RegisterAddon(IOverlayAddonV2 addon)
-        {
-            this.Addons.Add(addon);
-            InitEventSource(addon);
-
-            AddonRegistered(this, new AddonRegisteredEventArgs());
-        }
-
         /// <summary>
         /// 設定を読み込みます。
         /// </summary>
@@ -390,15 +352,40 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                Config = PluginConfig.LoadXml(PluginDirectory, GetConfigPath());
+                Config = PluginConfig.LoadJson(GetConfigPath());
+            }
+            catch (FileNotFoundException e)
+            {
+                Config = null;
             }
             catch (Exception e)
             {
-                // 設定ファイルが存在しない、もしくは破損している場合は作り直す
-                Logger.Log(LogLevel.Warning, "LoadConfig: {0}", e);
-                Logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
-                Config = new PluginConfig();
-                Config.SetDefaultOverlayConfigs(PluginDirectory);
+                Config = null;
+                Logger.Log(LogLevel.Error, "LoadConfig: {0}", e);
+            }
+
+            if (Config == null)
+            {
+                try
+                {
+                    Config = PluginConfig.LoadXml(PluginDirectory, GetConfigPath(true));
+                }
+                catch (Exception e)
+                {
+                    // 設定ファイルが存在しない、もしくは破損している場合は作り直す
+                    Logger.Log(LogLevel.Warning, "LoadConfig: {0}", e);
+                    Logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
+                    Config = new PluginConfig();
+                    Config.SetDefaultOverlayConfigs(PluginDirectory);
+                }
+            }
+
+            Registry.Register(Config);
+            Registry.Register<IPluginConfig>(Config);
+
+            foreach (var es in Registry.EventSources)
+            {
+                es.LoadConfig(Config);
             }
         }
 
@@ -414,7 +401,7 @@ namespace RainbowMage.OverlayPlugin
                     overlay.SavePositionAndSize();
                 }
 
-                Config.SaveXml(GetConfigPath());
+                Config.SaveJson(GetConfigPath());
             }
             catch (Exception e)
             {
@@ -427,19 +414,14 @@ namespace RainbowMage.OverlayPlugin
         /// 設定ファイルのパスを取得します。
         /// </summary>
         /// <returns></returns>
-        private static string GetConfigPath()
+        private static string GetConfigPath(bool xml = false)
         {
             var path = System.IO.Path.Combine(
                 ActGlobals.oFormActMain.AppDataFolder.FullName,
                 "Config",
-                "RainbowMage.OverlayPlugin.config.xml");
+                "RainbowMage.OverlayPlugin.config." + (xml ? "xml" : "json"));
 
             return path;
         }
-    }
-
-    public class AddonRegisteredEventArgs : EventArgs
-    {
-
     }
 }

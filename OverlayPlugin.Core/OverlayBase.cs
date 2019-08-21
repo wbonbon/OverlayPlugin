@@ -44,23 +44,34 @@ namespace RainbowMage.OverlayPlugin
         /// <summary>
         /// プラグインの設定を取得します。
         /// </summary>
-        public IPluginConfig PluginConfig { get; set; }
+        public IPluginConfig PluginConfig { get; private set; }
+        IOverlayConfig IOverlay.Config { get => Config; set => Config = (TConfig)value; }
 
         protected OverlayBase(TConfig config, string name)
         {
+            this.PluginConfig = Registry.Resolve<IPluginConfig>();
             this.Config = config;
             this.Name = name;
+
+            if (this.Config == null)
+            {
+                this.Config = (TConfig) typeof(TConfig).GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { name });
+            }
 
             InitializeOverlay();
             InitializeTimer();
             InitializeConfigHandlers();
         }
 
+        public abstract Control CreateConfigControl();
+
         /// <summary>
         /// オーバーレイの更新を開始します。
         /// </summary>
         public virtual void Start()
         {
+            if (Config == null) throw new InvalidOperationException("Configuration is missing!");
+
             timer.Start();
             xivWindowTimer.Start();
         }

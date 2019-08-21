@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace RainbowMage.OverlayPlugin.Overlays
 {
     [Serializable]
-    public class MiniParseEventSourceConfig : IEventSourceConfig
+    public class MiniParseEventSourceConfig
     {
         public event EventHandler<SortKeyChangedEventArgs> SortKeyChanged;
         public event EventHandler<SortTypeChangedEventArgs> SortTypeChanged;

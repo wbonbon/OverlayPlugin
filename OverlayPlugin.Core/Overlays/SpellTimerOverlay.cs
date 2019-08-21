@@ -53,6 +53,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             };
         }
 
+        public override System.Windows.Forms.Control CreateConfigControl()
+        {
+            return new SpellTimerConfigPanel(this);
+        }
+
         protected override void Update()
         {
             try

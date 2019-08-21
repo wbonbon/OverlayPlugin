@@ -9,19 +9,6 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// 使用中のリソースをすべてクリーンアップします。
-        /// </summary>
-        /// <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region コンポーネント デザイナーで生成されたコード
 
         /// <summary> 
@@ -30,7 +17,6 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPanel));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel0 = new System.Windows.Forms.TableLayoutPanel();
@@ -39,25 +25,17 @@ namespace RainbowMage.OverlayPlugin
             this.buttonNewOverlay = new System.Windows.Forms.Button();
             this.buttonRemoveOverlay = new System.Windows.Forms.Button();
             this.checkBoxAutoHide = new System.Windows.Forms.CheckBox();
+            this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
             this.logBox = new System.Windows.Forms.TextBox();
-            this.contextMenuLogList = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuCopyLogAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuLogCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuFollowLatestLog = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.menuClearLog = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.label_ListEmpty = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel0.SuspendLayout();
             this.flowLayoutPanel.SuspendLayout();
-            this.contextMenuLogList.SuspendLayout();
             this.tabPageMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,6 +97,13 @@ namespace RainbowMage.OverlayPlugin
             this.checkBoxAutoHide.UseVisualStyleBackColor = true;
             this.checkBoxAutoHide.CheckedChanged += new System.EventHandler(this.checkBoxAutoHide_CheckedChanged);
             // 
+            // checkBoxFollowLog
+            // 
+            resources.ApplyResources(this.checkBoxFollowLog, "checkBoxFollowLog");
+            this.checkBoxFollowLog.Name = "checkBoxFollowLog";
+            this.checkBoxFollowLog.UseVisualStyleBackColor = true;
+            this.checkBoxFollowLog.CheckedChanged += new System.EventHandler(this.CheckBoxFollowLog_CheckedChanged);
+            // 
             // logBox
             // 
             this.logBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -126,53 +111,6 @@ namespace RainbowMage.OverlayPlugin
             this.logBox.HideSelection = false;
             this.logBox.Name = "logBox";
             this.logBox.ReadOnly = true;
-            // 
-            // contextMenuLogList
-            // 
-            this.contextMenuLogList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuCopyLogAll,
-            this.menuLogCopy,
-            this.toolStripMenuItem1,
-            this.menuFollowLatestLog,
-            this.toolStripMenuItem2,
-            this.menuClearLog});
-            this.contextMenuLogList.Name = "contextMenuLogList";
-            resources.ApplyResources(this.contextMenuLogList, "contextMenuLogList");
-            // 
-            // menuCopyLogAll
-            // 
-            this.menuCopyLogAll.Name = "menuCopyLogAll";
-            resources.ApplyResources(this.menuCopyLogAll, "menuCopyLogAll");
-            this.menuCopyLogAll.Click += new System.EventHandler(this.menuCopyLogAll_Click);
-            // 
-            // menuLogCopy
-            // 
-            this.menuLogCopy.Name = "menuLogCopy";
-            resources.ApplyResources(this.menuLogCopy, "menuLogCopy");
-            this.menuLogCopy.Click += new System.EventHandler(this.menuLogCopy_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
-            // 
-            // menuFollowLatestLog
-            // 
-            this.menuFollowLatestLog.CheckOnClick = true;
-            this.menuFollowLatestLog.Name = "menuFollowLatestLog";
-            resources.ApplyResources(this.menuFollowLatestLog, "menuFollowLatestLog");
-            this.menuFollowLatestLog.Click += new System.EventHandler(this.menuFollowLatestLog_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
-            // 
-            // menuClearLog
-            // 
-            this.menuClearLog.Name = "menuClearLog";
-            resources.ApplyResources(this.menuClearLog, "menuClearLog");
-            this.menuClearLog.Click += new System.EventHandler(this.menuClearLog_Click);
             // 
             // tabPageMain
             // 
@@ -192,13 +130,6 @@ namespace RainbowMage.OverlayPlugin
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
             // 
-            // checkBoxFollowLog
-            // 
-            resources.ApplyResources(this.checkBoxFollowLog, "checkBoxFollowLog");
-            this.checkBoxFollowLog.Name = "checkBoxFollowLog";
-            this.checkBoxFollowLog.UseVisualStyleBackColor = true;
-            this.checkBoxFollowLog.CheckedChanged += new System.EventHandler(this.CheckBoxFollowLog_CheckedChanged);
-            // 
             // ControlPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -214,7 +145,6 @@ namespace RainbowMage.OverlayPlugin
             this.tableLayoutPanel0.ResumeLayout(false);
             this.flowLayoutPanel.ResumeLayout(false);
             this.flowLayoutPanel.PerformLayout();
-            this.contextMenuLogList.ResumeLayout(false);
             this.tabPageMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -223,14 +153,7 @@ namespace RainbowMage.OverlayPlugin
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuLogList;
-        private System.Windows.Forms.ToolStripMenuItem menuLogCopy;
         private RainbowMage.OverlayPlugin.TabControlExt tabControl;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem menuFollowLatestLog;
-        private System.Windows.Forms.ToolStripMenuItem menuCopyLogAll;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem menuClearLog;
         private System.Windows.Forms.TabPage tabPageMain;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonRemoveOverlay;

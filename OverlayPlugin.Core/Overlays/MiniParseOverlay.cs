@@ -15,8 +15,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
 {
     public partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
     {
-        public MiniParseOverlay(MiniParseOverlayConfig config)
-            : base(config, config.Name)
+        public MiniParseOverlay(MiniParseOverlayConfig config, string name)
+            : base(config, name)
         {
             config.CompatibilityChanged += (o, e) =>
             {
@@ -26,6 +26,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             Overlay.Renderer.BrowserStartLoading += PrepareWebsite;
             Overlay.Renderer.BrowserLoad += FinishLoading;
             Overlay.Renderer.BrowserConsoleLog += Renderer_BrowserConsoleLog;
+        }
+
+        public override Control CreateConfigControl()
+        {
+            return new MiniParseConfigPanel(this);
         }
 
         private void Renderer_BrowserConsoleLog(object sender, BrowserConsoleLogEventArgs e)
@@ -76,6 +81,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         }
                     };
                 })();");
+
+                Subscribe("CombatData");
             } else if (Config.Compatibility == "legacy") {
                 // Subscriptions are cleared on page navigation so we have to restore this after every load.
 

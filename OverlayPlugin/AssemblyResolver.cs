@@ -24,7 +24,9 @@ namespace RainbowMage.OverlayPlugin
             {
                 this.Directories.AddRange(directories);
             }
+
             AppDomain.CurrentDomain.AssemblyResolve += CustomAssemblyResolve;
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += CustomAssemblyResolve;
         }
 
         public AssemblyResolver()
@@ -36,6 +38,7 @@ namespace RainbowMage.OverlayPlugin
         public void Dispose()
         {
             AppDomain.CurrentDomain.AssemblyResolve -= CustomAssemblyResolve;
+            AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve -= CustomAssemblyResolve;
         }
 
         private Assembly CustomAssemblyResolve(object sender, ResolveEventArgs e)

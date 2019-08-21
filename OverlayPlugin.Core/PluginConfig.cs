@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -23,16 +25,12 @@ namespace RainbowMage.OverlayPlugin
         [XmlElement("HideOverlaysWhenNotActive")]
         public bool HideOverlaysWhenNotActive { get; set; }
 
-        [XmlElement("WSServerIP")]
         public string WSServerIP { get; set; }
 
-        [XmlElement("WSServerPort")]
         public int WSServerPort { get; set; }
 
-        [XmlElement("WSServerSSL")]
         public bool WSServerSSL { get; set; }
 
-        [XmlElement("WSServerRunning")]
         public bool WSServerRunning { get; set; }
 
         /// <summary>
@@ -40,6 +38,7 @@ namespace RainbowMage.OverlayPlugin
         /// 設定が新規に作成された場合、またはバージョン0.3未満では null が設定されます。
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public Version Version 
         {
             get
@@ -67,6 +66,7 @@ namespace RainbowMage.OverlayPlugin
         }
 
         [XmlElement("Version")]
+        [JsonProperty("Version")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Browsable(false)]
         public string VersionString { get; set; }
@@ -75,6 +75,7 @@ namespace RainbowMage.OverlayPlugin
         /// 設定が新規に作成されたことを示すフラグを取得または設定します。
         /// </summary>
         [XmlIgnore]
+        [JsonIgnore]
         public bool IsFirstLaunch { get; set; }
 
         /// <summary>
@@ -83,16 +84,15 @@ namespace RainbowMage.OverlayPlugin
         [XmlElement("Overlays")]
         public OverlayConfigList<IOverlayConfig> Overlays { get; set; }
 
-        [XmlElement("EventSources")]
-        public OverlayConfigList<IEventSourceConfig> EventSources { get; set; }
+        [XmlIgnore]
+        public Dictionary<string, object> EventSourceConfigs { get; set; }
 
         internal const string DefaultMiniParseOverlayName = "Mini Parse";
-        internal const string DefaultSpellTimerOverlayName = "Spell Timer";
 
         public PluginConfig()
         {
             this.Overlays = new OverlayConfigList<IOverlayConfig>();
-            this.EventSources = new OverlayConfigList<IEventSourceConfig>();
+            this.EventSourceConfigs = new Dictionary<string, object>();
 
             this.FollowLatestLog = false;
             this.HideOverlaysWhenNotActive = false;
@@ -114,6 +114,36 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public void SaveJson(string path)
+        {
+            using (var stream = new StreamWriter(path))
+            {
+                var serializer = new JsonSerializer();
+                serializer.Formatting = Formatting.Indented;
+                serializer.TypeNameHandling = TypeNameHandling.Auto;
+                serializer.Serialize(stream, this);
+            }
+        }
+
+        public static PluginConfig LoadJson(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return null;
+            }
+
+            using (var stream = new StreamReader(path))
+            {
+                var serializer = new JsonSerializer();
+                var reader = new JsonTextReader(stream);
+                serializer.TypeNameHandling = TypeNameHandling.Auto;
+
+                var result = serializer.Deserialize<PluginConfig>(reader);
+                result.IsFirstLaunch = false;
+                return result;
+            }
+        }
+
         /// <summary>
         /// 指定したファイルパスから設定を読み込みます。
         /// </summary>
@@ -130,16 +160,9 @@ namespace RainbowMage.OverlayPlugin
             using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(PluginConfig));
+
                 var result = (PluginConfig)serializer.Deserialize(stream);
-
                 result.IsFirstLaunch = false;
-
-                if (result.Version == null)
-                {
-                    
-                }
-
-
                 return result;
             }
         }
@@ -153,18 +176,10 @@ namespace RainbowMage.OverlayPlugin
             var miniparseOverlayConfig = new MiniParseOverlayConfig(DefaultMiniParseOverlayName);
             miniparseOverlayConfig.Position = new Point(20, 20);
             miniparseOverlayConfig.Size = new Size(500, 300);
-            miniparseOverlayConfig.Url = new Uri(Path.Combine(pluginDirectory, "resources", "miniparse.html")).ToString(); 
-
-            var spellTimerOverlayConfig = new SpellTimerOverlayConfig(DefaultSpellTimerOverlayName);
-            spellTimerOverlayConfig.Position = new Point(20, 520);
-            spellTimerOverlayConfig.Size = new Size(200, 300);
-            spellTimerOverlayConfig.IsVisible = true;
-            spellTimerOverlayConfig.MaxFrameRate = 5;
-            spellTimerOverlayConfig.Url = new Uri(Path.Combine(pluginDirectory, "resources", "spelltimer.html")).ToString();
+            miniparseOverlayConfig.Url = new Uri(Path.Combine(pluginDirectory, "resources", "miniparse.html")).ToString();
 
             this.Overlays = new OverlayConfigList<IOverlayConfig>();
             this.Overlays.Add(miniparseOverlayConfig);
-            this.Overlays.Add(spellTimerOverlayConfig);
 
             this.WSServerIP = "127.0.0.1";
             this.WSServerPort = 10501;

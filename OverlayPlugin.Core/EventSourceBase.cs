@@ -14,9 +14,12 @@ namespace RainbowMage.OverlayPlugin
 
         public event EventHandler<LogEventArgs> OnLog;
         protected Timer timer;
+        protected ILogger logger;
 
-        public EventSourceBase()
+        public EventSourceBase(ILogger logger)
         {
+            this.logger = logger;
+
             timer = new Timer(1000);
             timer.Elapsed += (o, e) =>
             {
@@ -31,9 +34,13 @@ namespace RainbowMage.OverlayPlugin
             };
         }
 
+        public abstract System.Windows.Forms.Control CreateConfigControl();
+
+        public abstract void LoadConfig(IPluginConfig config);
+
         protected void Log(LogLevel level, string message, params object[] args)
         {
-            OnLog?.Invoke(this, new LogEventArgs(level, string.Format(message, args)));
+            logger.Log(level, message, args);
         }
 
         public virtual void Dispose()

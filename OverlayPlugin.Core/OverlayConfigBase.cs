@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -273,6 +274,8 @@ namespace RainbowMage.OverlayPlugin
         }
 
         [XmlIgnore]
+        [JsonIgnore]
+
         public abstract Type OverlayType { get; }
     }
 

@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEventSourceConfig.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="IOverlay.cs" />
     <Compile Include="IOverlayAddonV2.cs" />

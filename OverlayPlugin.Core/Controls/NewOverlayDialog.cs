@@ -17,7 +17,7 @@ namespace RainbowMage.OverlayPlugin
         public ValidateNameDelegate NameValidator { get; set; }
 
         public string OverlayName { get; set; }
-        public IOverlayAddonV2 SelectedOverlayType { get; set; }
+        public Type SelectedOverlayType { get; set; }
 
         private PluginMain pluginMain;
 
@@ -30,14 +30,17 @@ namespace RainbowMage.OverlayPlugin
             // Default validator
             this.NameValidator = (name) => { return name != null; };
 
-            foreach (var addon in pluginMain.Addons)
+            foreach (var overlayType in Registry.Overlays)
             {
-                if (addon.OverlayType != null) {
-                    comboBox1.Items.Add(addon);
+                var name = overlayType.Name;
+                if (name.EndsWith("Overlay"))
+                {
+                    name = name.Substring(0, name.Length - 7);
                 }
+
+                comboBox1.Items.Add(new KeyValuePair<string, Type>(name, overlayType));
             }
 
-            //comboBox1.ValueMember = "OverlayType";
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
 
@@ -56,7 +59,7 @@ namespace RainbowMage.OverlayPlugin
                 else
                 {
                     this.OverlayName = textBox1.Text;
-                    this.SelectedOverlayType = (IOverlayAddonV2)comboBox1.SelectedItem;
+                    this.SelectedOverlayType = (Type)comboBox1.SelectedItem;
                 }
             }
             else
