@@ -18,7 +18,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public MiniParseOverlay(MiniParseOverlayConfig config, string name)
             : base(config, name)
         {
-            config.CompatibilityChanged += (o, e) =>
+            Config.CompatibilityChanged += (o, e) =>
             {
                 Navigate(Overlay.Url);
             };
@@ -105,12 +105,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void Start()
         {
-            
         }
 
         public override void Stop()
         {
-            
         }
 
         public override void HandleEvent(JObject e)

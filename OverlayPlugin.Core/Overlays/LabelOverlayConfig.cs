@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             this.Text = "";
             this.HtmlModeEnabled = false;
+            this.Url = "file:///" + Path.Combine(PluginMain.PluginDirectory, "resources", "label.html").Replace("\\", "/");
         }
 
         // XmlSerializer用

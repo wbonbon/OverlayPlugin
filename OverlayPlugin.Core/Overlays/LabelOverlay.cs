@@ -4,22 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
     [Serializable]
     public class LabelOverlay : OverlayBase<LabelOverlayConfig>
     {
-        public LabelOverlay(LabelOverlayConfig config)
-            : base(config, config.Name)
+        public LabelOverlay(LabelOverlayConfig config, string name)
+            : base(config, name)
         {
             timer.Stop();
 
-            config.TextChanged += (o, e) =>
+            Config.TextChanged += (o, e) =>
             {
                 UpdateOverlayText();
             };
-            config.HTMLModeChanged += (o, e) =>
+            Config.HTMLModeChanged += (o, e) =>
             {
                 UpdateOverlayText();
             };
@@ -38,18 +39,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             try
             {
-                var updateScript = CreateEventDispatcherScript();
-
-                if (this.Overlay != null &&
-                    this.Overlay.Renderer != null)
-                {
-                    this.Overlay.Renderer.ExecuteScript(updateScript);
-                }
-                else
-                {
-                    Log(LogLevel.Error, "Update: Browser not ready");
-                }
-
+                ExecuteScript(CreateEventDispatcherScript());
             }
             catch (Exception ex)
             {
@@ -67,8 +57,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         internal string CreateJson()
         {
             return string.Format(
-                "{{ text: \"{0}\", isHTML: {1} }}",
-                Util.CreateJsonSafeString(this.Config.Text),
+                "{{ text: {0}, isHTML: {1} }}",
+                JsonConvert.SerializeObject(this.Config.Text),
                 this.Config.HtmlModeEnabled ? "true" : "false");
         }
 

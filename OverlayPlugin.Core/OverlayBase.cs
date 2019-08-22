@@ -20,7 +20,6 @@ namespace RainbowMage.OverlayPlugin
         private bool disableLog = false;
 
         protected System.Timers.Timer timer;
-        protected System.Timers.Timer xivWindowTimer;
         /// <summary>
         /// オーバーレイがログを出力したときに発生します。
         /// </summary>
@@ -41,11 +40,21 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         public TConfig Config { get; private set; }
 
-        /// <summary>
+/// <summary>
         /// プラグインの設定を取得します。
         /// </summary>
         public IPluginConfig PluginConfig { get; private set; }
         IOverlayConfig IOverlay.Config { get => Config; set => Config = (TConfig)value; }
+        public bool Visible {
+            get
+            {
+                return Overlay == null ? false : Overlay.Visible;
+            }
+            set
+            {
+                if (Overlay != null) Overlay.Visible = value;
+            }
+        }
 
         protected OverlayBase(TConfig config, string name)
         {
@@ -73,7 +82,6 @@ namespace RainbowMage.OverlayPlugin
             if (Config == null) throw new InvalidOperationException("Configuration is missing!");
 
             timer.Start();
-            xivWindowTimer.Start();
         }
 
         /// <summary>
@@ -82,7 +90,6 @@ namespace RainbowMage.OverlayPlugin
         public virtual void Stop()
         {
             timer.Stop();
-            xivWindowTimer.Stop();
         }
 
         /// <summary>
@@ -269,41 +276,6 @@ namespace RainbowMage.OverlayPlugin
                     Log(LogLevel.Error, "Update: {0}", ex.ToString());
                 }
             };
-
-            xivWindowTimer = new System.Timers.Timer();
-            xivWindowTimer.Interval = 1000;
-            xivWindowTimer.Elapsed += (o, e) =>
-            {
-                try
-                {
-                    if (Config.IsVisible && PluginConfig.HideOverlaysWhenNotActive && this.Overlay != null)
-                    {
-                        uint pid;
-                        var hWndFg = NativeMethods.GetForegroundWindow();
-                        if (hWndFg == IntPtr.Zero)
-                        {
-                            return;
-                        }
-                        NativeMethods.GetWindowThreadProcessId(hWndFg, out pid);
-                        var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
-
-                        if (Path.GetFileName(exePath.ToString()) == "ffxiv.exe" ||
-                            Path.GetFileName(exePath.ToString()) == "ffxiv_dx11.exe" ||
-                            exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName)
-                        {
-                            this.Overlay.Visible = true;
-                        }
-                        else
-                        {
-                            this.Overlay.Visible = false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
-                }
-            };
         }
 
         /// <summary>
@@ -348,10 +320,6 @@ namespace RainbowMage.OverlayPlugin
                 if (this.timer != null)
                 {
                     this.timer.Stop();
-                }
-                if (this.xivWindowTimer != null)
-                {
-                    this.xivWindowTimer.Stop();
                 }
                 if (this.Overlay != null)
                 {

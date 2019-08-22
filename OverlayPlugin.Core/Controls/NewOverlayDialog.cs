@@ -41,7 +41,7 @@ namespace RainbowMage.OverlayPlugin
                 comboBox1.Items.Add(new KeyValuePair<string, Type>(name, overlayType));
             }
 
-            comboBox1.DisplayMember = "Name";
+            comboBox1.DisplayMember = "Key";
             comboBox1.SelectedIndex = 0;
 
             textBox1.Focus();
@@ -59,7 +59,7 @@ namespace RainbowMage.OverlayPlugin
                 else
                 {
                     this.OverlayName = textBox1.Text;
-                    this.SelectedOverlayType = (Type)comboBox1.SelectedItem;
+                    this.SelectedOverlayType = ((KeyValuePair<string, Type>)comboBox1.SelectedItem).Value;
                 }
             }
             else

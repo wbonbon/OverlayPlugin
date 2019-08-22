@@ -24,6 +24,8 @@ namespace RainbowMage.OverlayPlugin
 
         IOverlayConfig Config { get; set; }
 
+        bool Visible { get; set; }
+
         Control CreateConfigControl();
 
         /// <summary>

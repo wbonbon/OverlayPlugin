@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -169,7 +170,12 @@ namespace RainbowMage.HtmlRenderer
         {
             if (this._browser != null && this._browser.IsBrowserInitialized)
             {
-                this._browser.GetBrowserHost().WasHidden(!visible);
+                // If this call is executed synchronously, CEF stops emitting OnPaint events.
+                // Not sure why, probably a timing issue.
+                // TODO: Debug this further. Will probably require debugging libcef.dll directly.
+                //       Modifying _browser.Size immidiately after the WasHidden() call leads to a crash in libcef.dll,
+                //       that might be a good place to start investigating.
+                Task.Run(() => this._browser.GetBrowserHost().WasHidden(!visible));
             }
         }
 

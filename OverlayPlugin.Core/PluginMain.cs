@@ -26,6 +26,8 @@ namespace RainbowMage.OverlayPlugin
         TabPage wsTabPage;
         WSConfigPanel wsConfigPanel;
 
+        internal System.Timers.Timer xivWindowTimer;
+
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
 
@@ -192,6 +194,66 @@ namespace RainbowMage.OverlayPlugin
                     Logger.Log(LogLevel.Error, "InitPlugin: Could not find addon for {0}.", overlayConfig.Name);
                 }
             }
+
+            xivWindowTimer = new System.Timers.Timer();
+            xivWindowTimer.Interval = 1000;
+            xivWindowTimer.Elapsed += (o, e) =>
+            {
+                if (Config.HideOverlaysWhenNotActive)
+                {
+                    try
+                    {
+                        var shouldBeVisible = true;
+
+                        try
+                        {
+                            uint pid;
+                            var hWndFg = NativeMethods.GetForegroundWindow();
+                            if (hWndFg == IntPtr.Zero)
+                            {
+                                return;
+                            }
+                            NativeMethods.GetWindowThreadProcessId(hWndFg, out pid);
+                            var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+
+                            if (Path.GetFileName(exePath.ToString()) == "ffxiv.exe" ||
+                                Path.GetFileName(exePath.ToString()) == "ffxiv_dx11.exe" ||
+                                exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName)
+                            {
+                                shouldBeVisible = true;
+                            }
+                            else
+                            {
+                                shouldBeVisible = false;
+                            }
+                        }
+                        catch (System.ComponentModel.Win32Exception ex)
+                        {
+                            // Ignore access denied errors. Those usually happen if the foreground window is running with
+                            // admin permissions but we are not.
+                            if (ex.ErrorCode == -2147467259)  // 0x80004005
+                            {
+                                shouldBeVisible = false;
+                            }
+                            else
+                            {
+                                Logger.Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
+                            }
+                        }
+
+                        foreach (var overlay in this.Overlays)
+                        {
+                            if (overlay.Config.IsVisible) overlay.Visible = shouldBeVisible;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
+                    }
+                }
+            };
+
+            xivWindowTimer.Start();
         }
 
         /// <summary>
@@ -211,8 +273,8 @@ namespace RainbowMage.OverlayPlugin
         /// <param name="overlay">削除するオーバーレイ。</param>
         internal void RemoveOverlay(IOverlay overlay)
         {
-            overlay.Dispose();
             this.Overlays.Remove(overlay);
+            overlay.Dispose();
         }
 
         /// <summary>
@@ -220,6 +282,9 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         public void DeInitPlugin()
         {
+            xivWindowTimer.Stop();
+            xivWindowTimer.Dispose();
+
             SaveConfig();
 
             controlPanel.Dispose();
@@ -354,7 +419,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 Config = PluginConfig.LoadJson(GetConfigPath());
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
                 Config = null;
             }
