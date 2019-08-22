@@ -415,6 +415,7 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void LoadConfig()
         {
+            var found = true;
             try
             {
                 Config = PluginConfig.LoadJson(GetConfigPath());
@@ -422,6 +423,7 @@ namespace RainbowMage.OverlayPlugin
             catch (FileNotFoundException)
             {
                 Config = null;
+                found = false;
             }
             catch (Exception e)
             {
@@ -429,7 +431,7 @@ namespace RainbowMage.OverlayPlugin
                 Logger.Log(LogLevel.Error, "LoadConfig: {0}", e);
             }
 
-            if (Config == null)
+            if (!found)
             {
                 try
                 {
@@ -451,6 +453,7 @@ namespace RainbowMage.OverlayPlugin
             foreach (var es in Registry.EventSources)
             {
                 es.LoadConfig(Config);
+                es.Start();
             }
         }
 

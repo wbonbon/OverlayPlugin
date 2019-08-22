@@ -75,7 +75,7 @@ namespace RainbowMage.OverlayPlugin
             genSslBtn.Enabled = false;
             logDisplay.Text = "Generating SSL Certificate. Please wait...\r\n";
             
-            Task.Run((Action)GenSsl);
+            Task.Run(GenSsl);
         }
 
         private void GenSsl()

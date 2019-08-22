@@ -16,9 +16,9 @@ namespace RainbowMage.OverlayPlugin
         public static event EventHandler<SendMessageEventArgs> SendMessage;
         public static event EventHandler<SendMessageEventArgs> OverlayMessage;
 
-        IEventReceiver receiver;
+        IOverlay receiver;
 
-        public OverlayApi(IEventReceiver receiver)
+        public OverlayApi(IOverlay receiver)
         {
             this.receiver = receiver;
         }
@@ -35,7 +35,14 @@ namespace RainbowMage.OverlayPlugin
 
         public void overlayMessage(string target, string msg)
         {
-            OverlayMessage(this, new SendMessageEventArgs(target, msg));
+            if (target == receiver.Name)
+            {
+                receiver.OverlayMessage(msg);
+            }
+            else
+            {
+                OverlayMessage(this, new SendMessageEventArgs(target, msg));
+            }
         }
 
         public void endEncounter()
@@ -67,8 +74,8 @@ namespace RainbowMage.OverlayPlugin
 
                         foreach (var name in message["events"].ToList())
                         {
-                            EventDispatcher.Subscribe(name.ToString(), receiver);
-                            PluginMain.Logger.Log(LogLevel.Info, "{0}: Subscribed to {1}", ((OverlayBase<MiniParseOverlayConfig>)receiver).Name, name.ToString());
+                            EventDispatcher.Subscribe(name.ToString(), (IEventReceiver) receiver);
+                            PluginMain.Logger.Log(LogLevel.Info, "{0}: Subscribed to {1}", receiver.Name, name.ToString());
                         }
                         return;
                     } else if (handler == "unsubscribe")
@@ -81,7 +88,7 @@ namespace RainbowMage.OverlayPlugin
 
                         foreach (var name in message["events"].ToList())
                         {
-                            EventDispatcher.Unsubscribe(name.ToString(), receiver);
+                            EventDispatcher.Unsubscribe(name.ToString(), (IEventReceiver) receiver);
                         }
                         return;
                     }

@@ -43,7 +43,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             if (CheckIsActReady())
             {
-                /* // 最終更新時刻に変化がないなら更新を行わない
+                // 最終更新時刻に変化がないなら更新を行わない
                 if (this.prevEncounterId == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EncId &&
                     this.prevEndDateTime == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime &&
                     this.prevEncounterActive == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active)
@@ -54,7 +54,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.prevEncounterId = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EncId;
                 this.prevEndDateTime = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime;
                 this.prevEncounterActive = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active;
-                */
+
                 DispatchEvent(this.CreateJsonData());
             }
         }
@@ -141,7 +141,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         // プラグイン内で例外が発生してしまい、パフォーマンスが悪化するので代わりに空の文字列を挿入する
                         if (exportValuePair.Key == "Last10DPS" ||
                             exportValuePair.Key == "Last30DPS" ||
-                            exportValuePair.Key == "Last60DPS")
+                            exportValuePair.Key == "Last60DPS" ||
+                            exportValuePair.Key == "Last180DPS")
                         {
                             if (!ally.Items[CombatantData.DamageTypeDataOutgoingDamage].Items.ContainsKey("All"))
                             {
@@ -159,6 +160,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         continue;
                     }
                 }
+
+                valueDict.Add("damageShield", "0");
 
                 lock (combatantList)
                 {

@@ -12,7 +12,6 @@ namespace RainbowMage.OverlayPlugin
     {
         public string Name { get; protected set; }
 
-        public event EventHandler<LogEventArgs> OnLog;
         protected Timer timer;
         protected ILogger logger;
 
@@ -65,7 +64,7 @@ namespace RainbowMage.OverlayPlugin
             EventDispatcher.RegisterEventTypes(types);
         }
 
-        protected void RegisterEventHandler(string name, Func<JObject, JObject> handler)
+        protected void RegisterEventHandler(string name, Func<JObject, JToken> handler)
         {
             EventDispatcher.RegisterHandler(name, handler);
         }

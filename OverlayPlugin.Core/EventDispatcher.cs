@@ -10,7 +10,7 @@ namespace RainbowMage.OverlayPlugin
 {
     class EventDispatcher
     {
-        static Dictionary<string, Func<JObject, JObject>> handlers = new Dictionary<string, Func<JObject, JObject>>();
+        static Dictionary<string, Func<JObject, JToken>> handlers = new Dictionary<string, Func<JObject, JToken>>();
         static Dictionary<string, List<IEventReceiver>> eventFilter = new Dictionary<string, List<IEventReceiver>>();
 
         private static void Log(LogLevel level, string message, params object[] args)
@@ -18,7 +18,7 @@ namespace RainbowMage.OverlayPlugin
             PluginMain.Logger.Log(level, string.Format(message, args));
         }
 
-        public static void RegisterHandler(string name, Func<JObject, JObject> handler)
+        public static void RegisterHandler(string name, Func<JObject, JToken> handler)
         {
             if (handlers.ContainsKey(name))
             {
@@ -71,7 +71,6 @@ namespace RainbowMage.OverlayPlugin
                 throw new Exception(string.Format("Tried to dispatch unregistered event type \"{0}\"!", eventType));
             }
 
-            var data = e.ToString(Formatting.None);
             foreach (var receiver in eventFilter[eventType])
             {
                 try
@@ -84,7 +83,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static JObject CallHandler(JObject e)
+        public static JToken CallHandler(JObject e)
         {
             var handlerName = e["call"].ToString();
             if (!handlers.ContainsKey(handlerName))

@@ -170,12 +170,12 @@ namespace RainbowMage.HtmlRenderer
         {
             if (this._browser != null && this._browser.IsBrowserInitialized)
             {
-                // If this call is executed synchronously, CEF stops emitting OnPaint events.
+                // Sometimes, CEF stops emitting OnPaint events after this call.
                 // Not sure why, probably a timing issue.
                 // TODO: Debug this further. Will probably require debugging libcef.dll directly.
                 //       Modifying _browser.Size immidiately after the WasHidden() call leads to a crash in libcef.dll,
                 //       that might be a good place to start investigating.
-                Task.Run(() => this._browser.GetBrowserHost().WasHidden(!visible));
+                //Task.Run(() => this._browser.GetBrowserHost().WasHidden(!visible));
             }
         }
 
@@ -295,11 +295,21 @@ namespace RainbowMage.HtmlRenderer
             if (!initialized)
             {
                 Cef.EnableHighDPISupport();
-                
+
+                var lang = System.Globalization.CultureInfo.CurrentCulture.Name;
+                var langPak = Path.Combine(pluginDirectory, Environment.Is64BitProcess ? "x64" : "x86",
+                    "locales", lang + ".pak");
+
+                // Fall back to en-US if we can't find the current locale.
+                if (!File.Exists(langPak))
+                {
+                    lang = "en-US";
+                }
+
                 var cefSettings = new CefSettings
                 {
                     WindowlessRenderingEnabled = true,
-                    Locale = System.Globalization.CultureInfo.CurrentCulture.Name,
+                    Locale = lang,
                     CachePath = Path.Combine(pluginDirectory, "Cache"),
                     MultiThreadedMessageLoop = true,
 #if DEBUG
