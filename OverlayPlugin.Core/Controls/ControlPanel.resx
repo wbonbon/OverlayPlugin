@@ -157,7 +157,7 @@
     <value>tabControl</value>
   </data>
   <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
-    <value>RainbowMage.OverlayPlugin.TabControlExt, OverlayPlugin.Core, Version=0.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>RainbowMage.OverlayPlugin.TabControlExt, OverlayPlugin.Core, Version=0.4.2.7, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
     <value>tableLayoutPanel0</value>
@@ -293,6 +293,33 @@
   </data>
   <data name="&gt;&gt;checkBoxFollowLog.ZOrder" xml:space="preserve">
     <value>3</value>
+  </data>
+  <data name="buttonClearLog.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="buttonClearLog.Location" type="System.Drawing.Point, System.Drawing">
+    <value>493, 3</value>
+  </data>
+  <data name="buttonClearLog.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 31</value>
+  </data>
+  <data name="buttonClearLog.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="buttonClearLog.Text" xml:space="preserve">
+    <value>Clear Log</value>
+  </data>
+  <data name="&gt;&gt;buttonClearLog.Name" xml:space="preserve">
+    <value>buttonClearLog</value>
+  </data>
+  <data name="&gt;&gt;buttonClearLog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonClearLog.Parent" xml:space="preserve">
+    <value>flowLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;buttonClearLog.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="flowLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>

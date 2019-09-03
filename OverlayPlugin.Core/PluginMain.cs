@@ -38,6 +38,8 @@ namespace RainbowMage.OverlayPlugin
         {
             PluginDirectory = pluginDirectory;
             Logger = logger;
+
+            Registry.Register(this);
         }
 
         /// <summary>
@@ -79,6 +81,8 @@ namespace RainbowMage.OverlayPlugin
                 watch.Reset();
 #endif
 
+                FFXIVExportVariables.Init();
+
                 // プラグイン読み込み
                 LoadAddons();
 
@@ -86,7 +90,7 @@ namespace RainbowMage.OverlayPlugin
                 LoadConfig();
 
 #if DEBUG
-                Logger.Log(LogLevel.Debug, "Plugin and config load took {0}s.", watch.Elapsed.TotalSeconds);
+                Logger.Log(LogLevel.Debug, "Addon and config load took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Reset();
 #endif
 
@@ -94,7 +98,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     try
                     {
-                        WSServer.Initialize(Config);
+                        WSServer.Initialize();
                     }
                     catch (Exception e)
                     {
@@ -441,10 +445,15 @@ namespace RainbowMage.OverlayPlugin
                 {
                     // 設定ファイルが存在しない、もしくは破損している場合は作り直す
                     Logger.Log(LogLevel.Warning, "LoadConfig: {0}", e);
-                    Logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
-                    Config = new PluginConfig();
-                    Config.SetDefaultOverlayConfigs(PluginDirectory);
+                    Config = null;
                 }
+            }
+
+            if (Config == null)
+            {
+                Logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
+                Config = new PluginConfig();
+                Config.SetDefaultOverlayConfigs(PluginDirectory);
             }
 
             Registry.Register(Config);

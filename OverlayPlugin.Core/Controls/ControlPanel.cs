@@ -252,5 +252,10 @@ namespace RainbowMage.OverlayPlugin
         {
             config.FollowLatestLog = checkBoxFollowLog.Checked;
         }
+
+        private void ButtonClearLog_Click(object sender, EventArgs e)
+        {
+            logBox.Clear();
+        }
     }
 }

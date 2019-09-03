@@ -131,7 +131,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     {
                         // NAME タグには {NAME:8} のようにコロンで区切られたエクストラ情報が必要で、
                         // プラグインの仕組み的に対応することができないので除外する
-                        if (exportValuePair.Key == "NAME")
+                        if (exportValuePair.Key.StartsWith("NAME"))
                         {
                             continue;
                         }
@@ -160,8 +160,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         continue;
                     }
                 }
-
-                valueDict.Add("damageShield", "0");
 
                 lock (combatantList)
                 {
@@ -195,7 +193,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     // プラグイン内で例外が発生してしまい、パフォーマンスが悪化するので代わりに空の文字列を挿入する
                     if (exportValuePair.Key == "Last10DPS" ||
                         exportValuePair.Key == "Last30DPS" ||
-                        exportValuePair.Key == "Last60DPS")
+                        exportValuePair.Key == "Last60DPS" ||
+                        exportValuePair.Key == "Last180DPS")
                     {
                         if (!allies.All((ally) => ally.Items[CombatantData.DamageTypeDataOutgoingDamage].Items.ContainsKey("All")))
                         {

@@ -11,6 +11,7 @@ using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
+using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -22,9 +23,9 @@ namespace RainbowMage.OverlayPlugin
 
         public static EventHandler<StateChangedArgs> OnStateChanged;
 
-        public static void Initialize(PluginConfig cfg)
+        public static void Initialize()
         {
-            _inst = new WSServer(cfg);
+            _inst = new WSServer();
         }
 
         public static void Stop()
@@ -61,8 +62,10 @@ namespace RainbowMage.OverlayPlugin
             return File.Exists(GetCertPath());
         }
 
-        private WSServer(PluginConfig cfg)
+        private WSServer()
         {
+            var plugin = Registry.Resolve<PluginMain>();
+            var cfg = plugin.Config;
             _failed = false;
 
             try
@@ -94,12 +97,48 @@ namespace RainbowMage.OverlayPlugin
                 {
                     if (e.Request.RawUrl == "/")
                     {
-                        var doc = "<!DOCTYPE html><html><head><title>OverlayPlugin WSServer</title></head><body><h1>It Works!</h1><p>More to come...</p></body></html>";
+                        var builder = new StringBuilder();
+                        builder.Append(@"<!DOCTYPE html>
+<html>
+    <head>
+        <title>OverlayPlugin WSServer</title>
+    </head>
+    <script type='text/javascript'>
+        function loadOverlay(url, arg) {
+            location.href = url + '?' + arg + '=' + location.href.replace('http', 'ws');
+        }
+    </script>
+    <body>
+        <h1>It Works!</h1>
+        <ul>");
+
+                        foreach (var overlay in plugin.Overlays)
+                        {
+                            var argName = "OVERLAY_WS";
+                            if (overlay.GetType() == typeof(MiniParseOverlay))
+                            {
+                                var config = (MiniParseOverlayConfig)overlay.Config;
+                                if (config.Compatibility == "actws")
+                                {
+                                    argName = "HOST_PORT";
+                                }
+                            }
+
+                            var jsonInfo = $"{JsonConvert.SerializeObject(overlay.Config.Url)}, \"{argName}\"";
+
+                            // HTML escaping
+                            jsonInfo = jsonInfo.Replace("\"", "&quot;").Replace(">", "&gt;");
+                            var overlayName = overlay.Name.Replace("&", "&amp;").Replace("<", "&lt;");
+
+                            builder.Append($"<li><a href=\"javascript:loadOverlay({jsonInfo})\">{overlayName}</a></li>");
+                        }
+
+                        builder.Append("</body></html>");
 
                         var res = e.Response;
                         res.StatusCode = 200;
                         res.ContentType = "text/html";
-                        Ext.WriteContent(res, Encoding.UTF8.GetBytes(doc));
+                        Ext.WriteContent(res, Encoding.UTF8.GetBytes(builder.ToString()));
                     }
                 };
 
