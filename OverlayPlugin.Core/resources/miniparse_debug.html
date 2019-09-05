@@ -34,97 +34,17 @@
             background-repeat: no-repeat;
             box-sizing: border-box;
         }
+
+        pre {
+            word-break: break-all;
+            white-space: pre-wrap;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px;
+            font: 14px monospace;
+        }
     </style>
     <script>
-
-        //
-        // プラグイン側から以下のような ActXiv オブジェクトとしてデータが提供される
-        //
-        // var ActXiv = {
-        //    "Encounter": {...},
-        //    "Combatant": {
-        //        "PlayerName1": {...},
-        //        "PlayerName2": {...},
-        //        ...
-        //    }
-        // };
-        //
-        // データの更新は 1 秒毎。
-        // 
-        // プラグインから onOverlayDataUpdate イベントが発行されるので、それを受信することもできる
-        // イベントハンドラの第一引数の detail プロパティ内に上記のオブジェクトが入る
-        //
-
-        //
-        // 表示設定 (2)
-        //
-
-        // エンカウント情報の定義
-        var encounterDefine = "{title} / Time: {duration} / DPS: {ENCDPS}";
-
-        // 上記のエンカウント情報を HTML として扱うなら true
-        var useHTMLEncounterDefine = false;
-
-        // ヘッダの定義
-        var headerDefine =
-        [
-            //{ text: "#", width: "5%", align: "center" },
-            { text: "Name", width: "25%", align: "left" },
-            { text: "Job", width: "8%", align: "center" },
-            { text: "DPS (%)", width: "18%", align: "center", span: 2 },
-            { text: "HPS (%)", width: "18%", align: "center", span: 2 },
-            { text: "Acc.(%)", width: "16%", align: "right" },
-            { text: "Crt.(%)", width: "14%", align: "right" },
-        ];
-
-        // 表示するデータの定義
-        var bodyDefine =
-        [
-            //{ text: rankingText, width: "5%", align: "center", effect: deadYatsuEffect },
-            { text: "{name}", width: "25%" },
-            { text: "{Job}", width: "8%", align: "center" },
-            { text: "{encdps}", width: "16%", align: "right" },
-            { text: "{damage%}", width: "5%", align: "right" },
-            { text: "{enchps}", width: "16%", align: "right" },
-            { text: "{healed%}", width: "5%", align: "right" },
-            { text: "{tohit}%", width: "16%", align: "right" },
-            { text: "{crithit%}", width: "14%", align: "right" },
-        ];
-
-        // 順位を表示する（text に関数を指定する例）
-        // 引数:
-        //  combatant : キャラクターのデータ。combatant["..."]でデータを取得できる。
-        //  index : キャラクターの並び順。一番上は 0 で、その後は 1 ずつ増える。
-        // 戻り値: 
-        //  表示するテキスト。
-        //  ACT のタグは展開されないので、展開したい場合は parseActFormat 関数を使用してください。
-        function rankingText(combatant, index) {
-            // 1 から始まる番号を返す
-            return (index + 1).toString();
-        }
-        
-        // 死亡奴を赤くする（effect の例）
-        // 引数:
-        //  cell : セルの DOM 要素
-        //  combatant : キャラクターのデータ。combatant["..."]でデータを取得できる。
-        //  index: キャラクターの並び順。一番上は 0 で、その後は 1 ずつ増える。
-        // 戻り値: なし
-        function deadYatsuEffect(cell, combatant, index) {
-            // デス数を整数値に変換
-            var deaths = parseInt(combatant["deaths"]);
-            // デス数が 0 よりも大きいなら
-            if (deaths > 0) {
-                // 赤くする
-                cell.style.color = "#FFA0A0";
-                cell.style.textShadow = "-1px 0 3px #802020, 0 1px 3px #802020, 1px 0 3px #802020, 0 -1px 3px #802020";
-            }
-        }
-
-        //
-        // 以下表示用スクリプト
-        //
-
-        // onOverlayStateUpdate イベントを購読
         document.addEventListener("onOverlayStateUpdate", function (e) {
             if (!e.detail.isLocked) {
                 displayResizeHandle();
@@ -143,7 +63,7 @@
 
         // onOverlayDataUpdate イベントを購読
         document.addEventListener("onOverlayDataUpdate", function (e) {
-            document.querySelector("#encounter").innerText = JSON.stringify(e.detail);
+            document.querySelector("#encounter").innerText = JSON.stringify(e.detail, null, 4);
         });
 
     </script>
