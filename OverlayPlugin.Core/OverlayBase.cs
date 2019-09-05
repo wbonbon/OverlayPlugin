@@ -420,5 +420,10 @@ namespace RainbowMage.OverlayPlugin
         {
             EventDispatcher.UnsubscribeAll(this);
         }
+
+        public virtual void InitModernAPI()
+        {
+
+        }
     }
 }

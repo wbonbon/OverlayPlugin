@@ -22,14 +22,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             new KeyValuePair<string, GlobalHotkeyType>(Localization.GetText(TextItem.ToggleLock), GlobalHotkeyType.ToggleLock)
         };
 
-        //static readonly Dictionary<string,string> compOptions = new Dictionary<string, string>()
-        static readonly List<KeyValuePair<string, string>> compOptions = new List<KeyValuePair<string, string>>()
-        {
-            new KeyValuePair<string, string>("OverlayPlugin (Old & New)", "legacy"),
-            new KeyValuePair<string, string>("ACTWebSocket", "actws"),
-            new KeyValuePair<string, string>("OverlayPlugin (New only)", "overlay"),
-        };
-
         public MiniParseConfigPanel(MiniParseOverlay overlay)
         {
             InitializeComponent();
@@ -47,6 +39,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkMiniParseClickthru.Checked = config.IsClickThru;
             this.checkLock.Checked = config.IsLocked;
             this.textMiniParseUrl.Text = config.Url;
+            this.checkActwsCompatbility.Checked = config.ActwsCompatibility;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;
             this.checkEnableGlobalHotkey.Checked = config.GlobalHotkeyEnabled;
             this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
@@ -56,13 +49,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.comboHotkeyType.DataSource = hotkeyTypeDict;
             this.comboHotkeyType.SelectedValue = config.GlobalHotkeyType;
             this.comboHotkeyType.SelectedIndexChanged += ComboHotkeyMode_SelectedIndexChanged;
-            this.comboCompatibility.DisplayMember = "Key";
-            this.comboCompatibility.ValueMember = "Value";
-            this.comboCompatibility.DataSource = compOptions;
-            this.comboCompatibility.SelectedValue = config.Compatibility;
-            // We can't set this up before this because setting DataSource already triggers this event and
-            // would overwrite our configuration.
-            this.comboCompatibility.SelectedValueChanged += boxCompatibility_SelectedIndexChanged;
         }
 
         private void SetupConfigEventHandlers()
@@ -86,6 +72,13 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.InvokeIfRequired(() =>
                 {
                     this.textMiniParseUrl.Text = e.NewUrl;
+                });
+            };
+            this.config.ActwsCompatibilityChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.checkActwsCompatbility.Checked = config.ActwsCompatibility;
                 });
             };
             this.config.MaxFrameRateChanged += (o, e) =>
@@ -131,11 +124,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     this.comboHotkeyType.SelectedValue = e.NewHotkeyType;
                 });
             };
-            this.config.CompatibilityChanged += (o, e) =>
+            this.config.ActwsCompatibilityChanged += (o, e) =>
             {
                 this.InvokeIfRequired(() =>
                 {
-                    this.comboCompatibility.SelectedValue = e.Compatibility;
+                    this.checkActwsCompatbility.Checked = this.config.ActwsCompatibility;
                 });
             };
         }
@@ -233,9 +226,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.overlay.Overlay.Location = new Point(10, 10);
         }
 
-        private void boxCompatibility_SelectedIndexChanged(object sender, EventArgs e)
+        private void CheckActwsCompatbility_CheckedChanged(object sender, EventArgs e)
         {
-            this.config.Compatibility = (string) comboCompatibility.SelectedValue;
+            this.config.ActwsCompatibility = checkActwsCompatbility.Checked;
         }
     }
 }

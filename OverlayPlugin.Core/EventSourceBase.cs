@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Threading;
 using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
@@ -19,18 +16,19 @@ namespace RainbowMage.OverlayPlugin
         {
             this.logger = logger;
 
-            timer = new Timer(1000);
-            timer.Elapsed += (o, e) =>
+            timer = new Timer(UpdateWrapper, null, Timeout.Infinite, 1000);
+        }
+
+        protected void UpdateWrapper(object state)
+        {
+            try
             {
-                try
-                {
-                    Update();
-                }
-                catch (Exception ex)
-                {
-                    Log(LogLevel.Error, "Update: {0}", ex);
-                }
-            };
+                Update();
+            }
+            catch (Exception ex)
+            {
+                Log(LogLevel.Error, "Update: {0}", ex);
+            }
         }
 
         public abstract System.Windows.Forms.Control CreateConfigControl();
@@ -49,12 +47,12 @@ namespace RainbowMage.OverlayPlugin
 
         public virtual void Start()
         {
-            timer.Start();
+            timer.Change(0, 1000);
         }
 
         public virtual void Stop()
         {
-            timer.Stop();
+            timer.Change(-1, -1);
         }
 
         abstract protected void Update();

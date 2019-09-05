@@ -56,6 +56,9 @@ namespace RainbowMage.OverlayPlugin
             Task.Run(() => {
                 try
                 {
+                    // Tell the overlay that the page is using the modern API.
+                    receiver.InitModernAPI();
+
                     var message = JObject.Parse(data);
                     if (!message.ContainsKey("call"))
                     {

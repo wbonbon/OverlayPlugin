@@ -53,8 +53,9 @@
             this.checkLock = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboHotkeyType = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboCompatibility = new System.Windows.Forms.ComboBox();
+            this.checkActwsCompatbility = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -82,8 +83,9 @@
             this.tableLayoutPanel1.Controls.Add(this.checkLock, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.comboCompatibility, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.checkActwsCompatbility, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label11, 1, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -242,20 +244,26 @@
             // comboHotkeyType
             // 
             resources.ApplyResources(this.comboHotkeyType, "comboHotkeyType");
+            this.comboHotkeyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboHotkeyType.FormattingEnabled = true;
             this.comboHotkeyType.Name = "comboHotkeyType";
             // 
-            // label4
+            // checkActwsCompatbility
             // 
-            resources.ApplyResources(this.label4, "label4");
-            this.label4.Name = "label4";
+            resources.ApplyResources(this.checkActwsCompatbility, "checkActwsCompatbility");
+            this.checkActwsCompatbility.Name = "checkActwsCompatbility";
+            this.checkActwsCompatbility.UseVisualStyleBackColor = true;
+            this.checkActwsCompatbility.CheckedChanged += new System.EventHandler(this.CheckActwsCompatbility_CheckedChanged);
             // 
-            // comboCompatibility
+            // label5
             // 
-            resources.ApplyResources(this.comboCompatibility, "comboCompatibility");
-            this.comboCompatibility.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboCompatibility.FormattingEnabled = true;
-            this.comboCompatibility.Name = "comboCompatibility";
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
             // 
             // MiniParseConfigPanel
             // 
@@ -301,7 +309,8 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox comboHotkeyType;
         private System.Windows.Forms.Button buttonResetOverlayPosition;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboCompatibility;
+        private System.Windows.Forms.CheckBox checkActwsCompatbility;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label11;
     }
 }

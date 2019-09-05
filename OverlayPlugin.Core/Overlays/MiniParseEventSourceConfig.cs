@@ -10,11 +10,27 @@ namespace RainbowMage.OverlayPlugin.Overlays
     [Serializable]
     public class MiniParseEventSourceConfig
     {
-        public event EventHandler<SortKeyChangedEventArgs> SortKeyChanged;
-        public event EventHandler<SortTypeChangedEventArgs> SortTypeChanged;
+        public event EventHandler UpdateIntervalChanged;
+        public event EventHandler SortKeyChanged;
+        public event EventHandler SortDescChanged;
+
+        private int updateInterval;
+        public int UpdateInterval {
+            get
+            {
+                return this.updateInterval;
+            }
+            set
+            {
+                if (this.updateInterval != value)
+                {
+                    this.updateInterval = value;
+                    UpdateIntervalChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
 
         private string sortKey;
-        [XmlElement("SortKey")]
         public string SortKey
         {
             get
@@ -26,44 +42,46 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 if (this.sortKey != value)
                 {
                     this.sortKey = value;
-                    if (SortKeyChanged != null)
-                    {
-                        SortKeyChanged(this, new SortKeyChangedEventArgs(this.sortKey));
-                    }
+                    SortKeyChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
 
-        private MiniParseSortType sortType;
-        [XmlElement("SortType")]
-        public MiniParseSortType SortType
+        private bool sortDesc;
+        public bool SortDesc
         {
             get
             {
-                return this.sortType;
+                return this.sortDesc;
             }
             set
             {
-                if (this.sortType != value)
+                if (this.sortDesc != value)
                 {
-                    this.sortType = value;
-                    if (SortTypeChanged != null)
-                    {
-                        SortTypeChanged(this, new SortTypeChangedEventArgs(this.sortType));
-                    }
+                    this.sortDesc = value;
+                    SortDescChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
 
+
         public MiniParseEventSourceConfig()
         {
-            this.sortKey = "encdps";
-            this.sortType = MiniParseSortType.NumericDescending;
+            this.updateInterval = 1;
+            this.sortKey = null;
+            this.sortDesc = true;
         }
 
-        public Type SourceType
+        public static MiniParseEventSourceConfig LoadConfig()
         {
-            get { return typeof(MiniParseEventSource); }
+            var allConfigs = Registry.Resolve<IPluginConfig>().EventSourceConfigs;
+
+            if (!allConfigs.ContainsKey("MiniParse"))
+            {
+                allConfigs["MiniParse"] = new MiniParseEventSourceConfig();
+            }
+
+            return (MiniParseEventSourceConfig) allConfigs["MiniParse"];
         }
     }
 

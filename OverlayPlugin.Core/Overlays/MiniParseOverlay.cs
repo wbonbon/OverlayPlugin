@@ -15,10 +15,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
 {
     public partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
     {
+        protected bool modernApi = false;
+
         public MiniParseOverlay(MiniParseOverlayConfig config, string name)
             : base(config, name)
         {
-            Config.CompatibilityChanged += (o, e) =>
+            Config.ActwsCompatibilityChanged += (o, e) =>
             {
                 Navigate(Overlay.Url);
             };
@@ -35,7 +37,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void Renderer_BrowserConsoleLog(object sender, BrowserConsoleLogEventArgs e)
         {
-            if (Config.Compatibility == "actws" && e.Message.Contains("ws://127.0.0.1/fake/") && (e.Message.Contains("SecurityError:") || e.Message.Contains("ERR_CONNECTION_")))
+            if (Config.ActwsCompatibility && e.Message.Contains("ws://127.0.0.1/fake/") && (e.Message.Contains("SecurityError:") || e.Message.Contains("ERR_CONNECTION_")))
             {
                 Overlay.Reload();
             }
@@ -43,7 +45,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void FinishLoading(object sender, BrowserLoadEventArgs e)
         {
-            if (Config.Compatibility == "actws")
+            if (Config.ActwsCompatibility)
             {
                 var charName = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerName() ?? "YOU");
                 var charID = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerID());
@@ -54,7 +56,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void PrepareWebsite(object sender, BrowserLoadEventArgs e)
         {
-            if (Config.Compatibility == "actws")
+            if (Config.ActwsCompatibility)
             {
                 // Install a fake WebSocket so we can directly call the event handler.
                 ExecuteScript(@"(function() {
@@ -70,10 +72,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
                             };
                             console.log('ACTWS compatibility shim enabled.');
 
-                            setTimeout(() => {
-                                queue.forEach(__OverlayPlugin_ws_faker);
-                                queue = null;
-                            }, 100);
+                            if (queue !== null) {
+                                setTimeout(() => {
+                                    queue.forEach(__OverlayPlugin_ws_faker);
+                                    queue = null;
+                                }, 100);
+                            }
                         }
                         else
                         {
@@ -83,16 +87,17 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 })();");
 
                 Subscribe("CombatData");
-            } else if (Config.Compatibility == "legacy") {
+            } else {
                 // Subscriptions are cleared on page navigation so we have to restore this after every load.
 
+                modernApi = false;
                 Subscribe("CombatData");
             }
         }
 
         public override void Navigate(string url)
         {
-            if (Config.Compatibility == "actws" && !url.Contains("HOST_PORT="))
+            if (Config.ActwsCompatibility && !url.Contains("HOST_PORT="))
             {
                 url += "?HOST_PORT=ws://127.0.0.1/fake/";
             }
@@ -113,25 +118,27 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void HandleEvent(JObject e)
         {
-            if (e["type"].ToString() == "CombatData")
-            {
-                switch(Config.Compatibility)
-                {
-                    case "overlay":
-                        base.HandleEvent(e);
-                        break;
-                    case "legacy":
-                        base.HandleEvent(e);
-                        ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
-                        break;
-                    case "actws":
-                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg':  " + e.ToString(Formatting.None) + " });");
-                        break;
-                }
-            } else
+            if (modernApi)
             {
                 base.HandleEvent(e);
             }
+            else if(e["type"].ToString() == "CombatData")
+            {
+                if (Config.ActwsCompatibility)
+                {
+                    ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg':  " + e.ToString(Formatting.None) + " });");
+                } else
+                {
+                    ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
+                }
+            }
+        }
+
+        public override void InitModernAPI()
+        {
+            // Clear the subscription set in PrepareWebsite().
+            Unsubscribe("CombatData");
+            modernApi = true;
         }
 
         protected override void Update()

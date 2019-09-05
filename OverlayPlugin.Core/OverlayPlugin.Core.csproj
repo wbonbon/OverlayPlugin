@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FFXIVExportVariables.cs" />
     <Compile Include="FFXIVRepository.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="OverlayApi.cs" />

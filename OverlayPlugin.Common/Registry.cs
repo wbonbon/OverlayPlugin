@@ -28,7 +28,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static event EventHandler<AddonRegisteredEventArgs> AddonRegistered;
+        public static event EventHandler AddonRegistered;
 
         public static void Init()
         {
@@ -52,7 +52,7 @@ namespace RainbowMage.OverlayPlugin
             _overlays.Add(typeof(T));
             Container.Register<T>();
 
-            AddonRegistered?.Invoke(null, new AddonRegisteredEventArgs());
+            AddonRegistered?.Invoke(null, new EventArgs());
         }
 
         public static void UnregisterOverlay<T>()
@@ -66,7 +66,7 @@ namespace RainbowMage.OverlayPlugin
             Container.BuildUp(source);
             _eventSources.Add(source);
 
-            AddonRegistered?.Invoke(null, new AddonRegisteredEventArgs());
+            AddonRegistered?.Invoke(null, new EventArgs());
         }
 
         public static void RegisterEventSource<T>()
@@ -104,10 +104,5 @@ namespace RainbowMage.OverlayPlugin
             return Container.Register<T>(obj);
         }
         #endregion
-    }
-
-    public class AddonRegisteredEventArgs : EventArgs
-    {
-
     }
 }

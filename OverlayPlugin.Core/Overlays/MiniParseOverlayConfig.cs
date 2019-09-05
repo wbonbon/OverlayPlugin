@@ -11,22 +11,20 @@ namespace RainbowMage.OverlayPlugin.Overlays
     {
         public override Type OverlayType => typeof(MiniParseOverlay);
 
-        private string compatibility;
-        [XmlElement("Compatibility")]
-        public string Compatibility
+        private bool actwsCompatibility;
+        public bool ActwsCompatibility
         {
             get
             {
-                return this.compatibility ?? "legacy";
+                return this.actwsCompatibility;
             }
             set
             {
-                this.compatibility = value;
-                CompatibilityChanged?.Invoke(this, new CompatbilityChangedArgs(value));
+                this.actwsCompatibility = value;
+                ActwsCompatibilityChanged?.Invoke(this, new CompatbilityChangedArgs(value));
             }
         }
-
-        public event EventHandler<CompatbilityChangedArgs> CompatibilityChanged;
+        public event EventHandler<CompatbilityChangedArgs> ActwsCompatibilityChanged;
 
 
         public MiniParseOverlayConfig(string name) : base(name)
@@ -38,9 +36,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public class CompatbilityChangedArgs : EventArgs
         {
-            public string Compatibility { get; private set; }
+            public bool Compatibility { get; private set; }
 
-            public CompatbilityChangedArgs(string c)
+            public CompatbilityChangedArgs(bool c)
             {
                 Compatibility = c;
             }

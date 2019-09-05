@@ -118,7 +118,7 @@ namespace RainbowMage.OverlayPlugin
                             if (overlay.GetType() == typeof(MiniParseOverlay))
                             {
                                 var config = (MiniParseOverlayConfig)overlay.Config;
-                                if (config.Compatibility == "actws")
+                                if (config.ActwsCompatibility)
                                 {
                                     argName = "HOST_PORT";
                                 }

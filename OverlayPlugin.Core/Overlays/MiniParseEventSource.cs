@@ -20,12 +20,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
         
         public MiniParseEventSourceConfig Config { get; set; }
 
-        public MiniParseEventSource(MiniParseEventSourceConfig config, ILogger logger) : base(logger)
+        public MiniParseEventSource(ILogger logger) : base(logger)
         {
             this.Name = "MiniParse";
-            this.Config = Config;
 
-            RegisterEventTypes(new List<string> { "CombatData", "LogLine" });
+            // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
+            RegisterEventTypes(new List<string> { "CombatData", "LogLine", "FileChanged" });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
         }
@@ -37,6 +37,17 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void LoadConfig(IPluginConfig config)
         {
+            this.Config = MiniParseEventSourceConfig.LoadConfig();
+
+            this.Config.UpdateIntervalChanged += (o, e) =>
+            {
+                this.Start();
+            };
+        }
+
+        public override void Start()
+        {
+            this.timer.Change(0, this.Config.UpdateInterval);
         }
 
         protected override void Update()
@@ -92,6 +103,26 @@ namespace RainbowMage.OverlayPlugin.Overlays
             obj["type"] = "CombatData";
             obj["Encounter"] = JObject.FromObject(encounter);
             obj["Combatant"] = new JObject();
+
+            if (this.Config.SortKey != null)
+            {
+                int factor = this.Config.SortDesc ? -1 : 1;
+
+                try
+                {
+                    combatant.Sort((a, b) =>
+                    {
+                        var aValue = int.Parse(a.Value[this.Config.SortKey]);
+                        var bValue = int.Parse(b.Value[this.Config.SortKey]);
+
+                        return factor * aValue.CompareTo(bValue);
+                    });
+                }
+                catch(Exception e)
+                {
+                    Log(LogLevel.Error, $"Failed to sort list by {this.Config.SortKey}: {e}");
+                }
+            }
 
             foreach (var pair in combatant)
             {
