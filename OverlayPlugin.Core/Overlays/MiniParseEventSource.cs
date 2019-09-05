@@ -47,7 +47,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void Start()
         {
-            this.timer.Change(0, this.Config.UpdateInterval);
+            this.timer.Change(0, this.Config.UpdateInterval * 1000);
         }
 
         protected override void Update()
@@ -107,20 +107,27 @@ namespace RainbowMage.OverlayPlugin.Overlays
             if (this.Config.SortKey != null)
             {
                 int factor = this.Config.SortDesc ? -1 : 1;
+                var key = this.Config.SortKey;
 
                 try
                 {
                     combatant.Sort((a, b) =>
                     {
-                        var aValue = int.Parse(a.Value[this.Config.SortKey]);
-                        var bValue = int.Parse(b.Value[this.Config.SortKey]);
+                        try
+                        {
+                            var aValue = float.Parse(a.Value[key]);
+                            var bValue = float.Parse(b.Value[key]);
 
-                        return factor * aValue.CompareTo(bValue);
+                            return factor * aValue.CompareTo(bValue);
+                        } catch(FormatException)
+                        {
+                            return 0;
+                        }
                     });
                 }
                 catch(Exception e)
                 {
-                    Log(LogLevel.Error, $"Failed to sort list by {this.Config.SortKey}: {e}");
+                    Log(LogLevel.Error, $"Failed to sort list by {key}: {e}");
                 }
             }
 
