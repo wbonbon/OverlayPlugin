@@ -78,7 +78,7 @@ namespace RainbowMage.OverlayPlugin
                         foreach (var name in message["events"].ToList())
                         {
                             EventDispatcher.Subscribe(name.ToString(), (IEventReceiver) receiver);
-                            PluginMain.Logger.Log(LogLevel.Info, "{0}: Subscribed to {1}", receiver.Name, name.ToString());
+                            PluginMain.Logger.Log(LogLevel.Debug, "{0}: Subscribed to {1}", receiver.Name, name.ToString());
                         }
                         return;
                     } else if (handler == "unsubscribe")

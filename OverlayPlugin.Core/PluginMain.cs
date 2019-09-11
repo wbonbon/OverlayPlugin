@@ -26,8 +26,6 @@ namespace RainbowMage.OverlayPlugin
         TabPage wsTabPage;
         WSConfigPanel wsConfigPanel;
 
-        internal System.Timers.Timer xivWindowTimer;
-
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
 
@@ -257,8 +255,6 @@ namespace RainbowMage.OverlayPlugin
                     }
                 }
             };
-
-            xivWindowTimer.Start();
         }
 
         /// <summary>
@@ -287,9 +283,6 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         public void DeInitPlugin()
         {
-            xivWindowTimer.Stop();
-            xivWindowTimer.Dispose();
-
             SaveConfig();
 
             controlPanel.Dispose();
