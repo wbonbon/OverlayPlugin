@@ -199,9 +199,7 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
-            xivWindowTimer = new System.Timers.Timer();
-            xivWindowTimer.Interval = 1000;
-            xivWindowTimer.Elapsed += (o, e) =>
+            NativeMethods.ActiveWindowChanged += (sender, hWndFg) =>
             {
                 if (Config.HideOverlaysWhenNotActive)
                 {
@@ -212,16 +210,19 @@ namespace RainbowMage.OverlayPlugin
                         try
                         {
                             uint pid;
-                            var hWndFg = NativeMethods.GetForegroundWindow();
                             if (hWndFg == IntPtr.Zero)
                             {
                                 return;
                             }
                             NativeMethods.GetWindowThreadProcessId(hWndFg, out pid);
-                            var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
 
-                            if (Path.GetFileName(exePath.ToString()) == "ffxiv.exe" ||
-                                Path.GetFileName(exePath.ToString()) == "ffxiv_dx11.exe" ||
+                            if (pid == 0)
+                                return;
+
+                            var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+                            var fileName = Path.GetFileName(exePath.ToString());
+                            if (fileName == "ffxiv.exe" ||
+                                fileName == "ffxiv_dx11.exe" ||
                                 exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName)
                             {
                                 shouldBeVisible = true;
