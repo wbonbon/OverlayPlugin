@@ -162,9 +162,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void InitModernAPI()
         {
-            // Clear the subscription set in PrepareWebsite().
-            Unsubscribe("CombatData");
-            modernApi = true;
+            if (!modernApi)
+            {
+                // Clear the subscription set in PrepareWebsite().
+                Unsubscribe("CombatData");
+                modernApi = true;
+            }
         }
 
         protected override void Update()

@@ -35,6 +35,8 @@ namespace RainbowMage.OverlayPlugin
 
         public abstract void LoadConfig(IPluginConfig config);
 
+        public abstract void SaveConfig(IPluginConfig config);
+
         protected void Log(LogLevel level, string message, params object[] args)
         {
             logger.Log(level, message, args);

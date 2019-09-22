@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+using Newtonsoft.Json.Linq;
 
-namespace RainbowMage.OverlayPlugin.Overlays
+namespace RainbowMage.OverlayPlugin.EventSources
 {
     [Serializable]
     public class MiniParseEventSourceConfig
@@ -72,16 +68,36 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.sortDesc = true;
         }
 
-        public static MiniParseEventSourceConfig LoadConfig()
+        public static MiniParseEventSourceConfig LoadConfig(IPluginConfig Config)
         {
-            var allConfigs = Registry.Resolve<IPluginConfig>().EventSourceConfigs;
+            var result = new MiniParseEventSourceConfig();
 
-            if (!allConfigs.ContainsKey("MiniParse"))
+            if (Config.EventSourceConfigs.ContainsKey("MiniParse"))
             {
-                allConfigs["MiniParse"] = new MiniParseEventSourceConfig();
+                var obj = Config.EventSourceConfigs["MiniParse"];
+                
+                if (obj.TryGetValue("updateInterval", out JToken value))
+                {
+                    result.updateInterval = value.ToObject<int>();
+                }
+
+                if (obj.TryGetValue("sortKey", out value))
+                {
+                    result.sortKey = value.ToString();
+                }
+
+                if (obj.TryGetValue("sortDesc", out value))
+                {
+                    result.sortDesc = value.ToObject<bool>();
+                }
             }
 
-            return (MiniParseEventSourceConfig) allConfigs["MiniParse"];
+            return result;
+        }
+
+        public void SaveConfig(IPluginConfig Config)
+        {
+            Config.EventSourceConfigs["MiniParse"] = JObject.FromObject(this);
         }
     }
 

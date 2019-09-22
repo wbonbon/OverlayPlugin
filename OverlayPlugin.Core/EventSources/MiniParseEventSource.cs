@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using FFXIV_ACT_Plugin.Common;
 
-namespace RainbowMage.OverlayPlugin.Overlays
+namespace RainbowMage.OverlayPlugin.EventSources
 {
     partial class MiniParseEventSource : EventSourceBase
     {
@@ -93,12 +93,17 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void LoadConfig(IPluginConfig config)
         {
-            this.Config = MiniParseEventSourceConfig.LoadConfig();
+            this.Config = MiniParseEventSourceConfig.LoadConfig(config);
 
             this.Config.UpdateIntervalChanged += (o, e) =>
             {
                 this.Start();
             };
+        }
+
+        public override void SaveConfig(IPluginConfig config)
+        {
+            this.Config.SaveConfig(config);
         }
 
         public override void Start()

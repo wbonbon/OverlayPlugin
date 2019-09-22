@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -14,6 +11,6 @@ namespace RainbowMage.OverlayPlugin
         bool HideOverlaysWhenNotActive { get; set; }
         Version Version { get; set; }
         bool IsFirstLaunch { get; set; }
-        Dictionary<string, object> EventSourceConfigs { get; set; }
+        Dictionary<string, JObject> EventSourceConfigs { get; set; }
     }
 }

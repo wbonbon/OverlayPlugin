@@ -23,5 +23,7 @@ namespace RainbowMage.OverlayPlugin
         Control CreateConfigControl();
 
         void LoadConfig(IPluginConfig config);
+
+        void SaveConfig(IPluginConfig config);
     }
 }

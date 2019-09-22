@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Text.RegularExpressions;
 using RainbowMage.OverlayPlugin.Overlays;
+using RainbowMage.OverlayPlugin.EventSources;
 using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin
@@ -470,6 +471,11 @@ namespace RainbowMage.OverlayPlugin
                 foreach (var overlay in this.Overlays)
                 {
                     overlay.SavePositionAndSize();
+                }
+
+                foreach (var es in Registry.EventSources)
+                {
+                    es.SaveConfig(Config);
                 }
 
                 Config.SaveJson(GetConfigPath());

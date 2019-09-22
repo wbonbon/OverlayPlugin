@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace RainbowMage.OverlayPlugin.Overlays
+namespace RainbowMage.OverlayPlugin.EventSources
 {
     partial class MiniParseEventSource : EventSourceBase
     {

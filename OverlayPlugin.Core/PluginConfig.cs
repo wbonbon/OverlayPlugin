@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -82,17 +83,21 @@ namespace RainbowMage.OverlayPlugin
         /// オーバーレイ設定のリスト。
         /// </summary>
         [XmlElement("Overlays")]
+        [JsonIgnore]
         public OverlayConfigList<IOverlayConfig> Overlays { get; set; }
 
+        [JsonProperty("Overlays")]
+        public List<JObject> OverlayObjects;
+
         [XmlIgnore]
-        public Dictionary<string, object> EventSourceConfigs { get; set; }
+        public Dictionary<string, JObject> EventSourceConfigs { get; set; }
 
         internal const string DefaultMiniParseOverlayName = "Mini Parse";
 
         public PluginConfig()
         {
             this.Overlays = new OverlayConfigList<IOverlayConfig>();
-            this.EventSourceConfigs = new Dictionary<string, object>();
+            this.EventSourceConfigs = new Dictionary<string, JObject>();
 
             this.FollowLatestLog = false;
             this.HideOverlaysWhenNotActive = false;
@@ -116,6 +121,21 @@ namespace RainbowMage.OverlayPlugin
 
         public void SaveJson(string path)
         {
+            var oldOverlayObjects = OverlayObjects;
+
+            // Convert Overlays
+            if (OverlayObjects == null)
+            {
+                OverlayObjects = new List<JObject>();
+            }
+            
+            foreach (var item in this.Overlays)
+            {
+                var obj = JObject.FromObject(item);
+                obj["$type"] = item.GetType().FullName + ", " + item.GetType().Assembly.GetName();
+                OverlayObjects.Add(obj);
+            }
+
             using (var stream = new StreamWriter(path))
             {
                 var serializer = new JsonSerializer();
@@ -123,6 +143,8 @@ namespace RainbowMage.OverlayPlugin
                 serializer.TypeNameHandling = TypeNameHandling.Auto;
                 serializer.Serialize(stream, this);
             }
+
+            OverlayObjects = oldOverlayObjects;
         }
 
         public static PluginConfig LoadJson(string path)
@@ -132,16 +154,46 @@ namespace RainbowMage.OverlayPlugin
                 return null;
             }
 
+            PluginConfig result;
+            var Logger = Registry.Resolve<ILogger>();
+
             using (var stream = new StreamReader(path))
             {
                 var serializer = new JsonSerializer();
                 var reader = new JsonTextReader(stream);
                 serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                var result = serializer.Deserialize<PluginConfig>(reader);
-                result.IsFirstLaunch = false;
-                return result;
+                result = serializer.Deserialize<PluginConfig>(reader);
             }
+
+            result.IsFirstLaunch = false;
+
+            // Convert Overlays
+            var overlayLeftOvers = new List<JObject>();
+            result.Overlays = new OverlayConfigList<IOverlayConfig>();
+
+            foreach (var item in result.OverlayObjects)
+            {
+                try
+                {
+                    var typeName = item["$type"].ToString();
+                    var type = GetType(typeName.Split(',')[0]);
+                    if (type == null)
+                    {
+                        throw new Exception($"Type {typeName} not found!");
+                    }
+
+                    result.Overlays.Add((IOverlayConfig)JsonConvert.DeserializeObject(item.ToString(Formatting.None), type));
+                } catch (Exception e)
+                {
+                    Logger.Log(LogLevel.Error, $"Failed to load an overlay config: ${e}");
+                    overlayLeftOvers.Add(item);
+                }
+            }
+
+            result.OverlayObjects = overlayLeftOvers;
+
+            return result;
         }
 
         /// <summary>
@@ -190,6 +242,19 @@ namespace RainbowMage.OverlayPlugin
         private void UpdateFromVersion0_3_4_0OrBelow()
         {
             // TODO: Convert SortKey and SortType from OverlayConfig to EventSourceConfig
+        }
+
+        private static Type GetType(string fullName)
+        {
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var type = asm.GetType(fullName, false);
+                if (type != null)
+                {
+                    return type;
+                }
+            }
+            return null;
         }
     }
 }

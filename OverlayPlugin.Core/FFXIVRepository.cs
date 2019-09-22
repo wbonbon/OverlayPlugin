@@ -123,7 +123,7 @@ namespace RainbowMage.OverlayPlugin
         public static void RegisterLogLineHandler(Action<uint, uint, string> handler)
         {
             var sub = GetSubscription();
-            sub.LogLine += new LogLineDelegate(handler);
+            if (sub != null) sub.LogLine += new LogLineDelegate(handler);
         }
     }
 }
