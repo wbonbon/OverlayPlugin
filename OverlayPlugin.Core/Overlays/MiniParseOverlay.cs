@@ -87,11 +87,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 })();");
 
                 Subscribe("CombatData");
+                Subscribe("LogLine");
+                Subscribe("ChangeZone");
+                Subscribe("ChangePrimaryPlayer");
             } else {
                 // Subscriptions are cleared on page navigation so we have to restore this after every load.
 
                 modernApi = false;
                 Subscribe("CombatData");
+                Subscribe("LogLine");
             }
         }
 
@@ -122,14 +126,36 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 base.HandleEvent(e);
             }
-            else if(e["type"].ToString() == "CombatData")
+            else if (Config.ActwsCompatibility)
             {
-                if (Config.ActwsCompatibility)
+                // NOTE: Keep this in sync with WSServer's LegacyHandler.
+                switch (e["type"].ToString())
                 {
-                    ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg':  " + e.ToString(Formatting.None) + " });");
-                } else
+                    case "CombatData":
+                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg': " + e.ToString(Formatting.None) + " });");
+                        break;
+                    case "LogLine":
+                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'Chat', 'msg': " + e["rawLine"].ToString() + " });");
+                        break;
+                    case "ChangeZone":
+                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'ChangeZone', 'msg': " + e.ToString(Formatting.None) + " });");
+                        break;
+                    case "ChangePrimaryPlayer":
+                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'SendCharName', 'msg': " + e.ToString(Formatting.None) + " });");
+                        break;
+                }
+            }
+            else
+            {
+                // Old OverlayPlugin API
+                switch (e["type"].ToString())
                 {
-                    ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
+                    case "CombatData":
+                        ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
+                        break;
+                    case "LogLine":
+                        ExecuteScript("document.dispatchEvent(new CustomEvent('onLogLine', { detail: " + e["line"].ToString(Formatting.None) + " }));");
+                        break;
                 }
             }
         }

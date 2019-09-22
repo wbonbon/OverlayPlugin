@@ -104,9 +104,13 @@ namespace RainbowMage.OverlayPlugin
         <title>OverlayPlugin WSServer</title>
     </head>
     <script type='text/javascript'>
-        function loadOverlay(url, arg) {
-            location.href = url + '?' + arg + '=' + location.href.replace('http', 'ws');
-        }
+        document.addEventHandler('load', () => {
+            var links = document.querySelectorAll('a');
+            for (var i = 0; i < links.length; i++) {
+                var data = JSON.parse(links[i].getAttribute('data-info'));
+                links[i].href = data.url + '?' + data.arg + '=' + location.href.replace('http', 'ws');
+            }
+        });
     </script>
     <body>
         <h1>It Works!</h1>
@@ -124,13 +128,17 @@ namespace RainbowMage.OverlayPlugin
                                 }
                             }
 
-                            var jsonInfo = $"{JsonConvert.SerializeObject(overlay.Config.Url)}, \"{argName}\"";
+                            var jsonInfo = JsonConvert.SerializeObject(new
+                            {
+                                url = overlay.Config.Url,
+                                arg = argName
+                            });
 
                             // HTML escaping
                             jsonInfo = jsonInfo.Replace("\"", "&quot;").Replace(">", "&gt;");
                             var overlayName = overlay.Name.Replace("&", "&amp;").Replace("<", "&lt;");
 
-                            builder.Append($"<li><a href=\"javascript:loadOverlay({jsonInfo})\">{overlayName}</a></li>");
+                            builder.Append($"<li><a href=\"#\" data-info=\"{jsonInfo}\">{overlayName}</a></li>");
                         }
 
                         builder.Append("</body></html>");
@@ -268,6 +276,20 @@ namespace RainbowMage.OverlayPlugin
                 base.OnOpen();
 
                 EventDispatcher.Subscribe("CombatData", this);
+                EventDispatcher.Subscribe("LogLine", this);
+                EventDispatcher.Subscribe("ChangeZone", this);
+                EventDispatcher.Subscribe("ChangePrimaryPlayer", this);
+
+                Send(JsonConvert.SerializeObject(new
+                {
+                    type = "broadcast",
+                    msgtype = "SendCharName",
+                    msg = new
+                    {
+                        charName = FFXIVRepository.GetPlayerName() ?? "YOU",
+                        charID = FFXIVRepository.GetPlayerID()
+                    }
+                }));
             }
 
             protected override void OnClose(CloseEventArgs e)
@@ -279,7 +301,21 @@ namespace RainbowMage.OverlayPlugin
 
             public void HandleEvent(JObject e)
             {
-                Send("{\"type\":\"broadcast\",\"msgtype\":\"CombatData\",\"msg\":" + e.ToString(Formatting.None) + "}");
+                switch (e["type"].ToString())
+                {
+                    case "CombatData":
+                        Send("{\"type\":\"broadcast\",\"msgtype\":\"CombatData\",\"msg\":" + e.ToString(Formatting.None) + "}");
+                        break;
+                    case "LogLine":
+                        Send("{\"type\":\"broadcast\",\"msgtype\":\"Chat\",\"msg\":" + e["rawLine"].ToString() + "}");
+                        break;
+                    case "ChangeZone":
+                        Send("{\"type\":\"broadcast\",\"msgtype\":\"ChangeZone\",\"msg\":" + e.ToString(Formatting.None) + "}");
+                        break;
+                    case "ChangePrimaryPlayer":
+                        Send("{\"type\":\"broadcast\",\"msgtype\":\"SendCharName\",\"msg\":" + e.ToString(Formatting.None) + "}");
+                        break;
+                }
             }
         }
 

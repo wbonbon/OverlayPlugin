@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using System.Diagnostics;
 using System.Windows.Forms;
+using FFXIV_ACT_Plugin.Common;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -25,9 +26,64 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.Name = "MiniParse";
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
-            RegisterEventTypes(new List<string> { "CombatData", "LogLine", "FileChanged" });
+            RegisterEventTypes(new List<string> { "CombatData", "LogLine", "ChangeZone", "ChangePrimaryPlayer", "FileChanged" });
 
-            ActGlobals.oFormActMain.BeforeLogLineRead += LogLineReader;
+            FFXIVRepository.RegisterLogLineHandler(LogLineHandler);
+        }
+
+        private void LogLineHandler(uint EventType, uint Seconds, string logline)
+        {
+            LogMessageType lineType;
+            var line = logline.Split('|');
+
+            if (!int.TryParse(line[0], out int lineTypeInt))
+            {
+                return;
+            }
+
+            try
+            {
+                lineType = (LogMessageType)lineTypeInt;
+            } catch
+            {
+                return;
+            }
+
+            switch (lineType)
+            {
+                case LogMessageType.ChangeZone:
+                    if (line.Length < 3) return;
+
+                    var zoneID = Convert.ToUInt32(line[2], 16);
+
+                    DispatchEvent(JObject.FromObject(new
+                    {
+                        type = "ChangeZone",
+                        zoneID,
+                    }));
+                    break;
+
+                case LogMessageType.ChangePrimaryPlayer:
+                    if (line.Length < 4) return;
+
+                    var charID = Convert.ToUInt32(line[2], 16);
+                    var charName = line[3];
+
+                    DispatchEvent(JObject.FromObject(new
+                    {
+                        type = "ChangePrimaryPlayer",
+                        charID,
+                        charName,
+                    }));
+                    break;
+            }
+
+            DispatchEvent(JObject.FromObject(new
+            {
+                type = "LogLine",
+                line,
+                rawLine = logline,
+            }));
         }
 
         public override Control CreateConfigControl()
