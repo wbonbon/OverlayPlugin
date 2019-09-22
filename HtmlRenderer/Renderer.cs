@@ -21,6 +21,7 @@ namespace RainbowMage.HtmlRenderer
         public event EventHandler<BrowserConsoleLogEventArgs> BrowserConsoleLog;
 
         private ChromiumWebBrowser _browser;
+        private OverlayForm _form;
         private List<String> scriptQueue = new List<string>();
         private string urlToLoad = null;
         
@@ -44,8 +45,10 @@ namespace RainbowMage.HtmlRenderer
         {
             this.overlayVersion = overlayVersion;
             this.overlayName = overlayName;
+            this._form = form;
 
             this._browser = new BrowserWrapper("about:blank", automaticallyCreateBrowser: false, form: form);
+            _browser.RequestHandler = new CustomRequestHandler(this);
             _browser.FrameLoadStart += Browser_FrameLoadStart;
             _browser.FrameLoadEnd += Browser_FrameLoadEnd;
             _browser.LoadError += Browser_LoadError;
@@ -86,7 +89,7 @@ namespace RainbowMage.HtmlRenderer
             BrowserError?.Invoke(sender, new BrowserErrorEventArgs(e.ErrorCode, e.ErrorText, e.FailedUrl));
         }
 
-        private void Browser_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
+        public void Browser_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
         {
             BrowserConsoleLog?.Invoke(sender, new BrowserConsoleLogEventArgs(e.Message, e.Source, e.Line));
         }
@@ -113,6 +116,20 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        public void BeginRender()
+        {
+            var url = "about:none";
+            var maxFrameRate = 30;
+
+            if (this._browser != null && _browser.IsBrowserInitialized)
+            {
+                url = _browser.GetMainFrame().Url;
+                maxFrameRate = _browser.GetBrowserHost().WindowlessFrameRate;
+            }
+
+            BeginRender(_form.Width, _form.Height, url, maxFrameRate);
+        }
+
         public void BeginRender(int width, int height, string url, int maxFrameRate = 30)
         {
             EndRender();
@@ -125,6 +142,9 @@ namespace RainbowMage.HtmlRenderer
             var cefBrowserSettings = new BrowserSettings();
             cefBrowserSettings.WindowlessFrameRate = maxFrameRate;
             _browser.CreateBrowser(cefWindowInfo, cefBrowserSettings);
+
+            cefBrowserSettings.Dispose();
+            cefWindowInfo.Dispose();
 
             urlToLoad = url;
         }
@@ -315,7 +335,7 @@ namespace RainbowMage.HtmlRenderer
 #if DEBUG
                     LogSeverity = LogSeverity.Info,
 #else
-                    LogSeverity = LogSeverity.Disable,
+                    LogSeverity = LogSeverity.Error,
 #endif
                     BrowserSubprocessPath = Path.Combine(pluginDirectory,
                                            Environment.Is64BitProcess ? "x64" : "x86",
