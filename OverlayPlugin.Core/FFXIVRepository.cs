@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Advanced_Combat_Tracker;
-using FFXIV_ACT_Plugin;
 using FFXIV_ACT_Plugin.Common;
 
 namespace RainbowMage.OverlayPlugin
@@ -62,11 +61,11 @@ namespace RainbowMage.OverlayPlugin
                 return repository;
 
             var FFXIV = ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(x => x.lblPluginTitle.Text == "FFXIV_ACT_Plugin.dll");
-            if (FFXIV != null && FFXIV.pluginObj == null)
+            if (FFXIV != null && FFXIV.pluginObj != null)
             {
                 try
                 {
-                    repository = (IDataRepository)FFXIV.pluginObj.GetType().GetField("DataRepository");
+                    repository = (IDataRepository)FFXIV.pluginObj.GetType().GetProperty("DataRepository").GetValue(FFXIV.pluginObj);
                 }
                 catch (Exception ex)
                 {
@@ -83,11 +82,11 @@ namespace RainbowMage.OverlayPlugin
                 return subscription;
 
             var FFXIV = ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(x => x.lblPluginTitle.Text == "FFXIV_ACT_Plugin.dll");
-            if (FFXIV != null && FFXIV.pluginObj == null)
+            if (FFXIV != null && FFXIV.pluginObj != null)
             {
                 try
                 {
-                    subscription = (IDataSubscription)FFXIV.pluginObj.GetType().GetField("DataSubscription");
+                    subscription = (IDataSubscription)FFXIV.pluginObj.GetType().GetProperty("DataSubscription").GetValue(FFXIV.pluginObj);
                 }
                 catch (Exception ex)
                 {
@@ -123,7 +122,7 @@ namespace RainbowMage.OverlayPlugin
         public static void RegisterLogLineHandler(Action<uint, uint, string> handler)
         {
             var sub = GetSubscription();
-            if (sub != null) sub.LogLine += new LogLineDelegate(handler);
+            sub.LogLine += new LogLineDelegate(handler);
         }
     }
 }

@@ -135,7 +135,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'CombatData', 'msg': " + e.ToString(Formatting.None) + " });");
                         break;
                     case "LogLine":
-                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'Chat', 'msg': " + e["rawLine"].ToString() + " });");
+                        ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'Chat', 'msg': " + JsonConvert.SerializeObject(e["rawLine"].ToString()) + " });");
                         break;
                     case "ChangeZone":
                         ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'ChangeZone', 'msg': " + e.ToString(Formatting.None) + " });");
@@ -154,7 +154,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         ExecuteScript("document.dispatchEvent(new CustomEvent('onOverlayDataUpdate', { detail: " + e.ToString(Formatting.None) + " }));");
                         break;
                     case "LogLine":
-                        ExecuteScript("document.dispatchEvent(new CustomEvent('onLogLine', { detail: " + e["line"].ToString(Formatting.None) + " }));");
+                        ExecuteScript("document.dispatchEvent(new CustomEvent('onLogLine', { detail: " + JsonConvert.SerializeObject(e["line"].ToString(Formatting.None)) + " }));");
                         break;
                 }
             }

@@ -307,7 +307,7 @@ namespace RainbowMage.OverlayPlugin
                         Send("{\"type\":\"broadcast\",\"msgtype\":\"CombatData\",\"msg\":" + e.ToString(Formatting.None) + "}");
                         break;
                     case "LogLine":
-                        Send("{\"type\":\"broadcast\",\"msgtype\":\"Chat\",\"msg\":" + e["rawLine"].ToString() + "}");
+                        Send("{\"type\":\"broadcast\",\"msgtype\":\"Chat\",\"msg\":" + JsonConvert.SerializeObject(e["rawLine"].ToString()) + "}");
                         break;
                     case "ChangeZone":
                         Send("{\"type\":\"broadcast\",\"msgtype\":\"ChangeZone\",\"msg\":" + e.ToString(Formatting.None) + "}");

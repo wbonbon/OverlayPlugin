@@ -47,6 +47,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         
         private void LogLineReader(bool isImported, LogLineEventArgs e)
         {
+            Log(LogLevel.Info, e.logLine);
+
             string[] d = e.logLine.Split('|');
 
             if (d == null || d.Length < 2) // DataErr0r: null or 1-section

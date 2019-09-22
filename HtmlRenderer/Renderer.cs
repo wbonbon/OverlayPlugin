@@ -22,6 +22,7 @@ namespace RainbowMage.HtmlRenderer
 
         private ChromiumWebBrowser _browser;
         private OverlayForm _form;
+        private object _api;
         private List<String> scriptQueue = new List<string>();
         private string urlToLoad = null;
         
@@ -46,24 +47,31 @@ namespace RainbowMage.HtmlRenderer
             this.overlayVersion = overlayVersion;
             this.overlayName = overlayName;
             this._form = form;
+            this._api = api;
 
-            this._browser = new BrowserWrapper("about:blank", automaticallyCreateBrowser: false, form: form);
+            InitBrowser();
+        }
+
+        public void InitBrowser()
+        {
+            this._browser = new BrowserWrapper("about:blank", automaticallyCreateBrowser: false, form: _form);
             _browser.RequestHandler = new CustomRequestHandler(this);
+            _browser.BrowserInitialized += _browser_BrowserInitialized;
             _browser.FrameLoadStart += Browser_FrameLoadStart;
             _browser.FrameLoadEnd += Browser_FrameLoadEnd;
             _browser.LoadError += Browser_LoadError;
             _browser.ConsoleMessage += Browser_ConsoleMessage;
 
-            if (api != null)
+            if (_api != null)
             {
-                _browser.JavascriptObjectRepository.Register("OverlayPluginApi", api, isAsync: true);
-                _browser.JavascriptObjectRepository.ObjectBoundInJavascript += JavascriptObjectRepository_ObjectBoundInJavascript;
+                _browser.JavascriptObjectRepository.Register("OverlayPluginApi", _api, isAsync: true);
             }
         }
 
-        private void JavascriptObjectRepository_ObjectBoundInJavascript(object sender, CefSharp.Event.JavascriptBindingCompleteEventArgs e)
+        private void _browser_BrowserInitialized(object sender, EventArgs e)
         {
-            // BrowserConsoleLog(sender, new BrowserConsoleLogEventArgs("Object " + e.ObjectName + " succesfully bound.", "internal", 1));
+            // Make sure we use the correct size for rendering. CEF sometimes ignores the size passed in WindowInfo (see BeginRender()).
+            Resize(_form.Width, _form.Height);
         }
 
         private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
@@ -118,16 +126,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void BeginRender()
         {
-            var url = "about:none";
-            var maxFrameRate = 30;
-
-            if (this._browser != null && _browser.IsBrowserInitialized)
-            {
-                url = _browser.GetMainFrame().Url;
-                maxFrameRate = _browser.GetBrowserHost().WindowlessFrameRate;
-            }
-
-            BeginRender(_form.Width, _form.Height, url, maxFrameRate);
+            _form.UpdateRender();
         }
 
         public void BeginRender(int width, int height, string url, int maxFrameRate = 30)
@@ -151,7 +150,10 @@ namespace RainbowMage.HtmlRenderer
 
         public void EndRender()
         {
-            
+            if (_browser != null && _browser.IsBrowserInitialized)
+            {
+                _browser.GetBrowser().CloseBrowser(true);
+            }
         }
 
         public void SetMaxFramerate(int fps)

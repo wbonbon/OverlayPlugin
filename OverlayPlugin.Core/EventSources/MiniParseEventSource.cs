@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using System.Diagnostics;
 using System.Windows.Forms;
-using FFXIV_ACT_Plugin.Common;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -28,13 +27,13 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> { "CombatData", "LogLine", "ChangeZone", "ChangePrimaryPlayer", "FileChanged" });
 
-            FFXIVRepository.RegisterLogLineHandler(LogLineHandler);
+            ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
         }
 
-        private void LogLineHandler(uint EventType, uint Seconds, string logline)
+        private void LogLineHandler(bool isImport, LogLineEventArgs args)
         {
             LogMessageType lineType;
-            var line = logline.Split('|');
+            var line = args.originalLogLine.Split('|');
 
             if (!int.TryParse(line[0], out int lineTypeInt))
             {
@@ -82,7 +81,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 type = "LogLine",
                 line,
-                rawLine = logline,
+                rawLine = args.originalLogLine,
             }));
         }
 

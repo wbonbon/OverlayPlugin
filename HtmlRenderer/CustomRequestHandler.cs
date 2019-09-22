@@ -20,6 +20,8 @@ namespace RainbowMage.HtmlRenderer
         protected override void OnRenderProcessTerminated(IWebBrowser chromiumWebBrowser, IBrowser browser, CefTerminationStatus status)
         {
             _renderer.Browser_ConsoleMessage(this, new ConsoleMessageEventArgs(LogSeverity.Error, "Browser crashed! Trying to restart.", "internal", 1));
+
+            _renderer.InitBrowser();
             _renderer.BeginRender();
         }
     }
