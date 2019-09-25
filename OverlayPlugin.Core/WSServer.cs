@@ -79,7 +79,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Log(LogLevel.Info, "WS: {0}: {1} {2}", d.Level.ToString(), d.Message, msg);
                 };
-                _server.Log.Level = WebSocketSharp.LogLevel.Debug;
+                _server.Log.Level = WebSocketSharp.LogLevel.Info;
 
                 if (secure)
                 {
@@ -104,16 +104,28 @@ namespace RainbowMage.OverlayPlugin
         <title>OverlayPlugin WSServer</title>
     </head>
     <script type='text/javascript'>
-        document.addEventHandler('load', () => {
+        window.addEventListener('load', () => {
             var links = document.querySelectorAll('a');
             for (var i = 0; i < links.length; i++) {
                 var data = JSON.parse(links[i].getAttribute('data-info'));
-                links[i].href = data.url + '?' + data.arg + '=' + location.href.replace('http', 'ws');
+                var endpoint = data.arg === 'OVERLAY_WS' ? 'ws' : '';
+                links[i].href = data.url + '?' + data.arg + '=' + location.href.replace('http', 'ws') + endpoint;
+                
+                if (data.url.indexOf('file://') === 0) {
+                    links[i].parentNode.innerText = 'Local: ' + links[i].innerText + ': ' + links[i].href;
+                }
             }
         });
     </script>
     <body>
         <h1>It Works!</h1>
+        <p>
+            If any of these links are displayed with a &quot;Local:&quot; prefix and not clickable then that's because
+            those overlays display local files and web browsers don't allow web sites to link to local files.
+        </p>
+        <p>
+            You'll have to copy &amp; paste that link into your address bar.
+        </p>
         <ul>");
 
                         foreach (var overlay in plugin.Overlays)

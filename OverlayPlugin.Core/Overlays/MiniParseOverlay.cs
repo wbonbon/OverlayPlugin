@@ -50,7 +50,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 var charName = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerName() ?? "YOU");
                 var charID = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerID());
                 
-                ExecuteScript("__OverlayPlugin_ws_faker({ msgtype: 'SendCharName', msg: { charName: " + charName + ", charID: " + charID + " }});");
+                ExecuteScript("__OverlayPlugin_ws_faker({ type: 'broadcast', msgtype: 'SendCharName', msg: { charName: " + charName + ", charID: " + charID + " }});");
             }
         }
 
