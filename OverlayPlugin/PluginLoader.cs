@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RainbowMage.HtmlRenderer;
+using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -27,9 +28,9 @@ namespace RainbowMage.OverlayPlugin
                 pluginDirectory = GetPluginDirectory();
 
                 var directories = new List<string>();
-                directories.Add(pluginDirectory);
-                directories.Add(Path.Combine(pluginDirectory, "addon"));
-                directories.Add(Path.Combine(pluginDirectory, Environment.Is64BitProcess ? "x64" : "x86"));
+                directories.Add(Path.Combine(pluginDirectory, "libs"));
+                directories.Add(Path.Combine(pluginDirectory, "addons"));
+                directories.Add(GetCefPath());
                 asmResolver = new AssemblyResolver(directories);
             }
 
@@ -41,6 +42,8 @@ namespace RainbowMage.OverlayPlugin
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void Initialize(TabPage pluginScreenSpace, Label pluginStatusText)
         {
+            pluginStatusText.Text = "Initializing Runtime...";
+
             // Prevent a stack overflow in the assembly loaded handler by loading the logger interface early.
             var dummy = typeof(ILogger);
 
@@ -53,7 +56,7 @@ namespace RainbowMage.OverlayPlugin
             if (ActGlobals.oFormActMain.Visible)
             {
                 // ACT is running and this plugin was added. Immediately initialize!
-                pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                InitPluginCore(pluginScreenSpace, pluginStatusText);
             }
             else
             {
@@ -62,12 +65,20 @@ namespace RainbowMage.OverlayPlugin
                 initHandler = (o, e) =>
                 {
                     ActGlobals.oFormActMain.VisibleChanged -= initHandler;
-
-                    pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                    InitPluginCore(pluginScreenSpace, pluginStatusText);
                 };
 
                 ActGlobals.oFormActMain.VisibleChanged += initHandler;
+                pluginStatusText.Text = "Waiting for ACT to finish startup...";
             }
+        }
+
+        private async void InitPluginCore(TabPage pluginScreenSpace, Label pluginStatusText)
+        {
+            pluginStatusText.Text = "Initializing CEF...";
+
+            if (await CefInstaller.EnsureCef(GetCefPath()))
+                pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
         }
 
         public void DeInitPlugin()
@@ -80,6 +91,7 @@ namespace RainbowMage.OverlayPlugin
             // ShutdownRenderer(null, null);
         }
 
+        /*
         public void ShutdownRenderer(object sender, EventArgs e)
         {
             Renderer.Shutdown();
@@ -87,6 +99,7 @@ namespace RainbowMage.OverlayPlugin
             // We can only dispose the resolver once the HtmlRenderer is shut down.
             asmResolver.Dispose();
         }
+        */
 
         private string GetPluginDirectory()
         {
@@ -101,6 +114,11 @@ namespace RainbowMage.OverlayPlugin
             {
                 throw new Exception();
             }
+        }
+
+        private string GetCefPath()
+        {
+            return Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "OverlayPluginCef", Environment.Is64BitProcess ? "x64" : "x86");
         }
     }
 }

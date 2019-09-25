@@ -68,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
 
                 try
                 {
-                    Renderer.Initialize(PluginDirectory);
+                    Renderer.Initialize(PluginDirectory, ActGlobals.oFormActMain.AppDataFolder.FullName);
                 }
                 catch (Exception e)
                 {
@@ -286,22 +286,26 @@ namespace RainbowMage.OverlayPlugin
         {
             SaveConfig();
 
-            controlPanel.Dispose();
+            if (controlPanel != null) controlPanel.Dispose();
 
-            foreach (var overlay in this.Overlays)
+            if (Overlays != null)
             {
-                overlay.Dispose();
-            }
+                foreach (var overlay in this.Overlays)
+                {
+                    overlay.Dispose();
+                }
 
-            this.Overlays.Clear();
+                this.Overlays.Clear();
+            }
 
             try { WSServer.Stop(); }
             catch { }
 
-            ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
+            if (this.wsTabPage != null)
+                ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
 
             Logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
-            this.label.Text = "Finalized.";
+            if (this.label != null) this.label.Text = "Finalized.";
         }
 
         /// <summary>
@@ -466,6 +470,8 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void SaveConfig()
         {
+            if (Config == null) return;
+
             try
             {
                 foreach (var overlay in this.Overlays)

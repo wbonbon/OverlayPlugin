@@ -9,7 +9,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -312,14 +311,14 @@ namespace RainbowMage.HtmlRenderer
 
         static bool initialized = false;
 
-        public static void Initialize(string pluginDirectory)
+        public static void Initialize(string pluginDirectory, string appDataDirectory)
         {
             if (!initialized)
             {
                 Cef.EnableHighDPISupport();
 
                 var lang = System.Globalization.CultureInfo.CurrentCulture.Name;
-                var langPak = Path.Combine(pluginDirectory, Environment.Is64BitProcess ? "x64" : "x86",
+                var langPak = Path.Combine(appDataDirectory, "OverlayPluginCef", Environment.Is64BitProcess ? "x64" : "x86",
                     "locales", lang + ".pak");
 
                 // Fall back to en-US if we can't find the current locale.
@@ -332,14 +331,16 @@ namespace RainbowMage.HtmlRenderer
                 {
                     WindowlessRenderingEnabled = true,
                     Locale = lang,
-                    CachePath = Path.Combine(pluginDirectory, "Cache"),
+                    CachePath = Path.Combine(appDataDirectory, "OverlayPluginCache"),
                     MultiThreadedMessageLoop = true,
+                    LogFile = Path.Combine(appDataDirectory, "OverlayPluginCEF.log"),
 #if DEBUG
                     LogSeverity = LogSeverity.Info,
 #else
                     LogSeverity = LogSeverity.Error,
 #endif
-                    BrowserSubprocessPath = Path.Combine(pluginDirectory,
+                    BrowserSubprocessPath = Path.Combine(appDataDirectory,
+                                           "OverlayPluginCef",
                                            Environment.Is64BitProcess ? "x64" : "x86",
                                            "CefSharp.BrowserSubprocess.exe"),
                 };
