@@ -37,11 +37,17 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SharpCompress, Version=0.24.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpCompress.0.24.0\lib\net45\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +68,7 @@
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater.cs" />
     <EmbeddedResource Include="ProgressDisplay.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
@@ -71,10 +78,6 @@
     <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
       <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
       <Name>OverlayPlugin.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\OverlayPlugin.Core\OverlayPlugin.Core.csproj">
-      <Project>{dd6d2a9a-4ad4-47b8-a1d0-c8608ea37092}</Project>
-      <Name>OverlayPlugin.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

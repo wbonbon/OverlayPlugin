@@ -26,6 +26,9 @@ namespace RainbowMage.OverlayPlugin
         [XmlElement("HideOverlaysWhenNotActive")]
         public bool HideOverlaysWhenNotActive { get; set; }
 
+        public bool ErrorReports { get; set; }
+        public bool UpdateCheck { get; set; }
+
         public string WSServerIP { get; set; }
 
         public int WSServerPort { get; set; }
@@ -101,6 +104,8 @@ namespace RainbowMage.OverlayPlugin
 
             this.FollowLatestLog = false;
             this.HideOverlaysWhenNotActive = false;
+            this.ErrorReports = false;
+            this.UpdateCheck = true;
             this.IsFirstLaunch = true;
         }
 

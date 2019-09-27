@@ -62,6 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\GeneralConfigTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GeneralConfigTab.Designer.cs">
+      <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="FFXIVExportVariables.cs" />
     <Compile Include="FFXIVRepository.cs" />
     <Compile Include="Logger.cs" />
@@ -172,6 +178,9 @@
     <EmbeddedResource Include="Controls\ControlPanel.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GeneralConfigTab.resx">
+      <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewOverlayDialog.ja-JP.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +247,10 @@
     <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
       <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
       <Name>OverlayPlugin.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OverlayPlugin.Updater\OverlayPlugin.Updater.csproj">
+      <Project>{82b1d288-51a6-411f-a5f9-e37c6a72e7da}</Project>
+      <Name>OverlayPlugin.Updater</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

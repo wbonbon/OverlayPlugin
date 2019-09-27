@@ -85,6 +85,14 @@ namespace RainbowMage.OverlayPlugin
         {
             tabControl.TabPages.Clear();
 
+            var generalTab = new TabPage
+            {
+                Name = "General",
+                Text = "",
+            };
+            generalTab.Controls.Add(new GeneralConfigTab());
+            tabControl.TabPages.Add(generalTab);
+
             foreach (var source in Registry.EventSources)
             {
                 AddConfigTab(source);

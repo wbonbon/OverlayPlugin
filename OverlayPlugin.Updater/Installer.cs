@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Net.Http;
 using System.IO;
+using System.Reflection;
 using SharpCompress.Archives.SevenZip;
 
 namespace RainbowMage.OverlayPlugin.Updater
@@ -23,7 +24,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             _display.Show();
         }
 
-        public static async Task<bool> Run(string url, string dest)
+        public static async Task<bool> Run(string url, string dest, bool overwrite = false)
         {
             var inst = new Installer();
 
@@ -34,7 +35,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 if (await inst.Download(url))
                 {
-                    result = inst.Install(dest);
+                    result = overwrite ? inst.InstallOverwrite(dest) : inst.InstallReplace(dest);
                     inst.Cleanup();
 
                     if (result)
@@ -62,6 +63,9 @@ namespace RainbowMage.OverlayPlugin.Updater
             var client = new HttpClient();
             var cancel = _display.GetCancelToken();
             HttpResponseMessage response;
+
+            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            client.DefaultRequestHeaders.Add("User-Agent", "ngld/OverlayPlugin v" + currentVersion.ToString());
 
             try {
                 try
@@ -204,7 +208,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             return success;
         }
 
-        public bool Install(string dest)
+        public bool InstallReplace(string dest)
         {
             try
             {
@@ -253,7 +257,58 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
 
                 return true;
-            } catch(Exception e)
+            }
+            catch (Exception e)
+            {
+                _display.Log($"Fatal error: {e}");
+                return false;
+            }
+        }
+
+        public bool InstallOverwrite(string dest)
+        {
+            try
+            {
+                try
+                {
+                    _display.Log("Overwriting old files...");
+
+                    var prefix = Path.Combine(_tempDir, "contents");
+                    var queue = new List<DirectoryInfo>() { new DirectoryInfo(prefix) };
+                    while (queue.Count() > 0)
+                    {
+                        var info = queue[0];
+                        queue.RemoveAt(0);
+
+                        var sub = info.FullName.Substring(prefix.Length).TrimStart('\\', '/');
+                        var subDest = Path.Combine(dest, sub);
+                        if (!Directory.Exists(subDest))
+                        {
+                            Directory.CreateDirectory(subDest);
+                        }
+
+                        foreach (var item in info.EnumerateDirectories())
+                        {
+                            queue.Add(item);
+                        }
+
+                        foreach (var item in info.EnumerateFiles())
+                        {
+                            File.Move(item.FullName, Path.Combine(subDest, item.Name));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    _display.Log($"Failed to overwrite old files: {e}");
+                    _display.Log("WARNING: The plugin might be in an unusable state!!");
+                    _display.Log("Run the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart.");
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
             {
                 _display.Log($"Fatal error: {e}");
                 return false;
