@@ -294,6 +294,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         foreach (var item in info.EnumerateFiles())
                         {
+                            File.Delete(Path.Combine(subDest, item.Name));
                             File.Move(item.FullName, Path.Combine(subDest, item.Name));
                         }
                     }

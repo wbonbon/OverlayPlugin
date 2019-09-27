@@ -54,7 +54,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         {
             var url = DL.Replace("{VERSION}", version.ToString());
 
-            var result = await Installer.Run(url, pluginDirectory);
+            var result = await Installer.Run(url, pluginDirectory, true);
             if (!result)
             {
                 var response = MessageBox.Show(
@@ -92,7 +92,17 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             if (newVersion)
             {
-                await InstallUpdate(remoteVersion, pluginDirectory);
+                var result = MessageBox.Show(
+                    $"An update to {remoteVersion} is available. Install it now?",
+                    "OverlayPlugin Update",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    await InstallUpdate(remoteVersion, pluginDirectory);
+                }
             } else if (alwaysTalk)
             {
                 MessageBox.Show("You are already on the latest version.", "OverlayPlugin", MessageBoxButtons.OK, MessageBoxIcon.Information);

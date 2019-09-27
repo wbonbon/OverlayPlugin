@@ -67,7 +67,15 @@ namespace RainbowMage.OverlayPlugin
 
                 if (File.Exists(asmPath))
                 {
-                    var asm = Assembly.LoadFile(asmPath);
+                    Assembly asm;
+                    if (e.Name.Contains("CefSharp"))
+                    {
+                        asm = Assembly.LoadFile(asmPath);
+                    } else
+                    {
+                        asm = Assembly.Load(File.ReadAllBytes(asmPath));
+                    }
+
                     OnAssemblyLoaded(asm);
                     return asm;
                 }
