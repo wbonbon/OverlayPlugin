@@ -15,18 +15,23 @@ namespace RainbowMage.OverlayPlugin.Updater
     {
         ProgressDisplay _display;
         string _tempDir = null;
+        string _destDir = null;
 
         public ProgressDisplay Display => _display;
 
-        public Installer()
+        public Installer(string dest)
         {
             _display = new ProgressDisplay();
             _display.Show();
+
+            _destDir = dest;
+            // Make sure our temporary directory is on the same drive as the destination.
+            _tempDir = Path.Combine(Path.GetDirectoryName(dest), "OverlayPlugin.tmp");
         }
 
-        public static async Task<bool> Run(string url, string dest, bool overwrite = false)
+        public static async Task<bool> Run(string url, string _destDir, bool overwrite = false)
         {
-            var inst = new Installer();
+            var inst = new Installer(_destDir);
 
             // We need to use a Task here since parts of Download() and the other methods are blocking.
             return await Task.Run(async () =>
@@ -35,7 +40,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 if (await inst.Download(url))
                 {
-                    result = overwrite ? inst.InstallOverwrite(dest) : inst.InstallReplace(dest);
+                    result = overwrite ? inst.InstallOverwrite() : inst.InstallReplace();
                     inst.Cleanup();
 
                     if (result)
@@ -50,9 +55,19 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public async Task<bool> Download(string url)
         {
-            _tempDir = Path.GetTempFileName();
-            File.Delete(_tempDir);
-            Directory.CreateDirectory(_tempDir);
+            try
+            {
+                if (Directory.Exists(_tempDir))
+                {
+                    Directory.Delete(_tempDir, true);
+                }
+
+                Directory.CreateDirectory(_tempDir);
+            } catch(Exception ex)
+            {
+                _display.Log($"Failed to create or empty the temporary directory \"{_tempDir}\": {ex}");
+                return false;
+            }
 
             var archivePath = Path.Combine(_tempDir, "update.7z");
 
@@ -208,42 +223,46 @@ namespace RainbowMage.OverlayPlugin.Updater
             return success;
         }
 
-        public bool InstallReplace(string dest)
+        public bool InstallReplace()
         {
             try
             {
                 string backup = null;
-                var parent = Path.GetDirectoryName(dest);
+                var parent = Path.GetDirectoryName(_destDir);
                 if (!Directory.Exists(parent))
                     Directory.CreateDirectory(parent);
 
-                if (Directory.Exists(dest))
+                if (Directory.Exists(_destDir))
                 {
                     _display.Log("Backing up old files...");
 
-                    backup = dest + ".bak";
+                    backup = _destDir + ".bak";
                     if (Directory.Exists(backup))
                         Directory.Delete(backup, true);
 
-                    Directory.Move(dest, backup);
+                    Directory.Move(_destDir, backup);
                 }
 
                 try
                 {
                     _display.Log("Moving directory...");
-                    Directory.Move(Path.Combine(_tempDir, "contents"), dest);
+                    Directory.Move(Path.Combine(_tempDir, "contents"), _destDir);
                 }
                 catch (Exception e)
                 {
                     _display.Log($"Failed to replace old directory: {e}");
                     _display.Log("Cleaning up...");
-                    Directory.Delete(dest, true);
+
+                    if (Directory.Exists(_destDir))
+                    {
+                        Directory.Delete(_destDir, true);
+                    }
 
                     if (backup != null)
                     {
                         _display.Log("Restoring backup...");
 
-                        Directory.Move(backup, dest);
+                        Directory.Move(backup, _destDir);
                     }
 
                     _display.Log("Done.");
@@ -265,7 +284,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
         }
 
-        public bool InstallOverwrite(string dest)
+        public bool InstallOverwrite()
         {
             try
             {
@@ -281,10 +300,10 @@ namespace RainbowMage.OverlayPlugin.Updater
                         queue.RemoveAt(0);
 
                         var sub = info.FullName.Substring(prefix.Length).TrimStart('\\', '/');
-                        var subDest = Path.Combine(dest, sub);
-                        if (!Directory.Exists(subDest))
+                        var sub_destDir = Path.Combine(_destDir, sub);
+                        if (!Directory.Exists(sub_destDir))
                         {
-                            Directory.CreateDirectory(subDest);
+                            Directory.CreateDirectory(sub_destDir);
                         }
 
                         foreach (var item in info.EnumerateDirectories())
@@ -294,8 +313,8 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         foreach (var item in info.EnumerateFiles())
                         {
-                            File.Delete(Path.Combine(subDest, item.Name));
-                            File.Move(item.FullName, Path.Combine(subDest, item.Name));
+                            File.Delete(Path.Combine(sub_destDir, item.Name));
+                            File.Move(item.FullName, Path.Combine(sub_destDir, item.Name));
                         }
                     }
                 }

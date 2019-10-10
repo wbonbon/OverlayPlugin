@@ -15,7 +15,7 @@ namespace RainbowMage.HtmlRenderer
 {
     public class Renderer : IDisposable
     {
-        const string CRASH_SERVER = "https://sentry.gruenprint.de/crashpad/";
+        const string CRASH_SERVER = "https://sentry.gruenprint.de/api/12/minidump/?sentry_key=5742b37c4b71484e9ba590c6a6a0e137";
 
         public event EventHandler<BrowserErrorEventArgs> BrowserError;
         public event EventHandler<BrowserLoadEventArgs> BrowserStartLoading;
