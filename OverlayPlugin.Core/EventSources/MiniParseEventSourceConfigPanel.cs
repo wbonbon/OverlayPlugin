@@ -16,7 +16,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         static readonly List<KeyValuePair<string, string>> sortKeyDict = new List<KeyValuePair<string, string>>()
         {
-            new KeyValuePair<string, string>("None", "null"),
+            new KeyValuePair<string, string>("None", ""),
             new KeyValuePair<string, string>("DPS", "encdps"),
             new KeyValuePair<string, string>("HPS", "enchps"),
         };
@@ -38,7 +38,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.comboSortKey.DisplayMember = "Key";
             this.comboSortKey.ValueMember = "Value";
             this.comboSortKey.DataSource = sortKeyDict;
-            this.comboSortKey.SelectedValue = config.SortKey ?? "null";
+            this.comboSortKey.SelectedValue = config.SortKey ?? "";
             this.comboSortKey.SelectedIndexChanged += comboSortKey_SelectedIndexChanged;
 
             this.checkSortDesc.Checked = config.SortDesc;
@@ -58,7 +58,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 this.InvokeIfRequired(() =>
                 {
-                    this.comboSortKey.SelectedValue = config.SortKey;
+                    this.comboSortKey.SelectedValue = config.SortKey ?? "";
                 });
             };
 
@@ -86,7 +86,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private void comboSortKey_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.config.SortKey = (string)this.comboSortKey.SelectedValue;
-            if (this.config.SortKey == "null") this.config.SortKey = null;
+            if (this.config.SortKey == "") this.config.SortKey = null;
         }
 
         private void TextUpdateInterval_Leave(object sender, EventArgs e)

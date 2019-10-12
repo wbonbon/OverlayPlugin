@@ -182,6 +182,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         } catch(FormatException)
                         {
                             return 0;
+                        } catch(InvalidOperationException)
+                        {
+                            return 0;
                         }
                     });
                 }
