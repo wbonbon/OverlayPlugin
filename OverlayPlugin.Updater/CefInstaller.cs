@@ -31,6 +31,34 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<bool> InstallCef(string cefPath)
         {
+            while (!File.Exists("C:\\Windows\\system32\\msvcp140.dll"))
+            {
+                var response = MessageBox.Show(
+                    "You're missing the MS Visual C++ Redistributable for Visual Studio 2019.\nYou'll need that for OverlayPlugin. Install it now?",
+                    "OverlayPlugin",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (response == DialogResult.Yes)
+                {
+                    var installed = await Installer.InstallMsvcrt();
+
+                    if (!installed)
+                    {
+                        MessageBox.Show(
+                            "The MSVCRT installation failed.",
+                            "OverlayPlugin",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                    }
+                } else
+                {
+                    return false;
+                }
+            }
+
             var url = CEF_DL.Replace("{CEF_VERSION}", CEF_VERSION).Replace("{ARCH}", Environment.Is64BitProcess ? "x64" : "x86");
 
             var result = await Installer.Run(url, cefPath);

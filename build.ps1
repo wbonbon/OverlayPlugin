@@ -35,7 +35,7 @@ try {
     }
 
     $version = $m.Groups[1]
-    $archive = "..\OverlayPlugin-$version.7z"
+    $archive = "..\OverlayPlugin-$version.zip"
 
     if (Test-Path $archive) { rm $archive }
     7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources README.md LICENSE.txt libs\ja-JP libs\ko-KR libs\*.dll

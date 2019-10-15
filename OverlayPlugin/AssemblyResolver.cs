@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -14,6 +15,9 @@ namespace RainbowMage.OverlayPlugin
         static readonly Regex assemblyNameParser = new Regex(
             @"(?<name>.+?), Version=(?<version>.+?), Culture=(?<culture>.+?), PublicKeyToken=(?<pubkey>.+)",
             RegexOptions.Compiled);
+        static readonly List<string> OverlayPluginFiles = new List<string> {
+            "OverlayPlugin.Common", "OverlayPlugin.Core", "OverlayPlugin.Updater", "HtmlRenderer"
+        };
 
         public List<string> Directories { get; set; }
 
@@ -76,24 +80,31 @@ namespace RainbowMage.OverlayPlugin
                         asm = Assembly.Load(File.ReadAllBytes(asmPath));
                     }
 
+                    if (OverlayPluginFiles.Contains(e.Name))
+                    {
+                        var loaderVersion = Assembly.GetExecutingAssembly().GetName().Version;
+                        var asmVersion = asm.GetName().Version;
+
+                        if (loaderVersion != asmVersion)
+                        {
+                            MessageBox.Show(
+                                $"ACT tried to load {asmPath} {asmVersion} which doesn't match your OverlayPlugin version " +
+                                $"({loaderVersion}). Aborting plugin load.\n\n" +
+                                "Please make sure the old OverlayPlugin is disabled and restart ACT." +
+                                "If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or " +
+                                "HtmlRenderer.dll files in the same directory.",
+                                "OverlayPlugin Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error
+                            );
+
+                            return null;
+                        }
+                    }
+
                     OnAssemblyLoaded(asm);
                     return asm;
                 }
-            }
-
-            return null;
-        }
-
-        private Assembly GetAssembly(string path)
-        {
-            try
-            {
-                var result = Assembly.LoadFrom(path);
-                return result;
-            }
-            catch (Exception e)
-            {
-                OnExceptionOccured(e);
             }
 
             return null;

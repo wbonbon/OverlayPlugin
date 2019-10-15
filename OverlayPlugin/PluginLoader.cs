@@ -34,6 +34,27 @@ namespace RainbowMage.OverlayPlugin
                 asmResolver = new AssemblyResolver(directories);
             }
 
+            // Prevent a stack overflow in the assembly loaded handler by loading the logger interface early.
+            var commonAsm = Assembly.Load("OverlayPlugin.Common");
+
+            // Check if the above line loaded an old version of OverlayPlugin.Common.dll
+            var commonVersion = commonAsm.GetName().Version;
+            var loaderVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            if (commonVersion != loaderVersion)
+            {
+                MessageBox.Show(
+                    $"ACT loaded {commonAsm.Location} {commonVersion} which doesn't match your OverlayPlugin version " +
+                    $"({loaderVersion}). Aborting plugin load.\n\n" +
+                    "Please make sure the old OverlayPlugin is disabled and restart ACT." +
+                    "If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or " +
+                    "HtmlRenderer.dll files in the same directory.",
+                    "OverlayPlugin Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+                return;
+            }
+
             Initialize(pluginScreenSpace, pluginStatusText);
         }
 
@@ -43,9 +64,6 @@ namespace RainbowMage.OverlayPlugin
         private void Initialize(TabPage pluginScreenSpace, Label pluginStatusText)
         {
             pluginStatusText.Text = "Initializing Runtime...";
-
-            // Prevent a stack overflow in the assembly loaded handler by loading the logger interface early.
-            var dummy = typeof(ILogger);
 
             Registry.Init();
             logger = new Logger();
@@ -83,8 +101,11 @@ namespace RainbowMage.OverlayPlugin
 
         public void DeInitPlugin()
         {
-            pluginMain.DeInitPlugin();
-            Registry.Clear();
+            if (pluginMain != null)
+            {
+                pluginMain.DeInitPlugin();
+                Registry.Clear();
+            }
 
             // We can't re-init CEF after shutting it down. So let's only do that when ACT closes to avoid unexpected behaviour (crash when re-enabling the plugin).
             // TODO: Figure out how to detect disabling plugin vs ACT shutting down.
@@ -108,11 +129,11 @@ namespace RainbowMage.OverlayPlugin
             var plugin = ActGlobals.oFormActMain.ActPlugins.Where(x => x.pluginObj == this).FirstOrDefault();
             if (plugin != null)
             {
-                return System.IO.Path.GetDirectoryName(plugin.pluginFile.FullName);
+                return Path.GetDirectoryName(plugin.pluginFile.FullName);
             }
             else
             {
-                throw new Exception();
+                throw new Exception("Could not find ourselves in the plugin list!");
             }
         }
 
