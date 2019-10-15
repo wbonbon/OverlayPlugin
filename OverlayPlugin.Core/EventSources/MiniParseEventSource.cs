@@ -164,7 +164,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             obj["Encounter"] = JObject.FromObject(encounter);
             obj["Combatant"] = new JObject();
 
-            if (this.Config.SortKey != null)
+            if (this.Config.SortKey != null && this.Config.SortKey != "")
             {
                 int factor = this.Config.SortDesc ? -1 : 1;
                 var key = this.Config.SortKey;
@@ -182,7 +182,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         } catch(FormatException)
                         {
                             return 0;
-                        } catch(InvalidOperationException)
+                        } catch(KeyNotFoundException)
                         {
                             return 0;
                         }
