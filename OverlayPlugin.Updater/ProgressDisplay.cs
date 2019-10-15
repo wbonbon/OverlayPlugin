@@ -59,7 +59,8 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public void DisposeCancelSource()
         {
-            _cancel.Dispose();
+            if (_cancel != null) _cancel.Dispose();
+
             _cancel = null;
             cancelBtn.Enabled = false;
         }

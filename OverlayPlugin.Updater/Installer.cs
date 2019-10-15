@@ -228,6 +228,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                             }
                         }
 
+                        success = true;
                         break;
                     }
                 }
@@ -248,11 +249,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                         _display.Log("Aborted by user.");
                     }
 
-                    _display.DisposeCancelSource();
                     return false;
                 }
-
-                _display.DisposeCancelSource();
             }
             catch (Exception ex)
             {
