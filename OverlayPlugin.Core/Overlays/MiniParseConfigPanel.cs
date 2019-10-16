@@ -230,5 +230,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             this.config.ActwsCompatibility = checkActwsCompatbility.Checked;
         }
+
+        private void textGlobalHotkey_Enter(object sender, EventArgs e)
+        {
+            Registry.Resolve<KeyboardHook>().DisableHotKeys();
+        }
+
+        private void textGlobalHotkey_Leave(object sender, EventArgs e)
+        {
+            Registry.Resolve<KeyboardHook>().EnableHotKeys();
+        }
     }
 }

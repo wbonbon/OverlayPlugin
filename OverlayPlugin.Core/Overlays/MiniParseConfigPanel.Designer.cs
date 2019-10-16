@@ -222,7 +222,9 @@
             // 
             resources.ApplyResources(this.textGlobalHotkey, "textGlobalHotkey");
             this.textGlobalHotkey.Name = "textGlobalHotkey";
+            this.textGlobalHotkey.Enter += new System.EventHandler(this.textGlobalHotkey_Enter);
             this.textGlobalHotkey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxGlobalHotkey_KeyDown);
+            this.textGlobalHotkey.Leave += new System.EventHandler(this.textGlobalHotkey_Leave);
             // 
             // label9
             // 

@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="FFXIVExportVariables.cs" />
     <Compile Include="FFXIVRepository.cs" />
+    <Compile Include="GlobalHotkeyManager.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="OverlayApi.cs" />
     <Compile Include="EventDispatcher.cs" />

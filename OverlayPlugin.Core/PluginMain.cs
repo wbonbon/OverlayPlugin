@@ -179,6 +179,8 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void InitializeOverlays()
         {
+            Registry.Register(new KeyboardHook());
+
             // オーバーレイ初期化
             this.Overlays = new List<IOverlay>();
             foreach (var overlayConfig in this.Config.Overlays)

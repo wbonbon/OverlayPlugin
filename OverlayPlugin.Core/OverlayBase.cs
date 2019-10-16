@@ -16,8 +16,8 @@ namespace RainbowMage.OverlayPlugin
     public abstract class OverlayBase<TConfig> : IOverlay, IEventReceiver
         where TConfig: OverlayConfigBase
     {
-        private KeyboardHook hook = new KeyboardHook();
         private bool disableLog = false;
+        private Action hotKeyCallback = null;
 
         protected System.Timers.Timer timer;
         /// <summary>
@@ -103,40 +103,7 @@ namespace RainbowMage.OverlayPlugin
                 this.Overlay = new OverlayForm(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
                     this.Name, "about:blank", this.Config.MaxFrameRate, new OverlayApi(this));
 
-                // グローバルホットキーを設定
-                if (this.Config.GlobalHotkeyEnabled)
-                {
-                    var modifierKeys = GetModifierKey(this.Config.GlobalHotkeyModifiers);
-                    var key = this.Config.GlobalHotkey;
-                    var hotkeyType = this.Config.GlobalHotkeyType;
-                    if (key != Keys.None)
-                    {
-                        switch (hotkeyType)
-                        {
-                            case GlobalHotkeyType.ToggleVisible:
-                                hook.KeyPressed += (o, e) => this.Config.IsVisible = !this.Config.IsVisible;
-                                break;
-                            case GlobalHotkeyType.ToggleClickthru:
-                                hook.KeyPressed += (o, e) => this.Config.IsClickThru = !this.Config.IsClickThru;
-                                break;
-                            case GlobalHotkeyType.ToggleLock:
-                                hook.KeyPressed += (o, e) => this.Config.IsLocked = !this.Config.IsLocked;
-                                break;
-                            default:
-                                hook.KeyPressed += (o, e) => this.Config.IsVisible = !this.Config.IsVisible;
-                                break;
-                        }
-
-                        try
-                        {
-                            hook.RegisterHotKey(modifierKeys, key);
-                        }
-                        catch (Exception e)
-                        {
-                            Log(LogLevel.Error, "Failed to register hotkey: {0}", e.Message);
-                        }
-                    }
-                }
+                UpdateHotKey();
 
                 // 画面外にウィンドウがある場合は、初期表示位置をシステムに設定させる
                 if (!Util.IsOnScreen(this.Overlay))
@@ -220,6 +187,52 @@ namespace RainbowMage.OverlayPlugin
             return modifiers;
         }
 
+        private void UpdateHotKey()
+        {
+            var hook = Registry.Resolve<KeyboardHook>();
+
+            // Clear the old hotkey
+            if (hotKeyCallback != null)
+            {
+                hook.UnregisterHotKey(hotKeyCallback);
+            }
+
+            if (this.Config.GlobalHotkeyEnabled)
+            {
+                var modifierKeys = GetModifierKey(this.Config.GlobalHotkeyModifiers);
+                var key = this.Config.GlobalHotkey;
+                var hotkeyType = this.Config.GlobalHotkeyType;
+
+                if (key != Keys.None)
+                {
+                    switch (hotkeyType)
+                    {
+                        case GlobalHotkeyType.ToggleVisible:
+                            hotKeyCallback = () => this.Config.IsVisible = !this.Config.IsVisible;
+                            break;
+                        case GlobalHotkeyType.ToggleClickthru:
+                            hotKeyCallback = () => this.Config.IsClickThru = !this.Config.IsClickThru;
+                            break;
+                        case GlobalHotkeyType.ToggleLock:
+                            hotKeyCallback = () => this.Config.IsLocked = !this.Config.IsLocked;
+                            break;
+                        default:
+                            hotKeyCallback = () => this.Config.IsVisible = !this.Config.IsVisible;
+                            break;
+                    }
+
+                    try
+                    {
+                        hook.RegisterHotKey(modifierKeys, key, hotKeyCallback);
+                    }
+                    catch (Exception e)
+                    {
+                        Log(LogLevel.Error, "Failed to register hotkey: {0}", e.Message);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// URL が妥当であり、さらにローカルファイルであれば存在するかどうかをチェックします。
         /// </summary>
@@ -301,6 +314,9 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (this.Overlay != null) this.Overlay.MaxFrameRate = this.Config.MaxFrameRate;
             };
+            this.Config.GlobalHotkeyChanged += (o, e) => UpdateHotKey();
+            this.Config.GlobalHotkeyEnabledChanged += (o, e) => UpdateHotKey();
+            this.Config.GlobalHotkeyModifiersChanged += (o, e) => UpdateHotKey();
         }
 
         /// <summary>
@@ -326,9 +342,9 @@ namespace RainbowMage.OverlayPlugin
                     this.Overlay.Close();
                     this.Overlay.Dispose();
                 }
-                if (this.hook != null)
+                if (hotKeyCallback != null)
                 {
-                    this.hook.Dispose();
+                    Registry.Resolve<KeyboardHook>().UnregisterHotKey(hotKeyCallback);
                 }
             }
             catch (Exception ex)
