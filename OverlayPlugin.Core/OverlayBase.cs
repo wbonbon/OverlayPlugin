@@ -415,6 +415,11 @@ namespace RainbowMage.OverlayPlugin
         {
         }
 
+        public virtual void SetAcceptFocus(bool accept)
+        {
+            Overlay.SetAcceptFocus(accept);
+        }
+
         // Event Source stuff
 
         public virtual void HandleEvent(JObject e)

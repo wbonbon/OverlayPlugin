@@ -29,6 +29,11 @@ namespace RainbowMage.HtmlRenderer
         private bool altKeyPressed = false;
         private bool controlKeyPressed = false;
 
+        private const int WS_EX_TOPMOST = 0x00000008;
+        private const int WS_EX_LAYERED = 0x00080000;
+        private const int CP_NOCLOSE_BUTTON = 0x200;
+        private const int WS_EX_NOACTIVATE = 0x08000000;
+
         public Renderer Renderer { get; private set; }
 
         private string url;
@@ -109,6 +114,19 @@ namespace RainbowMage.HtmlRenderer
             NativeMethods.SetWindowLongA(Handle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
         }
 
+        public void SetAcceptFocus(bool accept)
+        {
+            int ex = NativeMethods.GetWindowLong(Handle, NativeMethods.GWL_EXSTYLE);
+            if (accept)
+            {
+                ex &= ~WS_EX_NOACTIVATE;
+            } else
+            {
+                ex |= WS_EX_NOACTIVATE;
+            }
+            NativeMethods.SetWindowLongA(Handle, NativeMethods.GWL_EXSTYLE, (IntPtr)ex);
+        }
+
         public void Reload()
         {
             this.Renderer.Reload();
@@ -119,11 +137,6 @@ namespace RainbowMage.HtmlRenderer
         {
             get
             {
-                const int WS_EX_TOPMOST = 0x00000008;
-                const int WS_EX_LAYERED = 0x00080000;
-                const int CP_NOCLOSE_BUTTON = 0x200;
-                const int WS_EX_NOACTIVATE = 0x08000000;
-
                 var cp = base.CreateParams;
                 cp.ExStyle = cp.ExStyle | WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_NOACTIVATE;
                 cp.ClassStyle = cp.ClassStyle | CP_NOCLOSE_BUTTON;

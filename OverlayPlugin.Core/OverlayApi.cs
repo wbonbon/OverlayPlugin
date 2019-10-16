@@ -50,6 +50,11 @@ namespace RainbowMage.OverlayPlugin
             ActGlobals.oFormActMain.EndCombat(true);
         }
 
+        public void setAcceptFocus(bool accept)
+        {
+            receiver.SetAcceptFocus(accept);
+        }
+
         // Also handles (un)subscription to make switching between this and WS easier.
         public void callHandler(string data, object callback)
         {

@@ -69,5 +69,7 @@ namespace RainbowMage.OverlayPlugin
         void OverlayMessage(string message);
 
         void InitModernAPI();
+
+        void SetAcceptFocus(bool accept);
     }
 }
