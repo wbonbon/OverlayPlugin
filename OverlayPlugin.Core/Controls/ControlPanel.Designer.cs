@@ -26,11 +26,11 @@ namespace RainbowMage.OverlayPlugin
             this.buttonRemoveOverlay = new System.Windows.Forms.Button();
             this.checkBoxAutoHide = new System.Windows.Forms.CheckBox();
             this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
+            this.buttonClearLog = new System.Windows.Forms.Button();
             this.logBox = new System.Windows.Forms.TextBox();
             this.tabPageMain = new System.Windows.Forms.TabPage();
             this.label_ListEmpty = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.buttonClearLog = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -43,6 +43,7 @@ namespace RainbowMage.OverlayPlugin
             // splitContainer1
             // 
             resources.ApplyResources(this.splitContainer1, "splitContainer1");
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -106,6 +107,13 @@ namespace RainbowMage.OverlayPlugin
             this.checkBoxFollowLog.UseVisualStyleBackColor = true;
             this.checkBoxFollowLog.CheckedChanged += new System.EventHandler(this.CheckBoxFollowLog_CheckedChanged);
             // 
+            // buttonClearLog
+            // 
+            resources.ApplyResources(this.buttonClearLog, "buttonClearLog");
+            this.buttonClearLog.Name = "buttonClearLog";
+            this.buttonClearLog.UseVisualStyleBackColor = true;
+            this.buttonClearLog.Click += new System.EventHandler(this.ButtonClearLog_Click);
+            // 
             // logBox
             // 
             this.logBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -131,13 +139,6 @@ namespace RainbowMage.OverlayPlugin
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
-            // 
-            // buttonClearLog
-            // 
-            resources.ApplyResources(this.buttonClearLog, "buttonClearLog");
-            this.buttonClearLog.Name = "buttonClearLog";
-            this.buttonClearLog.UseVisualStyleBackColor = true;
-            this.buttonClearLog.Click += new System.EventHandler(this.ButtonClearLog_Click);
             // 
             // ControlPanel
             // 

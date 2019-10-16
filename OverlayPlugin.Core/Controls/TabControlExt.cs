@@ -10,7 +10,7 @@ namespace RainbowMage.OverlayPlugin
         {
             base.OnPaint(e);
             e.Graphics.Clear(SystemColors.ControlLightLight);
-            e.Graphics.FillRectangle(SystemBrushes.ControlLight, 4, 4, ItemSize.Height - 4, Height - 8);
+            e.Graphics.FillRectangle(SystemBrushes.ControlLight, 4, 4, (ItemSize.Height * RowCount) - 4, Height - 8);
 
             int inc = 0;
 

@@ -56,6 +56,9 @@
             this.checkActwsCompatbility = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbWhiteBg = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -72,7 +75,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseVisible, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseClickthru, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 11);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 14);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.label7, 0, 7);
@@ -86,6 +89,9 @@
             this.tableLayoutPanel1.Controls.Add(this.checkActwsCompatbility, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label11, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.cbWhiteBg, 1, 10);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 1, 11);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -267,6 +273,23 @@
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // cbWhiteBg
+            // 
+            resources.ApplyResources(this.cbWhiteBg, "cbWhiteBg");
+            this.cbWhiteBg.Name = "cbWhiteBg";
+            this.cbWhiteBg.UseVisualStyleBackColor = true;
+            this.cbWhiteBg.CheckedChanged += new System.EventHandler(this.cbWhiteBg_CheckedChanged);
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -282,6 +305,7 @@
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxFrameRate)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -314,5 +338,8 @@
         private System.Windows.Forms.CheckBox checkActwsCompatbility;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbWhiteBg;
+        private System.Windows.Forms.Label label12;
     }
 }

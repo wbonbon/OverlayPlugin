@@ -240,5 +240,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             Registry.Resolve<KeyboardHook>().EnableHotKeys();
         }
+
+        private void cbWhiteBg_CheckedChanged(object sender, EventArgs e)
+        {
+            var color = this.cbWhiteBg.Checked ? "white" : "transparent";
+            this.overlay.ExecuteScript($"document.body.style.backgroundColor = \"{color}\";");
+        }
     }
 }

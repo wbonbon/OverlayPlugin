@@ -16,18 +16,27 @@ namespace RainbowMage.OverlayPlugin
     {
         PluginMain pluginMain;
         PluginConfig config;
+        TabPage generalTab;
 
         public ControlPanel(PluginMain pluginMain, PluginConfig config)
         {
             InitializeComponent();
             tableLayoutPanel0.PerformLayout();
+            splitContainer1.SplitterDistance = splitContainer1.Height - 180;
 
             this.pluginMain = pluginMain;
             this.config = config;
 
             this.checkBoxAutoHide.Checked = this.config.HideOverlaysWhenNotActive;
             this.checkBoxFollowLog.Checked = this.config.FollowLatestLog;
-            
+
+            generalTab = new TabPage
+            {
+                Name = "General",
+                Text = "",
+            };
+            generalTab.Controls.Add(new GeneralConfigTab());
+
             PluginMain.Logger.RegisterListener(addLogEntry);
             Registry.AddonRegistered += InitializeOverlayConfigTabs;
             InitializeOverlayConfigTabs(null, null);
@@ -84,13 +93,6 @@ namespace RainbowMage.OverlayPlugin
         private void InitializeOverlayConfigTabs(object sender, EventArgs e)
         {
             tabControl.TabPages.Clear();
-
-            var generalTab = new TabPage
-            {
-                Name = "General",
-                Text = "",
-            };
-            generalTab.Controls.Add(new GeneralConfigTab());
             tabControl.TabPages.Add(generalTab);
 
             foreach (var source in Registry.EventSources)
@@ -207,7 +209,7 @@ namespace RainbowMage.OverlayPlugin
                 tabControl.SelectedTab = tabControl.TabPages[0];
 
             var subLabel = tabControl.SelectedTab.Text;
-            if (subLabel.Length > 13 && subLabel.Substring(0, 13) == "Event Source ")
+            if (subLabel.EndsWith("EventSource") || subLabel.StartsWith("Event Source "))
             {
                 return;
             }
@@ -234,7 +236,7 @@ namespace RainbowMage.OverlayPlugin
             }
 
             // タブページを削除
-            this.tabControl.TabPages.RemoveByKey(selectedOverlayName);
+            this.tabControl.TabPages.Remove(tabControl.SelectedTab);
 
             // タープカントロールが
             if (this.tabControl.TabCount == 0)
