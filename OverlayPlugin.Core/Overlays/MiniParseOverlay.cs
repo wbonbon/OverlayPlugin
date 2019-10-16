@@ -166,6 +166,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 // Clear the subscription set in PrepareWebsite().
                 Unsubscribe("CombatData");
+                Unsubscribe("LogLine");
                 modernApi = true;
             }
         }

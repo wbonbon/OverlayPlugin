@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using System.Diagnostics;
@@ -15,7 +16,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private string prevEncounterId { get; set; }
         private DateTime prevEndDateTime { get; set; }
         private bool prevEncounterActive { get; set; }
-        
+
+        private List<string> importedLogs = new List<string>();
+
         // Event Source
         
         public MiniParseEventSourceConfig Config { get; set; }
@@ -25,13 +28,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.Name = "MiniParse";
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
-            RegisterEventTypes(new List<string> { "CombatData", "LogLine", "ChangeZone", "ChangePrimaryPlayer", "FileChanged" });
+            RegisterEventTypes(new List<string> { "CombatData", "LogLine", "ImportedLogLines", "ChangeZone", "ChangePrimaryPlayer", "FileChanged" });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
         {
+            if (isImport)
+            {
+                lock (importedLogs)
+                {
+                    importedLogs.Add(args.originalLogLine);
+                }
+                return;
+            }
+
             LogMessageType lineType;
             var line = args.originalLogLine.Split('|');
 
@@ -112,7 +124,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         protected override void Update()
         {
-            if (CheckIsActReady())
+            var importing = ActGlobals.oFormImportProgress?.Visible == true;
+
+            if (CheckIsActReady() && (!importing || this.Config.UpdateDpsDuringImport))
             {
                 // 最終更新時刻に変化がないなら更新を行わない
                 if (this.prevEncounterId == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EncId &&
@@ -127,6 +141,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 this.prevEncounterActive = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active;
 
                 DispatchEvent(this.CreateJsonData());
+            }
+            
+            if (importing)
+            {
+                List<string> logs = null;
+
+                lock (importedLogs)
+                {
+                    if (importedLogs.Count > 0)
+                    {
+                        logs = importedLogs;
+                        importedLogs = new List<string>();
+                    }
+                }
+
+                if (logs != null)
+                {
+                    DispatchEvent(JObject.FromObject(new
+                    {
+                        type = "ImportedLogLines",
+                        logLines = logs
+                    }));
+                }
             }
         }
 
@@ -329,9 +366,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private static bool CheckIsActReady()
         {
-            if (ActGlobals.oFormActMain != null &&
-                ActGlobals.oFormActMain.ActiveZone != null &&
-                ActGlobals.oFormActMain.ActiveZone.ActiveEncounter != null &&
+            if (ActGlobals.oFormActMain?.ActiveZone?.ActiveEncounter != null &&
                 EncounterData.ExportVariables != null &&
                 CombatantData.ExportVariables != null)
             {

@@ -36,6 +36,8 @@
             this.textUpdateInterval = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.checkSortDesc = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbUpdateDuringImport = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +50,8 @@
             this.tableLayoutPanel1.Controls.Add(this.textUpdateInterval, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkSortDesc, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.cbUpdateDuringImport, 1, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // comboSortKey
@@ -85,6 +89,18 @@
             this.checkSortDesc.UseVisualStyleBackColor = true;
             this.checkSortDesc.CheckedChanged += new System.EventHandler(this.CheckSortDesc_CheckedChanged);
             // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // cbUpdateDuringImport
+            // 
+            resources.ApplyResources(this.cbUpdateDuringImport, "cbUpdateDuringImport");
+            this.cbUpdateDuringImport.Name = "cbUpdateDuringImport";
+            this.cbUpdateDuringImport.UseVisualStyleBackColor = true;
+            this.cbUpdateDuringImport.CheckedChanged += new System.EventHandler(this.cbUpdateDuringImport_CheckedChanged);
+            // 
             // MiniParseEventSourceConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -107,5 +123,7 @@
         private System.Windows.Forms.TextBox textUpdateInterval;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkSortDesc;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox cbUpdateDuringImport;
     }
 }

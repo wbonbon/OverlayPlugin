@@ -42,6 +42,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.comboSortKey.SelectedIndexChanged += comboSortKey_SelectedIndexChanged;
 
             this.checkSortDesc.Checked = config.SortDesc;
+            this.cbUpdateDuringImport.Checked = config.UpdateDpsDuringImport;
         }
 
         private void SetupConfigEventHandlers()
@@ -67,6 +68,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 this.InvokeIfRequired(() =>
                 {
                     this.checkSortDesc.Checked = config.SortDesc;
+                });
+            };
+
+            this.config.UpdateDpsDuringImportChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.cbUpdateDuringImport.Checked = config.UpdateDpsDuringImport;
                 });
             };
         }
@@ -103,6 +112,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private void CheckSortDesc_CheckedChanged(object sender, EventArgs e)
         {
             this.config.SortDesc = this.checkSortDesc.Checked;
+        }
+
+        private void cbUpdateDuringImport_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.UpdateDpsDuringImport = this.cbUpdateDuringImport.Checked;
         }
     }
 }

@@ -442,8 +442,7 @@ MaxUploadsPerDay=0
         {
             if (_browser != null && _browser.IsBrowserInitialized)
             {
-                var frame = _browser.GetMainFrame();
-                frame.ExecuteJavaScriptAsync(script, "injected");
+                _browser.GetMainFrame().ExecuteJavaScriptAsync(script, "injected");
             }
             else
             {

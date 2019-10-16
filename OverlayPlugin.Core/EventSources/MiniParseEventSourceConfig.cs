@@ -9,6 +9,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public event EventHandler UpdateIntervalChanged;
         public event EventHandler SortKeyChanged;
         public event EventHandler SortDescChanged;
+        public event EventHandler UpdateDpsDuringImportChanged;
 
         private int updateInterval;
         public int UpdateInterval {
@@ -60,12 +61,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
+        private bool updateDpsDuringImport;
+        public bool UpdateDpsDuringImport
+        {
+            get
+            {
+                return this.updateDpsDuringImport;
+            }
+            set
+            {
+                if (this.updateDpsDuringImport != value)
+                {
+                    this.updateDpsDuringImport = value;
+                    UpdateDpsDuringImportChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
 
         public MiniParseEventSourceConfig()
         {
             this.updateInterval = 1;
             this.sortKey = null;
             this.sortDesc = true;
+            this.updateDpsDuringImport = false;
         }
 
         public static MiniParseEventSourceConfig LoadConfig(IPluginConfig Config)
@@ -89,6 +107,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 if (obj.TryGetValue("SortDesc", out value))
                 {
                     result.sortDesc = value.ToObject<bool>();
+                }
+
+                if (obj.TryGetValue("UpdateDpsDuringImport", out value))
+                {
+                    result.updateDpsDuringImport = value.ToObject<bool>();
                 }
             }
 

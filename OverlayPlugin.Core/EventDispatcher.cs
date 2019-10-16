@@ -76,7 +76,8 @@ namespace RainbowMage.OverlayPlugin
                 try
                 {
                     receiver.HandleEvent(e);
-                } catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Log(LogLevel.Error, "Failed to dispatch event {0} to {1}! {2}", eventType, receiver, ex);
                 }
