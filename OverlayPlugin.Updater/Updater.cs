@@ -17,7 +17,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<(bool, Version, string)> CheckForUpdate()
         {
-            var currentVersion = Version.Parse("0.6.0"); // Assembly.GetExecutingAssembly().GetName().Version;
+            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
             Version remoteVersion;
 
             var client = new HttpClient();
