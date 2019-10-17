@@ -74,7 +74,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void cbHideOverlaysWhenNotActive_CheckedChanged(object sender, EventArgs e)
         {
-            config.HideOverlaysWhenNotActive = cbHideOverlaysDuringCutscene.Checked;
+            config.HideOverlaysWhenNotActive = cbHideOverlaysWhenNotActive.Checked;
         }
 
         private void cbHideOverlaysDuringCutscene_CheckedChanged(object sender, EventArgs e)
