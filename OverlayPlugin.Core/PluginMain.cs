@@ -62,6 +62,7 @@ namespace RainbowMage.OverlayPlugin
 #endif
 
                 FFXIVExportVariables.Init();
+                NetworkParser.Init();
 
                 // プラグイン読み込み
                 LoadAddons();
@@ -144,19 +145,6 @@ namespace RainbowMage.OverlayPlugin
                 watch.Stop();
 #endif
 
-                NetworkParser.Init();
-                NetworkParser.OnOnlineStatusChanged += (o, e) =>
-                {
-                    if (!Config.HideOverlayDuringCutscene) return;
-                    if (e.Target != FFXIVRepository.GetPlayerID()) return;
-
-                    var shouldBeVisible = e.Status != 15;
-                    foreach (var overlay in Overlays)
-                    {
-                        if (overlay.Config.IsVisible) overlay.Visible = shouldBeVisible;
-                    }
-                };
-
                 // コンフィグUI系初期化
                 this.controlPanel = new ControlPanel(this, this.Config);
                 this.controlPanel.Dock = DockStyle.Fill;
@@ -213,62 +201,58 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
+            var gameActive = true;
+            var inCutscene = false;
             NativeMethods.ActiveWindowChanged += (sender, hWndFg) =>
             {
-                if (Config.HideOverlaysWhenNotActive)
+                if (!Config.HideOverlaysWhenNotActive || hWndFg == IntPtr.Zero) return;
+                try
                 {
                     try
                     {
-                        var shouldBeVisible = true;
+                        NativeMethods.GetWindowThreadProcessId(hWndFg, out uint pid);
 
-                        try
-                        {
-                            uint pid;
-                            if (hWndFg == IntPtr.Zero)
-                            {
-                                return;
-                            }
-                            NativeMethods.GetWindowThreadProcessId(hWndFg, out pid);
+                        if (pid == 0)
+                            return;
 
-                            if (pid == 0)
-                                return;
-
-                            var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
-                            var fileName = Path.GetFileName(exePath.ToString());
-                            if (fileName == "ffxiv.exe" ||
-                                fileName == "ffxiv_dx11.exe" ||
-                                exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName)
-                            {
-                                shouldBeVisible = true;
-                            }
-                            else
-                            {
-                                shouldBeVisible = false;
-                            }
-                        }
-                        catch (System.ComponentModel.Win32Exception ex)
-                        {
-                            // Ignore access denied errors. Those usually happen if the foreground window is running with
-                            // admin permissions but we are not.
-                            if (ex.ErrorCode == -2147467259)  // 0x80004005
-                            {
-                                shouldBeVisible = false;
-                            }
-                            else
-                            {
-                                Logger.Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
-                            }
-                        }
-
-                        foreach (var overlay in this.Overlays)
-                        {
-                            if (overlay.Config.IsVisible) overlay.Visible = shouldBeVisible;
-                        }
+                        var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+                        var fileName = Path.GetFileName(exePath.ToString());
+                        gameActive = (fileName == "ffxiv.exe" || fileName == "ffxiv_dx11.exe" ||
+                                      exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName);
                     }
-                    catch (Exception ex)
+                    catch (System.ComponentModel.Win32Exception ex)
                     {
-                        Logger.Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
+                        // Ignore access denied errors. Those usually happen if the foreground window is running with
+                        // admin permissions but we are not.
+                        if (ex.ErrorCode == -2147467259)  // 0x80004005
+                        {
+                            gameActive = false;
+                        }
+                        else
+                        {
+                            Logger.Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
+                        }
                     }
+
+                    foreach (var overlay in this.Overlays)
+                    {
+                        if (overlay.Config.IsVisible) overlay.Visible = gameActive && !inCutscene;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(LogLevel.Error, "XivWindowWatcher: {0}", ex.ToString());
+                }
+            };
+
+            NetworkParser.OnOnlineStatusChanged += (o, e) =>
+            {
+                if (!Config.HideOverlayDuringCutscene || e.Target != FFXIVRepository.GetPlayerID()) return;
+
+                inCutscene = e.Status != 15;
+                foreach (var overlay in Overlays)
+                {
+                    if (overlay.Config.IsVisible) overlay.Visible = gameActive && !inCutscene;
                 }
             };
         }

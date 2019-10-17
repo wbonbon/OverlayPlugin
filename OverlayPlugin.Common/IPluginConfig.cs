@@ -9,6 +9,13 @@ namespace RainbowMage.OverlayPlugin
         OverlayConfigList<IOverlayConfig> Overlays { get; set; }
         bool FollowLatestLog { get; set; }
         bool HideOverlaysWhenNotActive { get; set; }
+        bool HideOverlayDuringCutscene { get; set; }
+        bool ErrorReports { get; set; }
+        bool UpdateCheck { get; set; }
+        string WSServerIP { get; set; }
+        int WSServerPort { get; set; }
+        bool WSServerSSL { get; set; }
+        bool WSServerRunning { get; set; }
         Version Version { get; set; }
         bool IsFirstLaunch { get; set; }
         Dictionary<string, JObject> EventSourceConfigs { get; set; }
