@@ -24,6 +24,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\out\Release\libs\</OutputPath>
@@ -71,6 +72,7 @@
     <Compile Include="FFXIVExportVariables.cs" />
     <Compile Include="FFXIVRepository.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="NetworkParser.cs" />
     <Compile Include="OverlayApi.cs" />
     <Compile Include="EventDispatcher.cs" />
     <Compile Include="IEventReceiver.cs" />

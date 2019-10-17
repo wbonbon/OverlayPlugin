@@ -144,6 +144,19 @@ namespace RainbowMage.OverlayPlugin
                 watch.Stop();
 #endif
 
+                NetworkParser.Init();
+                NetworkParser.OnOnlineStatusChanged += (o, e) =>
+                {
+                    if (!Config.HideOverlayDuringCutscene) return;
+                    if (e.Target != FFXIVRepository.GetPlayerID()) return;
+
+                    var shouldBeVisible = e.Status != 15;
+                    foreach (var overlay in Overlays)
+                    {
+                        if (overlay.Config.IsVisible) overlay.Visible = shouldBeVisible;
+                    }
+                };
+
                 // コンフィグUI系初期化
                 this.controlPanel = new ControlPanel(this, this.Config);
                 this.controlPanel.Dock = DockStyle.Fill;

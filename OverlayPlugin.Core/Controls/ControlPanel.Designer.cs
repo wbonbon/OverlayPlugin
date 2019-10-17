@@ -24,7 +24,6 @@ namespace RainbowMage.OverlayPlugin
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.buttonNewOverlay = new System.Windows.Forms.Button();
             this.buttonRemoveOverlay = new System.Windows.Forms.Button();
-            this.checkBoxAutoHide = new System.Windows.Forms.CheckBox();
             this.checkBoxFollowLog = new System.Windows.Forms.CheckBox();
             this.buttonClearLog = new System.Windows.Forms.Button();
             this.logBox = new System.Windows.Forms.TextBox();
@@ -73,7 +72,6 @@ namespace RainbowMage.OverlayPlugin
             // 
             this.flowLayoutPanel.Controls.Add(this.buttonNewOverlay);
             this.flowLayoutPanel.Controls.Add(this.buttonRemoveOverlay);
-            this.flowLayoutPanel.Controls.Add(this.checkBoxAutoHide);
             this.flowLayoutPanel.Controls.Add(this.checkBoxFollowLog);
             this.flowLayoutPanel.Controls.Add(this.buttonClearLog);
             resources.ApplyResources(this.flowLayoutPanel, "flowLayoutPanel");
@@ -92,13 +90,6 @@ namespace RainbowMage.OverlayPlugin
             this.buttonRemoveOverlay.Name = "buttonRemoveOverlay";
             this.buttonRemoveOverlay.UseVisualStyleBackColor = true;
             this.buttonRemoveOverlay.Click += new System.EventHandler(this.buttonRemoveOverlay_Click);
-            // 
-            // checkBoxAutoHide
-            // 
-            resources.ApplyResources(this.checkBoxAutoHide, "checkBoxAutoHide");
-            this.checkBoxAutoHide.Name = "checkBoxAutoHide";
-            this.checkBoxAutoHide.UseVisualStyleBackColor = true;
-            this.checkBoxAutoHide.CheckedChanged += new System.EventHandler(this.checkBoxAutoHide_CheckedChanged);
             // 
             // checkBoxFollowLog
             // 
@@ -168,7 +159,6 @@ namespace RainbowMage.OverlayPlugin
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonRemoveOverlay;
         private System.Windows.Forms.Button buttonNewOverlay;
-        private System.Windows.Forms.CheckBox checkBoxAutoHide;
         private TableLayoutPanel tableLayoutPanel0;
         private FlowLayoutPanel flowLayoutPanel;
         private Label label_ListEmpty;

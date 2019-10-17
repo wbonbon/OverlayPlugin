@@ -27,7 +27,6 @@ namespace RainbowMage.OverlayPlugin
             this.pluginMain = pluginMain;
             this.config = config;
 
-            this.checkBoxAutoHide.Checked = this.config.HideOverlaysWhenNotActive;
             this.checkBoxFollowLog.Checked = this.config.FollowLatestLog;
 
             generalTab = new TabPage
@@ -251,11 +250,6 @@ namespace RainbowMage.OverlayPlugin
 
             // タープを更新
             this.tabControl.Update();
-        }
-
-        private void checkBoxAutoHide_CheckedChanged(object sender, EventArgs e)
-        {
-            config.HideOverlaysWhenNotActive = checkBoxAutoHide.Checked;
         }
 
         private void CheckBoxFollowLog_CheckedChanged(object sender, EventArgs e)

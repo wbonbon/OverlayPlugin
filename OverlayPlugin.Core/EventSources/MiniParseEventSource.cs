@@ -18,6 +18,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private bool prevEncounterActive { get; set; }
 
         private List<string> importedLogs = new List<string>();
+        private static Dictionary<uint, string> StatusMap = new Dictionary<uint, string>
+        {
+            { 0, "Online" },
+            { 12, "Busy" },
+            { 15, "InCutscene" },
+            { 17, "AFK" },
+            { 21, "LookingToMeld" },
+            { 22, "RP" },
+            { 23, "LookingForParty" },
+        };
 
         // Event Source
         
@@ -28,9 +38,21 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.Name = "MiniParse";
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
-            RegisterEventTypes(new List<string> { "CombatData", "LogLine", "ImportedLogLines", "ChangeZone", "ChangePrimaryPlayer", "FileChanged" });
+            RegisterEventTypes(new List<string> {
+                "CombatData", "LogLine", "ImportedLogLines", "ChangeZone", "ChangePrimaryPlayer", "FileChanged", "OnlineStatusChanged",
+            });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
+            NetworkParser.OnOnlineStatusChanged += (o, e) =>
+            {
+                var obj = new JObject();
+                obj["type"] = "OnlineStatusChanged";
+                obj["target"] = e.Target;
+                obj["rawStatus"] = e.Status;
+                obj["status"] = StatusMap.ContainsKey(e.Status) ? StatusMap[e.Status] : "Unknown";
+
+                DispatchEvent(obj);
+            };
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)

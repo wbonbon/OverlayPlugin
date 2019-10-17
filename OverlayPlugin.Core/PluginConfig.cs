@@ -26,6 +26,8 @@ namespace RainbowMage.OverlayPlugin
         [XmlElement("HideOverlaysWhenNotActive")]
         public bool HideOverlaysWhenNotActive { get; set; }
 
+        public bool HideOverlayDuringCutscene { get; set; }
+
         public bool ErrorReports { get; set; }
         public bool UpdateCheck { get; set; }
 
@@ -103,7 +105,8 @@ namespace RainbowMage.OverlayPlugin
             this.EventSourceConfigs = new Dictionary<string, JObject>();
 
             this.FollowLatestLog = false;
-            this.HideOverlaysWhenNotActive = false;
+            this.HideOverlaysWhenNotActive = true;
+            this.HideOverlayDuringCutscene = false;
             this.ErrorReports = false;
             this.UpdateCheck = true;
             this.IsFirstLaunch = true;

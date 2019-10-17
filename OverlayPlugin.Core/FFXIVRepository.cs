@@ -124,5 +124,11 @@ namespace RainbowMage.OverlayPlugin
             var sub = GetSubscription();
             sub.LogLine += new LogLineDelegate(handler);
         }
+
+        public static void RegisterNetworkParser(Action<string, long, byte[]> handler)
+        {
+            var sub = GetSubscription();
+            sub.NetworkReceived += new NetworkReceivedDelegate(handler);
+        }
     }
 }

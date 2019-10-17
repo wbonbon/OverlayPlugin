@@ -147,7 +147,7 @@
     <value>3, 4, 3, 4</value>
   </data>
   <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>671, 284</value>
+    <value>671, 283</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
@@ -231,39 +231,6 @@
   <data name="&gt;&gt;buttonRemoveOverlay.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="checkBoxAutoHide.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxAutoHide.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="checkBoxAutoHide.Location" type="System.Drawing.Point, System.Drawing">
-    <value>189, 4</value>
-  </data>
-  <data name="checkBoxAutoHide.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
-  <data name="checkBoxAutoHide.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 29</value>
-  </data>
-  <data name="checkBoxAutoHide.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="checkBoxAutoHide.Text" xml:space="preserve">
-    <value>Automatically hide overlays</value>
-  </data>
-  <data name="&gt;&gt;checkBoxAutoHide.Name" xml:space="preserve">
-    <value>checkBoxAutoHide</value>
-  </data>
-  <data name="&gt;&gt;checkBoxAutoHide.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxAutoHide.Parent" xml:space="preserve">
-    <value>flowLayoutPanel</value>
-  </data>
-  <data name="&gt;&gt;checkBoxAutoHide.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="checkBoxFollowLog.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -271,7 +238,7 @@
     <value>Fill</value>
   </data>
   <data name="checkBoxFollowLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>367, 3</value>
+    <value>189, 3</value>
   </data>
   <data name="checkBoxFollowLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 31</value>
@@ -292,13 +259,13 @@
     <value>flowLayoutPanel</value>
   </data>
   <data name="&gt;&gt;checkBoxFollowLog.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="buttonClearLog.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="buttonClearLog.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 3</value>
+    <value>315, 3</value>
   </data>
   <data name="buttonClearLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 31</value>
@@ -319,13 +286,13 @@
     <value>flowLayoutPanel</value>
   </data>
   <data name="&gt;&gt;buttonClearLog.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
   <data name="flowLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="flowLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 296</value>
+    <value>3, 295</value>
   </data>
   <data name="flowLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>
@@ -358,7 +325,7 @@
     <value>3, 4, 3, 4</value>
   </data>
   <data name="tableLayoutPanel0.Size" type="System.Drawing.Size, System.Drawing">
-    <value>677, 336</value>
+    <value>677, 335</value>
   </data>
   <data name="tableLayoutPanel0.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -406,7 +373,7 @@
     <value>Both</value>
   </data>
   <data name="logBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>677, 171</value>
+    <value>677, 172</value>
   </data>
   <data name="logBox.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -439,7 +406,7 @@
     <value>677, 512</value>
   </data>
   <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
-    <value>336</value>
+    <value>335</value>
   </data>
   <data name="splitContainer1.SplitterWidth" type="System.Int32, mscorlib">
     <value>5</value>
