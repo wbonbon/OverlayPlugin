@@ -249,7 +249,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (!Config.HideOverlayDuringCutscene || e.Target != FFXIVRepository.GetPlayerID()) return;
 
-                inCutscene = e.Status != 15;
+                inCutscene = e.Status == 15;
                 foreach (var overlay in Overlays)
                 {
                     if (overlay.Config.IsVisible) overlay.Visible = gameActive && !inCutscene;
