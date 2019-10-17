@@ -15,9 +15,9 @@ namespace RainbowMage.OverlayPlugin.Updater
         const string REL_URL = "https://api.github.com/repos/ngld/OverlayPlugin/releases";
         const string DL = "https://github.com/ngld/OverlayPlugin/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.7z";
 
-        public static async Task<(bool, Version)> CheckForUpdate()
+        public static async Task<(bool, Version, string)> CheckForUpdate()
         {
-            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var currentVersion = Version.Parse("0.6.0"); // Assembly.GetExecutingAssembly().GetName().Version;
             Version remoteVersion;
 
             var client = new HttpClient();
@@ -31,23 +31,37 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 MessageBox.Show("Failed to check for updates:\n" + ex.ToString(), "OverlayPlugin Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 client.Dispose();
-                return (false, null);
+                return (false, null, "");
             }
 
             client.Dispose();
 
+            var releaseNotes = "";
             try
             {
                 // JObject doesn't accept arrays so we have to package the response in a JSON object.
                 var tmp = JObject.Parse("{\"content\":" + response + "}");
                 remoteVersion = Version.Parse(tmp["content"][0]["tag_name"].ToString().Substring(1));
+
+                foreach (var rel in tmp["content"])
+                {
+                    var version = Version.Parse(rel["tag_name"].ToString().Substring(1));
+                    if (version.CompareTo(currentVersion) < 1) break;
+
+                    releaseNotes += "---\n\n# " + rel["name"].ToString() + "\n\n" + rel["body"].ToString() + "\n\n";
+                }
+
+                if (releaseNotes.Length > 5)
+                {
+                    releaseNotes = releaseNotes.Substring(5);
+                }
             } catch(Exception ex)
             {
                 MessageBox.Show("Failed to parse version:\n" + ex.ToString(), "OverlayPlugin Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return (false, null);
+                return (false, null, null);
             }
 
-            return (remoteVersion.CompareTo(currentVersion) > 0, remoteVersion);
+            return (remoteVersion.CompareTo(currentVersion) > 0, remoteVersion, releaseNotes);
         }
 
         public static async Task<bool> InstallUpdate(Version version, string pluginDirectory)
@@ -88,16 +102,13 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async void PerformUpdateIfNecessary(string pluginDirectory, bool alwaysTalk = false)
         {
-            var (newVersion, remoteVersion) = await CheckForUpdate();
+            var (newVersion, remoteVersion, releaseNotes) = await CheckForUpdate();
 
             if (newVersion)
             {
-                var result = MessageBox.Show(
-                    $"An update to {remoteVersion} is available. Install it now?",
-                    "OverlayPlugin Update",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
+                var dialog = new UpdateQuestionForm(releaseNotes);
+                var result = dialog.ShowDialog();
+                dialog.Dispose();
 
                 if (result == DialogResult.Yes)
                 {

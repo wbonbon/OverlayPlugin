@@ -88,6 +88,7 @@
             this.Name = "ProgressDisplay";
             this.ShowIcon = false;
             this.Text = "OverlayPlugin Updater";
+            this.TopMost = true;
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
