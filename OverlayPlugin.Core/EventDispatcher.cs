@@ -44,14 +44,20 @@ namespace RainbowMage.OverlayPlugin
                 return;
             }
 
-            eventFilter[eventName].Add(receiver);
+            lock (eventFilter[eventName])
+            {
+                eventFilter[eventName].Add(receiver);
+            }
         }
 
         public static void Unsubscribe(string eventName, IEventReceiver receiver)
         {
             if (eventFilter.ContainsKey(eventName))
             {
-                eventFilter[eventName].Remove(receiver);
+                lock (eventFilter[eventName])
+                {
+                    eventFilter[eventName].Remove(receiver);
+                }
             }
         }
 
@@ -59,7 +65,10 @@ namespace RainbowMage.OverlayPlugin
         {
             foreach (var item in eventFilter.Values)
             {
-                if (item.Contains(receiver)) item.Remove(receiver);
+                lock (item)
+                {
+                    if (item.Contains(receiver)) item.Remove(receiver);
+                }
             }
         }
 
@@ -71,15 +80,18 @@ namespace RainbowMage.OverlayPlugin
                 throw new Exception(string.Format("Tried to dispatch unregistered event type \"{0}\"!", eventType));
             }
 
-            foreach (var receiver in eventFilter[eventType])
+            lock (eventFilter[eventType])
             {
-                try
+                foreach (var receiver in eventFilter[eventType])
                 {
-                    receiver.HandleEvent(e);
-                }
-                catch (Exception ex)
-                {
-                    Log(LogLevel.Error, "Failed to dispatch event {0} to {1}! {2}", eventType, receiver, ex);
+                    try
+                    {
+                        receiver.HandleEvent(e);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(LogLevel.Error, "Failed to dispatch event {0} to {1}! {2}", eventType, receiver, ex);
+                    }
                 }
             }
         }
