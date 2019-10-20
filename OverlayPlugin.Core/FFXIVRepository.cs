@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Advanced_Combat_Tracker;
@@ -96,6 +97,14 @@ namespace RainbowMage.OverlayPlugin
             }
 
             return subscription;
+        }
+
+        public static Process GetCurrentFFXIVProcess()
+        {
+            var repo = GetRepository();
+            if (repo == null) return null;
+
+            return repo.GetCurrentFFXIVProcess();
         }
 
         public static uint GetPlayerID()
