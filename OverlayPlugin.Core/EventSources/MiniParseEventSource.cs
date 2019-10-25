@@ -29,8 +29,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
             { 23, "LookingForParty" },
         };
 
+        private const string CombatDataEvent = "CombatData";
+        private const string LogLineEvent = "LogLine";
+        private const string ImportedLogLinesEvent = "ImportedLogLines";
+        private const string ChangeZoneEvent = "ChangeZone";
+        private const string ChangePrimaryPlayerEvent = "ChangePrimaryPlayer";
+        private const string FileChangedEvent = "FileChanged";
+        private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
+
         // Event Source
-        
+
         public MiniParseEventSourceConfig Config { get; set; }
 
         public MiniParseEventSource(ILogger logger) : base(logger)
@@ -39,14 +47,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> {
-                "CombatData", "LogLine", "ImportedLogLines", "ChangeZone", "ChangePrimaryPlayer", "FileChanged", "OnlineStatusChanged",
+                CombatDataEvent, LogLineEvent, ImportedLogLinesEvent, ChangeZoneEvent, ChangePrimaryPlayerEvent, FileChangedEvent, OnlineStatusChangedEvent,
             });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
             NetworkParser.OnOnlineStatusChanged += (o, e) =>
             {
                 var obj = new JObject();
-                obj["type"] = "OnlineStatusChanged";
+                obj["type"] = OnlineStatusChangedEvent;
                 obj["target"] = e.Target;
                 obj["rawStatus"] = e.Status;
                 obj["status"] = StatusMap.ContainsKey(e.Status) ? StatusMap[e.Status] : "Unknown";
@@ -91,7 +99,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                     DispatchEvent(JObject.FromObject(new
                     {
-                        type = "ChangeZone",
+                        type = ChangeZoneEvent,
                         zoneID,
                     }));
                     break;
@@ -104,7 +112,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                     DispatchEvent(JObject.FromObject(new
                     {
-                        type = "ChangePrimaryPlayer",
+                        type = ChangePrimaryPlayerEvent,
                         charID,
                         charName,
                     }));
@@ -113,7 +121,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             DispatchEvent(JObject.FromObject(new
             {
-                type = "LogLine",
+                type = LogLineEvent,
                 line,
                 rawLine = args.originalLogLine,
             }));
@@ -150,6 +158,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             if (CheckIsActReady() && (!importing || this.Config.UpdateDpsDuringImport))
             {
+                if (!HasSubscriber(CombatDataEvent))
+                {
+                    return;
+                }
+
                 // 最終更新時刻に変化がないなら更新を行わない
                 if (this.prevEncounterId == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EncId &&
                     this.prevEndDateTime == ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime &&
@@ -162,10 +175,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 this.prevEndDateTime = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.EndTime;
                 this.prevEncounterActive = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active;
 
-                DispatchEvent(this.CreateJsonData());
+                DispatchEvent(this.CreateCombatData());
             }
             
-            if (importing)
+            if (importing && HasSubscriber(ImportedLogLinesEvent))
             {
                 List<string> logs = null;
 
@@ -182,14 +195,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     DispatchEvent(JObject.FromObject(new
                     {
-                        type = "ImportedLogLines",
+                        type = ImportedLogLinesEvent,
                         logLines = logs
                     }));
                 }
             }
         }
 
-        internal JObject CreateJsonData()
+        internal JObject CreateCombatData()
         {
             if (!CheckIsActReady())
             {

@@ -72,6 +72,18 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        // Can be used to check that an event will be delivered before building
+        // an expensive JObject that would otherwise be thrown away.
+        public static bool HasSubscriber(string eventName)
+        {
+            if (!eventFilter.ContainsKey(eventName))
+                return false;
+            lock (eventFilter[eventName])
+            {
+                return eventFilter[eventName].Count > 0;
+            }
+        }
+
         public static void DispatchEvent(JObject e)
         {
             var eventType = e["type"].ToString();
