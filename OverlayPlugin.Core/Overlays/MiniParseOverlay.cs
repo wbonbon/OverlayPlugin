@@ -90,12 +90,18 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 Subscribe("LogLine");
                 Subscribe("ChangeZone");
                 Subscribe("ChangePrimaryPlayer");
+
+                // ACTWS overlays always accept input focus.
+                SetAcceptFocus(true);
             } else {
                 // Subscriptions are cleared on page navigation so we have to restore this after every load.
 
                 modernApi = false;
                 Subscribe("CombatData");
                 Subscribe("LogLine");
+
+                // Reset the focus setting to make sure that a previously loaded overlay doesn't affect a different one.
+                SetAcceptFocus(false);
             }
         }
 
