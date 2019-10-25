@@ -75,6 +75,7 @@
         }
 
     </style>
+    <script src="common.js"></script>
     <script>
 
         //
@@ -181,10 +182,8 @@
             document.documentElement.classList.remove("resizeHandle");
         }
 
-        // onOverlayDataUpdate イベントを購読
-        document.addEventListener("onOverlayDataUpdate", function (e) {
-            update(e.detail);
-        });
+        // CombatData イベントを購読
+        window.addOverlayListener("CombatData", (e) => update(e));
 
         // 表示要素の更新
         function update(data) {
