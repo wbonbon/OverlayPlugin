@@ -44,6 +44,7 @@
             font: 14px monospace;
         }
     </style>
+    <script src="common.js"></script>
     <script>
         document.addEventListener("onOverlayStateUpdate", function (e) {
             if (!e.detail.isLocked) {
@@ -61,9 +62,9 @@
             document.documentElement.classList.remove("resizeHandle");
         }
 
-        // onOverlayDataUpdate イベントを購読
-        document.addEventListener("onOverlayDataUpdate", function (e) {
-            document.querySelector("#encounter").innerText = JSON.stringify(e.detail, null, 4);
+        // CombatData イベントを購読
+        window.addOverlayListener("CombatData", (e) => {
+            document.querySelector("#encounter").innerText = JSON.stringify(e, null, 4);
         });
 
     </script>
