@@ -74,5 +74,10 @@ namespace RainbowMage.OverlayPlugin
         {
             EventDispatcher.DispatchEvent(e);
         }
+
+        protected bool HasSubscriber(string eventName)
+        {
+            return EventDispatcher.HasSubscriber(eventName);
+        }
     }
 }
