@@ -96,7 +96,12 @@ namespace RainbowMage.OverlayPlugin
             pluginStatusText.Text = "Initializing CEF...";
 
             if (await CefInstaller.EnsureCef(GetCefPath()))
-                pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+            {
+                ActGlobals.oFormActMain.Invoke((Action) (() =>
+                {
+                    pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                }));
+            }
         }
 
         public void DeInitPlugin()
