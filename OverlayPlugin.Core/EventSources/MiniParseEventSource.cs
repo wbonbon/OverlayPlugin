@@ -262,7 +262,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
                 catch(Exception e)
                 {
-                    Log(LogLevel.Error, $"Failed to sort list by {key}: {e}");
+                    Log(LogLevel.Error, Resources.ListSortFailed, key, e);
                 }
             }
 

@@ -53,18 +53,18 @@ namespace RainbowMage.OverlayPlugin
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void Initialize(TabPage pluginScreenSpace, Label pluginStatusText)
         {
-            pluginStatusText.Text = "Initializing Runtime...";
+            pluginStatusText.Text = Resources.InitRuntime;
 
             Registry.Init();
             logger = new Logger();
-            asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, "AssemblyResolver: Error: {0}", e.Exception);
-            asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, "AssemblyResolver: Loaded: {0}", e.LoadedAssembly.FullName);
+            asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, Resources.AssemblyResolverError, e.Exception);
+            asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, Resources.AssemblyResolverLoaded, e.LoadedAssembly.FullName);
             pluginMain = new PluginMain(pluginDirectory, logger);
 
             // Load the assembly for CefInstaller and make sure the version matches.
             if (!SanityChecker.LoadSaneAssembly("OverlayPlugin.Updater"))
             {
-                pluginStatusText.Text = "CefInstaller couldn't be loaded.";
+                pluginStatusText.Text = Resources.CefInstallerFailed;
                 return;
             }
 
@@ -84,14 +84,14 @@ namespace RainbowMage.OverlayPlugin
                 };
 
                 ActGlobals.oFormActMain.VisibleChanged += initHandler;
-                pluginStatusText.Text = "Waiting for ACT to finish startup...";
+                pluginStatusText.Text = Resources.WaitingForAct;
             }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private async void InitPluginCore(TabPage pluginScreenSpace, Label pluginStatusText)
         {
-            pluginStatusText.Text = "Initializing CEF...";
+            pluginStatusText.Text = Resources.InitCef;
 
             if (await CefInstaller.EnsureCef(GetCefPath()))
             {
@@ -105,7 +105,7 @@ namespace RainbowMage.OverlayPlugin
                     }));
                 } else
                 {
-                    pluginStatusText.Text = "Core or HtmlRenderer aren't sane.";
+                    pluginStatusText.Text = Resources.CoreOrHtmlRendererInsane;
                 }
             }
         }

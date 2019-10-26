@@ -46,7 +46,7 @@ namespace RainbowMage.OverlayPlugin
                 FFXIVRepository.RegisterNetworkParser(Parse);
             } catch (Exception e)
             {
-                Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to setup network parser: {e}");
+                Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.NetworkParserInitException, e);
             }
         }
 

@@ -117,4 +117,199 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tableLayoutPanel1.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="cbErrorReports.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbErrorReports.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cbErrorReports.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 3</value>
+  </data>
+  <data name="cbErrorReports.Size" type="System.Drawing.Size, System.Drawing">
+    <value>660, 19</value>
+  </data>
+  <data name="cbErrorReports.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="cbErrorReports.Text" xml:space="preserve">
+    <value>Automatically report errors</value>
+  </data>
+  <data name="&gt;&gt;cbErrorReports.Name" xml:space="preserve">
+    <value>cbErrorReports</value>
+  </data>
+  <data name="&gt;&gt;cbErrorReports.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbErrorReports.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;cbErrorReports.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="cbUpdateCheck.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbUpdateCheck.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cbUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 28</value>
+  </data>
+  <data name="cbUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
+    <value>660, 19</value>
+  </data>
+  <data name="cbUpdateCheck.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="cbUpdateCheck.Text" xml:space="preserve">
+    <value>Automatically check for updates</value>
+  </data>
+  <data name="&gt;&gt;cbUpdateCheck.Name" xml:space="preserve">
+    <value>cbUpdateCheck</value>
+  </data>
+  <data name="&gt;&gt;cbUpdateCheck.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbUpdateCheck.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;cbUpdateCheck.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="btnUpdateCheck.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 123</value>
+  </data>
+  <data name="btnUpdateCheck.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 23</value>
+  </data>
+  <data name="btnUpdateCheck.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="btnUpdateCheck.Text" xml:space="preserve">
+    <value>Check For Updates</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateCheck.Name" xml:space="preserve">
+    <value>btnUpdateCheck</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateCheck.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateCheck.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;btnUpdateCheck.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="cbHideOverlaysWhenNotActive.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbHideOverlaysWhenNotActive.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cbHideOverlaysWhenNotActive.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 53</value>
+  </data>
+  <data name="cbHideOverlaysWhenNotActive.Size" type="System.Drawing.Size, System.Drawing">
+    <value>660, 19</value>
+  </data>
+  <data name="cbHideOverlaysWhenNotActive.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="cbHideOverlaysWhenNotActive.Text" xml:space="preserve">
+    <value>Automatically hide overlays when the game is in the background</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysWhenNotActive.Name" xml:space="preserve">
+    <value>cbHideOverlaysWhenNotActive</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysWhenNotActive.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysWhenNotActive.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysWhenNotActive.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="cbHideOverlaysDuringCutscene.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbHideOverlaysDuringCutscene.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="cbHideOverlaysDuringCutscene.Location" type="System.Drawing.Point, System.Drawing">
+    <value>23, 78</value>
+  </data>
+  <data name="cbHideOverlaysDuringCutscene.Size" type="System.Drawing.Size, System.Drawing">
+    <value>660, 19</value>
+  </data>
+  <data name="cbHideOverlaysDuringCutscene.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="cbHideOverlaysDuringCutscene.Text" xml:space="preserve">
+    <value>Automatically hide overlays during cutscenes</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysDuringCutscene.Name" xml:space="preserve">
+    <value>cbHideOverlaysDuringCutscene</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysDuringCutscene.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysDuringCutscene.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;cbHideOverlaysDuringCutscene.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>686, 397</value>
+  </data>
+  <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Name" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="cbErrorReports" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="cbUpdateCheck" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="btnUpdateCheck" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="cbHideOverlaysWhenNotActive" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="cbHideOverlaysDuringCutscene" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,20,Absolute,666" /&gt;&lt;Rows Styles="Absolute,25,Absolute,25,Absolute,25,Absolute,25,Absolute,20,Absolute,31,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>686, 397</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>GeneralConfigTab</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

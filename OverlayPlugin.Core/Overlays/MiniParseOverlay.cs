@@ -58,6 +58,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             if (Config.ActwsCompatibility)
             {
+                var shimMsg = Resources.ActwsShimEnabled;
+
                 // Install a fake WebSocket so we can directly call the event handler.
                 ExecuteScript(@"(function() {
                     let realWS = window.WebSocket;
@@ -70,7 +72,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                             window.__OverlayPlugin_ws_faker = (msg) => {
                                 if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
                             };
-                            console.log('ACTWS compatibility shim enabled.');
+                            console.log(" + JsonConvert.SerializeObject(shimMsg) + @");
 
                             if (queue !== null) {
                                 setTimeout(() => {

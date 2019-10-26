@@ -227,7 +227,7 @@ namespace RainbowMage.OverlayPlugin
                     }
                     catch (Exception e)
                     {
-                        Log(LogLevel.Error, "Failed to register hotkey: {0}", e.Message);
+                        Log(LogLevel.Error, Resources.OverlayBaseRegisterHotkeyError, e.Message);
                     }
                 }
             }
@@ -252,7 +252,7 @@ namespace RainbowMage.OverlayPlugin
                     if (!File.Exists(uri.LocalPath))
                     {
                         Log(LogLevel.Warning,
-                            "InitializeOverlay: Local file {0} does not exist!",
+                            Resources.InitOverlayLocalFileIsMissing,
                             uri.LocalPath);
                         return false;
                     }
@@ -262,7 +262,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 // URL パースエラー
                 Log(LogLevel.Error,
-                    "InitializeOverlay: URI parse error! Please reconfigure the URL. (Config.Url = {0}): {1}",
+                    Resources.InitOverlayUrlError,
                     this.Config.Url,
                     ex);
                 return false;
@@ -367,7 +367,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (message.Contains("Xilium.CefGlue"))
                 {
-                    Log(LogLevel.Error, string.Format("Detected incompatible addon {0}. Please update as soon as possible!!", this));
+                    Log(LogLevel.Error, string.Format(Resources.IncompatibleAddon, this));
                     Stop();
                     disableLog = true;
                 }

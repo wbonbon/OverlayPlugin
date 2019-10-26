@@ -113,7 +113,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (!UnregisterHotKey(Handle, pair.Value.Id))
                 {
-                    Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to unregister hotkey {pair.Key} in DisableHotKeys().");
+                    Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.UnregisterHotkeyError, pair.Key);
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace RainbowMage.OverlayPlugin
 
                 if (!RegisterHotKey(Handle, pair.Value.Id, modifier, key))
                 {
-                    Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to register hotkey {modifier}, {key} in EnableHotKeys().");
+                    Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.RegisterHotkeyError, modifier, key);
                 }
             }
         }

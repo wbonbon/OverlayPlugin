@@ -69,7 +69,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception ex)
                 {
-                    Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to retrieve the FFXIV DataRepository: {ex}");
+                    Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.FFXIVDataRepositoryException, ex);
                 }
             }
 
@@ -90,7 +90,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception ex)
                 {
-                    Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to retrieve the FFXIV DataSubscription: {ex}");
+                    Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.FFXIVDataSubscriptionException, ex);
                 }
             }
 

@@ -67,7 +67,7 @@ namespace RainbowMage.OverlayPlugin
                     var message = JObject.Parse(data);
                     if (!message.ContainsKey("call"))
                     {
-                        PluginMain.Logger.Log(LogLevel.Error, $"Received invalid handler call: {data}");
+                        PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiInvalidHandlerCall, data);
                         return;
                     }
                 
@@ -76,21 +76,21 @@ namespace RainbowMage.OverlayPlugin
                     {
                         if (!message.ContainsKey("events"))
                         {
-                            PluginMain.Logger.Log(LogLevel.Error, $"Missing events field in subscribe call: {data}!");
+                            PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsField, data);
                             return;
                         }
 
                         foreach (var name in message["events"].ToList())
                         {
                             EventDispatcher.Subscribe(name.ToString(), (IEventReceiver) receiver);
-                            PluginMain.Logger.Log(LogLevel.Debug, "{0}: Subscribed to {1}", receiver.Name, name.ToString());
+                            PluginMain.Logger.Log(LogLevel.Debug, Resources.OverlayApiSubscribed, receiver.Name, name.ToString());
                         }
                         return;
                     } else if (handler == "unsubscribe")
                     {
                         if (!message.ContainsKey("events"))
                         {
-                            PluginMain.Logger.Log(LogLevel.Error, $"Missing events field in unsubscribe call: {data}!");
+                            PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsFieldUnsub, data);
                             return;
                         }
 
@@ -106,7 +106,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception e)
                 {
-                    PluginMain.Logger.Log(LogLevel.Error, $"JS Handler call failed: {e}");
+                    PluginMain.Logger.Log(LogLevel.Error, Resources.JsHandlerCallException, e);
                 }
             });
         }

@@ -22,7 +22,7 @@ namespace RainbowMage.OverlayPlugin
         {
             if (handlers.ContainsKey(name))
             {
-                throw new Exception(string.Format("Duplicate handler for name {0}!", name));
+                throw new Exception(string.Format(Resources.DuplicateHandlerError, name));
             }
 
             handlers[name] = handler;
@@ -40,7 +40,7 @@ namespace RainbowMage.OverlayPlugin
         {
             if (!eventFilter.ContainsKey(eventName))
             {
-                Log(LogLevel.Error, "Got a subscription for missing event \"{0}\"!", eventName);
+                Log(LogLevel.Error, Resources.MissingEventSubError, eventName);
                 return;
             }
 
@@ -89,7 +89,7 @@ namespace RainbowMage.OverlayPlugin
             var eventType = e["type"].ToString();
             if (!eventFilter.ContainsKey(eventType))
             {
-                throw new Exception(string.Format("Tried to dispatch unregistered event type \"{0}\"!", eventType));
+                throw new Exception(string.Format(Resources.MissingEventDispatchError, eventType));
             }
 
             lock (eventFilter[eventType])
@@ -102,7 +102,7 @@ namespace RainbowMage.OverlayPlugin
                     }
                     catch (Exception ex)
                     {
-                        Log(LogLevel.Error, "Failed to dispatch event {0} to {1}! {2}", eventType, receiver, ex);
+                        Log(LogLevel.Error, Resources.EventHandlerException, eventType, receiver, ex);
                     }
                 }
             }
@@ -113,7 +113,7 @@ namespace RainbowMage.OverlayPlugin
             var handlerName = e["call"].ToString();
             if (!handlers.ContainsKey(handlerName))
             {
-                throw new Exception(string.Format("Tried to call missing handler \"{0}\"!", handlerName));
+                throw new Exception(string.Format(Resources.MissingHandlerError, handlerName));
             }
 
             return handlers[handlerName](e);
