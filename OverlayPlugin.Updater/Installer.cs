@@ -58,15 +58,15 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<bool> InstallMsvcrt()
         {
-            var inst = new Installer(Path.GetTempPath());
+            var inst = new Installer(Path.Combine(Path.GetTempPath(), "OverlayPlugin.tmp"));
             var exePath = Path.Combine(inst._tempDir, "vc_redist.x64.exe");
 
             return await Task.Run(async () =>
             {
                 if (await inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
                 {
-                    inst._display.UpdateStatus(0, "[2/2]: Launching installer...");
-                    inst._display.Log("Launching installer...");
+                    inst.Display.UpdateStatus(0, "[2/2]: Launching installer...");
+                    inst.Display.Log("Launching installer...");
 
                     try
                     {
@@ -75,8 +75,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                         proc.Close();
                     } catch(System.ComponentModel.Win32Exception ex)
                     {
-                        inst._display.Log($"Failed to launch installer: {ex.Message}");
-                        inst._display.Log("Trying again...");
+                        inst.Display.Log($"Failed to launch installer: {ex.Message}");
+                        inst.Display.Log("Trying again...");
 
                         using (var proc = new Process())
                         {
@@ -85,9 +85,9 @@ namespace RainbowMage.OverlayPlugin.Updater
                             proc.Start();
                         }
 
-                        var cancel = inst._display.GetCancelToken();
+                        var cancel = inst.Display.GetCancelToken();
 
-                        inst._display.Log("Waiting for installer to exit...");
+                        inst.Display.Log("Waiting for installer to exit...");
                         while (!File.Exists("C:\\Windows\\system32\\msvcp140.dll") && !cancel.IsCancellationRequested)
                         {
                             Thread.Sleep(500);
@@ -98,7 +98,16 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
 
                     inst.Cleanup();
-                    return File.Exists("C:\\Windows\\system32\\msvcp140.dll");
+                    if (File.Exists("C:\\Windows\\system32\\msvcp140.dll"))
+                    {
+                        inst.Display.Close();
+                        return true;
+                    } else
+                    {
+                        inst.Display.UpdateStatus(1, "Error");
+                        inst.Display.Log("Error: The installer did not finish correctly.");
+                        return false;
+                    }
                 }
 
                 return false;

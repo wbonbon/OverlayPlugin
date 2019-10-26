@@ -83,29 +83,6 @@ namespace RainbowMage.OverlayPlugin
                         asm = Assembly.Load(File.ReadAllBytes(asmPath));
                     }
 #endif
-
-                    if (OverlayPluginFiles.Contains(e.Name))
-                    {
-                        var loaderVersion = Assembly.GetExecutingAssembly().GetName().Version;
-                        var asmVersion = asm.GetName().Version;
-
-                        if (loaderVersion != asmVersion)
-                        {
-                            MessageBox.Show(
-                                $"ACT tried to load {asmPath} {asmVersion} which doesn't match your OverlayPlugin version " +
-                                $"({loaderVersion}). Aborting plugin load.\n\n" +
-                                "Please make sure the old OverlayPlugin is disabled and restart ACT." +
-                                "If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or " +
-                                "HtmlRenderer.dll files in the same directory.",
-                                "OverlayPlugin Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error
-                            );
-
-                            return null;
-                        }
-                    }
-
                     OnAssemblyLoaded(asm);
                     return asm;
                 }

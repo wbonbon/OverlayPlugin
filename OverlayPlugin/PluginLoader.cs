@@ -34,24 +34,14 @@ namespace RainbowMage.OverlayPlugin
                 asmResolver = new AssemblyResolver(directories);
             }
 
-            // Prevent a stack overflow in the assembly loaded handler by loading the logger interface early.
-            var commonAsm = Assembly.Load("OverlayPlugin.Common");
-
-            // Check if the above line loaded an old version of OverlayPlugin.Common.dll
-            var commonVersion = commonAsm.GetName().Version;
-            var loaderVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            if (commonVersion != loaderVersion)
+            /*
+             * We explicitly load OverlayPlugin.Common here for two reasons:
+             *  * To prevent a stack overflow in the assembly loaded handler when we use the logger interface.
+             *  * To check that the loaded version matches.
+             */
+            if (!SanityChecker.LoadSaneAssembly("OverlayPlugin.Common"))
             {
-                MessageBox.Show(
-                    $"ACT loaded {commonAsm.Location} {commonVersion} which doesn't match your OverlayPlugin version " +
-                    $"({loaderVersion}). Aborting plugin load.\n\n" +
-                    "Please make sure the old OverlayPlugin is disabled and restart ACT." +
-                    "If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or " +
-                    "HtmlRenderer.dll files in the same directory.",
-                    "OverlayPlugin Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                pluginStatusText.Text = Resources.FailedToLoadCommon;
                 return;
             }
 
@@ -70,6 +60,13 @@ namespace RainbowMage.OverlayPlugin
             asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, "AssemblyResolver: Error: {0}", e.Exception);
             asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, "AssemblyResolver: Loaded: {0}", e.LoadedAssembly.FullName);
             pluginMain = new PluginMain(pluginDirectory, logger);
+
+            // Load the assembly for CefInstaller and make sure the version matches.
+            if (!SanityChecker.LoadSaneAssembly("OverlayPlugin.Updater"))
+            {
+                pluginStatusText.Text = "CefInstaller couldn't be loaded.";
+                return;
+            }
 
             if (ActGlobals.oFormActMain.Visible)
             {
@@ -91,16 +88,25 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private async void InitPluginCore(TabPage pluginScreenSpace, Label pluginStatusText)
         {
             pluginStatusText.Text = "Initializing CEF...";
 
             if (await CefInstaller.EnsureCef(GetCefPath()))
             {
-                ActGlobals.oFormActMain.Invoke((Action) (() =>
+                // Finally, load the core and html renderer. We load these here since Core depends on HtmlRenderer and that depends on CEF.
+                // Thus we can't load these before the CefInstaller is done.
+                if (SanityChecker.LoadSaneAssembly("OverlayPlugin.Core") && SanityChecker.LoadSaneAssembly("HtmlRenderer"))
                 {
-                    pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
-                }));
+                    ActGlobals.oFormActMain.Invoke((Action)(() =>
+                    {
+                        pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                    }));
+                } else
+                {
+                    pluginStatusText.Text = "Core or HtmlRenderer aren't sane.";
+                }
             }
         }
 

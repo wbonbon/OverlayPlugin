@@ -57,6 +57,7 @@
     <Compile Include="OverlayConfigList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry.cs" />
+    <Compile Include="SanityChecker.cs" />
     <Compile Include="TinyIoC.cs" />
   </ItemGroup>
   <ItemGroup>
