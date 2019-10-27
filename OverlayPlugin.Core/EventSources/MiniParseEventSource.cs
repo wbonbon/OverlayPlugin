@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using System.Diagnostics;
 using System.Windows.Forms;
+using FFXIV_ACT_Plugin.Common.Models;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -36,6 +38,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string ChangePrimaryPlayerEvent = "ChangePrimaryPlayer";
         private const string FileChangedEvent = "FileChanged";
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
+        private const string PartyChangedEvent = "PartyChanged";
 
         // Event Source
 
@@ -47,7 +50,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> {
-                CombatDataEvent, LogLineEvent, ImportedLogLinesEvent, ChangeZoneEvent, ChangePrimaryPlayerEvent, FileChangedEvent, OnlineStatusChangedEvent,
+                ChangePrimaryPlayerEvent,
+                ChangeZoneEvent,
+                CombatDataEvent,
+                FileChangedEvent,
+                LogLineEvent,
+                ImportedLogLinesEvent,
+                OnlineStatusChangedEvent,
+                PartyChangedEvent,
             });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
@@ -61,6 +71,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 DispatchEvent(obj);
             };
+
+            FFXIVRepository.RegisterPartyChangeDelegate(PartyChangeHandler);
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
@@ -124,6 +136,51 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 type = LogLineEvent,
                 line,
                 rawLine = args.originalLogLine,
+            }));
+        }
+
+        struct PartyMember
+        {
+            // Player id in hex (for ease in matching logs).
+            public string id;
+            public string name;
+            public uint worldId;
+            // Raw job id.
+            public int job;
+            // In immediate party (true), vs in alliance (false).
+            public bool inParty;
+        }
+
+        private void PartyChangeHandler(ReadOnlyCollection<uint> unusedPartyList = null, int unusedPartySize = 0)
+        {
+            var combatants = FFXIVRepository.GetCombatants();
+            if (combatants == null)
+                return;
+
+            List<PartyMember> result = new List<PartyMember>(24);
+
+            // Because we have to look through the entire combatants array
+            // to do the id => instead, just look up anybody who is in the
+            // party or alliance rather than anything in partyList.
+            // The partyList contents are equivalent to the set of ids
+            // enumerated by |query|.
+            var query = combatants.Where(c => c.PartyType != PartyTypeEnum.None);
+            foreach (var c in query)
+            {
+                result.Add(new PartyMember()
+                {
+                    id = $"{c.ID:X}",
+                    name = c.Name,
+                    worldId = c.WorldID,
+                    job = c.Job,
+                    inParty = c.PartyType == PartyTypeEnum.Party,
+                });
+            }
+
+            DispatchEvent(JObject.FromObject(new
+            {
+                type = PartyChangedEvent,
+                party = result,
             }));
         }
 
