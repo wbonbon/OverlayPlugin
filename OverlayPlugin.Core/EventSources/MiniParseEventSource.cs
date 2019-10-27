@@ -72,7 +72,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 DispatchEvent(obj);
             };
 
-            FFXIVRepository.RegisterPartyChangeDelegate(PartyChangeHandler);
+            FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
@@ -151,7 +151,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             public bool inParty;
         }
 
-        private void PartyChangeHandler(ReadOnlyCollection<uint> unusedPartyList = null, int unusedPartySize = 0)
+        private void DispatchPartyChangeEvent()
         {
             var combatants = FFXIVRepository.GetCombatants();
             if (combatants == null)
@@ -159,11 +159,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             List<PartyMember> result = new List<PartyMember>(24);
 
-            // Because we have to look through the entire combatants array
-            // to do the id => instead, just look up anybody who is in the
-            // party or alliance rather than anything in partyList.
-            // The partyList contents are equivalent to the set of ids
-            // enumerated by |query|.
+            // The partyList contents from the PartyListChangedDelegate
+            // are equivalent to the set of ids enumerated by |query|
             var query = combatants.Where(c => c.PartyType != PartyTypeEnum.None);
             foreach (var c in query)
             {
