@@ -10,49 +10,6 @@ PROJECTS = ('HtmlRenderer', 'OverlayPlugin', 'OverlayPlugin.Common', 'OverlayPlu
 LANGS = ('en', 'ja-JP', 'ko-KR')
 ATTRIB_WHITELIST = ('Text',)
 JSON_PATH = os.path.join(BASE_DIR, 'translations.json')
-RES_TPL = '''<?xml version="1.0" encoding="utf-8"?>
-<root>
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>1.3</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-</root>
-'''
 
 # This is an overcomplicated parser which only replaces the contents of <value> tags and adds new <data> nodes.
 # The document style (comments, indentation, etc.) is left as-is to reduce noise due to Visual Studio or other tools
@@ -97,8 +54,6 @@ class XmlUpdater:
 
             self._output.append(self._data[self._pos:cut])
             self._pos = cut
-        else:
-            self._key = None
 
     def end_element(self, name):
         if name == 'value' and self._key:
@@ -118,19 +73,17 @@ class XmlUpdater:
         elif name == 'root':
             # Insert all missing elements
 
-            parser_pos = self._parser.CurrentByteIndex - 2
+            parser_pos = self._parser.CurrentByteIndex
             self._output.append(self._data[self._pos:parser_pos])
             self._pos = parser_pos
 
             for key in set(self._trans.keys()) - self._done:
                 print('Adding ' + key)
-                self._output.append(b'  <data name="%s" xml:space="preserve">\n' % self.escape(key))
+                self._output.append(b'\n  <data name="%s" xml:space="preserve">\n' % self.escape(key))
                 self._output.append(b'    <value>%s</value>\n' % self.escape(self._trans[key]))
-                self._output.append(b'  </data>\n')
-        else:
-            parser_pos = self._parser.CurrentByteIndex
-            self._output.append(self._data[self._pos:parser_pos])
-            self._pos = parser_pos
+                self._output.append(b'  </data>')
+        elif name == 'data':
+            self._key = None
 
 
 print('Parsing .resx files...')
@@ -190,12 +143,10 @@ if '--resx' in sys.argv:
 
     for path, items in file_bucket.items():
         path = os.path.join(BASE_DIR, path)
-        parser = expat.ParserCreate('utf8')
 
         if not os.path.isfile(path):
-            print('Creating %s...' % path)
-            with open(path, 'w', encoding='utf8', newline='\n') as stream:
-                stream.write(RES_TPL)
+            print('ERROR: %s is missing. Skipping.' % path)
+            continue
 
         print('Opening %s...' % path)
         updater = XmlUpdater(path, items)
