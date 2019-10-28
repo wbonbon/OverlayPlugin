@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Advanced_Combat_Tracker;
 using FFXIV_ACT_Plugin.Common;
@@ -118,6 +119,14 @@ namespace RainbowMage.OverlayPlugin
             return playerInfo.Name;
         }
 
+        public static ReadOnlyCollection<FFXIV_ACT_Plugin.Common.Models.Combatant> GetCombatants()
+        {
+            var repo = GetRepository();
+            if (repo == null) return null;
+
+            return repo.GetCombatantList();
+        }
+
         // LogLineDelegate(uint EventType, uint Seconds, string logline);
         public static void RegisterLogLineHandler(Action<uint, uint, string> handler)
         {
@@ -125,10 +134,24 @@ namespace RainbowMage.OverlayPlugin
             sub.LogLine += new LogLineDelegate(handler);
         }
 
+        // NetworkReceivedDelegate(string connection, long epoch, byte[] message)
         public static void RegisterNetworkParser(Action<string, long, byte[]> handler)
         {
             var sub = GetSubscription();
             sub.NetworkReceived += new NetworkReceivedDelegate(handler);
+        }
+
+        // PartyListChangedDelegate(ReadOnlyCollection<uint> partyList, int partySize)
+        //
+        // Details: partySize may differ from partyList.Count.
+        // In non-cross world parties, players who are not in the same
+        // zone count in the partySize but do not appear in the partyList.
+        // In cross world parties, nobody will appear in the partyList.
+        // Alliance data members show up in partyList but not in partySize.
+        public static void RegisterPartyChangeDelegate(Action<ReadOnlyCollection<uint>, int> handler)
+        {
+            var sub = GetSubscription();
+            sub.PartyListChanged += new PartyListChangedDelegate(handler);
         }
     }
 }
