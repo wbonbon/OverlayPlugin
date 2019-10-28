@@ -10,8 +10,7 @@ PROJECTS = ('HtmlRenderer', 'OverlayPlugin', 'OverlayPlugin.Common', 'OverlayPlu
 LANGS = ('en', 'ja-JP', 'ko-KR')
 ATTRIB_WHITELIST = ('Text',)
 JSON_PATH = os.path.join(BASE_DIR, 'translations.json')
-RES_TPL = '''
-<?xml version="1.0" encoding="utf-8"?>
+RES_TPL = '''<?xml version="1.0" encoding="utf-8"?>
 <root>
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -137,7 +136,7 @@ class XmlUpdater:
 print('Parsing .resx files...')
 resx_data = {}
 for project in PROJECTS:
-    for filepath in glob.iglob(os.path.join(BASE_DIR, project, '**.resx')):
+    for filepath in glob.iglob(os.path.join(BASE_DIR, project, '**/*.resx'), recursive=True):
         relpath = os.path.relpath(filepath, BASE_DIR).replace('\\', '/')
         chunks = os.path.basename(relpath).split('.')
         lang = 'en'
@@ -159,6 +158,11 @@ for project in PROJECTS:
             item = resx_data.setdefault(relpath, {}).setdefault(key, {})
             item[lang] = node.find('value').text
 
+            if lang == 'en':
+                comment = node.find('comment')
+                if comment is not None:
+                    item['#comment'] = comment.text
+
 
 print('Parsing .json file...')
 json_data = {}
@@ -175,7 +179,9 @@ if '--resx' in sys.argv:
     for path, items in resx_data.items():
         for key, values in items.items():
             for lang, text in values.items():
-                if lang == 'en':
+                if lang == '#comment':
+                    continue
+                elif lang == 'en':
                     suffix = '.resx'
                 else:
                     suffix = '.%s.resx' % lang

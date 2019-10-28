@@ -183,9 +183,6 @@
   <data name="checkBoxAutoHide.Size" type="System.Drawing.Size, System.Drawing">
     <value>249, 29</value>
   </data>
-  <data name="checkBoxAutoHide.Text" xml:space="preserve">
-    <value>非アクティブのときに自動的にオーバーレイを隠す</value>
-  </data>
   <data name="flowLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -219,14 +216,8 @@
   <data name="menuCopyLogAll.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="menuCopyLogAll.Text" xml:space="preserve">
-    <value>全てのログをコピー</value>
-  </data>
   <data name="menuLogCopy.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
-  </data>
-  <data name="menuLogCopy.Text" xml:space="preserve">
-    <value>選択されたログをコピー</value>
   </data>
   <data name="toolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>177, 6</value>
@@ -234,17 +225,11 @@
   <data name="menuFollowLatestLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="menuFollowLatestLog.Text" xml:space="preserve">
-    <value>最新のログを常に表示</value>
-  </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>177, 6</value>
   </data>
   <data name="menuClearLog.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
-  </data>
-  <data name="menuClearLog.Text" xml:space="preserve">
-    <value>ログをクリア</value>
   </data>
   <data name="contextMenuLogList.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 104</value>

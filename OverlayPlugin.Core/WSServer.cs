@@ -83,7 +83,7 @@ namespace RainbowMage.OverlayPlugin
 
                 if (secure)
                 {
-                    Log(LogLevel.Debug, "WS: Loading SSL certificate {0}...", sslPath);
+                    Log(LogLevel.Debug, Resources.WSLoadingCert, sslPath);
 
                     _server.SslConfiguration.ServerCertificate = new X509Certificate2(sslPath, "changeit");
                     _server.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls11 | System.Security.Authentication.SslProtocols.Tls12;

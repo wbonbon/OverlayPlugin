@@ -284,6 +284,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WS: Loading SSL certificate {0}....
+        /// </summary>
+        internal static string WSLoadingCert {
+            get {
+                return ResourceManager.GetString("WSLoadingCert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to send message: {0}.
         /// </summary>
         internal static string WSMessageSendFailed {
