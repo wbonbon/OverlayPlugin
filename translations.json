@@ -2,7 +2,7 @@
     "HtmlRenderer/Resources": {
         "BrowserCrashed": {
             "en": "Browser crashed! ({0}) Trying to restart.",
-            "zh-CN": "浏览器崩溃了！ ({0}) 尝试重新启动。"
+            "zh-CN": "浏览器崩溃了！({0})尝试重新启动。"
         }
     },
     "OverlayPlugin.Core/Controls/ControlPanel": {
@@ -579,7 +579,8 @@
     },
     "OverlayPlugin/Resources": {
         "AssemblyMismatch": {
-            "en": "ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.\n"
+            "en": "ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.\n",
+            "zh-CN": "ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。\n\n请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。\n"
         },
         "AssemblyResolverError": {
             "#comment": "Log message",
@@ -598,17 +599,21 @@
         },
         "FailedToLoadCommon": {
             "#comment": "Plugin status (in ACT's plugin list)",
-            "en": "Failed to load Common!"
+            "en": "Failed to load Common!",
+            "zh-CN": "加载公共库失败！"
         },
         "InitCef": {
-            "en": "Initializing CEF..."
+            "en": "Initializing CEF...",
+            "zh-CN": "正在安装CEF..."
         },
         "InitRuntime": {
             "#comment": "Plugin status (in ACT's plugin list)",
-            "en": "Initializing Runtime..."
+            "en": "Initializing Runtime...",
+            "zh-CN": "正在安装运行库..."
         },
         "WaitingForAct": {
-            "en": "Waiting for ACT to finish startup..."
+            "en": "Waiting for ACT to finish startup...",
+            "zh-CN": "正在等待ACT启动完毕..."
         }
     }
 }
