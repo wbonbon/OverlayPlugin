@@ -297,7 +297,7 @@
         "buttonMiniParseOpenDevTools.Text": {
             "en": "Open DevTools",
             "ja-JP": "DevToolsを開く",
-            "ko-KR": "개발자 도구 열기"
+            "ko-KR": "개발자 도구 열기",
             "zh-CN": "启动Debug工具"
         },
         "buttonMiniParseReloadBrowser.Text": {
@@ -325,7 +325,7 @@
         },
         "label10.Text": {
             "en": "Hotkey Type",
-            "ja-JP": "ホットキータイプ"
+            "ja-JP": "ホットキータイプ",
             "zh-CN": "快捷键功能"
         },
         "label11.Text": {
