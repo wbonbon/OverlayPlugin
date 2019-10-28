@@ -1,375 +1,460 @@
 {
     "HtmlRenderer/Resources": {
         "BrowserCrashed": {
-            "en": "Browser crashed! ({0}) Trying to restart."
+            "en": "Browser crashed! ({0}) Trying to restart.",
+            "zh-CN": "浏览器崩溃了！({0})尝试重新启动。"
         }
     },
     "OverlayPlugin.Core/Controls/ControlPanel": {
         "buttonClearLog.Text": {
-            "en": "Clear Log"
+            "en": "Clear Log",
+            "zh-CN": "清空记录"
         },
         "buttonNewOverlay.Text": {
             "en": "New",
             "ja-JP": "追加",
-            "ko-KR": "추가"
+            "ko-KR": "추가",
+            "zh-CN": "新建"
         },
         "buttonRemoveOverlay.Text": {
             "en": "Remove",
             "ja-JP": "削除",
-            "ko-KR": "삭제"
+            "ko-KR": "삭제",
+            "zh-CN": "删除"
         },
         "checkBoxFollowLog.Text": {
-            "en": "Autoscroll the log"
+            "en": "Autoscroll the log",
+            "zh-CN": "自动滚动日志"
         },
         "groupBox2.Text": {
-            "en": "Add/Remove overlays"
+            "en": "Add/Remove overlays",
+            "zh-CN": "添加/删除模板"
         },
         "label_ListEmpty.Text": {
             "en": "Click [Add] button to configure overlays.",
             "ja-JP": "[追加] バートンを押して、オーバーレイを設定してください",
-            "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주세요."
+            "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주세요.",
+            "zh-CN": "点击[添加]按钮设置美化窗口"
         },
         "tabPageMain.Text": {
             "en": "General",
             "ja-JP": "設定",
-            "ko-KR": "일반"
+            "ko-KR": "일반",
+            "zh-CN": "设置"
         }
     },
     "OverlayPlugin.Core/Controls/GeneralConfigTab": {
         "btnUpdateCheck.Text": {
-            "en": "Check For Updates"
+            "en": "Check For Updates",
+            "zh-CN": "检查更新"
         },
         "cbErrorReports.Text": {
-            "en": "Automatically report errors"
+            "en": "Automatically report errors",
+            "zh-CN": "自动报告错误"
         },
         "cbHideOverlaysDuringCutscene.Text": {
-            "en": "Automatically hide overlays during cutscenes"
+            "en": "Automatically hide overlays during cutscenes",
+            "zh-CN": "当过场动画时自动隐藏美化窗口"
         },
         "cbHideOverlaysWhenNotActive.Text": {
-            "en": "Automatically hide overlays when the game is in the background"
+            "en": "Automatically hide overlays when the game is in the background",
+            "zh-CN": "当ACT和游戏全部最小化时自动隐藏美化窗口"
         },
         "cbUpdateCheck.Text": {
-            "en": "Automatically check for updates"
+            "en": "Automatically check for updates",
+            "zh-CN": "自动检查更新"
         }
     },
     "OverlayPlugin.Core/Controls/NewOverlayDialog": {
         "$this.Text": {
             "en": "Create new overlay",
             "ja-JP": "新しいオーバーレイ",
-            "ko-KR": "새 오버레이"
+            "ko-KR": "새 오버레이",
+            "zh-CN": "创建新的美化窗口"
         },
         "buttonCancel.Text": {
             "en": "Cancel",
             "ja-JP": "キャンセル",
-            "ko-KR": "취소"
+            "ko-KR": "취소",
+            "zh-CN": "取消"
         },
         "buttonOK.Text": {
-            "en": "OK"
+            "en": "OK",
+            "zh-CN": "确定"
         },
         "label1.Text": {
             "en": "Name",
             "ja-JP": "名前",
-            "ko-KR": "이름"
+            "ko-KR": "이름",
+            "zh-CN": "名称"
         },
         "label2.Text": {
             "en": "Type",
             "ja-JP": "種類",
-            "ko-KR": "형식"
+            "ko-KR": "형식",
+            "zh-CN": "种类"
         }
     },
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "genSslBtn.Text": {
-            "en": "Generate SSL Certificate"
+            "en": "Generate SSL Certificate",
+            "zh-CN": "生成SSL证书"
         },
         "label1.Text": {
-            "en": "IP Address:"
+            "en": "IP Address:",
+            "zh-CN": "IP地址"
         },
         "label2.Text": {
-            "en": "Port:"
+            "en": "Port:",
+            "zh-CN": "端口："
         },
         "label3.Text": {
-            "en": "Status:"
+            "en": "Status:",
+            "zh-CN": "状态："
         },
         "logDisplay.Text": {
-            "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL."
+            "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL.",
+            "zh-CN": "只有拥有SSL证书，才能启用SSL。您可以单击上方的按钮自动生成一个，或将PKCS#12文件放置在%AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12中并重新启动ACT。\n\n然后，您将可以启用SSL。"
         },
         "sslBox.Text": {
-            "en": "Enable SSL"
+            "en": "Enable SSL",
+            "zh-CN": "启用SSL"
         },
         "startBtn.Text": {
-            "en": "Start"
+            "en": "Start",
+            "zh-CN": "启用"
         },
         "statusLabel.Text": {
-            "en": "Unknown"
+            "en": "Unknown",
+            "zh-CN": "未知"
         },
         "stopBtn.Text": {
-            "en": "Stop"
+            "en": "Stop",
+            "zh-CN": "停止"
         }
     },
     "OverlayPlugin.Core/EventSources/MiniParseEventSourceConfigPanel": {
         "label1.Text": {
-            "en": "Sort By"
+            "en": "Sort By",
+            "zh-CN": "排序方式"
         },
         "label2.Text": {
-            "en": "DPS update interval seconds"
+            "en": "DPS update interval seconds",
+            "zh-CN": "DPS更新间隔"
         },
         "label3.Text": {
-            "en": "Sort Descending (highest first)"
+            "en": "Sort Descending (highest first)",
+            "zh-CN": "降序排列"
         },
         "label4.Text": {
-            "en": "Update DPS during log import"
+            "en": "Update DPS during log import",
+            "zh-CN": "在日志导入期间更新DPS"
         }
     },
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
         "buttonCopyUpdateScript.Text": {
             "en": "Copy the update variable to clipboard",
             "ja-JP": "変数をクリップボードにコピー",
-            "ko-KR": "업데이트 값 복사"
+            "ko-KR": "업데이트 값 복사",
+            "zh-CN": "复制变量到剪切板"
         },
         "buttonOpenDevTools.Text": {
             "en": "Open DevTools",
             "ja-JP": "DevToolsを開く",
-            "ko-KR": "개발자 도구 열기"
+            "ko-KR": "개발자 도구 열기",
+            "zh-CN": "启动Debug工具"
         },
         "buttonReloadBrowser.Text": {
             "en": "Reload overlay",
             "ja-JP": "オーバーレイの表示をリロード",
-            "ko-KR": "새로고침"
+            "ko-KR": "새로고침",
+            "zh-CN": "重新加载（用于更换模板后即时刷新）"
         },
         "buttonSelectFile.Text": {
-            "en": "..."
+            "en": "...",
+            "zh-CN": "浏览"
         },
         "label1.Text": {
             "en": "Text",
             "ja-JP": "表示するテキスト",
-            "ko-KR": "표시할 텍스트"
+            "ko-KR": "표시할 텍스트",
+            "zh-CN": "显示文字"
         },
         "label2.Text": {
             "en": "Enable clickthru",
             "ja-JP": "クリックを透過させる",
-            "ko-KR": "클릭 무시"
+            "ko-KR": "클릭 무시",
+            "zh-CN": "鼠标穿透"
         },
         "label3.Text": {
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
-            "ko-KR": "오버레이 표시"
+            "ko-KR": "오버레이 표시",
+            "zh-CN": "启用美化窗口"
         },
         "label4.Text": {
             "en": "URL",
             "ja-JP": "表示するURL",
-            "ko-KR": "URL"
+            "ko-KR": "URL",
+            "zh-CN": "美化模板路径"
         },
         "label5.Text": {
             "en": "Display text as HTML",
             "ja-JP": "テキストをHTMLとして表示",
-            "ko-KR": "텍스트를 HTML로 표시"
+            "ko-KR": "텍스트를 HTML로 표시",
+            "zh-CN": "将文本显示为HTML"
         },
         "label7.Text": {
             "en": "Enable global hotkey",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용"
+            "ko-KR": "글로벌 핫 키 사용",
+            "zh-CN": "启用美化 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키"
+            "ko-KR": "글로벌 핫 키",
+            "zh-CN": "设置美化 开/关 快捷键"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
-            "ko-KR": "위치 잠금"
+            "ko-KR": "위치 잠금",
+            "zh-CN": "锁定美化窗口"
         }
     },
     "OverlayPlugin.Core/Overlays/LogParseConfigPanel": {
         "buttonLogParseCopyActXiv.Text": {
             "en": "Copy the update variable to clipboard",
             "ja-JP": "変数をクリップボードにコピー",
-            "ko-KR": "업데이트 값 복사"
+            "ko-KR": "업데이트 값 복사",
+            "zh-CN": "复制变量到剪切板"
         },
         "buttonLogParseOpenDevTools.Text": {
             "en": "Open DevTools",
             "ja-JP": "DevToolsを開く",
-            "ko-KR": "개발자 도구 열기"
+            "ko-KR": "개발자 도구 열기",
+            "zh-CN": "启动Debug工具"
         },
         "buttonLogParseReloadBrowser.Text": {
             "en": "Reload overlay",
             "ja-JP": "オーバーレイの表示をリロード",
-            "ko-KR": "새로고침"
+            "ko-KR": "새로고침",
+            "zh-CN": "重新加载（用于更换模板后即时刷新）"
         },
         "buttonLogParseSelectFile.Text": {
-            "en": "..."
+            "en": "...",
+            "zh-CN": "浏览"
         },
         "label1.Text": {
             "en": "URL",
-            "ja-JP": "表示するURL"
+            "ja-JP": "表示するURL",
+            "zh-CN": "美化模板路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
-            "ja-JP": "ホットキータイプ"
+            "ja-JP": "ホットキータイプ",
+            "zh-CN": "快捷键功能"
         },
         "label2.Text": {
             "en": "Enable clickthru",
             "ja-JP": "クリックを透過させる",
-            "ko-KR": "클릭 무시"
+            "ko-KR": "클릭 무시",
+            "zh-CN": "鼠标穿透"
         },
         "label3.Text": {
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
-            "ko-KR": "오버레이 표시"
+            "ko-KR": "오버레이 표시",
+            "zh-CN": "启用美化窗口"
         },
         "label6.Text": {
             "en": "Max. framerate",
             "ja-JP": "最大フレームレート",
-            "ko-KR": "최대 프레임 레이트"
+            "ko-KR": "최대 프레임 레이트",
+            "zh-CN": "最大帧速率"
         },
         "label7.Text": {
             "en": "Enable global hotkey",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용"
+            "ko-KR": "글로벌 핫 키 사용",
+            "zh-CN": "启用美化 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키"
+            "ko-KR": "글로벌 핫 키",
+            "zh-CN": "设置美化 开/关 快捷键"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
-            "ko-KR": "위치 잠금"
+            "ko-KR": "위치 잠금",
+            "zh-CN": "锁定美化窗口"
         }
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "buttonMiniParseOpenDevTools.Text": {
             "en": "Open DevTools",
             "ja-JP": "DevToolsを開く",
-            "ko-KR": "개발자 도구 열기"
+            "ko-KR": "개발자 도구 열기",
+            "zh-CN": "启动Debug工具"
         },
         "buttonMiniParseReloadBrowser.Text": {
             "en": "Reload overlay",
             "ja-JP": "オーバーレイの表示をリロード",
-            "ko-KR": "새로고침"
+            "ko-KR": "새로고침",
+            "zh-CN": "重新加载（用于更换模板后即时刷新）"
         },
         "buttonMiniParseSelectFile.Text": {
-            "en": "..."
+            "en": "...",
+            "zh-CN": "浏览"
         },
         "buttonResetOverlayPosition.Text": {
-            "en": "Reset Overlay Position"
+            "en": "Reset Overlay Position",
+            "zh-CN": "重置美化窗口位置"
         },
         "checkActwsCompatbility.Text": {
-            "en": "This is an overlay that requires ACTWebSocket"
+            "en": "This is an overlay that requires ACTWebSocket",
+            "zh-CN": "此模板需要使用ACTWebSocket"
         },
         "label1.Text": {
             "en": "URL",
-            "ja-JP": "表示するURL"
+            "ja-JP": "表示するURL",
+            "zh-CN": "美化模板路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
-            "ja-JP": "ホットキータイプ"
+            "ja-JP": "ホットキータイプ",
+            "zh-CN": "快捷键功能"
         },
         "label11.Text": {
-            "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally."
+            "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
+            "zh-CN": "仅当模板与OverlayPlugin不兼容时，才需要启用此选项。"
         },
         "label12.Text": {
-            "en": "Use this if you can't find the overlay or for some reason can't resize it."
+            "en": "Use this if you can't find the overlay or for some reason can't resize it.",
+            "zh-CN": "如果您找不到美化窗口或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label2.Text": {
             "en": "Enable clickthru",
             "ja-JP": "クリックを透過させる",
-            "ko-KR": "클릭 무시"
+            "ko-KR": "클릭 무시",
+            "zh-CN": "鼠标穿透"
         },
         "label3.Text": {
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
-            "ko-KR": "오버레이 표시"
+            "ko-KR": "오버레이 표시",
+            "zh-CN": "启用美化窗口"
         },
         "label4.Text": {
-            "en": "Force white background"
+            "en": "Force white background",
+            "zh-CN": "在美化窗口强制启用白色背景"
         },
         "label5.Text": {
-            "en": "ACTWS Compatiblity"
+            "en": "ACTWS Compatiblity",
+            "zh-CN": "ACTWS兼容性"
         },
         "label6.Text": {
             "en": "Max. framerate",
             "ja-JP": "最大フレームレート",
-            "ko-KR": "최대 프레임 레이트"
+            "ko-KR": "최대 프레임 레이트",
+            "zh-CN": "最大帧速率"
         },
         "label7.Text": {
             "en": "Enable global hotkey",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용"
+            "ko-KR": "글로벌 핫 키 사용",
+            "zh-CN": "启用美化 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키"
+            "ko-KR": "글로벌 핫 키",
+            "zh-CN": "设置美化 开/关 快捷键"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
-            "ko-KR": "위치 잠금"
+            "ko-KR": "위치 잠금",
+            "zh-CN": "锁定美化窗口"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
         "buttonCopyVariable.Text": {
             "en": "Copy the update variable to clipboard",
             "ja-JP": "変数をクリップボードにコピー",
-            "ko-KR": "업데이트 값 복사"
+            "ko-KR": "업데이트 값 복사",
+            "zh-CN": "复制变量到剪切板"
         },
         "buttonOpenDevTools.Text": {
             "en": "Open DevTools",
             "ja-JP": "DevToolsを開く",
-            "ko-KR": "개발자 도구 열기"
+            "ko-KR": "개발자 도구 열기",
+            "zh-CN": "启动Debug工具"
         },
         "buttonReloadBrowser.Text": {
             "en": "Reload overlay",
             "ja-JP": "オーバーレイの表示をリロード",
-            "ko-KR": "새로고침"
+            "ko-KR": "새로고침",
+            "zh-CN": "重新加载（用于更换模板后即时刷新）"
         },
         "buttonSpellTimerSelectFile.Text": {
-            "en": "..."
+            "en": "...",
+            "zh-CN": "浏览"
         },
         "label1.Text": {
             "en": "Enable global hotkey",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용"
+            "ko-KR": "글로벌 핫 키 사용",
+            "zh-CN": "启用美化 开/关 快捷键"
         },
         "label10.Text": {
             "en": "URL",
-            "ja-JP": "表示するURL"
+            "ja-JP": "表示するURL",
+            "zh-CN": "美化模板路径"
         },
         "label2.Text": {
             "en": "Global hotkey",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키"
+            "ko-KR": "글로벌 핫 키",
+            "zh-CN": "设置美化 开/关 快捷键"
         },
         "label3.Text": {
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
-            "ko-KR": "위치 잠금"
+            "ko-KR": "위치 잠금",
+            "zh-CN": "锁定美化窗口"
         },
         "label4.Text": {
             "en": "Hotkey Type",
-            "ja-JP": "ホットキータイプ"
+            "ja-JP": "ホットキータイプ",
+            "zh-CN": "快捷键功能"
         },
         "label7.Text": {
             "en": "Max. framerate",
             "ja-JP": "最大フレームレート",
-            "ko-KR": "최대 프레임 레이트"
+            "ko-KR": "최대 프레임 레이트",
+            "zh-CN": "最大帧速率"
         },
         "label8.Text": {
             "en": "Enable clickthru",
             "ja-JP": "クリックを透過させる",
-            "ko-KR": "클릭 무시"
+            "ko-KR": "클릭 무시",
+            "zh-CN": "鼠标穿透"
         },
         "label9.Text": {
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
-            "ko-KR": "오버레이 표시"
+            "ko-KR": "오버레이 표시",
+            "zh-CN": "启用美化窗口"
         }
     },
     "OverlayPlugin.Core/Resources": {
         "ActwsShimEnabled": {
-            "en": "ACTWS compatibility shim enabled."
+            "en": "ACTWS compatibility shim enabled.",
+            "zh-CN": "ACTWS兼容性功能已启用"
         },
         "DuplicateHandlerError": {
             "en": "Duplicate handler for name {0}!"
@@ -462,32 +547,40 @@
     },
     "OverlayPlugin.Updater/ProgressDisplay": {
         "$this.Text": {
-            "en": "OverlayPlugin Updater"
+            "en": "OverlayPlugin Updater",
+            "zh-CN": "OverlayPlugin更新程序"
         },
         "cancelBtn.Text": {
-            "en": "Cancel"
+            "en": "Cancel",
+            "zh-CN": "取消"
         },
         "label.Text": {
-            "en": "Please wait..."
+            "en": "Please wait...",
+            "zh-CN": "请稍后..."
         }
     },
     "OverlayPlugin.Updater/UpdateQuestionForm": {
         "$this.Text": {
-            "en": "OverlayPlugin Update"
+            "en": "OverlayPlugin Update",
+            "zh-CN": "OverlayPlugin更新"
         },
         "btnConfirm.Text": {
-            "en": "Install Update"
+            "en": "Install Update",
+            "zh-CN": "安装更新"
         },
         "btnDeny.Text": {
-            "en": "Cancel"
+            "en": "Cancel",
+            "zh-CN": "取消"
         },
         "label1.Text": {
-            "en": "There's a new update for OverlayPlugin available. Install it now?"
+            "en": "There's a new update for OverlayPlugin available. Install it now?",
+            "zh-CN": "发现一个可用的OverlayPlugin更新。现在安装？"
         }
     },
     "OverlayPlugin/Resources": {
         "AssemblyMismatch": {
-            "en": "ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.\n"
+            "en": "ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.\n",
+            "zh-CN": "ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。\n\n请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。\n"
         },
         "AssemblyResolverError": {
             "#comment": "Log message",
@@ -506,17 +599,21 @@
         },
         "FailedToLoadCommon": {
             "#comment": "Plugin status (in ACT's plugin list)",
-            "en": "Failed to load Common!"
+            "en": "Failed to load Common!",
+            "zh-CN": "加载公共库失败！"
         },
         "InitCef": {
-            "en": "Initializing CEF..."
+            "en": "Initializing CEF...",
+            "zh-CN": "正在安装CEF..."
         },
         "InitRuntime": {
             "#comment": "Plugin status (in ACT's plugin list)",
-            "en": "Initializing Runtime..."
+            "en": "Initializing Runtime...",
+            "zh-CN": "正在安装运行库..."
         },
         "WaitingForAct": {
-            "en": "Waiting for ACT to finish startup..."
+            "en": "Waiting for ACT to finish startup...",
+            "zh-CN": "正在等待ACT启动完毕..."
         }
     }
 }
