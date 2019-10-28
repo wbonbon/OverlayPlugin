@@ -127,6 +127,9 @@
     <comment>Displayed if the version for OverlayPlugin.Core or HtmlRenderer doesn't match the OverlayPlugin version.</comment>
   </data>
   <data name="AssemblyMismatch" xml:space="preserve">
-    <value>ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.</value>
+    <value>ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.
+
+Please make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.
+</value>
   </data>
 </root>

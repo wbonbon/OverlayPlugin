@@ -145,6 +145,11 @@
     <Compile Include="Overlays\SpellTimerConfigPanel.Designer.cs">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Util.cs" />
     <Compile Include="Controls\WSConfigPanel.cs">
       <SubType>UserControl</SubType>
@@ -240,6 +245,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WSConfigPanel.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

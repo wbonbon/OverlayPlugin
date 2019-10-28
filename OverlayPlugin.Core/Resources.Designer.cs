@@ -248,5 +248,84 @@ namespace RainbowMage.OverlayPlugin {
                 return ResourceManager.GetString("UnregisterHotkeyError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WS: Handler call failed: {0}.
+        /// </summary>
+        internal static string WSHandlerException {
+            get {
+                return ResourceManager.GetString("WSHandlerException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;h1&gt;It Works!&lt;/h1&gt;
+        ///        &lt;p&gt;
+        ///            If any of these links are displayed with a &amp;quot;Local:&amp;quot; prefix and not clickable then that&apos;s because
+        ///            those overlays display local files and web browsers don&apos;t allow web sites to link to local files.
+        ///        &lt;/p&gt;
+        ///        &lt;p&gt;
+        ///            You&apos;ll have to copy &amp;amp; paste that link into your address bar.
+        ///        &lt;/p&gt;.
+        /// </summary>
+        internal static string WSIndexPage {
+            get {
+                return ResourceManager.GetString("WSIndexPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid data received: {0}; {1}.
+        /// </summary>
+        internal static string WSInvalidDataRecv {
+            get {
+                return ResourceManager.GetString("WSInvalidDataRecv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to send message: {0}.
+        /// </summary>
+        internal static string WSMessageSendFailed {
+            get {
+                return ResourceManager.GetString("WSMessageSendFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to process new subscription: {0}.
+        /// </summary>
+        internal static string WSNewSubFail {
+            get {
+                return ResourceManager.GetString("WSNewSubFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WS: Failed to shutdown. {0}.
+        /// </summary>
+        internal static string WSShutdownError {
+            get {
+                return ResourceManager.GetString("WSShutdownError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WS: Failed to start: {0}.
+        /// </summary>
+        internal static string WSStartFailed {
+            get {
+                return ResourceManager.GetString("WSStartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to process unsubscription: {0}.
+        /// </summary>
+        internal static string WSUnsubFail {
+            get {
+                return ResourceManager.GetString("WSUnsubFail", resourceCulture);
+            }
+        }
     }
 }

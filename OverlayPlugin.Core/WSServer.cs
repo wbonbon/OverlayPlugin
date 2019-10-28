@@ -38,7 +38,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception e)
                 {
-                    Log(LogLevel.Error, "WS: Failed to shutdown. {0}", e);
+                    Log(LogLevel.Error, Resources.WSShutdownError, e);
                 }
                 _inst = null;
                 _failed = false;
@@ -118,14 +118,7 @@ namespace RainbowMage.OverlayPlugin
         });
     </script>
     <body>
-        <h1>It Works!</h1>
-        <p>
-            If any of these links are displayed with a &quot;Local:&quot; prefix and not clickable then that's because
-            those overlays display local files and web browsers don't allow web sites to link to local files.
-        </p>
-        <p>
-            You'll have to copy &amp; paste that link into your address bar.
-        </p>
+        " + Resources.WSIndexPage + @"
         <ul>");
 
                         foreach (var overlay in plugin.Overlays)
@@ -168,7 +161,7 @@ namespace RainbowMage.OverlayPlugin
             catch(Exception e)
             {
                 _failed = true;
-                Log(LogLevel.Error, "WS: Failed to start: {0}", e);
+                Log(LogLevel.Error, Resources.WSStartFailed, e);
                 OnStateChanged?.Invoke(this, new StateChangedArgs(false, true));
             }
         }
@@ -196,7 +189,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     if (!success)
                     {
-                        Log(LogLevel.Error, "Failed to send message: {0}", e);
+                        Log(LogLevel.Error, Resources.WSMessageSendFailed, e);
                     }
                 });
             }
@@ -216,7 +209,7 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch(JsonException ex)
                 {
-                    Log(LogLevel.Error, "Invalid data received: {0}; {1}", ex, e.Data);
+                    Log(LogLevel.Error, Resources.WSInvalidDataRecv, ex, e.Data);
                     return;
                 }
 
@@ -233,7 +226,7 @@ namespace RainbowMage.OverlayPlugin
                         }
                     } catch(Exception ex)
                     {
-                        Log(LogLevel.Error, "Failed to process new subscription: {0}", ex);
+                        Log(LogLevel.Error, Resources.WSNewSubFail, ex);
                     }
 
                     return;
@@ -247,7 +240,7 @@ namespace RainbowMage.OverlayPlugin
                         }
                     } catch (Exception ex)
                     {
-                        Log(LogLevel.Error, "Failed to process unsubscription: {0}", ex);
+                        Log(LogLevel.Error, Resources.WSUnsubFail, ex);
                     }
                     return;
                 }
@@ -269,7 +262,7 @@ namespace RainbowMage.OverlayPlugin
                         Send(response.ToString(Formatting.None));
                     } catch(Exception ex)
                     {
-                        Log(LogLevel.Error, "WS: Handler call failed: {0}", ex);
+                        Log(LogLevel.Error, Resources.WSHandlerException, ex);
                     }
                 });
             }

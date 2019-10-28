@@ -61,7 +61,10 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ACT tried to load {0} {1} which doesn&apos;t match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn&apos;t fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory..
+        ///   Looks up a localized string similar to ACT tried to load {0} {1} which doesn&apos;t match your OverlayPlugin version ({2}). Aborting plugin load.
+        ///
+        ///Please make sure the old OverlayPlugin is disabled and restart ACT. If that doesn&apos;t fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.
+        ///.
         /// </summary>
         internal static string AssemblyMismatch {
             get {

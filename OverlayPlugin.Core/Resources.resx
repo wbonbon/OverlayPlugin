@@ -160,4 +160,35 @@
   <data name="IncompatibleAddon" xml:space="preserve">
     <value>Detected incompatible addon {0}. Please update as soon as possible!!</value>
   </data>
+  <data name="WSShutdownError" xml:space="preserve">
+    <value>WS: Failed to shutdown. {0}</value>
+  </data>
+  <data name="WSIndexPage" xml:space="preserve">
+    <value>&lt;h1&gt;It Works!&lt;/h1&gt;
+        &lt;p&gt;
+            If any of these links are displayed with a &amp;quot;Local:&amp;quot; prefix and not clickable then that's because
+            those overlays display local files and web browsers don't allow web sites to link to local files.
+        &lt;/p&gt;
+        &lt;p&gt;
+            You'll have to copy &amp;amp; paste that link into your address bar.
+        &lt;/p&gt;</value>
+  </data>
+  <data name="WSStartFailed" xml:space="preserve">
+    <value>WS: Failed to start: {0}</value>
+  </data>
+  <data name="WSMessageSendFailed" xml:space="preserve">
+    <value>Failed to send message: {0}</value>
+  </data>
+  <data name="WSInvalidDataRecv" xml:space="preserve">
+    <value>Invalid data received: {0}; {1}</value>
+  </data>
+  <data name="WSNewSubFail" xml:space="preserve">
+    <value>Failed to process new subscription: {0}</value>
+  </data>
+  <data name="WSUnsubFail" xml:space="preserve">
+    <value>Failed to process unsubscription: {0}</value>
+  </data>
+  <data name="WSHandlerException" xml:space="preserve">
+    <value>WS: Handler call failed: {0}</value>
+  </data>
 </root>

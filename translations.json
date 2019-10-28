@@ -1,0 +1,612 @@
+{
+    "HtmlRenderer/Resources": {
+        "BrowserCrashed": {
+            "en": "Browser crashed! ({0}) Trying to restart."
+        }
+    },
+    "OverlayPlugin.Core/Controls/ControlPanel": {
+        "buttonClearLog.Text": {
+            "en": "Clear Log"
+        },
+        "buttonNewOverlay.Text": {
+            "en": "New",
+            "ja-JP": "追加",
+            "ko-KR": "추가"
+        },
+        "buttonRemoveOverlay.Text": {
+            "en": "Remove",
+            "ja-JP": "削除",
+            "ko-KR": "삭제"
+        },
+        "checkBoxAutoHide.Text": {
+            "ja-JP": "非アクティブのときに自動的にオーバーレイを隠す",
+            "ko-KR": "비활성화 시 오버레이 자동으로 감추기"
+        },
+        "checkBoxFollowLog.Text": {
+            "en": "Autoscroll the log"
+        },
+        "columnHeader1.Text": {
+            "ko-KR": "시각"
+        },
+        "columnHeader2.Text": {
+            "ko-KR": "수준"
+        },
+        "columnHeader3.Text": {
+            "ko-KR": "메시지"
+        },
+        "groupBox2.Text": {
+            "en": "Add/Remove overlays"
+        },
+        "label_ListEmpty.Text": {
+            "en": "Click [Add] button to configure overlays.",
+            "ja-JP": "[追加] バートンを押して、オーバーレイを設定してください",
+            "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주세요."
+        },
+        "menuClearLog.Text": {
+            "ja-JP": "ログをクリア",
+            "ko-KR": "로그 지우기"
+        },
+        "menuCopyLogAll.Text": {
+            "ja-JP": "全てのログをコピー",
+            "ko-KR": "모든 로그 복사"
+        },
+        "menuFollowLatestLog.Text": {
+            "ja-JP": "最新のログを常に表示",
+            "ko-KR": "마지막 로그를 따라가기"
+        },
+        "menuLogCopy.Text": {
+            "ja-JP": "選択されたログをコピー",
+            "ko-KR": "선택된 로그 복사"
+        },
+        "tabPageMain.Text": {
+            "en": "General",
+            "ja-JP": "設定",
+            "ko-KR": "일반"
+        }
+    },
+    "OverlayPlugin.Core/Controls/GeneralConfigTab": {
+        "btnUpdateCheck.Text": {
+            "en": "Check For Updates"
+        },
+        "cbErrorReports.Text": {
+            "en": "Automatically report errors"
+        },
+        "cbHideOverlaysDuringCutscene.Text": {
+            "en": "Automatically hide overlays during cutscenes"
+        },
+        "cbHideOverlaysWhenNotActive.Text": {
+            "en": "Automatically hide overlays when the game is in the background"
+        },
+        "cbUpdateCheck.Text": {
+            "en": "Automatically check for updates"
+        }
+    },
+    "OverlayPlugin.Core/Controls/NewOverlayDialog": {
+        "$this.Text": {
+            "en": "Create new overlay",
+            "ja-JP": "新しいオーバーレイ",
+            "ko-KR": "새 오버레이"
+        },
+        "buttonCancel.Text": {
+            "en": "Cancel",
+            "ja-JP": "キャンセル",
+            "ko-KR": "취소"
+        },
+        "buttonOK.Text": {
+            "en": "OK"
+        },
+        "label1.Text": {
+            "en": "Name",
+            "ja-JP": "名前",
+            "ko-KR": "이름"
+        },
+        "label2.Text": {
+            "en": "Type",
+            "ja-JP": "種類",
+            "ko-KR": "형식"
+        }
+    },
+    "OverlayPlugin.Core/Controls/WSConfigPanel": {
+        "genSslBtn.Text": {
+            "en": "Generate SSL Certificate"
+        },
+        "label1.Text": {
+            "en": "IP Address:"
+        },
+        "label2.Text": {
+            "en": "Port:"
+        },
+        "label3.Text": {
+            "en": "Status:"
+        },
+        "logDisplay.Text": {
+            "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL."
+        },
+        "sslBox.Text": {
+            "en": "Enable SSL"
+        },
+        "startBtn.Text": {
+            "en": "Start"
+        },
+        "statusLabel.Text": {
+            "en": "Unknown"
+        },
+        "stopBtn.Text": {
+            "en": "Stop"
+        }
+    },
+    "OverlayPlugin.Core/EventSources/MiniParseEventSourceConfigPanel": {
+        "buttonMiniParseCopyActXiv.Text": {
+            "ja-JP": "変数をクリップボードにコピー",
+            "ko-KR": "업데이트 값 복사"
+        },
+        "buttonMiniParseOpenDevTools.Text": {
+            "ja-JP": "DevToolsを開く",
+            "ko-KR": "개발자 도구 열기"
+        },
+        "buttonMiniParseReloadBrowser.Text": {
+            "ja-JP": "オーバーレイの表示をリロード",
+            "ko-KR": "새로고침"
+        },
+        "label1.Text": {
+            "en": "Sort By",
+            "ja-JP": "表示するURL"
+        },
+        "label10.Text": {
+            "ja-JP": "ホットキータイプ"
+        },
+        "label13.Text": {
+            "ja-JP": "※最大フレームレート、およびホットキーの変更を有効にするためにはプラグインの再起動が必要です",
+            "ko-KR": "※ 프레임 레이트나 핫 키 설정을 적용하려면 플러그인을 다시 시작해야 합니다."
+        },
+        "label2.Text": {
+            "en": "DPS update interval seconds",
+            "ja-JP": "クリックを透過させる",
+            "ko-KR": "클릭 무시"
+        },
+        "label3.Text": {
+            "en": "Sort Descending (highest first)",
+            "ja-JP": "オーバーレイを表示する",
+            "ko-KR": "오버레이 표시"
+        },
+        "label4.Text": {
+            "en": "Update DPS during log import",
+            "ja-JP": "ソートキー",
+            "ko-KR": "정렬할 값"
+        },
+        "label5.Text": {
+            "ja-JP": "ソートタイプ",
+            "ko-KR": "정렬 방식"
+        },
+        "label6.Text": {
+            "ja-JP": "最大フレームレート",
+            "ko-KR": "최대 프레임 레이트"
+        },
+        "label7.Text": {
+            "ja-JP": "グローバルホットキーを使用",
+            "ko-KR": "글로벌 핫 키 사용"
+        },
+        "label8.Text": {
+            "ja-JP": "グローバルホットキー",
+            "ko-KR": "글로벌 핫 키"
+        },
+        "label9.Text": {
+            "ja-JP": "移動とリサイズを制限する",
+            "ko-KR": "위치 잠금"
+        }
+    },
+    "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
+        "buttonCopyUpdateScript.Text": {
+            "en": "Copy the update variable to clipboard",
+            "ja-JP": "変数をクリップボードにコピー",
+            "ko-KR": "업데이트 값 복사"
+        },
+        "buttonOpenDevTools.Text": {
+            "en": "Open DevTools",
+            "ja-JP": "DevToolsを開く",
+            "ko-KR": "개발자 도구 열기"
+        },
+        "buttonReloadBrowser.Text": {
+            "en": "Reload overlay",
+            "ja-JP": "オーバーレイの表示をリロード",
+            "ko-KR": "새로고침"
+        },
+        "buttonSelectFile.Text": {
+            "en": "..."
+        },
+        "label1.Text": {
+            "en": "Text",
+            "ja-JP": "表示するテキスト",
+            "ko-KR": "표시할 텍스트"
+        },
+        "label13.Text": {
+            "en": "※You need restarting this plugin to apply framerate and hotkey settings.",
+            "ja-JP": "※ホットキーの変更を有効にするためにはプラグインの再起動が必要です",
+            "ko-KR": "※ 프레임 레이트나 핫 키 설정을 적용하려면 플러그인을 다시 시작해야 합니다."
+        },
+        "label2.Text": {
+            "en": "Enable clickthru",
+            "ja-JP": "クリックを透過させる",
+            "ko-KR": "클릭 무시"
+        },
+        "label3.Text": {
+            "en": "Show overlay",
+            "ja-JP": "オーバーレイを表示する",
+            "ko-KR": "오버레이 표시"
+        },
+        "label4.Text": {
+            "en": "URL",
+            "ja-JP": "表示するURL",
+            "ko-KR": "URL"
+        },
+        "label5.Text": {
+            "en": "Display text as HTML",
+            "ja-JP": "テキストをHTMLとして表示",
+            "ko-KR": "텍스트를 HTML로 표시"
+        },
+        "label7.Text": {
+            "en": "Enable global hotkey",
+            "ja-JP": "グローバルホットキーを使用",
+            "ko-KR": "글로벌 핫 키 사용"
+        },
+        "label8.Text": {
+            "en": "Global hotkey",
+            "ja-JP": "グローバルホットキー",
+            "ko-KR": "글로벌 핫 키"
+        },
+        "label9.Text": {
+            "en": "Lock overlay",
+            "ja-JP": "移動とリサイズを制限する",
+            "ko-KR": "위치 잠금"
+        }
+    },
+    "OverlayPlugin.Core/Overlays/LogParseConfigPanel": {
+        "buttonLogParseCopyActXiv.Text": {
+            "en": "Copy the update variable to clipboard",
+            "ja-JP": "変数をクリップボードにコピー",
+            "ko-KR": "업데이트 값 복사"
+        },
+        "buttonLogParseOpenDevTools.Text": {
+            "en": "Open DevTools",
+            "ja-JP": "DevToolsを開く",
+            "ko-KR": "개발자 도구 열기"
+        },
+        "buttonLogParseReloadBrowser.Text": {
+            "en": "Reload overlay",
+            "ja-JP": "オーバーレイの表示をリロード",
+            "ko-KR": "새로고침"
+        },
+        "buttonLogParseSelectFile.Text": {
+            "en": "..."
+        },
+        "checkIncludeChat.Text": {
+            "ja-JP": "残りの会話",
+            "ko-KR": "기타 대화"
+        },
+        "checkIncludeCombatLog.Text": {
+            "ja-JP": "残りのログ",
+            "ko-KR": "나머지 로그"
+        },
+        "checkIncludeEchoes.Text": {
+            "ja-JP": "/echo",
+            "ko-KR": "혼잣말"
+        },
+        "label1.Text": {
+            "en": "URL",
+            "ja-JP": "表示するURL"
+        },
+        "label10.Text": {
+            "en": "Hotkey Type",
+            "ja-JP": "ホットキータイプ"
+        },
+        "label13.Text": {
+            "en": "※You need restarting this plugin to apply framerate and hotkey settings.",
+            "ja-JP": "※最大フレームレート、およびホットキーの変更を有効にするためにはプラグインの再起動が必要です",
+            "ko-KR": "※ 프레임 레이트나 핫 키 설정을 적용하려면 플러그인을 다시 시작해야 합니다."
+        },
+        "label2.Text": {
+            "en": "Enable clickthru",
+            "ja-JP": "クリックを透過させる",
+            "ko-KR": "클릭 무시"
+        },
+        "label3.Text": {
+            "en": "Show overlay",
+            "ja-JP": "オーバーレイを表示する",
+            "ko-KR": "오버레이 표시"
+        },
+        "label4.Text": {
+            "en": "Sort key",
+            "ja-JP": "含めるログ",
+            "ko-KR": "포함할 로그"
+        },
+        "label5.Text": {
+            "en": "Sort type",
+            "ja-JP": "ソートタイプ",
+            "ko-KR": "정렬 방식"
+        },
+        "label6.Text": {
+            "en": "Max. framerate",
+            "ja-JP": "最大フレームレート",
+            "ko-KR": "최대 프레임 레이트"
+        },
+        "label7.Text": {
+            "en": "Enable global hotkey",
+            "ja-JP": "グローバルホットキーを使用",
+            "ko-KR": "글로벌 핫 키 사용"
+        },
+        "label8.Text": {
+            "en": "Global hotkey",
+            "ja-JP": "グローバルホットキー",
+            "ko-KR": "글로벌 핫 키"
+        },
+        "label9.Text": {
+            "en": "Lock overlay",
+            "ja-JP": "移動とリサイズを制限する",
+            "ko-KR": "위치 잠금"
+        }
+    },
+    "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
+        "buttonMiniParseCopyActXiv.Text": {
+            "ja-JP": "変数をクリップボードにコピー",
+            "ko-KR": "업데이트 값 복사"
+        },
+        "buttonMiniParseOpenDevTools.Text": {
+            "en": "Open DevTools",
+            "ja-JP": "DevToolsを開く",
+            "ko-KR": "개발자 도구 열기"
+        },
+        "buttonMiniParseReloadBrowser.Text": {
+            "en": "Reload overlay",
+            "ja-JP": "オーバーレイの表示をリロード",
+            "ko-KR": "새로고침"
+        },
+        "buttonMiniParseSelectFile.Text": {
+            "en": "..."
+        },
+        "buttonResetOverlayPosition.Text": {
+            "en": "Reset Overlay Position"
+        },
+        "checkActwsCompatbility.Text": {
+            "en": "This is an overlay that requires ACTWebSocket"
+        },
+        "label1.Text": {
+            "en": "URL",
+            "ja-JP": "表示するURL"
+        },
+        "label10.Text": {
+            "en": "Hotkey Type",
+            "ja-JP": "ホットキータイプ"
+        },
+        "label11.Text": {
+            "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally."
+        },
+        "label12.Text": {
+            "en": "Use this if you can't find the overlay or for some reason can't resize it."
+        },
+        "label13.Text": {
+            "ja-JP": "※最大フレームレート、およびホットキーの変更を有効にするためにはプラグインの再起動が必要です",
+            "ko-KR": "※ 프레임 레이트나 핫 키 설정을 적용하려면 플러그인을 다시 시작해야 합니다."
+        },
+        "label2.Text": {
+            "en": "Enable clickthru",
+            "ja-JP": "クリックを透過させる",
+            "ko-KR": "클릭 무시"
+        },
+        "label3.Text": {
+            "en": "Show overlay",
+            "ja-JP": "オーバーレイを表示する",
+            "ko-KR": "오버레이 표시"
+        },
+        "label4.Text": {
+            "en": "Force white background",
+            "ja-JP": "ソートキー",
+            "ko-KR": "정렬할 값"
+        },
+        "label5.Text": {
+            "en": "ACTWS Compatiblity",
+            "ja-JP": "ソートタイプ",
+            "ko-KR": "정렬 방식"
+        },
+        "label6.Text": {
+            "en": "Max. framerate",
+            "ja-JP": "最大フレームレート",
+            "ko-KR": "최대 프레임 레이트"
+        },
+        "label7.Text": {
+            "en": "Enable global hotkey",
+            "ja-JP": "グローバルホットキーを使用",
+            "ko-KR": "글로벌 핫 키 사용"
+        },
+        "label8.Text": {
+            "en": "Global hotkey",
+            "ja-JP": "グローバルホットキー",
+            "ko-KR": "글로벌 핫 키"
+        },
+        "label9.Text": {
+            "en": "Lock overlay",
+            "ja-JP": "移動とリサイズを制限する",
+            "ko-KR": "위치 잠금"
+        }
+    },
+    "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
+        "buttonCopyVariable.Text": {
+            "en": "Copy the update variable to clipboard",
+            "ja-JP": "変数をクリップボードにコピー",
+            "ko-KR": "업데이트 값 복사"
+        },
+        "buttonOpenDevTools.Text": {
+            "en": "Open DevTools",
+            "ja-JP": "DevToolsを開く",
+            "ko-KR": "개발자 도구 열기"
+        },
+        "buttonReloadBrowser.Text": {
+            "en": "Reload overlay",
+            "ja-JP": "オーバーレイの表示をリロード",
+            "ko-KR": "새로고침"
+        },
+        "buttonSpellTimerSelectFile.Text": {
+            "en": "..."
+        },
+        "label1.Text": {
+            "en": "Enable global hotkey",
+            "ja-JP": "グローバルホットキーを使用",
+            "ko-KR": "글로벌 핫 키 사용"
+        },
+        "label10.Text": {
+            "en": "URL",
+            "ja-JP": "表示するURL"
+        },
+        "label12.Text": {
+            "en": "※You need restarting this plugin to apply framerate and hotkey settings.",
+            "ja-JP": "※最大フレームレート、およびホットキーの変更を有効にするためにはプラグインの再起動が必要です",
+            "ko-KR": "※ 프레임 레이트나 핫 키 설정을 적용하려면 플러그인을 다시 시작해야 합니다."
+        },
+        "label2.Text": {
+            "en": "Global hotkey",
+            "ja-JP": "グローバルホットキー",
+            "ko-KR": "글로벌 핫 키"
+        },
+        "label3.Text": {
+            "en": "Lock overlay",
+            "ja-JP": "移動とリサイズを制限する",
+            "ko-KR": "위치 잠금"
+        },
+        "label4.Text": {
+            "en": "Hotkey Type",
+            "ja-JP": "ホットキータイプ"
+        },
+        "label7.Text": {
+            "en": "Max. framerate",
+            "ja-JP": "最大フレームレート",
+            "ko-KR": "최대 프레임 레이트"
+        },
+        "label8.Text": {
+            "en": "Enable clickthru",
+            "ja-JP": "クリックを透過させる",
+            "ko-KR": "클릭 무시"
+        },
+        "label9.Text": {
+            "en": "Show overlay",
+            "ja-JP": "オーバーレイを表示する",
+            "ko-KR": "오버레이 표시"
+        }
+    },
+    "OverlayPlugin.Core/Resources": {
+        "ActwsShimEnabled": {
+            "en": "ACTWS compatibility shim enabled."
+        },
+        "DuplicateHandlerError": {
+            "en": "Duplicate handler for name {0}!"
+        },
+        "EventHandlerException": {
+            "en": "Failed to dispatch event {0} to {1}! {2}"
+        },
+        "FFXIVDataRepositoryException": {
+            "en": "Failed to retrieve the FFXIV DataRepository: {0}"
+        },
+        "FFXIVDataSubscriptionException": {
+            "en": "Failed to retrieve the FFXIV DataSubscription: {0}"
+        },
+        "IncompatibleAddon": {
+            "en": "Detected incompatible addon {0}. Please update as soon as possible!!"
+        },
+        "InitOverlayLocalFileIsMissing": {
+            "en": "InitializeOverlay: Local file {0} does not exist!"
+        },
+        "InitOverlayUrlError": {
+            "en": "InitializeOverlay: URI parse error! Please reconfigure the URL. (Config.Url = {0}): {1}"
+        },
+        "JsHandlerCallException": {
+            "en": "JS Handler call failed: {0}"
+        },
+        "ListSortFailed": {
+            "en": "Failed to sort list by {0}: {1}"
+        },
+        "MissingEventDispatchError": {
+            "en": "Tried to dispatch unregistered event type \"{0}\"!"
+        },
+        "MissingEventSubError": {
+            "en": "Got a subscription for missing event \"{0}\"!"
+        },
+        "MissingHandlerError": {
+            "en": "Tried to call missing handler \"{0}\"!"
+        },
+        "NetworkParserInitException": {
+            "en": "Failed to setup network parser: {0}"
+        },
+        "OverlayApiInvalidHandlerCall": {
+            "en": "Received invalid handler call: {0}"
+        },
+        "OverlayApiMissingEventsField": {
+            "en": "Missing events field in subscribe call: {0}!"
+        },
+        "OverlayApiMissingEventsFieldUnsub": {
+            "en": "Missing events field in unsubscribe call: {0}!"
+        },
+        "OverlayApiSubscribed": {
+            "en": "{0}: Subscribed to {1}"
+        },
+        "OverlayBaseRegisterHotkeyError": {
+            "en": "Failed to register hotkey: {0}!"
+        },
+        "RegisterHotkeyError": {
+            "en": "Failed to register hotkey {0}, {1} in EnableHotKeys()."
+        },
+        "UnregisterHotkeyError": {
+            "en": "Failed to unregister hotkey {0} in DisableHotKeys()."
+        },
+        "WSHandlerException": {
+            "en": "WS: Handler call failed: {0}"
+        },
+        "WSIndexPage": {
+            "en": "<h1>It Works!</h1>\n        <p>\n            If any of these links are displayed with a &quot;Local:&quot; prefix and not clickable then that's because\n            those overlays display local files and web browsers don't allow web sites to link to local files.\n        </p>\n        <p>\n            You'll have to copy &amp; paste that link into your address bar.\n        </p>"
+        },
+        "WSInvalidDataRecv": {
+            "en": "Invalid data received: {0}; {1}"
+        },
+        "WSMessageSendFailed": {
+            "en": "Failed to send message: {0}"
+        },
+        "WSNewSubFail": {
+            "en": "Failed to process new subscription: {0}"
+        },
+        "WSShutdownError": {
+            "en": "WS: Failed to shutdown. {0}"
+        },
+        "WSStartFailed": {
+            "en": "WS: Failed to start: {0}"
+        },
+        "WSUnsubFail": {
+            "en": "Failed to process unsubscription: {0}"
+        }
+    },
+    "OverlayPlugin/Resources": {
+        "AssemblyMismatch": {
+            "en": "ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.\n"
+        },
+        "AssemblyResolverError": {
+            "en": "AssemblyResolver: Error: {0}"
+        },
+        "AssemblyResolverLoaded": {
+            "en": "AssemblyResolver: Loaded: {0}"
+        },
+        "CefInstallerFailed": {
+            "en": "CefInstaller couldn't be loaded."
+        },
+        "CoreOrHtmlRendererInsane": {
+            "en": "Core or HtmlRenderer aren't sane."
+        },
+        "FailedToLoadCommon": {
+            "en": "Failed to load Common!"
+        },
+        "InitCef": {
+            "en": "Initializing CEF..."
+        },
+        "InitRuntime": {
+            "en": "Initializing Runtime..."
+        },
+        "WaitingForAct": {
+            "en": "Waiting for ACT to finish startup..."
+        }
+    }
+}
