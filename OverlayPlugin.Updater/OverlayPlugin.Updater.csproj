@@ -87,7 +87,13 @@
     <EmbeddedResource Include="ProgressDisplay.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDisplay.zh-CN.resx">
+      <DependentUpon>ProgressDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UpdateQuestionForm.resx">
+      <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateQuestionForm.zh-CN.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
