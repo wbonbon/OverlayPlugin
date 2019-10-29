@@ -12,6 +12,7 @@ namespace RainbowMage.OverlayPlugin
 
         protected Timer timer;
         protected ILogger logger;
+        protected Dictionary<string, JObject> eventCache = new Dictionary<string, JObject>();
 
         public EventSourceBase(ILogger logger)
         {
@@ -64,6 +65,28 @@ namespace RainbowMage.OverlayPlugin
         {
             EventDispatcher.RegisterEventTypes(types);
         }
+        protected void RegisterEventType(string type)
+        {
+            EventDispatcher.RegisterEventType(type);
+        }
+        protected void RegisterEventType(string type, Func<JObject> initCallback)
+        {
+            EventDispatcher.RegisterEventType(type, initCallback);
+        }
+
+        protected void RegisterCachedEventTypes(List<string> types)
+        {
+            foreach (var type in types)
+            {
+                RegisterCachedEventType(type);
+            }
+        }
+
+        protected void RegisterCachedEventType(string type)
+        {
+            eventCache[type] = null;
+            EventDispatcher.RegisterEventType(type, () => eventCache[type]);
+        }
 
         protected void RegisterEventHandler(string name, Func<JObject, JToken> handler)
         {
@@ -72,6 +95,12 @@ namespace RainbowMage.OverlayPlugin
 
         protected void DispatchEvent(JObject e)
         {
+            EventDispatcher.DispatchEvent(e);
+        }
+
+        protected void DispatchAndCacheEvent(JObject e)
+        {
+            eventCache[e["type"].ToString()] = e;
             EventDispatcher.DispatchEvent(e);
         }
 

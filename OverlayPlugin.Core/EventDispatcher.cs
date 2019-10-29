@@ -12,6 +12,7 @@ namespace RainbowMage.OverlayPlugin
     {
         static Dictionary<string, Func<JObject, JToken>> handlers = new Dictionary<string, Func<JObject, JToken>>();
         static Dictionary<string, List<IEventReceiver>> eventFilter = new Dictionary<string, List<IEventReceiver>>();
+        static Dictionary<string, Func<JObject>> stateCallbacks = new Dictionary<string, Func<JObject>>();
 
         private static void Log(LogLevel level, string message, params object[] args)
         {
@@ -36,12 +37,31 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public static void RegisterEventType(string name)
+        {
+            RegisterEventType(name, null);
+        }
+
+        public static void RegisterEventType(string name, Func<JObject> initCallback)
+        {
+            eventFilter[name] = new List<IEventReceiver>();
+
+            if (initCallback != null)
+                stateCallbacks[name] = initCallback;
+        }
+
         public static void Subscribe(string eventName, IEventReceiver receiver)
         {
             if (!eventFilter.ContainsKey(eventName))
             {
                 Log(LogLevel.Error, Resources.MissingEventSubError, eventName);
                 return;
+            }
+
+            if (stateCallbacks.ContainsKey(eventName))
+            {
+                var ev = stateCallbacks[eventName]();
+                if (ev != null) receiver.HandleEvent(ev);
             }
 
             lock (eventFilter[eventName])

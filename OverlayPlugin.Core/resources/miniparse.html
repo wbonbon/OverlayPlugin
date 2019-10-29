@@ -183,7 +183,8 @@
         }
 
         // CombatData イベントを購読
-        window.addOverlayListener("CombatData", (e) => update(e));
+        addOverlayListener("CombatData", (e) => update(e));
+        startOverlayEvents();
 
         // 表示要素の更新
         function update(data) {

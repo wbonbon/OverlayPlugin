@@ -50,12 +50,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> {
-                ChangePrimaryPlayerEvent,
-                ChangeZoneEvent,
                 CombatDataEvent,
                 FileChangedEvent,
                 LogLineEvent,
                 ImportedLogLinesEvent,
+            });
+
+            // These events need to deliver cached values to new subscribers.
+            RegisterCachedEventTypes(new List<string> {
+                ChangePrimaryPlayerEvent,
+                ChangeZoneEvent,
                 OnlineStatusChangedEvent,
                 PartyChangedEvent,
             });
@@ -69,7 +73,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 obj["rawStatus"] = e.Status;
                 obj["status"] = StatusMap.ContainsKey(e.Status) ? StatusMap[e.Status] : "Unknown";
 
-                DispatchEvent(obj);
+                DispatchAndCacheEvent(obj);
             };
 
             FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
@@ -109,7 +113,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                     var zoneID = Convert.ToUInt32(line[2], 16);
 
-                    DispatchEvent(JObject.FromObject(new
+                    DispatchAndCacheEvent(JObject.FromObject(new
                     {
                         type = ChangeZoneEvent,
                         zoneID,
@@ -122,7 +126,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     var charID = Convert.ToUInt32(line[2], 16);
                     var charName = line[3];
 
-                    DispatchEvent(JObject.FromObject(new
+                    DispatchAndCacheEvent(JObject.FromObject(new
                     {
                         type = ChangePrimaryPlayerEvent,
                         charID,
@@ -174,7 +178,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 });
             }
 
-            DispatchEvent(JObject.FromObject(new
+            DispatchAndCacheEvent(JObject.FromObject(new
             {
                 type = PartyChangedEvent,
                 party = result,

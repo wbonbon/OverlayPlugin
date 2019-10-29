@@ -6,6 +6,7 @@
   let responsePromises = {};
   let subscribers = {};
   let sendMessage = null;
+  let eventsStarted = false;
 
   if (wsUrl) {
     sendMessage = (obj) => {
@@ -27,11 +28,6 @@
 
         let q = queue;
         queue = null;
-
-        sendMessage({
-          call: 'subscribe',
-          events: Object.keys(subscribers),
-        });
 
         for (let msg of q)
           sendMessage(msg);
@@ -84,11 +80,6 @@
 
       window.__OverlayCallback = processEvent;
 
-      sendMessage({
-        call: 'subscribe',
-        events: Object.keys(subscribers),
-      }, null);
-
       for (let [msg, resolve] of q)
         sendMessage(msg, resolve);
     }
@@ -106,15 +97,14 @@
   window.dispatchOverlayEvent = processEvent;
 
   window.addOverlayListener = (event, cb) => {
+    if (eventsStarted && subscribers[event]) {
+      console.warn(`A new listener for ${event} has been registered after event transmission has already begun.
+Some events might have been missed and no cached values will be transmitted.
+Please register your listeners before calling startOverlayEvents().`);
+    }
+
     if (!subscribers[event]) {
       subscribers[event] = [];
-
-      if (!queue) {
-        sendMessage({
-          call: 'subscribe',
-          events: [event],
-        });
-      }
     }
 
     subscribers[event].push(cb);
@@ -148,5 +138,14 @@
     }
 
     return p;
+  };
+
+  window.startOverlayEvents = () => {
+    eventsStarted = false;
+
+    sendMessage({
+      call: 'subscribe',
+      events: Object.keys(subscribers),
+    });
   };
 })();

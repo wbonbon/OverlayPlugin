@@ -63,9 +63,11 @@
         }
 
         // CombatData イベントを購読
-        window.addOverlayListener("CombatData", (e) => {
+        addOverlayListener("CombatData", (e) => {
             document.querySelector("#encounter").innerText = JSON.stringify(e, null, 4);
         });
+
+        startOverlayEvents();
 
     </script>
 </head>
