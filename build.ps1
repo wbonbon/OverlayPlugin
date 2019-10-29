@@ -38,12 +38,12 @@ try {
     $archive = "..\OverlayPlugin-$version.7z"
 
     if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources README.md LICENSE.txt libs\ja-JP libs\ko-KR libs\*.dll
+    7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources zh-CN README.md LICENSE.txt libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll
 
     $archive = "..\OverlayPlugin-$version.zip"
 
     if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources README.md LICENSE.txt libs\ja-JP libs\ko-KR libs\*.dll
+    7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources zh-CN README.md LICENSE.txt libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll
 } catch {
     Write-Error $Error[0]
 }
