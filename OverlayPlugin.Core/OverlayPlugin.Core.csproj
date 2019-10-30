@@ -160,6 +160,7 @@
     <Compile Include="WSServer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\common.js" />
     <Content Include="resources\label.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
