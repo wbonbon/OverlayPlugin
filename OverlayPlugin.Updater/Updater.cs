@@ -100,20 +100,24 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
         }
 
-        public static async void PerformUpdateIfNecessary(string pluginDirectory, bool alwaysTalk = false)
+        public static async void PerformUpdateIfNecessary(Control parent, string pluginDirectory, bool alwaysTalk = false)
         {
             var (newVersion, remoteVersion, releaseNotes) = await CheckForUpdate();
 
             if (newVersion)
             {
-                var dialog = new UpdateQuestionForm(releaseNotes);
-                var result = dialog.ShowDialog();
-                dialog.Dispose();
+                // Make sure we open the UpdateQuestionForm on a UI thread.
+                parent.Invoke((Action)(async () =>
+                 {
+                     var dialog = new UpdateQuestionForm(releaseNotes);
+                     var result = dialog.ShowDialog();
+                     dialog.Dispose();
 
-                if (result == DialogResult.Yes)
-                {
-                    await InstallUpdate(remoteVersion, pluginDirectory);
-                }
+                     if (result == DialogResult.Yes)
+                     {
+                         await InstallUpdate(remoteVersion, pluginDirectory);
+                     }
+                 }));
             } else if (alwaysTalk)
             {
                 MessageBox.Show("You are already on the latest version.", "OverlayPlugin", MessageBoxButtons.OK, MessageBoxIcon.Information);
