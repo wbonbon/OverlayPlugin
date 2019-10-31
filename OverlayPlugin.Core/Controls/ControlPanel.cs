@@ -29,16 +29,16 @@ namespace RainbowMage.OverlayPlugin
 
             this.checkBoxFollowLog.Checked = this.config.FollowLatestLog;
 
-            generalTab = new TabPage
+            generalTab = new ConfigTabPage
             {
                 Name = "General",
                 Text = "",
             };
             generalTab.Controls.Add(new GeneralConfigTab());
 
-            PluginMain.Logger.RegisterListener(addLogEntry);
-            Registry.AddonRegistered += InitializeOverlayConfigTabs;
-            InitializeOverlayConfigTabs(null, null);
+            PluginMain.Logger.RegisterListener(AddLogEntry);
+            Registry.EventSourceRegistered += AddEventSourceTab;
+            // InitializeOverlayConfigTabs(null, null);
         }
 
         protected override void Dispose(bool disposing)
@@ -46,14 +46,14 @@ namespace RainbowMage.OverlayPlugin
             if (disposing)
             {
                 if (components != null) components.Dispose();
-                Registry.AddonRegistered -= InitializeOverlayConfigTabs;
+                Registry.EventSourceRegistered -= AddEventSourceTab;
                 PluginMain.Logger.ClearListener();
             }
 
             base.Dispose(disposing);
         }
 
-        private void addLogEntry(LogEntry entry)
+        private void AddLogEntry(LogEntry entry)
         {
             var msg = $"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine;
 
@@ -89,7 +89,12 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private void InitializeOverlayConfigTabs(object sender, EventArgs e)
+        private void AddEventSourceTab(object sender, EventSourceRegisteredEventArgs e)
+        {
+            AddConfigTab(e.EventSource);
+        }
+
+        public void InitializeOverlayConfigTabs()
         {
             tabControl.TabPages.Clear();
             tabControl.TabPages.Add(generalTab);
@@ -112,10 +117,11 @@ namespace RainbowMage.OverlayPlugin
 
         private void AddConfigTab(IOverlay overlay)
         {
-            var tabPage = new TabPage
+            var tabPage = new ConfigTabPage
             {
                 Name = overlay.Name,
-                Text = overlay.GetType().Name
+                Text = overlay.GetType().Name,
+                IsOverlay = true,
             };
 
             var control = overlay.CreateConfigControl();
@@ -131,10 +137,11 @@ namespace RainbowMage.OverlayPlugin
 
         private void AddConfigTab(IEventSource source)
         {
-            var tabPage = new TabPage
+            var tabPage = new ConfigTabPage
             {
                 Name = source.Name,
-                Text = "Event Source " + source.GetType().Name
+                Text = "Event Source " + source.GetType().Name,
+                IsEventSource = true,
             };
 
             var control = source.CreateConfigControl();
@@ -144,7 +151,19 @@ namespace RainbowMage.OverlayPlugin
                 control.BackColor = SystemColors.ControlLightLight;
                 tabPage.Controls.Add(control);
 
-                this.tabControl.TabPages.Add(tabPage);
+                var index = 0;
+                foreach (var page in this.tabControl.TabPages)
+                {
+                    if (index == 0 || ((ConfigTabPage) page).IsEventSource)
+                    {
+                        index++;
+                    } else
+                    {
+                        break;
+                    }
+                }
+
+                this.tabControl.TabPages.Insert(index, tabPage);
             }
         }
 
@@ -201,14 +220,11 @@ namespace RainbowMage.OverlayPlugin
 
         private void buttonRemoveOverlay_Click(object sender, EventArgs e)
         {
-            if (this.tabControl.SelectedTab.Equals(this.tabPageMain))
-                return;
-
             if (tabControl.SelectedTab == null) // ???
                 tabControl.SelectedTab = tabControl.TabPages[0];
 
             var subLabel = tabControl.SelectedTab.Text;
-            if (subLabel.EndsWith("EventSource") || subLabel.StartsWith("Event Source "))
+            if (!((ConfigTabPage) tabControl.SelectedTab).IsOverlay)
             {
                 return;
             }
@@ -260,6 +276,12 @@ namespace RainbowMage.OverlayPlugin
         private void ButtonClearLog_Click(object sender, EventArgs e)
         {
             logBox.Clear();
+        }
+
+        private class ConfigTabPage : TabPage
+        {
+            public bool IsOverlay = false;
+            public bool IsEventSource = false;
         }
     }
 }

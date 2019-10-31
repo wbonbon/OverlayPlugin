@@ -28,7 +28,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static event EventHandler AddonRegistered;
+        public static event EventHandler<EventSourceRegisteredEventArgs> EventSourceRegistered;
 
         public static void Init()
         {
@@ -51,8 +51,6 @@ namespace RainbowMage.OverlayPlugin
         {
             _overlays.Add(typeof(T));
             Container.Register<T>();
-
-            AddonRegistered?.Invoke(null, new EventArgs());
         }
 
         public static void UnregisterOverlay<T>()
@@ -66,7 +64,15 @@ namespace RainbowMage.OverlayPlugin
             Container.BuildUp(source);
             _eventSources.Add(source);
 
-            AddonRegistered?.Invoke(null, new EventArgs());
+            // If an event source is registered at runtime, we have to load the config
+            // and start it immeditately.
+            if (Container.CanResolve<IPluginConfig>())
+            {
+                source.LoadConfig(Container.Resolve<IPluginConfig>());
+                source.Start();
+            }
+
+            EventSourceRegistered?.Invoke(null, new EventSourceRegisteredEventArgs(source));
         }
 
         public static void RegisterEventSource<T>()
@@ -104,5 +110,15 @@ namespace RainbowMage.OverlayPlugin
             return Container.Register<T>(obj);
         }
         #endregion
+    }
+
+    public class EventSourceRegisteredEventArgs : EventArgs
+    {
+        public IEventSource EventSource { get; private set; }
+
+        public EventSourceRegisteredEventArgs(IEventSource eventSource)
+        {
+            this.EventSource = eventSource;
+        }
     }
 }

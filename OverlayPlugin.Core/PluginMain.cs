@@ -22,6 +22,8 @@ namespace RainbowMage.OverlayPlugin
         TabPage wsTabPage;
         WSConfigPanel wsConfigPanel;
 
+        Timer initTimer;
+
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
 
@@ -64,14 +66,11 @@ namespace RainbowMage.OverlayPlugin
                 FFXIVExportVariables.Init();
                 NetworkParser.Init();
 
-                // プラグイン読み込み
-                LoadAddons();
-
-                // コンフィグ系読み込み
+                // LoadAddons();
                 LoadConfig();
 
 #if DEBUG
-                Logger.Log(LogLevel.Debug, "Addon and config load took {0}s.", watch.Elapsed.TotalSeconds);
+                Logger.Log(LogLevel.Debug, "Component init and config load took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Reset();
 #endif
 
@@ -138,13 +137,7 @@ namespace RainbowMage.OverlayPlugin
 #if DEBUG
                 watch.Reset();
 #endif
-                InitializeOverlays();
-
-#if DEBUG
-                Logger.Log(LogLevel.Debug, "ES and overlay init took {0}s.", watch.Elapsed.TotalSeconds);
-                watch.Stop();
-#endif
-
+                
                 // コンフィグUI系初期化
                 this.controlPanel = new ControlPanel(this, this.Config);
                 this.controlPanel.Dock = DockStyle.Fill;
@@ -165,6 +158,20 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Updater.Updater.PerformUpdateIfNecessary(PluginDirectory);
                 }
+
+                initTimer = new Timer();
+                initTimer.Interval = 100;
+                initTimer.Tick += (o, e) =>
+                {
+                    if (ActGlobals.oFormActMain.InitActDone)
+                    {
+                        initTimer.Stop();
+                        LoadAddons();
+                        InitializeOverlays();
+                        controlPanel.InitializeOverlayConfigTabs();
+                    }
+                };
+                initTimer.Start();
             }
             catch (Exception e)
             {
@@ -469,7 +476,7 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void SaveConfig()
         {
-            if (Config == null) return;
+            if (Config == null || Overlays == null) return;
 
             try
             {
