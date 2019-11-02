@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,34 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FailedToLoadCommon" xml:space="preserve">
-    <value>加载公共库失败！</value>
-  </data>  <data name="WaitingForAct" xml:space="preserve">
-    <value>正在等待ACT启动完毕...</value>
-  </data>
-  <data name="InitCef" xml:space="preserve">
-    <value>正在安装CEF...</value>
-  </data>
-  <data name="InitRuntime" xml:space="preserve">
-    <value>正在安装运行库...</value>
-  </data>
-  <data name="AssemblyMismatch" xml:space="preserve">
-    <value>ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。
 
-请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。
-</value>
+  <data name="UpdateCheckException" xml:space="preserve">
+    <value>检查更新失败：
+{0}</value>
   </data>
-
-
-  <data name="CoreOrHtmlRendererInsane" xml:space="preserve">
-    <value>核心或HtmlRenderer不匹配。</value>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>OverlayPlugin错误</value>
   </data>
-  <data name="AssemblyResolverLoaded" xml:space="preserve">
-    <value>AssemblyResolver：已加载：{0}</value>
+  <data name="LogRetry" xml:space="preserve">
+    <value>正在重试...</value>
   </data>
-  <data name="AssemblyResolverError" xml:space="preserve">
-    <value>AssemblyResolver：错误：{0}</value>
+  <data name="UpdateFailedError" xml:space="preserve">
+    <value>插件更新失败。下次运行ACT时将不会加载本插件。重试？</value>
   </data>
-  <data name="CefInstallerFailed" xml:space="preserve">
-    <value>Cef安装程序无法加载。</value>
+  <data name="LogDownloadFailed" xml:space="preserve">
+    <value>下载失败：{0}</value>
+  </data>
+  <data name="MsvcrtFailed" xml:space="preserve">
+    <value>MSVCRT安装失败。</value>
+  </data>
+  <data name="StatusError" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="LogResumingDownload" xml:space="preserve">
+    <value>正在恢复下载...</value>
+  </data>
+  <data name="OverlayPluginTitle" xml:space="preserve">
+    <value>伤害统计美化</value>
+  </data>
+  <data name="LaunchingInstallerFailed" xml:space="preserve">
+    <value>打开安装程序失败：{0}</value>
+  </data>
+  <data name="LogOpeningArchive" xml:space="preserve">
+    <value>正在打开压缩包...</value>
+  </data>
+  <data name="StatusPreparingExtraction" xml:space="preserve">
+    <value>[{0}/{1}]:正在准备解压缩...</value>
+  </data>
+  <data name="DownloadFailedContentLengthMissing" xml:space="preserve">
+    <value>下载失败！下载没有文件大小（缺少内容长度头）。</value>
+  </data>
+  <data name="UpdateParseVersionError" xml:space="preserve">
+    <value>解析版本失败:
+{0}</value>
+  </data>
+  <data name="LogInstallerFailed" xml:space="preserve">
+    <value>错误：安装程序没有正确完成。</value>
+  </data>
+  <data name="LogAbortedByUser" xml:space="preserve">
+    <value>用户已终止。</value>
+  </data>
+  <data name="StatusDownloadStarted" xml:space="preserve">
+    <value>[{0}/{1}]:正在开始下载...</value>
+  </data>
+  <data name="LogRetryAfter1s" xml:space="preserve">
+    <value>1秒后重试。</value>
+  </data>
+  <data name="StatusDone" xml:space="preserve">
+    <value>[{0}/{1}]:已完成。</value>
+  </data>
+  <data name="LogExtractionAbortedByUser" xml:space="preserve">
+    <value>解压缩被用户终止。</value>
+  </data>
+  <data name="UpdateCheckTitle" xml:space="preserve">
+    <value>OverlayPlugin检查更新</value>
+  </data>
+  <data name="UpdateCefDlFailed" xml:space="preserve">
+    <value>下载CEF失败！您将不能使用OverlayPlugin。重试？</value>
+  </data>
+  <data name="Exception" xml:space="preserve">
+    <value>失败：{0}</value>
+  </data>
+  <data name="LogLaunchingInstaller" xml:space="preserve">
+    <value>正在运行安装程序...</value>
+  </data>
+  <data name="LogInstallerWaiting" xml:space="preserve">
+    <value>正在等待安装程序退出...</value>
+  </data>
+  <data name="OutOfRetries" xml:space="preserve">
+    <value>超出尝试次数。</value>
+  </data>
+  <data name="StatusLaunchingInstaller" xml:space="preserve">
+    <value>[{0}/{1}]:正在运行安装程序...。</value>
+  </data>
+  <data name="LogDownloading" xml:space="preserve">
+    <value>正在下载"{0}"至{1}...</value>
+  </data>
+  <data name="StatusCancelling" xml:space="preserve">
+    <value>正在取消...</value>
+  </data>
+  <data name="MsvcrtMissing" xml:space="preserve">
+    <value>你没有安装MS Visual C++ Redistributable for Visual Studio 2019。
+OverlayPlugin运行需要它。现在安装？</value>
+  </data>
+  <data name="CreatingTempDirFailed" xml:space="preserve">
+    <value>创建或清空缓存目录"{0}": {1}失败</value>
+  </data>
+  <data name="UpdateTitle" xml:space="preserve">
+    <value>OverlayPlugin更新</value>
+  </data>
+  <data name="StatusCancelled" xml:space="preserve">
+    <value>已取消！</value>
+  </data>
+  <data name="LogExtractingFiles" xml:space="preserve">
+    <value>正在解压文件...</value>
+  </data>
+  <data name="UpdateAlreadyLatest" xml:space="preserve">
+    <value>您正在使用最新版本。</value>
+  </data>
+  <data name="LogDownloadInterrupted" xml:space="preserve">
+    <value>下载被中断：{0}</value>
+  </data>
+  <data name="UpdateSuccess" xml:space="preserve">
+    <value>更新成功。请重新运行ACT来加载新版插件。</value>
   </data></root>

@@ -117,7 +117,65 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>  <data name="ActwsShimEnabled" xml:space="preserve">
-    <value>ACTWS兼容性功能已启用</value>
+    <value>ACTWS兼容性功能已启用。</value>
   </data>
 
-</root>
+
+  <data name="WSInvalidDataRecv" xml:space="preserve">
+    <value>收到无效数据：{0}; {1}</value>
+  </data>
+  <data name="OverlayApiSubscribed" xml:space="preserve">
+    <value>{0}：已订阅{1}</value>
+  </data>
+  <data name="WSLoadingCert" xml:space="preserve">
+    <value>WS：正在加载SSL证书{0}...</value>
+  </data>
+  <data name="ListSortFailed" xml:space="preserve">
+    <value>以{0}: {1}排序列表失败</value>
+  </data>
+  <data name="InitOverlayLocalFileIsMissing" xml:space="preserve">
+    <value>初始化插件：本地文件{0}不存在！</value>
+  </data>
+  <data name="WSUnsubFail" xml:space="preserve">
+    <value>处理退订失败：{0}</value>
+  </data>
+  <data name="RegisterHotkeyError" xml:space="preserve">
+    <value>在EnableHotKeys()注册热键{0}, {1}失败。</value>
+  </data>
+  <data name="WSMessageSendFailed" xml:space="preserve">
+    <value>发送信息失败：{0}</value>
+  </data>
+  <data name="NetworkParserInitException" xml:space="preserve">
+    <value>无法设置网络解析器：{0}</value>
+  </data>
+  <data name="OverlayBaseRegisterHotkeyError" xml:space="preserve">
+    <value>注册热键：{0}失败！</value>
+  </data>
+  <data name="WSNewSubFail" xml:space="preserve">
+    <value>处理新订阅失败：{0}</value>
+  </data>
+  <data name="WSIndexPage" xml:space="preserve">
+    <value>&lt;h1&gt;It Works!&lt;/h1&gt;
+        &lt;p&gt;
+            如果这些链接中有任何一个以&amp;quot;Local:&amp;quot;为前缀显示且不可点击，那是因为
+            这些模板显示本地文件，并且网页浏览器不允许网站链接到本地文件。
+        &lt;/p&gt;
+        &lt;p&gt;
+            您必须复制&amp;amp;并粘贴到您的地址栏中。
+        &lt;/p&gt;</value>
+  </data>
+  <data name="WSStartFailed" xml:space="preserve">
+    <value>WS:启动失败：{0}</value>
+  </data>
+  <data name="InitOverlayUrlError" xml:space="preserve">
+    <value>初始化插件：路径解析错误！请重新设置美化模板路径(Config.Url = {0}): {1}</value>
+  </data>
+  <data name="WSShutdownError" xml:space="preserve">
+    <value>WS:关闭失败：{0}</value>
+  </data>
+  <data name="IncompatibleAddon" xml:space="preserve">
+    <value>检测到不兼容的插件{0}。请尽快更新！！</value>
+  </data>
+  <data name="UnregisterHotkeyError" xml:space="preserve">
+    <value>在DisableHotKeys()反注册热键{0}失败。</value>
+  </data></root>
