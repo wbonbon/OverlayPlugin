@@ -77,6 +77,11 @@
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UpdateQuestionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +94,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressDisplay.zh-CN.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateQuestionForm.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>

@@ -34,8 +34,8 @@ namespace RainbowMage.OverlayPlugin.Updater
             while (!File.Exists("C:\\Windows\\system32\\msvcp140.dll"))
             {
                 var response = MessageBox.Show(
-                    "You're missing the MS Visual C++ Redistributable for Visual Studio 2019.\nYou'll need that for OverlayPlugin. Install it now?",
-                    "OverlayPlugin",
+                    Resources.MsvcrtMissing,
+                    Resources.OverlayPluginTitle,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
@@ -47,8 +47,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                     if (!installed)
                     {
                         MessageBox.Show(
-                            "The MSVCRT installation failed.",
-                            "OverlayPlugin",
+                            Resources.MsvcrtFailed,
+                            Resources.OverlayPluginTitle,
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error
                         );
@@ -65,8 +65,8 @@ namespace RainbowMage.OverlayPlugin.Updater
             if (!result || !Directory.Exists(cefPath))
             {
                 var response = MessageBox.Show(
-                    "Failed to download CEF! You will not be able to use OverlayPlugin. Retry?",
-                    "OverlayPlugin Error",
+                    Resources.UpdateCefDlFailed,
+                    Resources.ErrorTitle,
                     MessageBoxButtons.YesNo
                 );
 

@@ -65,8 +65,8 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 if (await inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
                 {
-                    inst.Display.UpdateStatus(0, "[2/2]: Launching installer...");
-                    inst.Display.Log("Launching installer...");
+                    inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
+                    inst.Display.Log(Resources.LogLaunchingInstaller);
 
                     try
                     {
@@ -75,8 +75,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                         proc.Close();
                     } catch(System.ComponentModel.Win32Exception ex)
                     {
-                        inst.Display.Log($"Failed to launch installer: {ex.Message}");
-                        inst.Display.Log("Trying again...");
+                        inst.Display.Log(string.Format(Resources.LaunchingInstallerFailed, ex.Message));
+                        inst.Display.Log(Resources.LogRetry);
 
                         using (var proc = new Process())
                         {
@@ -87,7 +87,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         var cancel = inst.Display.GetCancelToken();
 
-                        inst.Display.Log("Waiting for installer to exit...");
+                        inst.Display.Log(Resources.LogInstallerWaiting);
                         while (!File.Exists("C:\\Windows\\system32\\msvcp140.dll") && !cancel.IsCancellationRequested)
                         {
                             Thread.Sleep(500);
@@ -104,8 +104,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                         return true;
                     } else
                     {
-                        inst.Display.UpdateStatus(1, "Error");
-                        inst.Display.Log("Error: The installer did not finish correctly.");
+                        inst.Display.UpdateStatus(1, Resources.StatusError);
+                        inst.Display.Log(Resources.LogInstallerFailed);
                         return false;
                     }
                 }
@@ -126,12 +126,12 @@ namespace RainbowMage.OverlayPlugin.Updater
                 Directory.CreateDirectory(_tempDir);
             } catch (Exception ex)
             {
-                _display.Log($"Failed to create or empty the temporary directory \"{_tempDir}\": {ex}");
+                _display.Log(string.Format(Resources.CreatingTempDirFailed, _tempDir, ex));
                 return false;
             }
 
-            _display.UpdateStatus(0, "[1/2]: Starting download...");
-            _display.Log($"Downloading \"{url}\" into {dest}...");
+            _display.UpdateStatus(0, string.Format(Resources.StatusDownloadStarted, 1, 2));
+            _display.Log(string.Format(Resources.LogDownloading, url, dest));
 
             var success = false;
             var client = new HttpClient();
@@ -162,11 +162,11 @@ namespace RainbowMage.OverlayPlugin.Updater
                         }
                         catch (HttpRequestException ex)
                         {
-                            _display.Log($"Download failed: {ex.Message}");
+                            _display.Log(string.Format(Resources.LogDownloadFailed, ex));
 
                             if (retries > 0)
                             {
-                                _display.Log("Retrying in 1 second.");
+                                _display.Log(Resources.LogRetryAfter1s);
                                 Thread.Sleep(1000);
                             }
                             failed = true;
@@ -175,11 +175,11 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         if (!response.IsSuccessStatusCode)
                         {
-                            _display.Log($"Download failed: {response.ReasonPhrase}");
+                            _display.Log(string.Format(Resources.LogDownloadFailed, response.ReasonPhrase));
 
                             if (retries > 0)
                             {
-                                _display.Log("Retrying in 1 second.");
+                                _display.Log(Resources.LogRetryAfter1s);
                                 Thread.Sleep(1000);
                             }
                             failed = true;
@@ -190,7 +190,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         if (length == -1)
                         {
                             // Retrying wouldn't help here.
-                            _display.Log("Download failed! The download has no file size (Content-Length header is missing).");
+                            _display.Log(Resources.DownloadFailedContentLengthMissing);
                             return false;
                         }
 
@@ -207,13 +207,13 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         stream = await response.Content.ReadAsStreamAsync();
 
+                        var status = string.Format(Resources.StatusDownloadStarted, 1, 2);
                         try
                         {
                             while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
                             {
                                 file.Write(buffer, 0, read);
-
-                                _display.UpdateStatus((float)file.Position / length, $"[1/2]: Downloading...");
+                                _display.UpdateStatus((float)file.Position / length, status);
 
                                 if (cancel.IsCancellationRequested)
                                 {
@@ -224,11 +224,11 @@ namespace RainbowMage.OverlayPlugin.Updater
                         }
                         catch (Exception ex)
                         {
-                            _display.Log($"The download was interrupted: {ex.Message}");
+                            _display.Log(string.Format(Resources.LogDownloadInterrupted, ex));
 
                             if (file.Position > 0 && retries > 0)
                             {
-                                _display.Log("Resuming download...");
+                                _display.Log(Resources.LogResumingDownload);
                                 failed = true;
 
                                 client.DefaultRequestHeaders.Remove("Range");
@@ -244,18 +244,18 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 if (cancel.IsCancellationRequested || failed)
                 {
-                    _display.UpdateStatus(0, "Cancelling...");
+                    _display.UpdateStatus(0, Resources.StatusCancelling);
                     File.Delete(dest);
 
                     if (failed)
                     {
-                        _display.UpdateStatus(0, "Out of retries.");
-                        _display.Log("Out of retries.");
+                        _display.UpdateStatus(0, Resources.OutOfRetries);
+                        _display.Log(Resources.OutOfRetries);
                     }
                     else
                     {
-                        _display.UpdateStatus(0, "Cancelled!");
-                        _display.Log("Aborted by user.");
+                        _display.UpdateStatus(0, Resources.StatusCancelled);
+                        _display.Log(Resources.LogAbortedByUser);
                     }
 
                     return false;
@@ -265,12 +265,12 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 if (cancel.IsCancellationRequested)
                 {
-                    _display.UpdateStatus(1, "Cancelled!");
-                    _display.Log("Aborted by user.");
+                    _display.UpdateStatus(1, Resources.StatusCancelled);
+                    _display.Log(Resources.LogAbortedByUser);
                     return false;
                 }
 
-                _display.Log($"Failed: {ex}");
+                _display.Log(string.Format(Resources.Exception, ex));
                 return false;
             }
             finally
@@ -291,8 +291,8 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             try
             {
-                _display.UpdateStatus(0, "[2/2]: Preparing extraction...");
-                _display.Log("Opening archive...");
+                _display.UpdateStatus(0, string.Format(Resources.StatusPreparingExtraction, 2, 2));
+                _display.Log(Resources.LogOpeningArchive);
 
                 var contentsPath = Path.Combine(_tempDir, "contents");
                 Directory.CreateDirectory(contentsPath);
@@ -318,7 +318,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         };
 
                         cancel = _display.GetCancelToken();
-                        _display.Log("Extracting files...");
+                        _display.Log(Resources.LogExtractingFiles);
 
                         while (reader.MoveToNextEntry())
                         {
@@ -351,8 +351,8 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 if (cancel.IsCancellationRequested)
                 {
-                    _display.UpdateStatus(1, "Cancelled!");
-                    _display.Log("Extraction aborted by user.");
+                    _display.UpdateStatus(1, Resources.StatusCancelled);
+                    _display.Log(Resources.LogExtractionAbortedByUser);
                     return false;
                 }
 
@@ -361,12 +361,12 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 if (cancel.IsCancellationRequested)
                 {
-                    _display.UpdateStatus(1, "Cancelled!");
-                    _display.Log("Aborted by user.");
+                    _display.UpdateStatus(1, Resources.StatusCancelled);
+                    _display.Log(Resources.LogAbortedByUser);
                     return false;
                 }
 
-                _display.Log($"Failed: {ex}");
+                _display.Log(string.Format(Resources.Exception, ex));
                 return false;
             }
             finally
@@ -376,8 +376,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 if (!success) Cleanup();
             }
 
-            _display.UpdateStatus(1, "[2/2]: Done.");
-            _display.Log("Done.");
+            _display.UpdateStatus(1, string.Format(Resources.StatusDone, 2, 2));
+            _display.Log(Resources.LogDone);
             return success;
         }
 
@@ -392,7 +392,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 if (Directory.Exists(_destDir))
                 {
-                    _display.Log("Backing up old files...");
+                    _display.Log(Resources.LogBackingUpOldFiles);
 
                     backup = _destDir + ".bak";
                     if (Directory.Exists(backup))
@@ -403,13 +403,13 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 try
                 {
-                    _display.Log("Moving directory...");
+                    _display.Log(Resources.LogMovingDirectory);
                     Directory.Move(Path.Combine(_tempDir, "contents"), _destDir);
                 }
                 catch (Exception e)
                 {
-                    _display.Log($"Failed to replace old directory: {e}");
-                    _display.Log("Cleaning up...");
+                    _display.Log(string.Format(Resources.LogFailedReplaceDirectory, e));
+                    _display.Log(Resources.LogCleaningUp);
 
                     if (Directory.Exists(_destDir))
                     {
@@ -418,18 +418,18 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                     if (backup != null)
                     {
-                        _display.Log("Restoring backup...");
+                        _display.Log(Resources.LogRestoringBackup);
 
                         Directory.Move(backup, _destDir);
                     }
 
-                    _display.Log("Done.");
+                    _display.Log(Resources.LogDone);
                     return false;
                 }
 
                 if (backup != null)
                 {
-                    _display.Log("Removing old backup...");
+                    _display.Log(Resources.LogRemovingOldBackup);
                     Directory.Delete(backup, true);
                 }
 
@@ -437,7 +437,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
             catch (Exception e)
             {
-                _display.Log($"Fatal error: {e}");
+                _display.Log(string.Format(Resources.Exception, e));
                 return false;
             }
         }
@@ -448,7 +448,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 try
                 {
-                    _display.Log("Overwriting old files...");
+                    _display.Log(Resources.LogOverwritingOldFiles);
 
                     var prefix = Path.Combine(_tempDir, "contents");
                     var queue = new List<DirectoryInfo>() { new DirectoryInfo(prefix) };
@@ -478,9 +478,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
                 catch (Exception e)
                 {
-                    _display.Log($"Failed to overwrite old files: {e}");
-                    _display.Log("WARNING: The plugin might be in an unusable state!!");
-                    _display.Log("Run the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart.");
+                    _display.Log(string.Format(Resources.LogOverwritingOldFilesFailed, e));
                     return false;
                 }
 
@@ -488,7 +486,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
             catch (Exception e)
             {
-                _display.Log($"Fatal error: {e}");
+                _display.Log(string.Format(Resources.Exception, e));
                 return false;
             }
         }
@@ -497,16 +495,16 @@ namespace RainbowMage.OverlayPlugin.Updater
         {
             if (Directory.Exists(_tempDir))
             {
-                _display.Log("Deleting temporary files...");
+                _display.Log(Resources.LogDeletingTempFiles);
 
                 try
                 {
                     Directory.Delete(_tempDir, true);
-                    _display.Log("Done.");
+                    _display.Log(Resources.LogDone);
                 }
                 catch (Exception ex)
                 {
-                    _display.Log($"Failed to delete {_tempDir}: {ex}");
+                    _display.Log(string.Format(Resources.LogFailedToDelete, _tempDir, ex));
                 }
             }
         }

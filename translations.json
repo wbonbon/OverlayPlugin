@@ -559,6 +559,123 @@
             "zh-CN": "请稍后..."
         }
     },
+    "OverlayPlugin.Updater/Resources": {
+        "CreatingTempDirFailed": {
+            "en": "Failed to create or empty the temporary directory \"{0}\": {1}"
+        },
+        "DownloadFailedContentLengthMissing": {
+            "en": "Download failed! The download has no file size (Content-Length header is missing)."
+        },
+        "ErrorTitle": {
+            "en": "OverlayPlugin Error"
+        },
+        "Exception": {
+            "en": "Failed: {0}"
+        },
+        "LaunchingInstallerFailed": {
+            "en": "Failed to launch installer: {0}"
+        },
+        "LogAbortedByUser": {
+            "en": "Aborted by user."
+        },
+        "LogDownloadFailed": {
+            "en": "Download failed: {0}"
+        },
+        "LogDownloadInterrupted": {
+            "en": "The download was interrupted: {0}"
+        },
+        "LogDownloading": {
+            "en": "Downloading \"{0}\" into {1}..."
+        },
+        "LogExtractingFiles": {
+            "en": "Extracting files..."
+        },
+        "LogExtractionAbortedByUser": {
+            "en": "Extraction aborted by user."
+        },
+        "LogInstallerFailed": {
+            "en": "Error: The installer did not finish correctly."
+        },
+        "LogInstallerWaiting": {
+            "en": "Waiting for installer to exit..."
+        },
+        "LogLaunchingInstaller": {
+            "en": "Launching installer..."
+        },
+        "LogOpeningArchive": {
+            "en": "Opening archive..."
+        },
+        "LogResumingDownload": {
+            "en": "Resuming download..."
+        },
+        "LogRetry": {
+            "en": "Trying again..."
+        },
+        "LogRetryAfter1s": {
+            "en": "Retrying in 1 second."
+        },
+        "MsvcrtFailed": {
+            "en": "The MSVCRT installation failed."
+        },
+        "MsvcrtMissing": {
+            "en": "You're missing the MS Visual C++ Redistributable for Visual Studio 2019.\nYou'll need that for OverlayPlugin. Install it now?"
+        },
+        "OutOfRetries": {
+            "en": "Out of retries."
+        },
+        "OverlayPluginTitle": {
+            "en": "OverlayPlugin"
+        },
+        "StatusCancelled": {
+            "en": "Cancelled!"
+        },
+        "StatusCancelling": {
+            "en": "Cancelling..."
+        },
+        "StatusDone": {
+            "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
+            "en": "[{0}/{1}]: Done."
+        },
+        "StatusDownloadStarted": {
+            "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
+            "en": "[{0}/{1}]: Starting download..."
+        },
+        "StatusError": {
+            "en": "Error"
+        },
+        "StatusLaunchingInstaller": {
+            "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
+            "en": "[{0}/{1}]: Launching installer..."
+        },
+        "StatusPreparingExtraction": {
+            "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
+            "en": "[{0}/{1}]: Preparing extraction..."
+        },
+        "UpdateAlreadyLatest": {
+            "en": "You are already on the latest version."
+        },
+        "UpdateCefDlFailed": {
+            "en": "Failed to download CEF! You will not be able to use OverlayPlugin. Retry?"
+        },
+        "UpdateCheckException": {
+            "en": "Failed to check for updates:\n{0}"
+        },
+        "UpdateCheckTitle": {
+            "en": "OverlayPlugin Update Check"
+        },
+        "UpdateFailedError": {
+            "en": "Failed to update the plugin. It might not load the next time you start ACT. Retry?"
+        },
+        "UpdateParseVersionError": {
+            "en": "Failed to parse version:\n{0}"
+        },
+        "UpdateSuccess": {
+            "en": "The update was successful. Please restart ACT to load the new plugin version."
+        },
+        "UpdateTitle": {
+            "en": "OverlayPlugin Update"
+        }
+    },
     "OverlayPlugin.Updater/UpdateQuestionForm": {
         "$this.Text": {
             "en": "OverlayPlugin Update",

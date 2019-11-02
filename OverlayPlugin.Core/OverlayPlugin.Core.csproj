@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RainbowMage.OverlayPlugin</RootNamespace>
     <AssemblyName>OverlayPlugin.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -160,7 +160,9 @@
     <Compile Include="WSServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\common.js" />
+    <Content Include="resources\common.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="resources\label.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

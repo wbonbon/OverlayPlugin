@@ -36,6 +36,7 @@ class XmlUpdater:
         self._output.append(self._data[self._pos:])
 
     def dumps(self):
+        # Join output and normalize line breaks
         return b''.join(self._output)
 
     def escape(self, value):
@@ -43,6 +44,7 @@ class XmlUpdater:
             .replace('<', '&lt;') \
             .replace('>', '&gt;') \
             .replace('\r', '&#xD;') \
+            .replace('\n', '\r\n') \
             .encode('utf8')
 
     def start_element(self, name, attrs):
@@ -61,9 +63,11 @@ class XmlUpdater:
             old_value = self._data[self._pos:parser_pos]
 
             if self._key in self._trans:
-                if old_value != self.escape(self._trans[self._key]):
+                new_value = self.escape(self._trans[self._key])
+
+                if old_value != new_value:
                     print('Updating %s (%s -> %s)' % (self._key, old_value.decode('utf8'),
-                                                      self.escape(self._trans[self._key]).decode('utf8')))
+                                                      new_value.decode('utf8')))
 
                 self._output.append(self.escape(self._trans[self._key]))
                 self._done.add(self._key)

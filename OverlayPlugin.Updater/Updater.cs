@@ -29,7 +29,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 response = await client.GetStringAsync(REL_URL);
             } catch (HttpRequestException ex)
             {
-                MessageBox.Show("Failed to check for updates:\n" + ex.ToString(), "OverlayPlugin Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Resources.UpdateCheckException, ex.ToString()), Resources.UpdateCheckTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 client.Dispose();
                 return (false, null, "");
             }
@@ -57,7 +57,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
             } catch(Exception ex)
             {
-                MessageBox.Show("Failed to parse version:\n" + ex.ToString(), "OverlayPlugin Update Check", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Resources.UpdateParseVersionError, ex.ToString()), Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return (false, null, null);
             }
 
@@ -72,8 +72,8 @@ namespace RainbowMage.OverlayPlugin.Updater
             if (!result)
             {
                 var response = MessageBox.Show(
-                    "Failed to update the plugin. It might not load the next time you start ACT. Retry?",
-                    "OverlayPlugin Error",
+                    Resources.UpdateFailedError,
+                    Resources.ErrorTitle,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning
                 );
@@ -90,8 +90,8 @@ namespace RainbowMage.OverlayPlugin.Updater
             else
             {
                 MessageBox.Show(
-                    "The update was successful. Please restart ACT to load the new plugin version.",
-                    "OverlayPlugin Update",
+                    Resources.UpdateSuccess,
+                    Resources.UpdateTitle,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
@@ -120,7 +120,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                  }));
             } else if (alwaysTalk)
             {
-                MessageBox.Show("You are already on the latest version.", "OverlayPlugin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.UpdateAlreadyLatest, Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
