@@ -178,7 +178,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void buttonReloadBrowser_Click(object sender, EventArgs e)
         {
-            this.overlay.Overlay.Reload();
+            this.overlay.Reload();
         }
 
         private void buttonSelectFile_Click(object sender, EventArgs e)

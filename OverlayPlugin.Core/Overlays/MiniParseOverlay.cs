@@ -16,6 +16,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
     public partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
     {
         protected bool modernApi = false;
+        protected DateTime lastUrlChange;
+        protected string lastLoadedUrl;
 
         public MiniParseOverlay(MiniParseOverlayConfig config, string name)
             : base(config, name)
@@ -37,7 +39,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void Renderer_BrowserConsoleLog(object sender, BrowserConsoleLogEventArgs e)
         {
-            if (Config.ActwsCompatibility && e.Message.Contains("ws://127.0.0.1/fake/") && (e.Message.Contains("SecurityError:") || e.Message.Contains("ERR_CONNECTION_")))
+            if (Config.ActwsCompatibility && e.Message.Contains("ws://127.0.0.1/") && (e.Message.Contains("SecurityError:") || e.Message.Contains("ERR_CONNECTION_")))
             {
                 Overlay.Reload();
             }
@@ -56,6 +58,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void PrepareWebsite(object sender, BrowserLoadEventArgs e)
         {
+            lastLoadedUrl = e.Url;
+            Config.Url = e.Url;
+
             if (Config.ActwsCompatibility)
             {
                 var shimMsg = Resources.ActwsShimEnabled;
@@ -109,14 +114,40 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void Navigate(string url)
         {
-            if (Config.ActwsCompatibility && !url.Contains("HOST_PORT="))
+            // If this URL was just loaded (see PrepareWebsite), ignore this request since we're loading that URL already.
+            if (url == lastLoadedUrl) return;
+
+            if (Config.ActwsCompatibility)
             {
-                url += "?HOST_PORT=ws://127.0.0.1/fake/";
+                if (!url.Contains("HOST_PORT="))
+                {
+                    url += "?HOST_PORT=ws://127.0.0.1/fake/";
+                }
+            } else
+            {
+                int pos = url.IndexOf("HOST_PORT=");
+                if (pos > -1)
+                {
+                    url = url.Substring(0, pos);
+                }
             }
 
+            lastUrlChange = DateTime.Now;
             if (url != Overlay.Url)
             {
                 base.Navigate(url);
+            }
+        }
+
+        public override void Reload()
+        {
+            // If the user changed the URL less than a second ago, ignore the reload since it would interrupt
+            // the currently loading overlay and end up with an empty page.
+            // The user probably just wanted to load the page so doing nothing here (in that case) is fine.
+
+            if (DateTime.Now - lastUrlChange > new TimeSpan(0, 0, 1))
+            {
+                base.Reload();
             }
         }
 

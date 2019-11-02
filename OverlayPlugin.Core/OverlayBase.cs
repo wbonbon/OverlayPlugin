@@ -361,6 +361,14 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public virtual void Reload()
+        {
+            if (this.Overlay != null)
+            {
+                this.Overlay.Reload();
+            }
+        }
+
         protected void Log(LogLevel level, string message)
         {
             if (PluginMain.Logger != null && !disableLog)
