@@ -605,9 +605,9 @@ namespace RainbowMage.HtmlRenderer
         {
             var modifiers = CefEventFlags.None;
 
-            if (IsKeyDown(Keys.Shift)) modifiers |= CefEventFlags.ShiftDown;
-            if (IsKeyDown(Keys.Control)) modifiers |= CefEventFlags.ControlDown;
-            if (IsKeyDown(Keys.Menu)) modifiers |= CefEventFlags.AltDown;
+            if (shiftKeyPressed) modifiers |= CefEventFlags.ShiftDown;
+            if (controlKeyPressed) modifiers |= CefEventFlags.ControlDown;
+            if (altKeyPressed) modifiers |= CefEventFlags.AltDown;
 
             if (IsKeyToggled(Keys.NumLock)) modifiers |= CefEventFlags.NumLockOn;
             if (IsKeyToggled(Keys.Capital)) modifiers |= CefEventFlags.CapsLockOn;
@@ -651,15 +651,15 @@ namespace RainbowMage.HtmlRenderer
                     modifiers |= CefEventFlags.IsKeyPad;
                     break;
                 case Keys.Shift:
-                    if (IsKeyDown(Keys.LShiftKey)) modifiers |= CefEventFlags.IsLeft;
+                    if (shiftKeyPressed) modifiers |= CefEventFlags.IsLeft;
                     else modifiers |= CefEventFlags.IsRight;
                     break;
                 case Keys.Control:
-                    if (IsKeyDown(Keys.LControlKey)) modifiers |= CefEventFlags.IsLeft;
+                    if (controlKeyPressed) modifiers |= CefEventFlags.IsLeft;
                     else modifiers |= CefEventFlags.IsRight;
                     break;
                 case Keys.Alt:
-                    if (IsKeyDown(Keys.LMenu)) modifiers |= CefEventFlags.IsLeft;
+                    if (altKeyPressed) modifiers |= CefEventFlags.IsLeft;
                     else modifiers |= CefEventFlags.IsRight;
                     break;
                 case Keys.LWin:

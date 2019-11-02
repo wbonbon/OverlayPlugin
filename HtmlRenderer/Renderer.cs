@@ -528,7 +528,7 @@ MaxUploadsPerDay=0
         }
     }
 
-    public class BrowserWrapper : ChromiumWebBrowser, IRenderWebBrowser
+    internal class BrowserWrapper : ChromiumWebBrowser, IRenderWebBrowser
     {
         OverlayForm form;
 
@@ -537,6 +537,7 @@ MaxUploadsPerDay=0
             base(address, browserSettings, requestContext, automaticallyCreateBrowser)
         {
             this.form = form;
+            this.MenuHandler = new ContextMenuHandler();
         }
 
         void IRenderWebBrowser.OnPaint(PaintElementType type, Rect dirtyRect, IntPtr buffer, int width, int height)
@@ -547,6 +548,36 @@ MaxUploadsPerDay=0
         void IRenderWebBrowser.OnCursorChange(IntPtr cursor, CursorType type, CursorInfo customCursorInfo)
         {
             form.Cursor = new Cursor(cursor);
+        }
+
+        bool IRenderWebBrowser.GetScreenPoint(int contentX, int contentY, out int screenX, out int screenY)
+        {
+            screenX = (int) (contentX + form.Location.X);
+            screenY = (int) (contentY + form.Location.Y);
+
+            return true;
+        }
+    }
+
+    internal class ContextMenuHandler : IContextMenuHandler
+    {
+        public void OnBeforeContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model)
+        {
+        }
+
+        public bool OnContextMenuCommand(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, CefMenuCommand commandId, CefEventFlags eventFlags)
+        {
+            return false;
+        }
+
+        public void OnContextMenuDismissed(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame)
+        {
+        }
+
+        public bool RunContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback)
+        {
+            // Suppress the context menu.
+            return true;
         }
     }
 }
