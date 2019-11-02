@@ -85,6 +85,8 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Log(LogLevel.Debug, Resources.WSLoadingCert, sslPath);
 
+                    // IMPORTANT: Do *not* change the password here. This is the default password that mkcert uses.
+                    // If you use a different password here, you'd have to pass it to mkcert and update the text on the WSServer tab to match.
                     _server.SslConfiguration.ServerCertificate = new X509Certificate2(sslPath, "changeit");
                     _server.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls11 | System.Security.Authentication.SslProtocols.Tls12;
                 }

@@ -113,7 +113,7 @@
             "zh-CN": "状态："
         },
         "logDisplay.Text": {
-            "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL.",
+            "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file with the password changeit in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL.",
             "zh-CN": "只有拥有SSL证书，才能启用SSL。您可以单击上方的按钮自动生成一个，或将PKCS#12文件放置在%AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12中并重新启动ACT。\n\n然后，您将可以启用SSL。"
         },
         "sslBox.Text": {

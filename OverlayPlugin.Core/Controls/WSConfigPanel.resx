@@ -289,7 +289,7 @@
     <value>6</value>
   </data>
   <data name="logDisplay.Text" xml:space="preserve">
-    <value>SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file in %AppData%\Advanced Combat Tracker\Config\OverlayPluginSSL.p12 and restart ACT.
+    <value>SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file with the password changeit in %AppData%\Advanced Combat Tracker\Config\OverlayPluginSSL.p12 and restart ACT.
 
 Afterwards, you should be able to enable SSL.</value>
   </data>
