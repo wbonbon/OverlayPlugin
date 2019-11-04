@@ -114,9 +114,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void Navigate(string url)
         {
-            // If this URL was just loaded (see PrepareWebsite), ignore this request since we're loading that URL already.
-            if (url == lastLoadedUrl) return;
-
             if (Config.ActwsCompatibility)
             {
                 if (!url.Contains("HOST_PORT="))
@@ -126,11 +123,14 @@ namespace RainbowMage.OverlayPlugin.Overlays
             } else
             {
                 int pos = url.IndexOf("HOST_PORT=");
-                if (pos > -1)
+                if (pos > -1 && url.Contains("/fake/"))
                 {
                     url = url.Substring(0, pos);
                 }
             }
+
+            // If this URL was just loaded (see PrepareWebsite), ignore this request since we're loading that URL already.
+            if (url == lastLoadedUrl) return;
 
             lastUrlChange = DateTime.Now;
             if (url != Overlay.Url)
