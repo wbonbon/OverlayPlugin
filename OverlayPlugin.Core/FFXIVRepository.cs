@@ -127,6 +127,14 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCombatantList();
         }
 
+        public static Language GetLanguage()
+        {
+            var repo = GetRepository();
+            if (repo == null)
+                return Language.Unknown;
+            return repo.GetSelectedLanguageID();
+        }
+
         // LogLineDelegate(uint EventType, uint Seconds, string logline);
         public static void RegisterLogLineHandler(Action<uint, uint, string> handler)
         {
