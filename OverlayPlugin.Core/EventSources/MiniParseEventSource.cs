@@ -39,7 +39,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string FileChangedEvent = "FileChanged";
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
         private const string PartyChangedEvent = "PartyChanged";
-        private const string LanguageEvent = "Language";
 
         // Event Source
 
@@ -63,7 +62,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 ChangeZoneEvent,
                 OnlineStatusChangedEvent,
                 PartyChangedEvent,
-                LanguageEvent,
+            });
+
+            RegisterEventHandler("getLanguage", (msg) => {
+                var lang = FFXIVRepository.GetLanguage();
+                return JObject.FromObject(new
+                {
+                    language = lang.ToString("g"),
+                    languageId = lang.ToString("d"),
+                });
             });
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
@@ -79,15 +86,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
             };
 
             FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
-
-            // Language event is only sent once, so if you change it you need to restart ACT.
-            var lang = FFXIVRepository.GetLanguage();
-            DispatchAndCacheEvent(JObject.FromObject(new
-            {
-                type = LanguageEvent,
-                language = lang.ToString("g"),
-                languageId = lang.ToString("d"),
-            }));
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
