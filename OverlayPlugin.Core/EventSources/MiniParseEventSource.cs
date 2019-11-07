@@ -64,6 +64,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 PartyChangedEvent,
             });
 
+            RegisterEventHandler("getLanguage", (msg) => {
+                var lang = FFXIVRepository.GetLanguage();
+                return JObject.FromObject(new
+                {
+                    language = lang.ToString("g"),
+                    languageId = lang.ToString("d"),
+                });
+            });
+
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
             NetworkParser.OnOnlineStatusChanged += (o, e) =>
             {
