@@ -86,6 +86,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             };
 
             FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
+
+            InitializeEnmityEventSource();
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
@@ -207,6 +209,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 this.Start();
             };
+
+            LoadEnmityConfig();
         }
 
         public override void SaveConfig(IPluginConfig config)

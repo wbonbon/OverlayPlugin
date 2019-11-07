@@ -3,22 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows.Forms;
+using System.Threading;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
-    public class EnmityEventSource : EventSourceBase
+    partial class MiniParseEventSource : EventSourceBase
     {
         private EnmityMemory memory;
+        private Timer enmityTimer;
+        private const int defaultEnmityInterval = 100;
 
         // General information about the target, focus target, hover target.  Also, enmity entries for main target.
         private const string EnmityTargetDataEvent = "EnmityTargetData";
         // All of the mobs with aggro on the player.  Equivalent of the sidebar aggro list in game.
         private const string EnmityAggroListEvent = "EnmityAggroList";
 
-        public EnmityEventSource(ILogger logger) : base(logger)
+        public void InitializeEnmityEventSource()
         {
-            this.Name = "Enmity";
             this.memory = new EnmityMemory(logger);
 
             RegisterEventTypes(new List<string> {
@@ -26,29 +27,17 @@ namespace RainbowMage.OverlayPlugin.EventSources
             });
         }
 
-        public override void Start()
+        public void LoadEnmityConfig()
         {
-            this.timer.Change(0, this.Config.ScanInterval);
+            enmityTimer = new Timer(UpdateEnmity, null, Timeout.Infinite, this.Config.EnmityIntervalMs);
+            enmityTimer.Change(0, this.Config.EnmityIntervalMs);
+            this.Config.EnmityIntervalChanged += (o, e) =>
+            {
+                enmityTimer.Change(0, this.Config.EnmityIntervalMs);
+            };
         }
 
-        public EnmityEventSourceConfig Config { get; set; }
-
-        public override Control CreateConfigControl()
-        {
-            return new EnmityEventSourceConfigPanel(this);
-        }
-
-        public override void LoadConfig(IPluginConfig config)
-        {
-            this.Config = EnmityEventSourceConfig.LoadConfig(config);
-        }
-
-        public override void SaveConfig(IPluginConfig config)
-        {
-            this.Config.SaveConfig(config);
-        }
-
-        protected override void Update()
+        protected void UpdateEnmity(object state)
         {
             if (memory == null || !memory.IsValid())
                 return;

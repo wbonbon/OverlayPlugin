@@ -339,12 +339,10 @@ namespace RainbowMage.OverlayPlugin
 
                 // Make sure the event source is ready before we load any overlays.
                 Registry.RegisterEventSource<MiniParseEventSource>();
-                Registry.RegisterEventSource<EnmityEventSource>();
 
                 Registry.RegisterOverlay<MiniParseOverlay>();
                 Registry.RegisterOverlay<SpellTimerOverlay>();
                 Registry.RegisterOverlay<LabelOverlay>();
-
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
 
