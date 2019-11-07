@@ -20,7 +20,7 @@
         <div class="box">
           <div class="gauge {{target | hpcolor}}" style="width: {{target | hppercent}}%"></div>
           <div class="name">
-            <span class="header">ターゲット: </span>
+            <span class="header">{{strings.target}}: </span>
             <span class="value">{{target.Name}}</span>
           </div>
         </div>
@@ -34,7 +34,7 @@
           <span class="header">Time to Death: </span>
           <span class="value">{{target.TimeToDeath}}</span>
           <div style="float: right">
-            <span class="header">距離: </span>
+            <span class="header">{{strings.distance}}: </span>
             <span class="value">{{target.Distance}}m</span>
           </div>
         </div>

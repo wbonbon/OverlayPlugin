@@ -1,12 +1,26 @@
-// 表示する項目
 var targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
 
-// 項目のタイトル
-var titles = {
-    Target: 'ターゲット',
-    Focus: 'フォーカス',
-    Hover: 'ホバー',
-    TargetOfTarget: 'TT'
+var localeStrings = {
+  'English': {
+    target: 'Target',
+    distance: 'Distance',
+    titles: {
+        Target: 'Target',
+        Focus: 'Focus',
+        Hover: 'Hover',
+        TargetOfTarget: 'ToT',
+    },
+  },
+  'Japanese': {
+    target: 'ターゲット',
+    distance: '距離',
+    titles: {
+        Target: 'ターゲット',
+        Focus: 'フォーカス',
+        Hover: 'ホバー',
+        TargetOfTarget: 'TT',
+    },
+  },
 };
 
 var targetinfo = new Vue({
@@ -16,11 +30,19 @@ var targetinfo = new Vue({
         locked: false,
         collapsed: false,
         targets: [],
+        strings: {},
     },
     attached: function () {
-        window.addOverlayListener('EnmityTargetData', this.update);
-        document.addEventListener('onOverlayStateUpdate', this.updateState);
-        window.startOverlayEvents();
+        window.callOverlayHandler({call: 'getLanguage'}).then((msg) => {
+            if (msg.language in localeStrings) {
+                this.strings = localeStrings[msg.language];
+            } else {
+                this.strings = localStrings['English'];
+            }
+            window.addOverlayListener('EnmityTargetData', this.update);
+            document.addEventListener('onOverlayStateUpdate', this.updateState);
+            window.startOverlayEvents();
+        });
     },
     detached: function () {
         window.addOverlayListener('EnmityTargetData', this.update);
@@ -40,7 +62,7 @@ var targetinfo = new Vue({
                       Distance: 0,
                     };
                 }
-                t.Key = titles[k];
+                t.Key = this.strings.titles[k];
                 this.targets.push(t);
             }
         },

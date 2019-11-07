@@ -11,6 +11,17 @@ var noEntry = {
   RelativeEnmity: 0,
 };
 
+var localeStrings = {
+  'English': {
+    target: 'Target',
+    distance: 'Distance',
+  },
+  'Japanese': {
+    target: 'ターゲット',
+    distance: '距離',
+  },
+};
+
 var enmity = new Vue({
   el: '#enmity',
   data: {
@@ -20,12 +31,20 @@ var enmity = new Vue({
     target: null,
     entries: null,
     myEntry: null,
-    hide: false
+    hide: false,
+    strings: {},
   },
   attached: function() {
-    window.addOverlayListener('EnmityTargetData', this.update);
-    document.addEventListener('onOverlayStateUpdate', this.updateState);
-    window.startOverlayEvents();
+    window.callOverlayHandler({call: 'getLanguage'}).then((msg) => {
+      if (msg.language in localeStrings) {
+        this.strings = localeStrings[msg.language];
+      } else {
+        this.strings = localStrings['English'];
+      }
+      window.addOverlayListener('EnmityTargetData', this.update);
+      document.addEventListener('onOverlayStateUpdate', this.updateState);
+      window.startOverlayEvents();
+    });
   },
   detached: function() {
     window.removeOverlayListener('EnmityTargetData', this.update);
