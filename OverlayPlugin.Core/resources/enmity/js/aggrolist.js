@@ -1,4 +1,6 @@
-var aggrolist = new Vue({
+'use strict'
+
+let aggrolist = new Vue({
   el: '#aggrolist',
   data: {
     updated: false,

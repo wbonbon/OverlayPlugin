@@ -1,6 +1,8 @@
-var targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
+'use strict'
 
-var localeStrings = {
+let targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
+
+let localeStrings = {
   'English': {
     target: 'Target',
     distance: 'Distance',
@@ -23,7 +25,7 @@ var localeStrings = {
   },
 };
 
-var targetinfo = new Vue({
+let targetinfo = new Vue({
   el: '#targetinfo',
   data: {
     updated: false,

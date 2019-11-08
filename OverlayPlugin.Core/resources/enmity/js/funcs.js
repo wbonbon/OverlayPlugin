@@ -1,4 +1,6 @@
-var jobEnumToName = {
+'use strict'
+
+let jobEnumToName = {
   0: 'UNKNOWN',
   1: 'GLA',
   2: 'PGL',
@@ -40,7 +42,7 @@ var jobEnumToName = {
   38: 'DNC',
 };
 
-var jobNameToRole = {
+let jobNameToRole = {
   PLD: 'TANK',
   WAR: 'TANK',
   GLD: 'TANK',
@@ -72,7 +74,7 @@ var jobNameToRole = {
   DNC: 'DPS',
 };
 
-var isPet = (entity) => {
+let isPet = (entity) => {
   return entity.OwnerID != 0;
 };
 
@@ -103,7 +105,7 @@ Vue.filter('jobname', function(entity) {
   return 'UNKNOWN';
 });
 
-var hpPercentString = (entity) => {
+let hpPercentString = (entity) => {
   if (!entity)
     return '--';
   if (entity.MaxHP <= 0)

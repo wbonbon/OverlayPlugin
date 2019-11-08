@@ -1,4 +1,6 @@
-var noTarget = {
+'use strict'
+
+let noTarget = {
   Name: '- none -',
   MaxHP: '--',
   CurrentHP: '--',
@@ -6,12 +8,12 @@ var noTarget = {
   TimeToDeath: '',
 };
 
-var noEntry = {
+let noEntry = {
   Enmity: 0,
   RelativeEnmity: 0,
 };
 
-var localeStrings = {
+let localeStrings = {
   'English': {
     target: 'Target',
     distance: 'Distance',
@@ -22,7 +24,7 @@ var localeStrings = {
   },
 };
 
-var enmity = new Vue({
+let enmity = new Vue({
   el: '#enmity',
   data: {
     updated: false,
