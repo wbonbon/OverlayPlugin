@@ -5,7 +5,7 @@ var aggrolist = new Vue({
     locked: false,
     collapsed: false,
     combatants: null,
-    hide: false
+    hide: false,
   },
   attached: function() {
     window.addOverlayListener('EnmityAggroList', this.update);
@@ -30,5 +30,5 @@ var aggrolist = new Vue({
     toggleCollapse: function() {
       this.collapsed = !this.collapsed;
     },
-  }
+  },
 });

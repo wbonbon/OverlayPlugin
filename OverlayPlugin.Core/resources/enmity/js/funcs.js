@@ -72,49 +72,51 @@ var jobNameToRole = {
   DNC: 'DPS',
 };
 
-var isPet = (entity) => { return entity.OwnerID != 0; };
+var isPet = (entity) => {
+  return entity.OwnerID != 0;
+};
 
-Vue.filter('jobrole', function (entity) {
+Vue.filter('jobrole', function(entity) {
   if (!entity)
-    return "UNKNOWN";
+    return 'UNKNOWN';
   if (isPet(entity))
-    return "Pet";
+    return 'Pet';
   if (entity.isMe)
-    return "YOU";
-  var jobName = jobEnumToName[entity.Job];
-  var role = jobNameToRole[jobName];
+    return 'YOU';
+  let jobName = jobEnumToName[entity.Job];
+  let role = jobNameToRole[jobName];
   if (role != null)
     return role;
-  return "UNKNOWN";
+  return 'UNKNOWN';
 });
 
-Vue.filter('jobname', function (entity) {
+Vue.filter('jobname', function(entity) {
   if (!entity)
-    return "UNKNOWN";
+    return 'UNKNOWN';
   if (isPet(entity))
-    return "Pet";
+    return 'Pet';
   if (entity.isMe)
-    return "YOU";
-  var jobName = jobEnumToName[entity.Job];
+    return 'YOU';
+  let jobName = jobEnumToName[entity.Job];
   if (jobName != null)
     return jobName;
-  return "UNKNOWN";
+  return 'UNKNOWN';
 });
 
 var hpPercentString = (entity) => {
   if (!entity)
-    return "--";
+    return '--';
   if (entity.MaxHP <= 0)
-    return "0.00";
+    return '0.00';
   return (100.0 * entity.CurrentHP / entity.MaxHP).toFixed(2);
 };
 
 Vue.filter('hpcolor', function(entity) {
-  var percent = 100.0 * entity.CurrentHP / entity.MaxHP;
-  if (percent > 75) return "green";
-  if (percent > 50) return "yellow";
-  if (percent > 25) return "orange";
-  return "red";
+  let percent = 100.0 * entity.CurrentHP / entity.MaxHP;
+  if (percent > 75) return 'green';
+  if (percent > 50) return 'yellow';
+  if (percent > 25) return 'orange';
+  return 'red';
 });
 
 Vue.filter('hppercent', function(entity) {
@@ -129,7 +131,7 @@ Vue.filter('hatecolor', function(entity) {
 });
 
 Vue.filter('you', function(entity) {
-  return entity.isMe ? "YOU" : entity.Name;
+  return entity.isMe ? 'YOU' : entity.Name;
 });
 
 Vue.filter('round', (x) => Math.round(x));
@@ -138,14 +140,14 @@ function formatNum(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1,');
 }
 
-Vue.filter('numformat', num => {
+Vue.filter('numformat', (num) => {
   if (num == 0)
-    return '--'
+    return '--';
   return formatNum(num);
 });
 
-Vue.filter('relnumformat', num => {
+Vue.filter('relnumformat', (num) => {
   if (num == 0)
-    return '--'
+    return '--';
   return (num > 0 ? '+' : '') + formatNum(num);
 });
