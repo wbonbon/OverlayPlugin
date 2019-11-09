@@ -42,20 +42,27 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (memory == null || !memory.IsValid())
                 return;
 
-            bool targetData = HasSubscriber(EnmityTargetDataEvent);
-            bool aggroList = HasSubscriber(EnmityAggroListEvent);
-            if (!targetData && !aggroList)
-                return;
-
-            var combatants = memory.GetCombatantList();
-
-            if (targetData)
+            try
             {
-                this.DispatchEvent(CreateTargetData(combatants));
+                bool targetData = HasSubscriber(EnmityTargetDataEvent);
+                bool aggroList = HasSubscriber(EnmityAggroListEvent);
+                if (!targetData && !aggroList)
+                    return;
+
+                var combatants = memory.GetCombatantList();
+
+                if (targetData)
+                {
+                    this.DispatchEvent(CreateTargetData(combatants));
+                }
+                if (aggroList)
+                {
+                    this.DispatchEvent(CreateAggroList(combatants));
+                }
             }
-            if (aggroList)
+            catch (Exception ex)
             {
-                this.DispatchEvent(CreateAggroList(combatants));
+                Log(LogLevel.Error, "UpdateEnmity: {0}", ex.ToString());
             }
         }
 
