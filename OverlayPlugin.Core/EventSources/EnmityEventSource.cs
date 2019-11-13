@@ -39,11 +39,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         protected void UpdateEnmity(object state)
         {
-            if (memory == null || !memory.IsValid())
-                return;
-
             try
             {
+                if (memory == null || !memory.IsValid())
+                    return;
+
                 bool targetData = HasSubscriber(EnmityTargetDataEvent);
                 bool aggroList = HasSubscriber(EnmityAggroListEvent);
                 if (!targetData && !aggroList)
