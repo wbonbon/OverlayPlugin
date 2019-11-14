@@ -154,11 +154,13 @@ namespace RainbowMage.OverlayPlugin
                     if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
                     {
                         initTimer.Stop();
+                        
+                        Registry.Register(new KeyboardHook());
+
                         LoadAddons();
                         InitializeOverlays();
                         controlPanel.InitializeOverlayConfigTabs();
 
-                        Registry.Register(new KeyboardHook());
                         OverlayHider.Initialize();
 
                         if (Config.WSServerRunning)

@@ -100,9 +100,22 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
         }
 
-        public static async void PerformUpdateIfNecessary(Control parent, string pluginDirectory, bool alwaysTalk = false)
+        public static async void PerformUpdateIfNecessary(Control parent, string pluginDirectory, bool manualCheck = false)
         {
+            var config = Registry.Resolve<IPluginConfig>();
+
+            // Only check once per day.
+            if (!manualCheck && config.LastUpdateCheck != null && (DateTime.Now - config.LastUpdateCheck).TotalDays < 1)
+            {
+                return;
+            }
+
             var (newVersion, remoteVersion, releaseNotes) = await CheckForUpdate();
+
+            if (remoteVersion != null)
+            {
+                config.LastUpdateCheck = DateTime.Now;
+            }
 
             if (newVersion)
             {
@@ -118,7 +131,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                          await InstallUpdate(remoteVersion, pluginDirectory);
                      }
                  }));
-            } else if (alwaysTalk)
+            } else if (manualCheck && remoteVersion != null)
             {
                 MessageBox.Show(Resources.UpdateAlreadyLatest, Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

@@ -77,6 +77,8 @@ namespace RainbowMage.OverlayPlugin
         [Browsable(false)]
         public string VersionString { get; set; }
 
+        public DateTime LastUpdateCheck { get; set; }
+
         /// <summary>
         /// 設定が新規に作成されたことを示すフラグを取得または設定します。
         /// </summary>

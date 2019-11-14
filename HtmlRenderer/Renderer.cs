@@ -245,6 +245,14 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        public void SendMouseLeave()
+        {
+            if (this._browser != null && this._browser.IsBrowserInitialized)
+            {
+                this._browser.GetBrowserHost().SendMouseMoveEvent(new MouseEvent(0, 0, 0), true);
+            }
+        }
+
         public void SendMouseUpDown(int x, int y, MouseButtonType button, bool isMouseUp)
         {
             if (this._browser != null && this._browser.IsBrowserInitialized)
@@ -303,7 +311,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void SendKeyEvent(KeyEvent keyEvent)
         {
-            if (this._browser != null)
+            if (this._browser != null && this._browser.IsBrowserInitialized)
             {
                 var host = this._browser.GetBrowserHost();
 
@@ -313,7 +321,7 @@ namespace RainbowMage.HtmlRenderer
 
         public void showDevTools(bool firstwindow = true)
         {
-            if (_browser != null)
+            if (_browser != null && _browser.IsBrowserInitialized)
             {
                 WindowInfo wi = new WindowInfo();
                 wi.SetAsPopup(_browser.GetBrowserHost().GetWindowHandle(), "DevTools");

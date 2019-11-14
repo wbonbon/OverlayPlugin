@@ -92,6 +92,7 @@ namespace RainbowMage.HtmlRenderer
             this.MouseDown += OverlayForm_MouseDown;
             this.MouseUp += OverlayForm_MouseUp;
             this.MouseMove += OverlayForm_MouseMove;
+            this.MouseLeave += OverlayForm_MouseLeave;
             this.KeyDown += OverlayForm_KeyDown;
             this.KeyUp += OverlayForm_KeyUp;
             this.Resize += OverlayForm_Resize;
@@ -420,6 +421,11 @@ namespace RainbowMage.HtmlRenderer
             {
                 this.Renderer.SendMouseMove(e.X, e.Y, GetMouseButtonType(e));
             }
+        }
+
+        private void OverlayForm_MouseLeave(object sender, EventArgs e)
+        {
+            this.Renderer.SendMouseLeave();
         }
 
         private void OverlayForm_MouseUp(object sender, MouseEventArgs e)
