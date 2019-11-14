@@ -348,8 +348,6 @@ namespace RainbowMage.HtmlRenderer
                     }
                 }
 
-                Cef.EnableHighDPISupport();
-
                 var lang = System.Globalization.CultureInfo.CurrentCulture.Name;
                 var langPak = Path.Combine(appDataDirectory, "OverlayPluginCef", Environment.Is64BitProcess ? "x64" : "x86",
                     "locales", lang + ".pak");
