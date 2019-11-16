@@ -87,6 +87,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public ushort Stack;
         public float Timer;
         public uint ActorID;
+        public bool isOwner;
     }
 
     public class EnmityMemory
@@ -251,7 +252,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (address == IntPtr.Zero)
                 return null;
             byte[] source = memory.GetByteArray(address, CombatantMemory.Size);
-            return GetCombatantFromByteArray(source);
+            return GetCombatantFromByteArray(source, true);
         }
 
         public Combatant GetFocusCombatant()
@@ -380,7 +381,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         // Will return any kind of combatant, even if not a mob.
         // This function always returns a combatant object, even if empty.
-        public unsafe Combatant GetCombatantFromByteArray(byte[] source)
+        public unsafe Combatant GetCombatantFromByteArray(byte[] source, bool exceptEffects = false)
         {
             fixed (byte* p = source)
             {
@@ -399,7 +400,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     TargetID = mem.TargetID,
                     CurrentHP = mem.CurrentHP,
                     MaxHP = mem.MaxHP,
-                    Effects = GetEffectEntries(mem.Effects, (ObjectType)mem.Type),
+                    Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type),
                 };
                 if (combatant.Type != ObjectType.PC && combatant.Type != ObjectType.Monster)
                 {
@@ -574,7 +575,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     effect.Timer >= 0.0f &&
                     effect.ActorID > 0)
                 {
-                    result.Add(GetEffectEntryFromBytes(bytes, i));
+                    result.Add(effect);
                 }
             }
 
@@ -583,6 +584,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public unsafe EffectEntry GetEffectEntryFromBytes(byte[] source, int num = 0)
         {
+            uint mycharID = 0;
+
+            
+            Combatant mychar = GetSelfCombatant();
+            if(mychar != null)
+            {
+                mycharID = mychar.ID;
+            }
+
             fixed (byte* p = source)
             {
                 EffectMemory mem = *(EffectMemory*)&p[num * EffectMemory.Size];
@@ -593,6 +603,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     Stack = mem.Stack,
                     Timer = mem.Timer,
                     ActorID = mem.ActorID,
+                    isOwner = mem.ActorID == mycharID,
                 };
 
                 return effectEntry;
