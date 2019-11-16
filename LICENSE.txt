@@ -161,7 +161,7 @@ Libraries used by OverlayPlugin:
  * ACT_EnmityPlugin
    https://github.com/xtuaok/ACT_EnmityPlugin
 
-	Copyright (c) 2015 Tomonori Tamagawa
+	Copyright (c) 2015-2019 Tomonori Tamagawa, TamanegiMage, qitana
 
 	Permission is hereby granted, free of charge, to any person obtaining a
 	copy of this software and associated documentation files (the
