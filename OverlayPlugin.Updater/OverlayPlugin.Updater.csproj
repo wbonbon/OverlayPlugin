@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="CefInstaller.cs" />
     <Compile Include="Installer.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="ProgressDisplay.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -31,8 +31,16 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<bool> InstallCef(string cefPath)
         {
-            while (!File.Exists("C:\\Windows\\system32\\msvcp140.dll"))
+            var lib = IntPtr.Zero;
+            while (true)
             {
+                lib = NativeMethods.LoadLibrary("msvcp140.dll");
+                if (lib != IntPtr.Zero)
+                {
+                    NativeMethods.FreeLibrary(lib);
+                    break;
+                }
+
                 var response = MessageBox.Show(
                     Resources.MsvcrtMissing,
                     Resources.OverlayPluginTitle,
