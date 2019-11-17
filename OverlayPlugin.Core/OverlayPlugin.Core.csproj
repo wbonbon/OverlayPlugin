@@ -241,6 +241,9 @@
     <EmbeddedResource Include="Controls\ControlPanel.zh-CN.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GeneralConfigTab.ja-JP.resx">
+      <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewOverlayDialog.zh-CN.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WSConfigPanel.ja-JP.resx">
+      <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WSConfigPanel.zh-CN.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
