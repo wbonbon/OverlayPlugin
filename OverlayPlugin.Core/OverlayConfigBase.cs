@@ -24,6 +24,7 @@ namespace RainbowMage.OverlayPlugin
         public event EventHandler<GlobalHotkeyChangedEventArgs> GlobalHotkeyModifiersChanged;
         public event EventHandler<LockStateChangedEventArgs> LockChanged;
         public event EventHandler<GlobalHotkeyTypeChangedEventArgs> GlobalHotkeyTypeChanged;
+        public event EventHandler LogConsoleMessagesChanged;
 
         /// <summary>
         /// ユーザーが設定したオーバーレイの名前を取得または設定します。
@@ -256,6 +257,23 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        private bool logConsoleMessages = true;
+        public bool LogConsoleMessages
+        {
+            get
+            {
+                return this.logConsoleMessages;
+            }
+            set
+            {
+                if (this.logConsoleMessages != value)
+                {
+                    this.logConsoleMessages = value;
+                    LogConsoleMessagesChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
         protected OverlayConfigBase(string name)
         {
             this.Name = name;
@@ -269,6 +287,7 @@ namespace RainbowMage.OverlayPlugin
             this.GlobalHotkey = Keys.None;
             this.globalHotkeyModifiers = Keys.None;
             this.globalHotkeyType = GlobalHotkeyType.ToggleVisible;
+            this.logConsoleMessages = true;
         }
 
         [XmlIgnore]

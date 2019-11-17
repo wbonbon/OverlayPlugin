@@ -59,39 +59,53 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbWhiteBg = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.lblNoFocus = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.checkNoFocus = new System.Windows.Forms.CheckBox();
+            this.checkLogConsoleMessages = new System.Windows.Forms.CheckBox();
+            this.tbZoom = new System.Windows.Forms.TrackBar();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnResetZoom = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxFrameRate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).BeginInit();
+            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseVisible, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.checkMiniParseClickthru, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 14);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 16);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.nudMaxFrameRate, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.checkEnableGlobalHotkey, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.textGlobalHotkey, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.checkLock, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.comboHotkeyType, 1, 10);
             this.tableLayoutPanel1.Controls.Add(this.checkActwsCompatbility, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label11, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.cbWhiteBg, 1, 10);
-            this.tableLayoutPanel1.Controls.Add(this.label12, 1, 11);
+            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 11);
+            this.tableLayoutPanel1.Controls.Add(this.cbWhiteBg, 1, 11);
+            this.tableLayoutPanel1.Controls.Add(this.label12, 1, 12);
+            this.tableLayoutPanel1.Controls.Add(this.label15, 0, 14);
+            this.tableLayoutPanel1.Controls.Add(this.checkLogConsoleMessages, 1, 13);
+            this.tableLayoutPanel1.Controls.Add(this.lblNoFocus, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.checkNoFocus, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 1, 14);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // label6
@@ -290,6 +304,53 @@
             resources.ApplyResources(this.label12, "label12");
             this.label12.Name = "label12";
             // 
+            // lblNoFocus
+            // 
+            resources.ApplyResources(this.lblNoFocus, "lblNoFocus");
+            this.lblNoFocus.Name = "lblNoFocus";
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.Name = "label15";
+            // 
+            // checkNoFocus
+            // 
+            resources.ApplyResources(this.checkNoFocus, "checkNoFocus");
+            this.checkNoFocus.Name = "checkNoFocus";
+            this.checkNoFocus.UseVisualStyleBackColor = true;
+            this.checkNoFocus.CheckedChanged += new System.EventHandler(this.checkNoFocus_CheckedChanged);
+            // 
+            // checkLogConsoleMessages
+            // 
+            resources.ApplyResources(this.checkLogConsoleMessages, "checkLogConsoleMessages");
+            this.checkLogConsoleMessages.Name = "checkLogConsoleMessages";
+            this.checkLogConsoleMessages.UseVisualStyleBackColor = true;
+            this.checkLogConsoleMessages.CheckedChanged += new System.EventHandler(this.checkLogConsoleMessages_CheckedChanged);
+            // 
+            // tbZoom
+            // 
+            resources.ApplyResources(this.tbZoom, "tbZoom");
+            this.tbZoom.Maximum = 400;
+            this.tbZoom.Minimum = 1;
+            this.tbZoom.Name = "tbZoom";
+            this.tbZoom.Value = 1;
+            this.tbZoom.ValueChanged += new System.EventHandler(this.tbZoom_ValueChanged);
+            // 
+            // tableLayoutPanel4
+            // 
+            resources.ApplyResources(this.tableLayoutPanel4, "tableLayoutPanel4");
+            this.tableLayoutPanel4.Controls.Add(this.tbZoom, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnResetZoom, 1, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            // 
+            // btnResetZoom
+            // 
+            resources.ApplyResources(this.btnResetZoom, "btnResetZoom");
+            this.btnResetZoom.Name = "btnResetZoom";
+            this.btnResetZoom.UseVisualStyleBackColor = true;
+            this.btnResetZoom.Click += new System.EventHandler(this.btnResetZoom_Click);
+            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -304,6 +365,8 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxFrameRate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).EndInit();
+            this.tableLayoutPanel4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,5 +404,12 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox cbWhiteBg;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox checkLogConsoleMessages;
+        private System.Windows.Forms.TrackBar tbZoom;
+        private System.Windows.Forms.Label lblNoFocus;
+        private System.Windows.Forms.CheckBox checkNoFocus;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Button btnResetZoom;
     }
 }

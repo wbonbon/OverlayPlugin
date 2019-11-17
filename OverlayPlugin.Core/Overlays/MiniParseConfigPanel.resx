@@ -139,10 +139,10 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 161</value>
+    <value>3, 186</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 18</value>
+    <value>149, 26</value>
   </data>
   <data name="label6.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -286,7 +286,7 @@
     <value>158, 3</value>
   </data>
   <data name="checkMiniParseVisible.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 20</value>
+    <value>489, 20</value>
   </data>
   <data name="checkMiniParseVisible.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -316,7 +316,7 @@
     <value>158, 29</value>
   </data>
   <data name="checkMiniParseClickthru.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 20</value>
+    <value>489, 20</value>
   </data>
   <data name="checkMiniParseClickthru.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -343,7 +343,7 @@
     <value>3, 3</value>
   </data>
   <data name="buttonMiniParseOpenDevTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 55</value>
+    <value>197, 37</value>
   </data>
   <data name="buttonMiniParseOpenDevTools.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -370,10 +370,10 @@
     <value>NoControl</value>
   </data>
   <data name="buttonMiniParseReloadBrowser.Location" type="System.Drawing.Point, System.Drawing">
-    <value>177, 3</value>
+    <value>206, 3</value>
   </data>
   <data name="buttonMiniParseReloadBrowser.Size" type="System.Drawing.Size, System.Drawing">
-    <value>168, 55</value>
+    <value>197, 37</value>
   </data>
   <data name="buttonMiniParseReloadBrowser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -397,10 +397,10 @@
     <value>Fill</value>
   </data>
   <data name="buttonResetOverlayPosition.Location" type="System.Drawing.Point, System.Drawing">
-    <value>351, 3</value>
+    <value>409, 3</value>
   </data>
   <data name="buttonResetOverlayPosition.Size" type="System.Drawing.Size, System.Drawing">
-    <value>231, 55</value>
+    <value>232, 37</value>
   </data>
   <data name="buttonResetOverlayPosition.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -430,7 +430,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>585, 61</value>
+    <value>644, 43</value>
   </data>
   <data name="tableLayoutPanel3.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -454,10 +454,10 @@
     <value>Fill</value>
   </data>
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 429</value>
+    <value>3, 433</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>585, 61</value>
+    <value>644, 43</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -487,7 +487,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="textMiniParseUrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>397, 20</value>
+    <value>456, 20</value>
   </data>
   <data name="textMiniParseUrl.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -508,7 +508,7 @@
     <value>NoControl</value>
   </data>
   <data name="buttonMiniParseSelectFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>397, 0</value>
+    <value>456, 0</value>
   </data>
   <data name="buttonMiniParseSelectFile.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 1</value>
@@ -547,7 +547,7 @@
     <value>1</value>
   </data>
   <data name="tableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 24</value>
+    <value>493, 24</value>
   </data>
   <data name="tableLayoutPanel2.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -571,13 +571,13 @@
     <value>Fill</value>
   </data>
   <data name="nudMaxFrameRate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 162</value>
+    <value>156, 187</value>
   </data>
   <data name="nudMaxFrameRate.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>
   </data>
   <data name="nudMaxFrameRate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 20</value>
+    <value>493, 20</value>
   </data>
   <data name="nudMaxFrameRate.TabIndex" type="System.Int32, mscorlib">
     <value>13</value>
@@ -604,7 +604,7 @@
     <value>NoControl</value>
   </data>
   <data name="label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 179</value>
+    <value>3, 212</value>
   </data>
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 26</value>
@@ -640,7 +640,7 @@
     <value>NoControl</value>
   </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 205</value>
+    <value>3, 238</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 26</value>
@@ -673,10 +673,10 @@
     <value>NoControl</value>
   </data>
   <data name="checkEnableGlobalHotkey.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 182</value>
+    <value>158, 215</value>
   </data>
   <data name="checkEnableGlobalHotkey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 20</value>
+    <value>489, 20</value>
   </data>
   <data name="checkEnableGlobalHotkey.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
@@ -697,13 +697,13 @@
     <value>Fill</value>
   </data>
   <data name="textGlobalHotkey.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 206</value>
+    <value>156, 239</value>
   </data>
   <data name="textGlobalHotkey.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>
   </data>
   <data name="textGlobalHotkey.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 20</value>
+    <value>493, 20</value>
   </data>
   <data name="textGlobalHotkey.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -769,7 +769,7 @@
     <value>158, 55</value>
   </data>
   <data name="checkLock.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 20</value>
+    <value>489, 20</value>
   </data>
   <data name="checkLock.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -796,7 +796,7 @@
     <value>NoControl</value>
   </data>
   <data name="label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 231</value>
+    <value>3, 264</value>
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 26</value>
@@ -826,13 +826,13 @@
     <value>Fill</value>
   </data>
   <data name="comboHotkeyType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 232</value>
+    <value>156, 265</value>
   </data>
   <data name="comboHotkeyType.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>1, 1, 1, 1</value>
   </data>
   <data name="comboHotkeyType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
+    <value>493, 21</value>
   </data>
   <data name="comboHotkeyType.TabIndex" type="System.Int32, mscorlib">
     <value>26</value>
@@ -859,7 +859,7 @@
     <value>158, 107</value>
   </data>
   <data name="checkActwsCompatbility.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 17</value>
+    <value>489, 20</value>
   </data>
   <data name="checkActwsCompatbility.TabIndex" type="System.Int32, mscorlib">
     <value>28</value>
@@ -889,7 +889,7 @@
     <value>3, 104</value>
   </data>
   <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>149, 23</value>
+    <value>149, 26</value>
   </data>
   <data name="label5.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
@@ -922,10 +922,10 @@
     <value>NoControl</value>
   </data>
   <data name="label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 127</value>
+    <value>158, 130</value>
   </data>
   <data name="label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 34</value>
+    <value>489, 30</value>
   </data>
   <data name="label11.TabIndex" type="System.Int32, mscorlib">
     <value>31</value>
@@ -951,8 +951,11 @@
   <data name="label4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 257</value>
+    <value>3, 290</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 26</value>
@@ -984,11 +987,14 @@
   <data name="cbWhiteBg.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="cbWhiteBg.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="cbWhiteBg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 260</value>
+    <value>158, 293</value>
   </data>
   <data name="cbWhiteBg.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 20</value>
+    <value>489, 20</value>
   </data>
   <data name="cbWhiteBg.TabIndex" type="System.Int32, mscorlib">
     <value>33</value>
@@ -1011,11 +1017,14 @@
   <data name="label12.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>158, 283</value>
+    <value>158, 316</value>
   </data>
   <data name="label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>430, 26</value>
+    <value>489, 26</value>
   </data>
   <data name="label12.TabIndex" type="System.Int32, mscorlib">
     <value>34</value>
@@ -1035,6 +1044,234 @@
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
     <value>22</value>
   </data>
+  <data name="label15.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label15.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label15.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 368</value>
+  </data>
+  <data name="label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 39</value>
+  </data>
+  <data name="label15.TabIndex" type="System.Int32, mscorlib">
+    <value>37</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="label15.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;label15.Name" xml:space="preserve">
+    <value>label15</value>
+  </data>
+  <data name="&gt;&gt;label15.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label15.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;label15.ZOrder" xml:space="preserve">
+    <value>23</value>
+  </data>
+  <data name="checkLogConsoleMessages.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkLogConsoleMessages.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkLogConsoleMessages.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkLogConsoleMessages.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 345</value>
+  </data>
+  <data name="checkLogConsoleMessages.Size" type="System.Drawing.Size, System.Drawing">
+    <value>489, 20</value>
+  </data>
+  <data name="checkLogConsoleMessages.TabIndex" type="System.Int32, mscorlib">
+    <value>39</value>
+  </data>
+  <data name="checkLogConsoleMessages.Text" xml:space="preserve">
+    <value>Show console messages from this overlay in the overlay log</value>
+  </data>
+  <data name="&gt;&gt;checkLogConsoleMessages.Name" xml:space="preserve">
+    <value>checkLogConsoleMessages</value>
+  </data>
+  <data name="&gt;&gt;checkLogConsoleMessages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkLogConsoleMessages.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkLogConsoleMessages.ZOrder" xml:space="preserve">
+    <value>24</value>
+  </data>
+  <data name="lblNoFocus.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="lblNoFocus.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblNoFocus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblNoFocus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 160</value>
+  </data>
+  <data name="lblNoFocus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 26</value>
+  </data>
+  <data name="lblNoFocus.TabIndex" type="System.Int32, mscorlib">
+    <value>35</value>
+  </data>
+  <data name="lblNoFocus.Text" xml:space="preserve">
+    <value>No Focus</value>
+  </data>
+  <data name="lblNoFocus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;lblNoFocus.Name" xml:space="preserve">
+    <value>lblNoFocus</value>
+  </data>
+  <data name="&gt;&gt;lblNoFocus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblNoFocus.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;lblNoFocus.ZOrder" xml:space="preserve">
+    <value>25</value>
+  </data>
+  <data name="checkNoFocus.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkNoFocus.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="checkNoFocus.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkNoFocus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 163</value>
+  </data>
+  <data name="checkNoFocus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>489, 20</value>
+  </data>
+  <data name="checkNoFocus.TabIndex" type="System.Int32, mscorlib">
+    <value>38</value>
+  </data>
+  <data name="checkNoFocus.Text" xml:space="preserve">
+    <value>Don't accept focus for this overlay</value>
+  </data>
+  <data name="&gt;&gt;checkNoFocus.Name" xml:space="preserve">
+    <value>checkNoFocus</value>
+  </data>
+  <data name="&gt;&gt;checkNoFocus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkNoFocus.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;checkNoFocus.ZOrder" xml:space="preserve">
+    <value>26</value>
+  </data>
+  <data name="tableLayoutPanel4.ColumnCount" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tbZoom.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tbZoom.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tbZoom.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tbZoom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="tbZoom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>389, 27</value>
+  </data>
+  <data name="tbZoom.TabIndex" type="System.Int32, mscorlib">
+    <value>40</value>
+  </data>
+  <data name="&gt;&gt;tbZoom.Name" xml:space="preserve">
+    <value>tbZoom</value>
+  </data>
+  <data name="&gt;&gt;tbZoom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TrackBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tbZoom.Parent" xml:space="preserve">
+    <value>tableLayoutPanel4</value>
+  </data>
+  <data name="&gt;&gt;tbZoom.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnResetZoom.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="btnResetZoom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>398, 3</value>
+  </data>
+  <data name="btnResetZoom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 27</value>
+  </data>
+  <data name="btnResetZoom.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="btnResetZoom.Text" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="&gt;&gt;btnResetZoom.Name" xml:space="preserve">
+    <value>btnResetZoom</value>
+  </data>
+  <data name="&gt;&gt;btnResetZoom.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnResetZoom.Parent" xml:space="preserve">
+    <value>tableLayoutPanel4</value>
+  </data>
+  <data name="&gt;&gt;btnResetZoom.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel4.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tableLayoutPanel4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>158, 371</value>
+  </data>
+  <data name="tableLayoutPanel4.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tableLayoutPanel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>489, 33</value>
+  </data>
+  <data name="tableLayoutPanel4.TabIndex" type="System.Int32, mscorlib">
+    <value>41</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel4.Name" xml:space="preserve">
+    <value>tableLayoutPanel4</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel4.Parent" xml:space="preserve">
+    <value>tableLayoutPanel1</value>
+  </data>
+  <data name="&gt;&gt;tableLayoutPanel4.ZOrder" xml:space="preserve">
+    <value>27</value>
+  </data>
+  <data name="tableLayoutPanel4.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tbZoom" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="btnResetZoom" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,94" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="tableLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -1042,10 +1279,10 @@
     <value>0, 0</value>
   </data>
   <data name="tableLayoutPanel1.RowCount" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>18</value>
   </data>
   <data name="tableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>591, 493</value>
+    <value>650, 533</value>
   </data>
   <data name="tableLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1063,7 +1300,7 @@
     <value>0</value>
   </data>
   <data name="tableLayoutPanel1.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="label6" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkMiniParseVisible" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkMiniParseClickthru" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="14" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="tableLayoutPanel2" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="nudMaxFrameRate" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkEnableGlobalHotkey" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textGlobalHotkey" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkLock" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="9" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboHotkeyType" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkActwsCompatbility" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="10" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="cbWhiteBg" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label12" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,155,Percent,100" /&gt;&lt;Rows Styles="Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,23,Absolute,34,Absolute,18,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Percent,100,Absolute,10,Absolute,67" /&gt;&lt;/TableLayoutSettings&gt;</value>
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="label6" Row="7" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label2" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label3" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label1" Row="3" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkMiniParseVisible" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkMiniParseClickthru" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="panel1" Row="16" RowSpan="1" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="tableLayoutPanel2" Row="3" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="nudMaxFrameRate" Row="7" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label7" Row="8" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label8" Row="9" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkEnableGlobalHotkey" Row="8" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="textGlobalHotkey" Row="9" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label9" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkLock" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label10" Row="10" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="comboHotkeyType" Row="10" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="checkActwsCompatbility" Row="4" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label5" Row="4" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="label11" Row="5" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label4" Row="11" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="cbWhiteBg" Row="11" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label12" Row="12" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="label15" Row="14" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkLogConsoleMessages" Row="13" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="lblNoFocus" Row="6" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="checkNoFocus" Row="6" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="tableLayoutPanel4" Row="14" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Absolute,155,Percent,100" /&gt;&lt;Rows Styles="Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,30,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,26,Absolute,39,Absolute,23,Absolute,49,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -1072,7 +1309,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>591, 493</value>
+    <value>650, 533</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MiniParseConfigPanel</value>

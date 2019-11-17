@@ -136,7 +136,8 @@ namespace RainbowMage.OverlayPlugin
                 };
                 this.Overlay.Renderer.BrowserConsoleLog += (o, e) =>
                 {
-                    Log(LogLevel.Info, "BrowserConsole: {0} (Source: {1}, Line: {2})", e.Message, e.Source, e.Line);
+                    if (Config.LogConsoleMessages)
+                        Log(LogLevel.Info, "BrowserConsole: {0} (Source: {1}, Line: {2})", e.Message, e.Source, e.Line);
                 };
                 this.Config.UrlChanged += (o, e) =>
                 {

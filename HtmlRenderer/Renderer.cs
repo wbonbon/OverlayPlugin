@@ -200,6 +200,14 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        public void SetZoomLevel(double zoom)
+        {
+            if (this._browser != null && this._browser.IsBrowserInitialized)
+            {
+                this._browser.SetZoomLevel(zoom);
+            }
+        }
+
         public void NotifyMoveStarted()
         {
             if (this._browser != null && this._browser.IsBrowserInitialized)

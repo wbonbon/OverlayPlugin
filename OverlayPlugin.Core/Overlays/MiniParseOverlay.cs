@@ -26,6 +26,14 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 if (lastLoadedUrl != null) Navigate(lastLoadedUrl);
             };
+            Config.NoFocusChanged += (o, e) =>
+            {
+                Overlay.SetAcceptFocus(!Config.NoFocus);
+            };
+            Config.ZoomChanged += (o, e) =>
+            {
+                Overlay.Renderer.SetZoomLevel(Config.Zoom / 100.0);
+            };
 
             Overlay.Renderer.BrowserStartLoading += PrepareWebsite;
             Overlay.Renderer.BrowserLoad += FinishLoading;
@@ -62,6 +70,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             lastLoadedUrl = e.Url;
             Config.Url = e.Url;
+            Overlay.Renderer.SetZoomLevel(Config.Zoom / 100.0);
 
             if (Config.ActwsCompatibility)
             {

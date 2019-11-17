@@ -40,6 +40,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkLock.Checked = config.IsLocked;
             this.textMiniParseUrl.Text = config.Url;
             this.checkActwsCompatbility.Checked = config.ActwsCompatibility;
+            this.checkNoFocus.Visible = config.ActwsCompatibility;
+            this.checkNoFocus.Checked = config.NoFocus;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;
             this.checkEnableGlobalHotkey.Checked = config.GlobalHotkeyEnabled;
             this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
@@ -49,6 +51,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.comboHotkeyType.DataSource = hotkeyTypeDict;
             this.comboHotkeyType.SelectedValue = config.GlobalHotkeyType;
             this.comboHotkeyType.SelectedIndexChanged += ComboHotkeyMode_SelectedIndexChanged;
+            this.checkLogConsoleMessages.Checked = config.LogConsoleMessages;
+            this.tbZoom.Value = config.Zoom;
         }
 
         private void SetupConfigEventHandlers()
@@ -79,6 +83,21 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.InvokeIfRequired(() =>
                 {
                     this.checkActwsCompatbility.Checked = config.ActwsCompatibility;
+
+                    this.lblNoFocus.Visible = config.ActwsCompatibility;
+                    this.checkNoFocus.Visible = config.ActwsCompatibility;
+
+                    if (!config.ActwsCompatibility)
+                    {
+                        config.NoFocus = true;
+                    }
+                });
+            };
+            this.config.NoFocusChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.checkNoFocus.Checked = config.NoFocus;
                 });
             };
             this.config.MaxFrameRateChanged += (o, e) =>
@@ -129,6 +148,20 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.InvokeIfRequired(() =>
                 {
                     this.checkActwsCompatbility.Checked = this.config.ActwsCompatibility;
+                });
+            };
+            this.config.LogConsoleMessagesChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.checkLogConsoleMessages.Checked = this.config.LogConsoleMessages;
+                });
+            };
+            this.config.ZoomChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.tbZoom.Value = this.config.Zoom;
                 });
             };
         }
@@ -245,6 +278,26 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             var color = this.cbWhiteBg.Checked ? "white" : "transparent";
             this.overlay.ExecuteScript($"document.body.style.backgroundColor = \"{color}\";");
+        }
+
+        private void checkNoFocus_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.NoFocus = this.checkNoFocus.Checked;
+        }
+
+        private void checkLogConsoleMessages_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.LogConsoleMessages = this.checkLogConsoleMessages.Checked;
+        }
+
+        private void tbZoom_ValueChanged(object sender, EventArgs e)
+        {
+            this.config.Zoom = this.tbZoom.Value;
+        }
+
+        private void btnResetZoom_Click(object sender, EventArgs e)
+        {
+            this.config.Zoom = 1;
         }
     }
 }
