@@ -45,7 +45,7 @@ let enmity = new Vue({
       if (msg.language in localeStrings)
         this.strings = localeStrings[msg.language];
       else
-        this.strings = localStrings['English'];
+        this.strings = localeStrings['English'];
 
       window.addOverlayListener('EnmityTargetData', this.update);
       document.addEventListener('onOverlayStateUpdate', this.updateState);
