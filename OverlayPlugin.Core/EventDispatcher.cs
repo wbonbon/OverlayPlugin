@@ -10,9 +10,16 @@ namespace RainbowMage.OverlayPlugin
 {
     class EventDispatcher
     {
-        static Dictionary<string, Func<JObject, JToken>> handlers = new Dictionary<string, Func<JObject, JToken>>();
-        static Dictionary<string, List<IEventReceiver>> eventFilter = new Dictionary<string, List<IEventReceiver>>();
-        static Dictionary<string, Func<JObject>> stateCallbacks = new Dictionary<string, Func<JObject>>();
+        static Dictionary<string, Func<JObject, JToken>> handlers;
+        static Dictionary<string, List<IEventReceiver>> eventFilter;
+        static Dictionary<string, Func<JObject>> stateCallbacks;
+
+        public static void Init()
+        {
+            handlers = new Dictionary<string, Func<JObject, JToken>>();
+            eventFilter = new Dictionary<string, List<IEventReceiver>>();
+            stateCallbacks = new Dictionary<string, Func<JObject>>();
+        }
 
         private static void Log(LogLevel level, string message, params object[] args)
         {

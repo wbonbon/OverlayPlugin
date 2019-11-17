@@ -65,6 +65,7 @@ namespace RainbowMage.OverlayPlugin
 
                 FFXIVExportVariables.Init();
                 NetworkParser.Init();
+                EventDispatcher.Init();
 
                 // LoadAddons();
                 LoadConfig();
@@ -148,7 +149,7 @@ namespace RainbowMage.OverlayPlugin
                 }
 
                 initTimer = new Timer();
-                initTimer.Interval = 100;
+                initTimer.Interval = 300;
                 initTimer.Tick += (o, e) =>
                 {
                     if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
