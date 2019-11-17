@@ -171,7 +171,8 @@
         },
         "label5.Text": {
             "en": "Enmity update interval (ms)",
-            "ja-JP": "敵視情報の更新間隔 (ミリ秒)"
+            "ja-JP": "敵視情報の更新間隔 (ミリ秒)",
+            "zh-CN": "仇恨更新间隔（毫秒）"
         }
     },
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
