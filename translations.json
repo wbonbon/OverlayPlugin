@@ -631,16 +631,20 @@
             "zh-CN": "用户已终止。"
         },
         "LogBackingUpOldFiles": {
-            "en": "Backing up old files..."
+            "en": "Backing up old files...",
+            "zh-CN": "正在备份旧文件..."
         },
         "LogCleaningUp": {
-            "en": "Cleaning up..."
+            "en": "Cleaning up...",
+            "zh-CN": "正在执行清理..."
         },
         "LogDeletingTempFiles": {
-            "en": "Deleting temporary files..."
+            "en": "Deleting temporary files...",
+            "zh-CN": "正在删除临时文件..."
         },
         "LogDone": {
-            "en": "Done."
+            "en": "Done.",
+            "zh-CN": "完成。"
         },
         "LogDownloadFailed": {
             "en": "Download failed: {0}",
@@ -663,10 +667,12 @@
             "zh-CN": "解压缩被用户终止。"
         },
         "LogFailedReplaceDirectory": {
-            "en": "Failed to replace old directory: {0}"
+            "en": "Failed to replace old directory: {0}",
+            "zh-CN": "无法替换旧目录：{0}"
         },
         "LogFailedToDelete": {
-            "en": "Failed to delete {0}: {1}"
+            "en": "Failed to delete {0}: {1}",
+            "zh-CN": "无法删除{0}：{1}"
         },
         "LogInstallerFailed": {
             "en": "Error: The installer did not finish correctly.",
@@ -681,23 +687,28 @@
             "zh-CN": "正在运行安装程序..."
         },
         "LogMovingDirectory": {
-            "en": "Moving directory..."
+            "en": "Moving directory...",
+            "zh-CN": "正在移动目录..."
         },
         "LogOpeningArchive": {
             "en": "Opening archive...",
             "zh-CN": "正在打开压缩包..."
         },
         "LogOverwritingOldFiles": {
-            "en": "Overwriting old files..."
+            "en": "Overwriting old files...",
+            "zh-CN": "正在覆写旧文件..."
         },
         "LogOverwritingOldFilesFailed": {
-            "en": "Failed to overwrite old files: {0}\nWARNING: The plugin might be in an unusable state!!\nRun the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart."
+            "en": "Failed to overwrite old files: {0}\nWARNING: The plugin might be in an unusable state!!\nRun the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart.",
+            "zh-CN": "无法覆写旧文件：{0}\n警告：插件可能处于无法使用的状态！！\n再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。"
         },
         "LogRemovingOldBackup": {
-            "en": "Removing old backup directory..."
+            "en": "Removing old backup directory...",
+            "zh-CN": "正在删除旧备份目录..."
         },
         "LogRestoringBackup": {
-            "en": "Restoring backup..."
+            "en": "Restoring backup...",
+            "zh-CN": "正在恢复备份..."
         },
         "LogResumingDownload": {
             "en": "Resuming download...",
