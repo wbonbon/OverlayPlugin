@@ -18,6 +18,10 @@ let localeStrings = {
     target: 'Target',
     distance: 'Distance',
   },
+  'French': {
+    target: 'Cible',
+    distance: 'Distance',
+  },
   'Japanese': {
     target: 'ターゲット',
     distance: '距離',
