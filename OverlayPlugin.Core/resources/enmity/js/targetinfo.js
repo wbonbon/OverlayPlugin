@@ -13,6 +13,15 @@ let localeStrings = {
       TargetOfTarget: 'ToT',
     },
   },
+  'French': {
+    target: 'Cible',
+    distance: 'Distance',
+    titles: {
+      Target: 'Cible',
+      Focus: 'Focus',
+      Hover: 'Survol',
+      TargetOfTarget: 'ToT',
+    },
   'Japanese': {
     target: 'ターゲット',
     distance: '距離',
