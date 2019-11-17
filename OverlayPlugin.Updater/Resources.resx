@@ -135,6 +135,18 @@
   <data name="LogAbortedByUser" xml:space="preserve">
     <value>Aborted by user.</value>
   </data>
+  <data name="LogBackingUpOldFiles" xml:space="preserve">
+    <value>Backing up old files...</value>
+  </data>
+  <data name="LogCleaningUp" xml:space="preserve">
+    <value>Cleaning up...</value>
+  </data>
+  <data name="LogDeletingTempFiles" xml:space="preserve">
+    <value>Deleting temporary files...</value>
+  </data>
+  <data name="LogDone" xml:space="preserve">
+    <value>Done.</value>
+  </data>
   <data name="LogDownloadFailed" xml:space="preserve">
     <value>Download failed: {0}</value>
   </data>
@@ -150,6 +162,12 @@
   <data name="LogExtractionAbortedByUser" xml:space="preserve">
     <value>Extraction aborted by user.</value>
   </data>
+  <data name="LogFailedReplaceDirectory" xml:space="preserve">
+    <value>Failed to replace old directory: {0}</value>
+  </data>
+  <data name="LogFailedToDelete" xml:space="preserve">
+    <value>Failed to delete {0}: {1}</value>
+  </data>
   <data name="LogInstallerFailed" xml:space="preserve">
     <value>Error: The installer did not finish correctly.</value>
   </data>
@@ -159,8 +177,25 @@
   <data name="LogLaunchingInstaller" xml:space="preserve">
     <value>Launching installer...</value>
   </data>
+  <data name="LogMovingDirectory" xml:space="preserve">
+    <value>Moving directory...</value>
+  </data>
   <data name="LogOpeningArchive" xml:space="preserve">
     <value>Opening archive...</value>
+  </data>
+  <data name="LogOverwritingOldFiles" xml:space="preserve">
+    <value>Overwriting old files...</value>
+  </data>
+  <data name="LogOverwritingOldFilesFailed" xml:space="preserve">
+    <value>Failed to overwrite old files: {0}
+WARNING: The plugin might be in an unusable state!!
+Run the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart.</value>
+  </data>
+  <data name="LogRemovingOldBackup" xml:space="preserve">
+    <value>Removing old backup directory...</value>
+  </data>
+  <data name="LogRestoringBackup" xml:space="preserve">
+    <value>Restoring backup...</value>
   </data>
   <data name="LogResumingDownload" xml:space="preserve">
     <value>Resuming download...</value>

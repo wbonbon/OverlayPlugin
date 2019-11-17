@@ -279,7 +279,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removing old backup....
+        ///   Looks up a localized string similar to Removing old backup directory....
         /// </summary>
         internal static string LogRemovingOldBackup {
             get {
@@ -470,8 +470,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to parse version:
-        ///{0}.
+        ///   Looks up a localized string similar to Failed to parse version: {0}.
         /// </summary>
         internal static string UpdateParseVersionError {
             get {

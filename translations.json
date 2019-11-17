@@ -630,6 +630,18 @@
             "en": "Aborted by user.",
             "zh-CN": "用户已终止。"
         },
+        "LogBackingUpOldFiles": {
+            "en": "Backing up old files..."
+        },
+        "LogCleaningUp": {
+            "en": "Cleaning up..."
+        },
+        "LogDeletingTempFiles": {
+            "en": "Deleting temporary files..."
+        },
+        "LogDone": {
+            "en": "Done."
+        },
         "LogDownloadFailed": {
             "en": "Download failed: {0}",
             "zh-CN": "下载失败：{0}"
@@ -650,6 +662,12 @@
             "en": "Extraction aborted by user.",
             "zh-CN": "解压缩被用户终止。"
         },
+        "LogFailedReplaceDirectory": {
+            "en": "Failed to replace old directory: {0}"
+        },
+        "LogFailedToDelete": {
+            "en": "Failed to delete {0}: {1}"
+        },
         "LogInstallerFailed": {
             "en": "Error: The installer did not finish correctly.",
             "zh-CN": "错误：安装程序没有正确完成。"
@@ -662,9 +680,24 @@
             "en": "Launching installer...",
             "zh-CN": "正在运行安装程序..."
         },
+        "LogMovingDirectory": {
+            "en": "Moving directory..."
+        },
         "LogOpeningArchive": {
             "en": "Opening archive...",
             "zh-CN": "正在打开压缩包..."
+        },
+        "LogOverwritingOldFiles": {
+            "en": "Overwriting old files..."
+        },
+        "LogOverwritingOldFilesFailed": {
+            "en": "Failed to overwrite old files: {0}\nWARNING: The plugin might be in an unusable state!!\nRun the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart."
+        },
+        "LogRemovingOldBackup": {
+            "en": "Removing old backup directory..."
+        },
+        "LogRestoringBackup": {
+            "en": "Restoring backup..."
         },
         "LogResumingDownload": {
             "en": "Resuming download...",
