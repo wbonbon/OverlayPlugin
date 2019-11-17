@@ -79,6 +79,24 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name must not be empty or white space only..
+        /// </summary>
+        internal static string ErrorOverlayNameEmpty {
+            get {
+                return ResourceManager.GetString("ErrorOverlayNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name should be unique..
+        /// </summary>
+        internal static string ErrorOverlayNameNotUnique {
+            get {
+                return ResourceManager.GetString("ErrorOverlayNameNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to dispatch event {0} to {1}! {2}.
         /// </summary>
         internal static string EventHandlerException {
@@ -102,6 +120,42 @@ namespace RainbowMage.OverlayPlugin {
         internal static string FFXIVDataSubscriptionException {
             get {
                 return ResourceManager.GetString("FFXIVDataSubscriptionException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        internal static string GeneralTab {
+            get {
+                return ResourceManager.GetString("GeneralTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle clickthru.
+        /// </summary>
+        internal static string HotkeyActionToggleClickthrough {
+            get {
+                return ResourceManager.GetString("HotkeyActionToggleClickthrough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle lock.
+        /// </summary>
+        internal static string HotkeyActionToggleLock {
+            get {
+                return ResourceManager.GetString("HotkeyActionToggleLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle visible/hide.
+        /// </summary>
+        internal static string HotkeyActionToggleVisible {
+            get {
+                return ResourceManager.GetString("HotkeyActionToggleVisible", resourceCulture);
             }
         }
         
@@ -147,6 +201,69 @@ namespace RainbowMage.OverlayPlugin {
         internal static string ListSortFailed {
             get {
                 return ResourceManager.GetString("ListSortFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MiniParseEventSource.
+        /// </summary>
+        internal static string MapESMiniParse {
+            get {
+                return ResourceManager.GetString("MapESMiniParse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LabelOverlay.
+        /// </summary>
+        internal static string MapOverlayLabel {
+            get {
+                return ResourceManager.GetString("MapOverlayLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MiniParseOverlay.
+        /// </summary>
+        internal static string MapOverlayMiniParse {
+            get {
+                return ResourceManager.GetString("MapOverlayMiniParse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label.
+        /// </summary>
+        internal static string MapOverlayShortLabel {
+            get {
+                return ResourceManager.GetString("MapOverlayShortLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MiniParse.
+        /// </summary>
+        internal static string MapOverlayShortMiniParse {
+            get {
+                return ResourceManager.GetString("MapOverlayShortMiniParse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SpellTimer.
+        /// </summary>
+        internal static string MapOverlayShortSpellTimer {
+            get {
+                return ResourceManager.GetString("MapOverlayShortSpellTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SpellTimerOverlay.
+        /// </summary>
+        internal static string MapOverlaySpellTimer {
+            get {
+                return ResourceManager.GetString("MapOverlaySpellTimer", resourceCulture);
             }
         }
         
@@ -232,11 +349,29 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select overlay type..
+        /// </summary>
+        internal static string PromptSelectOverlayType {
+            get {
+                return ResourceManager.GetString("PromptSelectOverlayType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to register hotkey {0}, {1} in EnableHotKeys()..
         /// </summary>
         internal static string RegisterHotkeyError {
             get {
                 return ResourceManager.GetString("RegisterHotkeyError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Source.
+        /// </summary>
+        internal static string TabsESLabel {
+            get {
+                return ResourceManager.GetString("TabsESLabel", resourceCulture);
             }
         }
         

@@ -21,6 +21,13 @@ namespace RainbowMage.OverlayPlugin
 
         private PluginMain pluginMain;
 
+        static Dictionary<string, string> overlayNames = new Dictionary<string, string>
+        {
+            { "Label", Resources.MapOverlayShortLabel },
+            { "MiniParse", Resources.MapOverlayShortMiniParse },
+            { "SpellTimer", Resources.MapOverlayShortSpellTimer },
+        };
+
         public NewOverlayDialog(PluginMain pluginMain)
         {
             InitializeComponent();
@@ -38,6 +45,10 @@ namespace RainbowMage.OverlayPlugin
                     name = name.Substring(0, name.Length - 7);
                 }
 
+                if (overlayNames.ContainsKey(name)) {
+                    name = overlayNames[name];
+                }
+
                 comboBox1.Items.Add(new KeyValuePair<string, Type>(name, overlayType));
             }
 
@@ -53,7 +64,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (comboBox1.SelectedItem == null)
                 {
-                    MessageBox.Show("Please select overlay type.");
+                    MessageBox.Show(Resources.PromptSelectOverlayType);
                     this.DialogResult = System.Windows.Forms.DialogResult.None;
                 }
                 else

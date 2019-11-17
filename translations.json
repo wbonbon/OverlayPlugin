@@ -317,6 +317,9 @@
         }
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
+        "btnResetZoom.Text": {
+            "en": "Reset"
+        },
         "buttonMiniParseOpenDevTools.Text": {
             "en": "Open DevTools",
             "ja-JP": "DevToolsを開く",
@@ -343,6 +346,12 @@
             "ja-JP": "このオーバーレイはACTWebSocketが必要",
             "zh-CN": "此模板需要使用ACTWebSocket"
         },
+        "checkLogConsoleMessages.Text": {
+            "en": "Show console messages from this overlay in the overlay log"
+        },
+        "checkNoFocus.Text": {
+            "en": "Don't accept focus for this overlay"
+        },
         "label1.Text": {
             "en": "URL",
             "ja-JP": "表示するURL",
@@ -362,6 +371,9 @@
             "en": "Use this if you can't find the overlay or for some reason can't resize it.",
             "ja-JP": "オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。",
             "zh-CN": "如果您找不到美化窗口或由于某种原因无法调整其大小时，请启用此选项。"
+        },
+        "label15.Text": {
+            "en": "Zoom"
         },
         "label2.Text": {
             "en": "Enable clickthru",
@@ -408,6 +420,9 @@
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
             "zh-CN": "锁定美化窗口"
+        },
+        "lblNoFocus.Text": {
+            "en": "No Focus"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
@@ -488,6 +503,12 @@
         "DuplicateHandlerError": {
             "en": "Duplicate handler for name {0}!"
         },
+        "ErrorOverlayNameEmpty": {
+            "en": "Name must not be empty or white space only."
+        },
+        "ErrorOverlayNameNotUnique": {
+            "en": "Name should be unique."
+        },
         "EventHandlerException": {
             "en": "Failed to dispatch event {0} to {1}! {2}"
         },
@@ -496,6 +517,18 @@
         },
         "FFXIVDataSubscriptionException": {
             "en": "Failed to retrieve the FFXIV DataSubscription: {0}"
+        },
+        "GeneralTab": {
+            "en": "General"
+        },
+        "HotkeyActionToggleClickthrough": {
+            "en": "Toggle clickthru"
+        },
+        "HotkeyActionToggleLock": {
+            "en": "Toggle lock"
+        },
+        "HotkeyActionToggleVisible": {
+            "en": "Toggle visible/hide"
         },
         "IncompatibleAddon": {
             "en": "Detected incompatible addon {0}. Please update as soon as possible!!",
@@ -515,6 +548,33 @@
         "ListSortFailed": {
             "en": "Failed to sort list by {0}: {1}",
             "zh-CN": "以{0}: {1}排序列表失败"
+        },
+        "MapESMiniParse": {
+            "en": "MiniParseEventSource"
+        },
+        "MapOverlayLabel": {
+            "#comment": "This name appears on the overlay list underneath the overlay name.",
+            "en": "LabelOverlay"
+        },
+        "MapOverlayMiniParse": {
+            "#comment": "This name appears on the overlay list underneath the overlay name.",
+            "en": "MiniParseOverlay"
+        },
+        "MapOverlayShortLabel": {
+            "#comment": "This name appears in the combo box for new overlays.",
+            "en": "Label"
+        },
+        "MapOverlayShortMiniParse": {
+            "#comment": "This name appears in the combo box for new overlays.",
+            "en": "MiniParse"
+        },
+        "MapOverlayShortSpellTimer": {
+            "#comment": "This name appears in the combo box for new overlays.",
+            "en": "SpellTimer"
+        },
+        "MapOverlaySpellTimer": {
+            "#comment": "This name appears on the overlay list underneath the overlay name.",
+            "en": "SpellTimerOverlay"
         },
         "MissingEventDispatchError": {
             "en": "Tried to dispatch unregistered event type \"{0}\"!"
@@ -546,9 +606,15 @@
             "en": "Failed to register hotkey: {0}!",
             "zh-CN": "注册热键：{0}失败！"
         },
+        "PromptSelectOverlayType": {
+            "en": "Please select overlay type."
+        },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
             "zh-CN": "在EnableHotKeys()注册热键{0}, {1}失败。"
+        },
+        "TabsESLabel": {
+            "en": "Event Source"
         },
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
