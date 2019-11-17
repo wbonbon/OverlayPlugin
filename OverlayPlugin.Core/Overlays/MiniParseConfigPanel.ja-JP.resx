@@ -301,4 +301,22 @@
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>604, 388</value>
   </data>
+  <data name="checkActwsCompatbility.Text" xml:space="preserve">
+    <value>このオーバーレイはACTWebSocketが必要</value>
+  </data>
+  <data name="label11.Text" xml:space="preserve">
+    <value>オーバーレイが通常のOverlayPluginと互換性がない場合のみ、このチェックを有効にして下さい。</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>オーバーレイの背景を白にする</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>ACTWSの互換性</value>
+  </data>
+  <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
+    <value>オーバーレイの位置をリセットする</value>
+  </data>
+  <data name="label12.Text" xml:space="preserve">
+    <value>オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。</value>
+  </data>
 </root>
