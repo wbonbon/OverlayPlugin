@@ -8,6 +8,7 @@
     "OverlayPlugin.Core/Controls/ControlPanel": {
         "buttonClearLog.Text": {
             "en": "Clear Log",
+            "ja-JP": "ログのクリア",
             "zh-CN": "清空记录"
         },
         "buttonNewOverlay.Text": {
@@ -24,6 +25,7 @@
         },
         "checkBoxFollowLog.Text": {
             "en": "Autoscroll the log",
+            "ja-JP": "ログの自動スクロール",
             "zh-CN": "自动滚动日志"
         },
         "groupBox2.Text": {
@@ -46,22 +48,27 @@
     "OverlayPlugin.Core/Controls/GeneralConfigTab": {
         "btnUpdateCheck.Text": {
             "en": "Check For Updates",
+            "ja-JP": "アップデートの確認",
             "zh-CN": "检查更新"
         },
         "cbErrorReports.Text": {
             "en": "Automatically report errors",
+            "ja-JP": "エラーを自動で報告する",
             "zh-CN": "自动报告错误"
         },
         "cbHideOverlaysDuringCutscene.Text": {
             "en": "Automatically hide overlays during cutscenes",
+            "ja-JP": "カットシーン中にオーバーレイを非表示にする",
             "zh-CN": "当过场动画时自动隐藏美化窗口"
         },
         "cbHideOverlaysWhenNotActive.Text": {
             "en": "Automatically hide overlays when the game is in the background",
+            "ja-JP": "ACTまたはゲームがアクティブでない場合にオーバーレイを非表示にする",
             "zh-CN": "当ACT和游戏全部最小化时自动隐藏美化窗口"
         },
         "cbUpdateCheck.Text": {
             "en": "Automatically check for updates",
+            "ja-JP": "アップデートを自動で確認する",
             "zh-CN": "自动检查更新"
         }
     },
@@ -98,30 +105,37 @@
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "genSslBtn.Text": {
             "en": "Generate SSL Certificate",
+            "ja-JP": "SSL証明書を作成する",
             "zh-CN": "生成SSL证书"
         },
         "label1.Text": {
             "en": "IP Address:",
+            "ja-JP": "IPアドレス :",
             "zh-CN": "IP地址"
         },
         "label2.Text": {
             "en": "Port:",
+            "ja-JP": "ポート :",
             "zh-CN": "端口："
         },
         "label3.Text": {
             "en": "Status:",
+            "ja-JP": "ステータス :",
             "zh-CN": "状态："
         },
         "logDisplay.Text": {
             "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file with the password changeit in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL.",
+            "ja-JP": "SSLを有効にするにはSSL証明書が必要です。上のボタンを押して証明書を作成するか、 証明書がある場合はパスワードを changeit に設定した PKCS#12 ファイルを %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 に保存して下さい。設定後はACTを再起動して下さい。\n\nSSL証明書の準備が完了したら、SSLを有効にすることが出来ます。",
             "zh-CN": "只有拥有SSL证书，才能启用SSL。您可以单击上方的按钮自动生成一个，或将PKCS#12文件放置在%AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12中并重新启动ACT。\n\n然后，您将可以启用SSL。"
         },
         "sslBox.Text": {
             "en": "Enable SSL",
+            "ja-JP": "SSLを有効にする",
             "zh-CN": "启用SSL"
         },
         "startBtn.Text": {
             "en": "Start",
+            "ja-JP": "スタート",
             "zh-CN": "启用"
         },
         "statusLabel.Text": {
@@ -130,25 +144,34 @@
         },
         "stopBtn.Text": {
             "en": "Stop",
+            "ja-JP": "ストップ",
             "zh-CN": "停止"
         }
     },
     "OverlayPlugin.Core/EventSources/MiniParseEventSourceConfigPanel": {
         "label1.Text": {
             "en": "Sort By",
+            "ja-JP": "ソート順",
             "zh-CN": "排序方式"
         },
         "label2.Text": {
             "en": "DPS update interval seconds",
+            "ja-JP": "DPSの更新間隔",
             "zh-CN": "DPS更新间隔"
         },
         "label3.Text": {
             "en": "Sort Descending (highest first)",
+            "ja-JP": "逆順にソート",
             "zh-CN": "降序排列"
         },
         "label4.Text": {
             "en": "Update DPS during log import",
+            "ja-JP": "ログのインポート中にDPSを更新する",
             "zh-CN": "在日志导入期间更新DPS"
+        },
+        "label5.Text": {
+            "en": "Enmity update interval (ms)",
+            "ja-JP": "敵視情報の更新間隔 (ミリ秒)"
         }
     },
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
@@ -312,10 +335,12 @@
         },
         "buttonResetOverlayPosition.Text": {
             "en": "Reset Overlay Position",
+            "ja-JP": "オーバーレイの位置をリセットする",
             "zh-CN": "重置美化窗口位置"
         },
         "checkActwsCompatbility.Text": {
             "en": "This is an overlay that requires ACTWebSocket",
+            "ja-JP": "このオーバーレイはACTWebSocketが必要",
             "zh-CN": "此模板需要使用ACTWebSocket"
         },
         "label1.Text": {
@@ -330,10 +355,12 @@
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
+            "ja-JP": "オーバーレイが通常のOverlayPluginと互換性がない場合のみ、このチェックを有効にして下さい。",
             "zh-CN": "仅当模板与OverlayPlugin不兼容时，才需要启用此选项。"
         },
         "label12.Text": {
             "en": "Use this if you can't find the overlay or for some reason can't resize it.",
+            "ja-JP": "オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。",
             "zh-CN": "如果您找不到美化窗口或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label2.Text": {
@@ -350,10 +377,12 @@
         },
         "label4.Text": {
             "en": "Force white background",
+            "ja-JP": "オーバーレイの背景を白にする",
             "zh-CN": "在美化窗口强制启用白色背景"
         },
         "label5.Text": {
             "en": "ACTWS Compatiblity",
+            "ja-JP": "ACTWSの互換性",
             "zh-CN": "ACTWS兼容性"
         },
         "label6.Text": {
