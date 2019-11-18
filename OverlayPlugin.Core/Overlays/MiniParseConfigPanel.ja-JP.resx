@@ -319,4 +319,19 @@
   <data name="label12.Text" xml:space="preserve">
     <value>オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。</value>
   </data>
+  <data name="btnResetZoom.Text" xml:space="preserve">
+    <value>リセット</value>
+  </data>
+  <data name="checkLogConsoleMessages.Text" xml:space="preserve">
+    <value>オーバーレイのコンソールメッセージをログに表示する</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>ズーム</value>
+  </data>
+  <data name="checkNoFocus.Text" xml:space="preserve">
+    <value>このオーバーレイにはフォーカスしない</value>
+  </data>
+  <data name="lblNoFocus.Text" xml:space="preserve">
+    <value>フォーカスの無効</value>
+  </data>
 </root>

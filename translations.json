@@ -319,7 +319,8 @@
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnResetZoom.Text": {
-            "en": "Reset"
+            "en": "Reset",
+            "ja-JP": "リセット"
         },
         "buttonMiniParseOpenDevTools.Text": {
             "en": "Open DevTools",
@@ -348,10 +349,12 @@
             "zh-CN": "此模板需要使用ACTWebSocket"
         },
         "checkLogConsoleMessages.Text": {
-            "en": "Show console messages from this overlay in the overlay log"
+            "en": "Show console messages from this overlay in the overlay log",
+            "ja-JP": "オーバーレイのコンソールメッセージをログに表示する"
         },
         "checkNoFocus.Text": {
-            "en": "Don't accept focus for this overlay"
+            "en": "Don't accept focus for this overlay",
+            "ja-JP": "このオーバーレイにはフォーカスしない"
         },
         "label1.Text": {
             "en": "URL",
@@ -374,7 +377,8 @@
             "zh-CN": "如果您找不到美化窗口或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label15.Text": {
-            "en": "Zoom"
+            "en": "Zoom",
+            "ja-JP": "ズーム"
         },
         "label2.Text": {
             "en": "Enable clickthru",
@@ -423,7 +427,8 @@
             "zh-CN": "锁定美化窗口"
         },
         "lblNoFocus.Text": {
-            "en": "No Focus"
+            "en": "No Focus",
+            "ja-JP": "フォーカスの無効"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
