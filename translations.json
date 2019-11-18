@@ -36,7 +36,7 @@
             "en": "Click [Add] button to configure overlays.",
             "ja-JP": "[追加] バートンを押して、オーバーレイを設定してください",
             "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주세요.",
-            "zh-CN": "点击[添加]按钮设置美化窗口"
+            "zh-CN": "点击[添加]按钮设置美化悬浮窗"
         },
         "tabPageMain.Text": {
             "en": "General",
@@ -59,12 +59,12 @@
         "cbHideOverlaysDuringCutscene.Text": {
             "en": "Automatically hide overlays during cutscenes",
             "ja-JP": "カットシーン中にオーバーレイを非表示にする",
-            "zh-CN": "当过场动画时自动隐藏美化窗口"
+            "zh-CN": "当过场动画时自动隐藏美化悬浮窗"
         },
         "cbHideOverlaysWhenNotActive.Text": {
             "en": "Automatically hide overlays when the game is in the background",
             "ja-JP": "ACTまたはゲームがアクティブでない場合にオーバーレイを非表示にする",
-            "zh-CN": "当ACT和游戏全部最小化时自动隐藏美化窗口"
+            "zh-CN": "当ACT和游戏全部最小化时自动隐藏美化悬浮窗"
         },
         "cbUpdateCheck.Text": {
             "en": "Automatically check for updates",
@@ -77,7 +77,7 @@
             "en": "Create new overlay",
             "ja-JP": "新しいオーバーレイ",
             "ko-KR": "새 오버레이",
-            "zh-CN": "创建新的美化窗口"
+            "zh-CN": "创建新的美化悬浮窗"
         },
         "buttonCancel.Text": {
             "en": "Cancel",
@@ -214,7 +214,7 @@
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化窗口"
+            "zh-CN": "启用美化悬浮窗"
         },
         "label4.Text": {
             "en": "URL",
@@ -244,7 +244,7 @@
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化窗口"
+            "zh-CN": "锁定美化悬浮窗"
         }
     },
     "OverlayPlugin.Core/Overlays/LogParseConfigPanel": {
@@ -290,7 +290,7 @@
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化窗口"
+            "zh-CN": "启用美化悬浮窗"
         },
         "label6.Text": {
             "en": "Max. framerate",
@@ -314,12 +314,13 @@
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化窗口"
+            "zh-CN": "锁定美化悬浮窗"
         }
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnResetZoom.Text": {
-            "en": "Reset"
+            "en": "Reset",
+            "zh-CN": "重设"
         },
         "buttonMiniParseOpenDevTools.Text": {
             "en": "Open DevTools",
@@ -340,7 +341,7 @@
         "buttonResetOverlayPosition.Text": {
             "en": "Reset Overlay Position",
             "ja-JP": "オーバーレイの位置をリセットする",
-            "zh-CN": "重置美化窗口位置"
+            "zh-CN": "重置美化悬浮窗位置"
         },
         "checkActwsCompatbility.Text": {
             "en": "This is an overlay that requires ACTWebSocket",
@@ -348,10 +349,12 @@
             "zh-CN": "此模板需要使用ACTWebSocket"
         },
         "checkLogConsoleMessages.Text": {
-            "en": "Show console messages from this overlay in the overlay log"
+            "en": "Show console messages from this overlay in the overlay log",
+            "zh-CN": "在模板日志中显示来自此模板的控制台消息"
         },
         "checkNoFocus.Text": {
-            "en": "Don't accept focus for this overlay"
+            "en": "Don't accept focus for this overlay",
+            "zh-CN": "不焦点此悬浮窗"
         },
         "label1.Text": {
             "en": "URL",
@@ -371,10 +374,11 @@
         "label12.Text": {
             "en": "Use this if you can't find the overlay or for some reason can't resize it.",
             "ja-JP": "オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。",
-            "zh-CN": "如果您找不到美化窗口或由于某种原因无法调整其大小时，请启用此选项。"
+            "zh-CN": "如果您找不到美化悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label15.Text": {
-            "en": "Zoom"
+            "en": "Zoom",
+            "zh-CN": "缩放"
         },
         "label2.Text": {
             "en": "Enable clickthru",
@@ -386,12 +390,12 @@
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化窗口"
+            "zh-CN": "启用美化悬浮窗"
         },
         "label4.Text": {
             "en": "Force white background",
             "ja-JP": "オーバーレイの背景を白にする",
-            "zh-CN": "在美化窗口强制启用白色背景"
+            "zh-CN": "在美化悬浮窗强制启用白色背景"
         },
         "label5.Text": {
             "en": "ACTWS Compatiblity",
@@ -420,10 +424,11 @@
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化窗口"
+            "zh-CN": "锁定美化悬浮窗"
         },
         "lblNoFocus.Text": {
-            "en": "No Focus"
+            "en": "No Focus",
+            "zh-CN": "取消焦点"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
@@ -470,7 +475,7 @@
             "en": "Lock overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化窗口"
+            "zh-CN": "锁定美化悬浮窗"
         },
         "label4.Text": {
             "en": "Hotkey Type",
@@ -493,7 +498,7 @@
             "en": "Show overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化窗口"
+            "zh-CN": "启用美化悬浮窗"
         }
     },
     "OverlayPlugin.Core/Resources": {
@@ -505,10 +510,12 @@
             "en": "Duplicate handler for name {0}!"
         },
         "ErrorOverlayNameEmpty": {
-            "en": "Name must not be empty or white space only."
+            "en": "Name must not be empty or white space only.",
+            "zh-CN": "名称不得为空或只有空格。"
         },
         "ErrorOverlayNameNotUnique": {
-            "en": "Name should be unique."
+            "en": "Name should be unique.",
+            "zh-CN": "名称不得重复。"
         },
         "EventHandlerException": {
             "en": "Failed to dispatch event {0} to {1}! {2}"
@@ -520,16 +527,20 @@
             "en": "Failed to retrieve the FFXIV DataSubscription: {0}"
         },
         "GeneralTab": {
-            "en": "General"
+            "en": "General",
+            "zh-CN": "通用"
         },
         "HotkeyActionToggleClickthrough": {
-            "en": "Toggle clickthru"
+            "en": "Toggle clickthru",
+            "zh-CN": "切换悬浮窗 鼠标穿透"
         },
         "HotkeyActionToggleLock": {
-            "en": "Toggle lock"
+            "en": "Toggle lock",
+            "zh-CN": "切换悬浮窗 锁定"
         },
         "HotkeyActionToggleVisible": {
-            "en": "Toggle visible/hide"
+            "en": "Toggle visible/hide",
+            "zh-CN": "切换悬浮窗 启用/隐藏"
         },
         "IncompatibleAddon": {
             "en": "Detected incompatible addon {0}. Please update as soon as possible!!",
@@ -551,31 +562,38 @@
             "zh-CN": "以{0}: {1}排序列表失败"
         },
         "MapESMiniParse": {
-            "en": "MiniParseEventSource"
+            "en": "MiniParseEventSource",
+            "zh-CN": "数据统计事件源设置"
         },
         "MapOverlayLabel": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
-            "en": "LabelOverlay"
+            "en": "LabelOverlay",
+            "zh-CN": "标签美化悬浮窗"
         },
         "MapOverlayMiniParse": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
-            "en": "MiniParseOverlay"
+            "en": "MiniParseOverlay",
+            "zh-CN": "数据统计美化悬浮窗"
         },
         "MapOverlayShortLabel": {
             "#comment": "This name appears in the combo box for new overlays.",
-            "en": "Label"
+            "en": "Label",
+            "zh-CN": "标签"
         },
         "MapOverlayShortMiniParse": {
             "#comment": "This name appears in the combo box for new overlays.",
-            "en": "MiniParse"
+            "en": "MiniParse",
+            "zh-CN": "数据统计"
         },
         "MapOverlayShortSpellTimer": {
             "#comment": "This name appears in the combo box for new overlays.",
-            "en": "SpellTimer"
+            "en": "SpellTimer",
+            "zh-CN": "技能冷却"
         },
         "MapOverlaySpellTimer": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
-            "en": "SpellTimerOverlay"
+            "en": "SpellTimerOverlay",
+            "zh-CN": "技能冷却美化悬浮窗"
         },
         "MissingEventDispatchError": {
             "en": "Tried to dispatch unregistered event type \"{0}\"!"
@@ -608,14 +626,16 @@
             "zh-CN": "注册热键：{0}失败！"
         },
         "PromptSelectOverlayType": {
-            "en": "Please select overlay type."
+            "en": "Please select overlay type.",
+            "zh-CN": "请选择悬浮窗类型。"
         },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
             "zh-CN": "在EnableHotKeys()注册热键{0}, {1}失败。"
         },
         "TabsESLabel": {
-            "en": "Event Source"
+            "en": "Event Source",
+            "zh-CN": "事件源"
         },
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
@@ -803,7 +823,7 @@
         },
         "OverlayPluginTitle": {
             "en": "OverlayPlugin",
-            "zh-CN": "伤害统计美化"
+            "zh-CN": "数据统计美化"
         },
         "StatusCancelled": {
             "en": "Cancelled!",
