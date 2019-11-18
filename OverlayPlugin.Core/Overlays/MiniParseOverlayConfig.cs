@@ -43,7 +43,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             }
         }
 
-        private int zoom;
+        private int zoom = 1;
         public int Zoom
         {
             get
@@ -63,7 +63,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public MiniParseOverlayConfig(string name) : base(name)
         {
             this.noFocus = true;
-            this.zoom = 0;
+            this.zoom = 1;
         }
 
         public MiniParseOverlayConfig() : base(null) { }
