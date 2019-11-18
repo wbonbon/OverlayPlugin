@@ -376,6 +376,7 @@
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnResetZoom.Text": {
             "en": "Reset",
+            "ja-JP": "リセット",
             "zh-CN": "重设"
         },
         "buttonMiniParseOpenDevTools.Text": {
@@ -412,11 +413,13 @@
         "checkLogConsoleMessages.Text": {
             "en": "Show console messages from this overlay in the overlay log",
             "fr-FR": "Afficher les messages de cet overlay dans le log",
+            "ja-JP": "オーバーレイのコンソールメッセージをログに表示する",
             "zh-CN": "在模板日志中显示来自此模板的控制台消息"
         },
         "checkNoFocus.Text": {
             "en": "Don't accept focus for this overlay",
             "fr-FR": "Ne pas accepter le focus pour cet overlay",
+            "ja-JP": "このオーバーレイにはフォーカスしない",
             "zh-CN": "不焦点此悬浮窗"
         },
         "label1.Text": {
@@ -445,6 +448,7 @@
         },
         "label15.Text": {
             "en": "Zoom",
+            "ja-JP": "ズーム",
             "zh-CN": "缩放"
         },
         "label2.Text": {
@@ -504,6 +508,7 @@
         "lblNoFocus.Text": {
             "en": "No Focus",
             "fr-FR": "Pas de focus",
+            "ja-JP": "フォーカスの無効",
             "zh-CN": "取消焦点"
         }
     },
