@@ -627,7 +627,7 @@
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
-            "zh-CN": "请选择模板类型。"
+            "zh-CN": "请选择悬浮窗类型。"
         },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
