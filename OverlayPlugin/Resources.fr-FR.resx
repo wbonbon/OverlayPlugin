@@ -116,41 +116,34 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>  <data name="label6.Text" xml:space="preserve">
-    <value>最大帧速率</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>启用美化 开/关 快捷键</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>鼠标穿透</value>
-  </data>
-  <data name="buttonLogParseCopyActXiv.Text" xml:space="preserve">
-    <value>复制变量到剪切板</value>
-  </data>
-  <data name="label9.Text" xml:space="preserve">
-    <value>锁定美化悬浮窗</value>
-  </data>
-  <data name="buttonLogParseOpenDevTools.Text" xml:space="preserve">
-    <value>启动Debug工具</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>快捷键功能</value>
-  </data>
-  <data name="buttonLogParseSelectFile.Text" xml:space="preserve">
-    <value>浏览</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>美化模板路径</value>
-  </data>
-  <data name="buttonLogParseReloadBrowser.Text" xml:space="preserve">
-    <value>重新加载（用于更换模板后即时刷新）</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>启用美化悬浮窗</value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>设置美化 开/关 快捷键</value>
-  </data>
+  </resheader>
 
-</root>
+  <data name="AssemblyResolverLoaded" xml:space="preserve">
+    <value>AssemblyResolver : Chargé : {0}</value>
+  </data>
+  <data name="FailedToLoadCommon" xml:space="preserve">
+    <value>Impossible de charger Common !</value>
+  </data>
+  <data name="CefInstallerFailed" xml:space="preserve">
+    <value>Impossible de charger CefInstaller.</value>
+  </data>
+  <data name="CoreOrHtmlRendererInsane" xml:space="preserve">
+    <value>Core et HtmlRenderer sont différents.</value>
+  </data>
+  <data name="AssemblyResolverError" xml:space="preserve">
+    <value>AssemblyResolver : Erreur : {0}</value>
+  </data>
+  <data name="AssemblyMismatch" xml:space="preserve">
+    <value>ACT a essayé de charger {0} {1} qui ne correspond pas à votre version d'OverlayPlugin ({2}). Chargement du plugin annulé.
+Vérifier que l'ancien OverlayPlugin est désactivé et relancez ACT. Si le problème persiste, supprimer les fichiers spécifiés au dessus et les fichiers OverlayPlugin*.dll, CEF et HtmlRenderer.dll dans le même répertoire.
+</value>
+  </data>
+  <data name="WaitingForAct" xml:space="preserve">
+    <value>En attente d'ACT pour terminer le démarrage ...</value>
+  </data>
+  <data name="InitRuntime" xml:space="preserve">
+    <value>Initialisation Runtime</value>
+  </data>
+  <data name="InitCef" xml:space="preserve">
+    <value>Initialisation de CEF ...</value>
+  </data></root>

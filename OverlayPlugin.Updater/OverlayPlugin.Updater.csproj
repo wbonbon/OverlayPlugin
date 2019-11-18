@@ -90,17 +90,24 @@
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
+    <EmbeddedResource Include="ProgressDisplay.fr-FR.resx">
+      <DependentUpon>ProgressDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressDisplay.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressDisplay.zh-CN.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.fr-FR.resx" />
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.zh-CN.resx" />
+    <EmbeddedResource Include="UpdateQuestionForm.fr-FR.resx">
+      <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UpdateQuestionForm.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>

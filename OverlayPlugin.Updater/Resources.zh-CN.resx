@@ -144,7 +144,7 @@
     <value>正在恢复下载...</value>
   </data>
   <data name="OverlayPluginTitle" xml:space="preserve">
-    <value>伤害统计美化</value>
+    <value>数据统计美化</value>
   </data>
   <data name="LaunchingInstallerFailed" xml:space="preserve">
     <value>打开安装程序失败：{0}</value>
@@ -231,4 +231,39 @@ OverlayPlugin运行需要它。现在安装？</value>
   </data>
   <data name="UpdateSuccess" xml:space="preserve">
     <value>更新成功。请重新运行ACT来加载新版插件。</value>
+  </data>
+  <data name="LogBackingUpOldFiles" xml:space="preserve">
+    <value>正在备份旧文件...</value>
+  </data>
+  <data name="LogRemovingOldBackup" xml:space="preserve">
+    <value>正在删除旧备份目录...</value>
+  </data>
+  <data name="LogOverwritingOldFiles" xml:space="preserve">
+    <value>正在覆写旧文件...</value>
+  </data>
+  <data name="LogRestoringBackup" xml:space="preserve">
+    <value>正在恢复备份...</value>
+  </data>
+  <data name="LogDone" xml:space="preserve">
+    <value>完成。</value>
+  </data>
+  <data name="LogFailedReplaceDirectory" xml:space="preserve">
+    <value>无法替换旧目录：{0}</value>
+  </data>
+  <data name="LogMovingDirectory" xml:space="preserve">
+    <value>正在移动目录...</value>
+  </data>
+  <data name="LogDeletingTempFiles" xml:space="preserve">
+    <value>正在删除临时文件...</value>
+  </data>
+  <data name="LogFailedToDelete" xml:space="preserve">
+    <value>无法删除{0}：{1}</value>
+  </data>
+  <data name="LogCleaningUp" xml:space="preserve">
+    <value>正在执行清理...</value>
+  </data>
+  <data name="LogOverwritingOldFilesFailed" xml:space="preserve">
+    <value>无法覆写旧文件：{0}
+警告：插件可能处于无法使用的状态！！
+再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。</value>
   </data></root>

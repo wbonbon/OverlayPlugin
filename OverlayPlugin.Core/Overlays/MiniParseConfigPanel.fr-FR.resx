@@ -116,41 +116,65 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>  <data name="label6.Text" xml:space="preserve">
-    <value>最大帧速率</value>
+  </resheader>
+
+  <data name="buttonMiniParseSelectFile.Text" xml:space="preserve">
+    <value>...</value>
   </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>启用美化 开/关 快捷键</value>
+  <data name="label11.Text" xml:space="preserve">
+    <value>Cette option est seulement nécessaire si la skin de l'overlay n'est pas compatible d'origine avec OverlayPlugin</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>鼠标穿透</value>
+  <data name="label12.Text" xml:space="preserve">
+    <value>Utilisez cette option si vous ne trouvez ou ne pouvez pas redimensionner l'overlay</value>
   </data>
-  <data name="buttonLogParseCopyActXiv.Text" xml:space="preserve">
-    <value>复制变量到剪切板</value>
+  <data name="buttonMiniParseOpenDevTools.Text" xml:space="preserve">
+    <value>Ouvrir DevTools</value>
+  </data>
+  <data name="lblNoFocus.Text" xml:space="preserve">
+    <value>Pas de focus</value>
+  </data>
+  <data name="checkLogConsoleMessages.Text" xml:space="preserve">
+    <value>Afficher les messages de cet overlay dans le log</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Compatibilité ACTWS</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>锁定美化悬浮窗</value>
+    <value>Bloquer l'overlay</value>
   </data>
-  <data name="buttonLogParseOpenDevTools.Text" xml:space="preserve">
-    <value>启动Debug工具</value>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Forcer le fond en blanc</value>
   </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>快捷键功能</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Activer cliquer à travers</value>
   </data>
-  <data name="buttonLogParseSelectFile.Text" xml:space="preserve">
-    <value>浏览</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>美化模板路径</value>
-  </data>
-  <data name="buttonLogParseReloadBrowser.Text" xml:space="preserve">
-    <value>重新加载（用于更换模板后即时刷新）</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>启用美化悬浮窗</value>
+  <data name="checkNoFocus.Text" xml:space="preserve">
+    <value>Ne pas accepter le focus pour cet overlay</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
-    <value>设置美化 开/关 快捷键</value>
+    <value>Touche de raccourci</value>
   </data>
-
-</root>
+  <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
+    <value>RAZ Position</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Rafraichissement max.</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Afficher l'overlay</value>
+  </data>
+  <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
+    <value>Recharger l'overlay</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Type de raccourci</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Activer raccourci</value>
+  </data>
+  <data name="checkActwsCompatbility.Text" xml:space="preserve">
+    <value>Cet overlay nécessite ACTWebSocket</value>
+  </data></root>

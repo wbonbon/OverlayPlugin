@@ -229,6 +229,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlPanel.fr-FR.resx">
+      <DependentUpon>ControlPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ControlPanel.ja-JP.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -241,6 +244,9 @@
     <EmbeddedResource Include="Controls\ControlPanel.zh-CN.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GeneralConfigTab.fr-FR.resx">
+      <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.ja-JP.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </EmbeddedResource>
@@ -249,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.zh-CN.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\NewOverlayDialog.fr-FR.resx">
+      <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewOverlayDialog.ja-JP.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
@@ -259,14 +268,23 @@
     <EmbeddedResource Include="Controls\NewOverlayDialog.zh-CN.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WSConfigPanel.fr-FR.resx">
+      <DependentUpon>WSConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\WSConfigPanel.ja-JP.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WSConfigPanel.zh-CN.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.fr-FR.resx">
+      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.zh-CN.resx">
       <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.fr-FR.resx">
+      <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.ja-JP.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
@@ -279,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.zh-CN.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\LogParseConfigPanel.fr-FR.resx">
+      <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LogParseConfigPanel.ja-JP.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
@@ -301,6 +322,9 @@
     <EmbeddedResource Include="Overlays\LogParseConfigPanel.zh-CN.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\MiniParseConfigPanel.fr-FR.resx">
+      <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Overlays\MiniParseConfigPanel.ja-JP.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -315,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\MiniParseConfigPanel.zh-CN.resx">
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.fr-FR.resx">
+      <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.ko-KR.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
@@ -331,6 +358,7 @@
     <EmbeddedResource Include="Overlays\SpellTimerConfigPanel.zh-CN.resx">
       <DependentUpon>SpellTimerConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.fr-FR.resx" />
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

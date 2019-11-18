@@ -129,7 +129,7 @@
     <value>复制变量到剪切板</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>启用美化窗口</value>
+    <value>启用美化悬浮窗</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>美化模板路径</value>
@@ -144,7 +144,7 @@
     <value>重新加载（用于更换模板后即时刷新）</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>锁定美化窗口</value>
+    <value>锁定美化悬浮窗</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>快捷键功能</value>

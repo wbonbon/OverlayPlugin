@@ -138,10 +138,10 @@
     <value>ACTWS兼容性</value>
   </data>
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
-    <value>重置美化窗口位置</value>
+    <value>重置美化悬浮窗位置</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
-    <value>如果您找不到美化窗口或由于某种原因无法调整其大小时，请启用此选项。</value>
+    <value>如果您找不到美化悬浮窗或由于某种原因无法调整其大小时，请启用此选项。</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>鼠标穿透</value>
@@ -150,7 +150,7 @@
     <value>浏览</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>锁定美化窗口</value>
+    <value>锁定美化悬浮窗</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>快捷键功能</value>
@@ -162,10 +162,25 @@
     <value>重新加载（用于更换模板后即时刷新）</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>启用美化窗口</value>
+    <value>启用美化悬浮窗</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>在美化窗口强制启用白色背景</value>
+    <value>在美化悬浮窗强制启用白色背景</value>
   </data>
 
-</root>
+
+  <data name="checkLogConsoleMessages.Text" xml:space="preserve">
+    <value>在模板日志中显示来自此模板的控制台消息</value>
+  </data>
+  <data name="checkNoFocus.Text" xml:space="preserve">
+    <value>不焦点此悬浮窗</value>
+  </data>
+  <data name="lblNoFocus.Text" xml:space="preserve">
+    <value>取消焦点</value>
+  </data>
+  <data name="btnResetZoom.Text" xml:space="preserve">
+    <value>重设</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>缩放</value>
+  </data></root>
