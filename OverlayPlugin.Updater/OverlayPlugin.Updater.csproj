@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -69,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CefInstaller.cs" />
+    <Compile Include="CurlWrapper.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="ProgressDisplay.cs">
@@ -123,4 +126,8 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)Thirdparty\curl\builds\libcurl-x64.dll" "$(TargetDir)x64\libcurl.dll"
+copy "$(SolutionDir)Thirdparty\curl\builds\libcurl.dll" "$(TargetDir)x86\libcurl.dll"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

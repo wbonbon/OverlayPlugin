@@ -18,6 +18,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         ProgressDisplay _display;
         string _tempDir = null;
         string _destDir = null;
+        CancellationToken _token = CancellationToken.None;
 
         public ProgressDisplay Display => _display;
 
@@ -35,13 +36,12 @@ namespace RainbowMage.OverlayPlugin.Updater
         {
             var inst = new Installer(_destDir);
 
-            // We need to use a Task here since parts of Download() and the other methods are blocking.
-            return await Task.Run(async () =>
+            return await Task.Run(() =>
             {
                 var result = false;
                 var archivePath = Path.Combine(inst._tempDir, "update.7z");
 
-                if (await inst.Download(url, archivePath) && inst.Extract(archivePath))
+                if (inst.Download(url, archivePath) && inst.Extract(archivePath))
                 {
                     result = overwrite ? inst.InstallOverwrite() : inst.InstallReplace();
                     inst.Cleanup();
@@ -61,9 +61,9 @@ namespace RainbowMage.OverlayPlugin.Updater
             var inst = new Installer(Path.Combine(Path.GetTempPath(), "OverlayPlugin.tmp"));
             var exePath = Path.Combine(inst._tempDir, "vc_redist.x64.exe");
 
-            return await Task.Run(async () =>
+            return await Task.Run(() =>
             {
-                if (await inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
+                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
                 {
                     inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
                     inst.Display.Log(Resources.LogLaunchingInstaller);
@@ -88,7 +88,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         var cancel = inst.Display.GetCancelToken();
 
                         inst.Display.Log(Resources.LogInstallerWaiting);
-                        while (!File.Exists("C:\\Windows\\system32\\msvcp140.dll") && !cancel.IsCancellationRequested)
+                        while (NativeMethods.LoadLibrary("msvcp140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
                         {
                             Thread.Sleep(500);
                         }
@@ -98,7 +98,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
 
                     inst.Cleanup();
-                    if (File.Exists("C:\\Windows\\system32\\msvcp140.dll"))
+                    if (NativeMethods.LoadLibrary("msvcp140.dll") != IntPtr.Zero)
                     {
                         inst.Display.Close();
                         return true;
@@ -114,7 +114,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             });
         }
 
-        public async Task<bool> Download(string url, string dest)
+        public bool Download(string url, string dest)
         {
             try
             {
@@ -134,120 +134,43 @@ namespace RainbowMage.OverlayPlugin.Updater
             _display.Log(string.Format(Resources.LogDownloading, url, dest));
 
             var success = false;
-            var client = new HttpClient();
             var cancel = _display.GetCancelToken();
-            HttpResponseMessage response;
-
-            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            client.DefaultRequestHeaders.Add("User-Agent", "ngld/OverlayPlugin v" + currentVersion.ToString());
+            _token = cancel;
 
             try
             {
-                Stream stream = null;
-                var buffer = new byte[81290];
-                var read = 0;
-                var failed = true;
                 var retries = 10;
 
-                using (var file = File.OpenWrite(dest))
+                while (retries > 0 && !cancel.IsCancellationRequested)
                 {
-                    while (retries > 0 && failed)
+                    try
                     {
-                        failed = false;
-                        retries--;
-
-                        try
-                        {
-                            response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancel);
-                        }
-                        catch (HttpRequestException ex)
-                        {
-                            _display.Log(string.Format(Resources.LogDownloadFailed, ex));
-
-                            if (retries > 0)
-                            {
-                                _display.Log(Resources.LogRetryAfter1s);
-                                Thread.Sleep(1000);
-                            }
-                            failed = true;
-                            continue;
-                        }
-
-                        if (!response.IsSuccessStatusCode)
-                        {
-                            _display.Log(string.Format(Resources.LogDownloadFailed, response.ReasonPhrase));
-
-                            if (retries > 0)
-                            {
-                                _display.Log(Resources.LogRetryAfter1s);
-                                Thread.Sleep(1000);
-                            }
-                            failed = true;
-                            continue;
-                        }
-
-                        var length = response.Content.Headers.ContentLength ?? -1;
-                        if (length == -1)
-                        {
-                            // Retrying wouldn't help here.
-                            _display.Log(Resources.DownloadFailedContentLengthMissing);
-                            return false;
-                        }
-
-                        if (response.StatusCode == HttpStatusCode.PartialContent)
-                        {
-                            // This is a resumed download.
-                            length += file.Position;
-                        }
-                        else
-                        {
-                            // Make sure we don't append stuff if the resumption failed and we're receiving the whole file again.
-                            file.Seek(0, SeekOrigin.Begin);
-                        }
-
-                        stream = await response.Content.ReadAsStreamAsync();
-
-                        var status = string.Format(Resources.StatusDownloadStarted, 1, 2);
-                        try
-                        {
-                            while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                file.Write(buffer, 0, read);
-                                _display.UpdateStatus((float)file.Position / length, status);
-
-                                if (cancel.IsCancellationRequested)
-                                {
-                                    retries = 0;
-                                    break;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            _display.Log(string.Format(Resources.LogDownloadInterrupted, ex));
-
-                            if (file.Position > 0 && retries > 0)
-                            {
-                                _display.Log(Resources.LogResumingDownload);
-                                failed = true;
-
-                                client.DefaultRequestHeaders.Remove("Range");
-                                client.DefaultRequestHeaders.Add("Range", $"bytes={file.Position}-");
-                                continue;
-                            }
-                        }
-
+                        CurlWrapper.Get(url, new Dictionary<string, string>(), dest, DlProgressCallback, true);
                         success = true;
                         break;
                     }
+                    catch (Exception ex)
+                    {
+                        _display.Log(string.Format(Resources.LogDownloadInterrupted, ex));
+
+                        if (retries > 0)
+                        {
+                            if (ex.GetType().IsSubclassOf(typeof(CurlException)))
+                                Thread.Sleep(1000);
+
+                            _display.Log(Resources.LogResumingDownload);
+                            success = false;
+                            continue;
+                        }
+                    }
                 }
 
-                if (cancel.IsCancellationRequested || failed)
+                if (cancel.IsCancellationRequested || !success)
                 {
                     _display.UpdateStatus(0, Resources.StatusCancelling);
                     File.Delete(dest);
 
-                    if (failed)
+                    if (!cancel.IsCancellationRequested)
                     {
                         _display.UpdateStatus(0, Resources.OutOfRetries);
                         _display.Log(Resources.OutOfRetries);
@@ -276,12 +199,22 @@ namespace RainbowMage.OverlayPlugin.Updater
             finally
             {
                 _display.DisposeCancelSource();
-                client.Dispose();
 
                 if (!success) Cleanup();
             }
 
             return true;
+        }
+
+        private int DlProgressCallback(IntPtr clientp, long dltotal, long dlnow, long ultotal, long ulnow)
+        {
+            var resumed = (float)((int)clientp);
+            var status = string.Format(Resources.StatusDownloadStarted, 1, 2);
+
+            if (dltotal > 0)
+                _display.UpdateStatus((resumed + dlnow) / (resumed + dltotal), status);
+
+            return _token.IsCancellationRequested ? 1 : 0;
         }
 
         public bool Extract(string archivePath)
@@ -497,14 +430,21 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 _display.Log(Resources.LogDeletingTempFiles);
 
-                try
+                var retries = 10;
+                while (retries > 0)
                 {
-                    Directory.Delete(_tempDir, true);
-                    _display.Log(Resources.LogDone);
-                }
-                catch (Exception ex)
-                {
-                    _display.Log(string.Format(Resources.LogFailedToDelete, _tempDir, ex));
+                    retries--;
+                    try
+                    {
+                        Directory.Delete(_tempDir, true);
+                        _display.Log(Resources.LogDone);
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        _display.Log(string.Format(Resources.LogFailedToDelete, _tempDir, ex));
+                        Thread.Sleep(300);
+                    }
                 }
             }
         }

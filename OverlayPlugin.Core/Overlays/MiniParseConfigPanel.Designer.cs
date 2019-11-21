@@ -59,20 +59,20 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cbWhiteBg = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.lblNoFocus = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.checkNoFocus = new System.Windows.Forms.CheckBox();
             this.checkLogConsoleMessages = new System.Windows.Forms.CheckBox();
-            this.tbZoom = new System.Windows.Forms.TrackBar();
+            this.lblNoFocus = new System.Windows.Forms.Label();
+            this.checkNoFocus = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tbZoom = new System.Windows.Forms.TrackBar();
             this.btnResetZoom = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxFrameRate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -304,15 +304,22 @@
             resources.ApplyResources(this.label12, "label12");
             this.label12.Name = "label12";
             // 
-            // lblNoFocus
-            // 
-            resources.ApplyResources(this.lblNoFocus, "lblNoFocus");
-            this.lblNoFocus.Name = "lblNoFocus";
-            // 
             // label15
             // 
             resources.ApplyResources(this.label15, "label15");
             this.label15.Name = "label15";
+            // 
+            // checkLogConsoleMessages
+            // 
+            resources.ApplyResources(this.checkLogConsoleMessages, "checkLogConsoleMessages");
+            this.checkLogConsoleMessages.Name = "checkLogConsoleMessages";
+            this.checkLogConsoleMessages.UseVisualStyleBackColor = true;
+            this.checkLogConsoleMessages.CheckedChanged += new System.EventHandler(this.checkLogConsoleMessages_CheckedChanged);
+            // 
+            // lblNoFocus
+            // 
+            resources.ApplyResources(this.lblNoFocus, "lblNoFocus");
+            this.lblNoFocus.Name = "lblNoFocus";
             // 
             // checkNoFocus
             // 
@@ -321,12 +328,12 @@
             this.checkNoFocus.UseVisualStyleBackColor = true;
             this.checkNoFocus.CheckedChanged += new System.EventHandler(this.checkNoFocus_CheckedChanged);
             // 
-            // checkLogConsoleMessages
+            // tableLayoutPanel4
             // 
-            resources.ApplyResources(this.checkLogConsoleMessages, "checkLogConsoleMessages");
-            this.checkLogConsoleMessages.Name = "checkLogConsoleMessages";
-            this.checkLogConsoleMessages.UseVisualStyleBackColor = true;
-            this.checkLogConsoleMessages.CheckedChanged += new System.EventHandler(this.checkLogConsoleMessages_CheckedChanged);
+            resources.ApplyResources(this.tableLayoutPanel4, "tableLayoutPanel4");
+            this.tableLayoutPanel4.Controls.Add(this.tbZoom, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.btnResetZoom, 1, 0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             // 
             // tbZoom
             // 
@@ -336,13 +343,6 @@
             this.tbZoom.Name = "tbZoom";
             this.tbZoom.Value = 1;
             this.tbZoom.ValueChanged += new System.EventHandler(this.tbZoom_ValueChanged);
-            // 
-            // tableLayoutPanel4
-            // 
-            resources.ApplyResources(this.tableLayoutPanel4, "tableLayoutPanel4");
-            this.tableLayoutPanel4.Controls.Add(this.tbZoom, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.btnResetZoom, 1, 0);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             // 
             // btnResetZoom
             // 
@@ -365,8 +365,8 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxFrameRate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

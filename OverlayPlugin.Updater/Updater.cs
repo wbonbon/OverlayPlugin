@@ -15,53 +15,54 @@ namespace RainbowMage.OverlayPlugin.Updater
         const string REL_URL = "https://api.github.com/repos/ngld/OverlayPlugin/releases";
         const string DL = "https://github.com/ngld/OverlayPlugin/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.7z";
 
-        public static async Task<(bool, Version, string)> CheckForUpdate()
+        public static Task<(bool, Version, string)> CheckForUpdate(Control parent)
         {
-            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            Version remoteVersion;
-
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("User-Agent", "ngld/OverlayPlugin v" + currentVersion.ToString());
-
-            string response;
-            try
+            return Task.Run(() =>
             {
-                response = await client.GetStringAsync(REL_URL);
-            } catch (HttpRequestException ex)
-            {
-                MessageBox.Show(string.Format(Resources.UpdateCheckException, ex.ToString()), Resources.UpdateCheckTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                client.Dispose();
-                return (false, null, "");
-            }
-
-            client.Dispose();
-
-            var releaseNotes = "";
-            try
-            {
-                // JObject doesn't accept arrays so we have to package the response in a JSON object.
-                var tmp = JObject.Parse("{\"content\":" + response + "}");
-                remoteVersion = Version.Parse(tmp["content"][0]["tag_name"].ToString().Substring(1));
-
-                foreach (var rel in tmp["content"])
+                var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
+                Version remoteVersion;
+                string response;
+                try
                 {
-                    var version = Version.Parse(rel["tag_name"].ToString().Substring(1));
-                    if (version.CompareTo(currentVersion) < 1) break;
-
-                    releaseNotes += "---\n\n# " + rel["name"].ToString() + "\n\n" + rel["body"].ToString() + "\n\n";
+                    response = CurlWrapper.Get(REL_URL);
+                }
+                catch (CurlException ex)
+                {
+                    MessageBox.Show(string.Format(Resources.UpdateCheckException, ex.ToString()), Resources.UpdateCheckTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return (false, null, "");
                 }
 
-                if (releaseNotes.Length > 5)
+                var releaseNotes = "";
+                try
                 {
-                    releaseNotes = releaseNotes.Substring(5);
-                }
-            } catch(Exception ex)
-            {
-                MessageBox.Show(string.Format(Resources.UpdateParseVersionError, ex.ToString()), Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return (false, null, null);
-            }
+                    // JObject doesn't accept arrays so we have to package the response in a JSON object.
+                    var tmp = JObject.Parse("{\"content\":" + response + "}");
+                    remoteVersion = Version.Parse(tmp["content"][0]["tag_name"].ToString().Substring(1));
 
-            return (remoteVersion.CompareTo(currentVersion) > 0, remoteVersion, releaseNotes);
+                    foreach (var rel in tmp["content"])
+                    {
+                        var version = Version.Parse(rel["tag_name"].ToString().Substring(1));
+                        if (version.CompareTo(currentVersion) < 1) break;
+
+                        releaseNotes += "---\n\n# " + rel["name"].ToString() + "\n\n" + rel["body"].ToString() + "\n\n";
+                    }
+
+                    if (releaseNotes.Length > 5)
+                    {
+                        releaseNotes = releaseNotes.Substring(5);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    parent.Invoke((Action) (() =>
+                    {
+                        MessageBox.Show(string.Format(Resources.UpdateParseVersionError, ex.ToString()), Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }));
+                    return (false, null, null);
+                }
+
+                return (remoteVersion.CompareTo(currentVersion) > 0, remoteVersion, releaseNotes);
+            });
         }
 
         public static async Task<bool> InstallUpdate(Version version, string pluginDirectory)
@@ -110,7 +111,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 return;
             }
 
-            var (newVersion, remoteVersion, releaseNotes) = await CheckForUpdate();
+            var (newVersion, remoteVersion, releaseNotes) = await CheckForUpdate(parent);
 
             if (remoteVersion != null)
             {
@@ -133,7 +134,10 @@ namespace RainbowMage.OverlayPlugin.Updater
                  }));
             } else if (manualCheck && remoteVersion != null)
             {
-                MessageBox.Show(Resources.UpdateAlreadyLatest, Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                parent.Invoke((Action)(() =>
+                {
+                    MessageBox.Show(Resources.UpdateAlreadyLatest, Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }));
             }
         }
     }

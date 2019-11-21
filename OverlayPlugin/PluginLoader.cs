@@ -67,6 +67,14 @@ namespace RainbowMage.OverlayPlugin
 
             pluginStatusText.Text = Resources.InitCef;
 
+            try
+            {
+                CurlWrapper.Init(pluginDirectory);
+            } catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, ex.ToString());
+            }
+
             if (await CefInstaller.EnsureCef(GetCefPath()))
             {
                 // Finally, load the html renderer. We load it here since HtmlRenderer depends on CEF which we can't load these before
