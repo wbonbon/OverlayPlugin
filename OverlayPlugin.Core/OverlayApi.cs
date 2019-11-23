@@ -102,6 +102,9 @@ namespace RainbowMage.OverlayPlugin
                     }
 
                     var result = EventDispatcher.CallHandler(message);
+                    if (result != null && result.Type != JTokenType.Object) {
+                        throw new Exception("Handler response must be an object or null");
+                    }
                     Renderer.ExecuteCallback(callback, result == null ? null : result.ToString(Newtonsoft.Json.Formatting.None));
                 }
                 catch (Exception e)

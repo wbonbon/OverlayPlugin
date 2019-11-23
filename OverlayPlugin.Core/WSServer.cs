@@ -252,6 +252,10 @@ namespace RainbowMage.OverlayPlugin
                     {
                         var response = EventDispatcher.CallHandler(data);
 
+                        if (response != null && response.Type != JTokenType.Object) {
+                            throw new Exception("Handler response must be an object or null");
+                        }
+
                         if (response == null) {
                             response = new JObject();
                             response["$isNull"] = true;
