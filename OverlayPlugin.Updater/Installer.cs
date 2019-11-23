@@ -206,9 +206,9 @@ namespace RainbowMage.OverlayPlugin.Updater
             return true;
         }
 
-        private int DlProgressCallback(IntPtr clientp, long dltotal, long dlnow, long ultotal, long ulnow)
+        private unsafe int DlProgressCallback(IntPtr clientp, long dltotal, long dlnow, long ultotal, long ulnow)
         {
-            var resumed = (float)((int)clientp);
+            var resumed = (float) *(long*)clientp;
             var status = string.Format(Resources.StatusDownloadStarted, 1, 2);
 
             if (dltotal > 0)

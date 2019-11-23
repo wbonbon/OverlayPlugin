@@ -127,7 +127,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(SolutionDir)Thirdparty\curl\builds\libcurl-x64.dll" "$(TargetDir)x64\libcurl.dll"
+    <PostBuildEvent>mkdir "$(TargetDir)x64"
+mkdir "$(TargetDir)x86"
+copy "$(SolutionDir)Thirdparty\curl\builds\libcurl-x64.dll" "$(TargetDir)x64\libcurl.dll"
 copy "$(SolutionDir)Thirdparty\curl\builds\libcurl.dll" "$(TargetDir)x86\libcurl.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
