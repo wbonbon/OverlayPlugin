@@ -820,8 +820,7 @@
             "ko-KR": "DisableHotKeys()에서 핫 키 {0}(을/를) 등록 취소하지 못했습니다."
         },
         "WSHandlerException": {
-            "en": "WS: Handler call failed: {0}",
-            "ko-KR": "WS 핸들러 호출 실패 : {0}"
+            "en": "WS: Handler call failed: {0}"
         },
         "WSIndexPage": {
             "#comment": "Front page of the WebSocket server. A list of the currently active overlays is displayed underneath with links for WebSocket mode.",
