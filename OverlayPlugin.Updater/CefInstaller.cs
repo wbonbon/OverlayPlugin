@@ -13,6 +13,11 @@ namespace RainbowMage.OverlayPlugin.Updater
         const string CEF_DL = "https://github.com/ngld/OverlayPlugin/releases/download/v0.7.0/CefSharp-{CEF_VERSION}-{ARCH}.DO_NOT_DOWNLOAD";
         const string CEF_VERSION = "75.1.14";
 
+        public static string GetUrl()
+        {
+            return CEF_DL.Replace("{CEF_VERSION}", CEF_VERSION).Replace("{ARCH}", Environment.Is64BitProcess ? "x64" : "x86");
+        }
+
         public static async Task<bool> EnsureCef(string cefPath)
         {
             var manifest = Path.Combine(cefPath, "version.txt");
@@ -29,7 +34,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             return await InstallCef(cefPath);
         }
 
-        public static async Task<bool> InstallCef(string cefPath)
+        public static async Task<bool> InstallCef(string cefPath, string archivePath = null)
         {
             var lib = IntPtr.Zero;
             while (true)
@@ -67,24 +72,18 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
             }
 
-            var url = CEF_DL.Replace("{CEF_VERSION}", CEF_VERSION).Replace("{ARCH}", Environment.Is64BitProcess ? "x64" : "x86");
+            var url = GetUrl();
 
-            var result = await Installer.Run(url, cefPath);
+            var result = await Installer.Run(archivePath == null ? url : archivePath, cefPath);
             if (!result || !Directory.Exists(cefPath))
             {
-                var response = MessageBox.Show(
+                MessageBox.Show(
                     Resources.UpdateCefDlFailed,
                     Resources.ErrorTitle,
-                    MessageBoxButtons.YesNo
+                    MessageBoxButtons.OK
                 );
-
-                if (response == DialogResult.Yes)
-                {
-                    return await InstallCef(cefPath);
-                } else
-                {
-                    return false;
-                }
+                
+                return false;
             } else
             {
                 File.WriteAllText(Path.Combine(cefPath, "version.txt"), CEF_VERSION);

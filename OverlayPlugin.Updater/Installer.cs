@@ -40,8 +40,18 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 var result = false;
                 var archivePath = Path.Combine(inst._tempDir, "update.7z");
+                var dlResult = true;
 
-                if (inst.Download(url, archivePath) && inst.Extract(archivePath))
+                // Only try to download URLs. We can skip this step for local files.
+                if (File.Exists(url))
+                {
+                    archivePath = url;
+                } else
+                {
+                    dlResult = inst.Download(url, archivePath);
+                }
+
+                if (dlResult && inst.Extract(archivePath))
                 {
                     result = overwrite ? inst.InstallOverwrite() : inst.InstallReplace();
                     inst.Cleanup();
@@ -155,7 +165,9 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         if (retries > 0)
                         {
-                            if (ex.GetType().IsSubclassOf(typeof(CurlException)))
+                            // If this is a curl exception, it's most likely network related. Wait a second
+                            // before trying again. We don't want to spam the other side with download requests.
+                            if (ex.GetType() == typeof(CurlException))
                                 Thread.Sleep(1000);
 
                             _display.Log(Resources.LogResumingDownload);

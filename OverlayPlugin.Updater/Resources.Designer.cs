@@ -433,7 +433,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to download CEF! You will not be able to use OverlayPlugin. Retry?.
+        ///   Looks up a localized string similar to Failed to download CEF! Check the OverlayPlugin.dll tab for details..
         /// </summary>
         internal static string UpdateCefDlFailed {
             get {
@@ -470,7 +470,8 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to parse version: {0}.
+        ///   Looks up a localized string similar to Failed to parse version:
+        ///{0}.
         /// </summary>
         internal static string UpdateParseVersionError {
             get {

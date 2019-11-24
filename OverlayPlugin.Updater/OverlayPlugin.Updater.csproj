@@ -71,6 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CefInstaller.cs" />
+    <Compile Include="CefMissingTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CefMissingTab.Designer.cs">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="CurlWrapper.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="NativeMethods.cs" />
@@ -93,6 +99,9 @@
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
+    <EmbeddedResource Include="CefMissingTab.resx">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressDisplay.fr-FR.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>

@@ -61,7 +61,7 @@
             "zh-CN": "检查更新"
         },
         "cbErrorReports.Text": {
-            "en": "Automatically report errors",
+            "en": "Automatically send error reports to the developer",
             "fr-FR": "Envoyer automatiquement les rapports d'erreur",
             "ja-JP": "エラーを自動で報告する",
             "zh-CN": "自动报告错误"
@@ -763,7 +763,7 @@
             "zh-CN": "在DisableHotKeys()反注册热键{0}失败。"
         },
         "WSHandlerException": {
-            "en": "WS: Handler call failed: {0}"            
+            "en": "WS: Handler call failed: {0}"
         },
         "WSIndexPage": {
             "#comment": "Front page of the WebSocket server. A list of the currently active overlays is displayed underneath with links for WebSocket mode.",
@@ -805,6 +805,38 @@
             "en": "Failed to process unsubscription: {0}",
             "fr-FR": "Impossible de procéder à la déinscription : {0}",
             "zh-CN": "处理退订失败：{0}"
+        }
+    },
+    "OverlayPlugin.Updater/CefMissingTab": {
+        "btnOpenManual.Text": {
+            "en": "Extract Downloaded File"
+        },
+        "btnStartAuto.Text": {
+            "en": "Download and unpack the missing files"
+        },
+        "label1.Text": {
+            "en": "Some files which are required for OverlayPlugin to function are missing. This is normal if you just installed OverlayPlugin or recently updated it. The files are fairly big (> 150 MiB) and change rarely (at most once per month). To make updates easier for everyone, these files are split into a separate download."
+        },
+        "label2.Text": {
+            "en": "Use this if the automated installation doesn't work for you."
+        },
+        "label3.Text": {
+            "en": "Download the following file and then open it using the button on the bottom:"
+        },
+        "label4.Text": {
+            "en": "Click the button below and let OverlayPlugin handle everything automatically. This should work for most people."
+        },
+        "label5.Text": {
+            "en": "If this doesn't work, take a look at the other tab."
+        },
+        "lnkManual.Text": {
+            "en": "Please wait..."
+        },
+        "tabPage1.Text": {
+            "en": "Automated Installation"
+        },
+        "tabPage2.Text": {
+            "en": "Manual Installation"
         }
     },
     "OverlayPlugin.Updater/ProgressDisplay": {
@@ -1035,7 +1067,7 @@
             "zh-CN": "您正在使用最新版本。"
         },
         "UpdateCefDlFailed": {
-            "en": "Failed to download CEF! You will not be able to use OverlayPlugin. Retry?",
+            "en": "Failed to download CEF! Check the OverlayPlugin.dll tab for details.",
             "fr-FR": "Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin. Réessayer ?",
             "zh-CN": "下载CEF失败！您将不能使用OverlayPlugin。重试？"
         },

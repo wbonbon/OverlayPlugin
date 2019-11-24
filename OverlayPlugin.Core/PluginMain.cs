@@ -152,28 +152,30 @@ namespace RainbowMage.OverlayPlugin
                 initTimer.Interval = 300;
                 initTimer.Tick += (o, e) =>
                 {
-                    if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
+                    if (ActGlobals.oFormActMain == null)
                     {
+                        // Something went really wrong.
                         initTimer.Stop();
-                        
-                        Registry.Register(new KeyboardHook());
-
-                        LoadAddons();
-                        InitializeOverlays();
-                        controlPanel.InitializeOverlayConfigTabs();
-
-                        OverlayHider.Initialize();
-
-                        if (Config.WSServerRunning)
+                    } else if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
+                    {
+                        try
                         {
-                            try
+                            initTimer.Stop();
+                            Registry.Register(new KeyboardHook());
+
+                            LoadAddons();
+                            InitializeOverlays();
+                            controlPanel.InitializeOverlayConfigTabs();
+                            OverlayHider.Initialize();
+
+                            if (Config.WSServerRunning)
                             {
                                 WSServer.Initialize();
                             }
-                            catch (Exception ex)
-                            {
-                                Logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
-                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
                         }
                     }
                 };
@@ -288,6 +290,7 @@ namespace RainbowMage.OverlayPlugin
 
                 // Make sure the event source is ready before we load any overlays.
                 Registry.RegisterEventSource<MiniParseEventSource>();
+                Registry.StartEventSources();
 
                 Registry.RegisterOverlay<MiniParseOverlay>();
                 Registry.RegisterOverlay<SpellTimerOverlay>();
@@ -413,12 +416,6 @@ namespace RainbowMage.OverlayPlugin
 
             Registry.Register(Config);
             Registry.Register<IPluginConfig>(Config);
-
-            foreach (var es in Registry.EventSources)
-            {
-                es.LoadConfig(Config);
-                es.Start();
-            }
         }
 
         /// <summary>

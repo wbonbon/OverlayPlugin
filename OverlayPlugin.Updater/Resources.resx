@@ -248,7 +248,7 @@ You'll need that for OverlayPlugin. Install it now?</value>
     <value>You are already on the latest version.</value>
   </data>
   <data name="UpdateCefDlFailed" xml:space="preserve">
-    <value>Failed to download CEF! You will not be able to use OverlayPlugin. Retry?</value>
+    <value>Failed to download CEF! Check the OverlayPlugin.dll tab for details.</value>
   </data>
   <data name="UpdateCheckException" xml:space="preserve">
     <value>Failed to check for updates:
