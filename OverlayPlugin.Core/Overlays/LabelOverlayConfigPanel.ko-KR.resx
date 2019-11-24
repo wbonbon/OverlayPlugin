@@ -145,7 +145,7 @@
     <value>업데이트 값 복사</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>URL</value>
+    <value>주소(URL)</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>텍스트를 HTML로 표시</value>

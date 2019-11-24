@@ -81,7 +81,7 @@ class XmlUpdater:
 
             for key in set(self._trans.keys()) - self._done:
                 print('Adding ' + key)
-                self._output.append(b'\n  <data name="%s" xml:space="preserve">\n' % self.escape(key))
+                self._output.append(b'  <data name="%s" xml:space="preserve">\n' % self.escape(key))
                 self._output.append(b'    <value>%s</value>\n' % self.escape(self._trans[key]))
                 self._output.append(b'  </data>\n')
         elif name == 'data':

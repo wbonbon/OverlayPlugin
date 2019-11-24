@@ -1182,8 +1182,8 @@
         },
         "UpdateCefDlFailed": {
             "en": "Failed to download CEF! Check the OverlayPlugin.dll tab for details.",
-            "fr-FR": "Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin. Réessayer ?",
-            "ko-KR": "CEF 패키지를 다운로드하지 못했습니다. OverlayPlugin을 사용할 수 없습니다. 재시도하시겠습니까?",
+            "fr-FR": "Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin.",
+            "ko-KR": "CEF 패키지를 다운로드하지 못했습니다. OverlayPlugin을 사용할 수 없습니다.",
             "zh-CN": "下载CEF失败！检查OverlayPlugin.dll选项卡以获取详细信息。"
         },
         "UpdateCheckException": {

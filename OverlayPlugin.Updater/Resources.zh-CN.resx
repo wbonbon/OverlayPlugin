@@ -184,7 +184,7 @@
     <value>OverlayPlugin检查更新</value>
   </data>
   <data name="UpdateCefDlFailed" xml:space="preserve">
-    <value>下载CEF失败！您将不能使用OverlayPlugin。重试？</value>
+    <value>下载CEF失败！检查OverlayPlugin.dll选项卡以获取详细信息。</value>
   </data>
   <data name="Exception" xml:space="preserve">
     <value>失败：{0}</value>
