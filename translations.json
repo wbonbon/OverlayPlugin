@@ -641,7 +641,8 @@
         },
         "DuplicateHandlerError": {
             "en": "Duplicate handler for name {0}!",
-            "fr-FR": "Handler en double pour le nom {0}!"
+            "fr-FR": "Handler en double pour le nom {0}!",
+            "ko-KR": "이름 {0}에 대한 중복 처리!"
         },
         "ErrorOverlayNameEmpty": {
             "en": "Name must not be empty or white space only.",
@@ -658,7 +659,6 @@
         "EventHandlerException": {
             "en": "Failed to dispatch event {0} to {1}! {2}",
             "fr-FR": "Impossible d'envoyer l'événement {0} à {1}! {2}"
-
         },
         "FFXIVDataRepositoryException": {
             "en": "Failed to retrieve the FFXIV DataRepository: {0}",
@@ -695,26 +695,31 @@
         "IncompatibleAddon": {
             "en": "Detected incompatible addon {0}. Please update as soon as possible!!",
             "fr-FR": "Addon {0} incompatible. Mettez à jour dès que possible !",
-            "zh-CN": "检测到不兼容的插件{0}。请尽快更新！！"
+            "zh-CN": "检测到不兼容的插件{0}。请尽快更新！！",
+            "ko-KR": "호환되지 않는 애드온 {0}(을/를) 감지했습니다. 가능한 빨리 업데이트하세요!"
         },
         "InitOverlayLocalFileIsMissing": {
             "en": "InitializeOverlay: Local file {0} does not exist!",
             "fr-FR": "InitializeOverlay: Le fichier local {0} n'existe pas !",
-            "zh-CN": "初始化插件：本地文件{0}不存在！"
+            "zh-CN": "初始化插件：本地文件{0}不存在！",
+            "ko-KR": "오버레이 초기화 : 로컬 파일 {0}이 없습니다!"
         },
         "InitOverlayUrlError": {
             "en": "InitializeOverlay: URI parse error! Please reconfigure the URL. (Config.Url = {0}): {1}",
             "fr-FR": "InitializeOverlay: erreur d'analyse URI ! Reconfigurez l'URL. (Config.Url = {0}): {1}",
-            "zh-CN": "初始化插件：路径解析错误！请重新设置美化模板路径(Config.Url = {0}): {1}"
+            "zh-CN": "初始化插件：路径解析错误！请重新设置美化模板路径(Config.Url = {0}): {1}",
+            "ko-KR": "오버레이 초기화 : URL 파싱 오류! URL 경로를 다시 확인해 주세요. (Config.Url = {0}): {1}"
         },
         "JsHandlerCallException": {
             "en": "JS Handler call failed: {0}",
-            "fr-FR": "Appel JS Handler échoué : {0}"
+            "fr-FR": "Appel JS Handler échoué : {0}",
+            "ko-KR": "JS 핸들러 호출 실패 : {0}"
         },
         "ListSortFailed": {
             "en": "Failed to sort list by {0}: {1}",
             "fr-FR": "Impossible de trier la liste par {0}: {1}",
-            "zh-CN": "以{0}: {1}排序列表失败"
+            "zh-CN": "以{0}: {1}排序列表失败",
+            "ko-KR": "{0}을 기준으로 정렬 실패 : {1}"
         },
         "MapESMiniParse": {
             "en": "MiniParseEventSource",
@@ -783,12 +788,14 @@
         "OverlayApiSubscribed": {
             "en": "{0}: Subscribed to {1}",
             "fr-FR": "{0}: Souscription à {1}",
-            "zh-CN": "{0}：已订阅{1}"
+            "zh-CN": "{0}：已订阅{1}",
+            "ko-KR": "{0} : 구독 {1}"
         },
         "OverlayBaseRegisterHotkeyError": {
             "en": "Failed to register hotkey: {0}!",
             "fr-FR": "Impossible d'enregistrer le raccourci : {0}!",
-            "zh-CN": "注册热键：{0}失败！"
+            "zh-CN": "注册热键：{0}失败！",
+            "ko-KR": "핫 키 등록을 실패했습니다. : {0}!"
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
@@ -799,7 +806,8 @@
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
             "fr-FR": "Impossible d'enregistrer le raccourci {0},{1} dans EnableHotKeys().!",
-            "zh-CN": "在EnableHotKeys()注册热键{0}, {1}失败。"
+            "zh-CN": "在EnableHotKeys()注册热键{0}, {1}失败。",
+            "ko-KR": "EnableHotKeys()에서 핫 키 {0}, {1}(을/를) 등록하지 못했습니다."
         },
         "TabsESLabel": {
             "en": "Event Source",
@@ -808,10 +816,12 @@
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
             "fr-FR": "Impossible de supprimer le raccourci {0},{1} dans DisableHotKeys() !",
-            "zh-CN": "在DisableHotKeys()反注册热键{0}失败。"
+            "zh-CN": "在DisableHotKeys()反注册热键{0}失败。",
+            "ko-KR": "DisableHotKeys()에서 핫 키 {0}(을/를) 등록 취소하지 못했습니다."
         },
         "WSHandlerException": {
-            "en": "WS: Handler call failed: {0}"
+            "en": "WS: Handler call failed: {0}",
+            "ko-KR": "WS 핸들러 호출 실패 : {0}"
         },
         "WSIndexPage": {
             "#comment": "Front page of the WebSocket server. A list of the currently active overlays is displayed underneath with links for WebSocket mode.",
@@ -822,37 +832,44 @@
         "WSInvalidDataRecv": {
             "en": "Invalid data received: {0}; {1}",
             "fr-FR": "Données non valides reçues : {0}; {1}",
-            "zh-CN": "收到无效数据：{0}; {1}"
+            "zh-CN": "收到无效数据：{0}; {1}",
+            "ko-KR": "유효하지 않은 데이터를 받았습니다 : {0}; {1}"
         },
         "WSLoadingCert": {
             "en": "WS: Loading SSL certificate {0}...",
             "fr-FR": "WS : Chargement du certificat SSL  {0}...",
-            "zh-CN": "WS：正在加载SSL证书{0}..."
+            "zh-CN": "WS：正在加载SSL证书{0}...",
+            "ko-KR": "WS : SSL 인증서 {0} 로드 중..."
         },
         "WSMessageSendFailed": {
             "en": "Failed to send message: {0}",
             "fr-FR": "Impossible d'enoyer le message : {0}",
-            "zh-CN": "发送信息失败：{0}"
+            "zh-CN": "发送信息失败：{0}",
+            "ko-KR": "메시지를 보내지 못했습니다 : {0}"
         },
         "WSNewSubFail": {
             "en": "Failed to process new subscription: {0}",
             "fr-FR": "Impossible de procéder à une nouvelle souscription : {0}",
-            "zh-CN": "处理新订阅失败：{0}"
+            "zh-CN": "处理新订阅失败：{0}",
+            "ko-KR": "새 구독을 처리하지 못했습니다 : {0}"
         },
         "WSShutdownError": {
             "en": "WS: Failed to shutdown. {0}",
             "fr-FR": "WS : L'arrêt a échoué. {0}",
-            "zh-CN": "WS:关闭失败：{0}"
+            "zh-CN": "WS:关闭失败：{0}",
+            "ko-KR": "WS : 종료하지 못했습니다. {0} "
         },
         "WSStartFailed": {
             "en": "WS: Failed to start: {0}",
             "fr-FR": "WS : Impossible de démarrer : {0}",
-            "zh-CN": "WS:启动失败：{0}"
+            "zh-CN": "WS:启动失败：{0}",
+            "ko-KR": "WS : 시작하지 못했습니다. {0} "
         },
         "WSUnsubFail": {
             "en": "Failed to process unsubscription: {0}",
             "fr-FR": "Impossible de procéder à la déinscription : {0}",
-            "zh-CN": "处理退订失败：{0}"
+            "zh-CN": "处理退订失败：{0}",
+            "ko-KR": "구독 취소를 처리하지 못했습니다 : {0}"
         }
     },
     "OverlayPlugin.Updater/ProgressDisplay": {
