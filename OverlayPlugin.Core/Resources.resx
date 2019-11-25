@@ -266,4 +266,7 @@
   <data name="TabsESLabel" xml:space="preserve">
     <value>Event Source</value>
   </data>
+  <data name="WSNotConfidentLink" xml:space="preserve">
+    <value>This link might not work if the overlay doesn't support ACTWebSocket.</value>
+  </data>
 </root>

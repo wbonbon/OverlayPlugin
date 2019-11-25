@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
@@ -105,50 +106,36 @@ namespace RainbowMage.OverlayPlugin
     <head>
         <title>OverlayPlugin WSServer</title>
     </head>
-    <script type='text/javascript'>
-        window.addEventListener('load', () => {
-            var links = document.querySelectorAll('a');
-            for (var i = 0; i < links.length; i++) {
-                var data = JSON.parse(links[i].getAttribute('data-info'));
-                var endpoint = data.arg === 'OVERLAY_WS' ? 'ws' : '';
-                links[i].href = data.url + '?' + data.arg + '=' + location.href.replace('http', 'ws') + endpoint;
-                
-                if (data.url.indexOf('file://') === 0) {
-                    links[i].parentNode.innerText = 'Local: ' + links[i].innerText + ': ' + links[i].href;
-                }
-            }
-        });
-    </script>
     <body>
         " + Resources.WSIndexPage + @"
         <ul>");
 
                         foreach (var overlay in plugin.Overlays)
                         {
-                            var argName = "OVERLAY_WS";
-                            if (overlay.GetType() == typeof(MiniParseOverlay))
+                            if (overlay.GetType() != typeof(MiniParseOverlay)) continue;
+
+                            var (confident, url) = GetUrl((MiniParseOverlay) overlay);
+
+                            url = url.Replace("&", "&amp;").Replace("\"", "&quot;");
+                            var overlayName = overlay.Name.Replace("&", "&amp;").Replace("<", "&lt;");
+                            
+                            if (url.StartsWith("file://"))
                             {
-                                var config = (MiniParseOverlayConfig)overlay.Config;
-                                if (config.ActwsCompatibility)
-                                {
-                                    argName = "HOST_PORT";
-                                }
+                                builder.Append($"<li>Local: {overlayName}: {url}</li>");
+                            } else
+                            {
+                                builder.Append($"<li><a href=\"{url}\">{overlayName}</a>");
+                            }
+                            
+                            if (!confident)
+                            {
+                                builder.Append(" " + Resources.WSNotConfidentLink);
                             }
 
-                            var jsonInfo = JsonConvert.SerializeObject(new
-                            {
-                                url = overlay.Config.Url,
-                                arg = argName
-                            });
-
-                            // HTML escaping
-                            jsonInfo = jsonInfo.Replace("\"", "&quot;").Replace(">", "&gt;");
-                            var overlayName = overlay.Name.Replace("&", "&amp;").Replace("<", "&lt;");
-
-                            builder.Append($"<li><a href=\"#\" data-info=\"{jsonInfo}\">{overlayName}</a></li>");
+                            builder.Append("</li>");
                         }
 
-                        builder.Append("</body></html>");
+                        builder.Append("</ul></body></html>");
 
                         var res = e.Response;
                         res.StatusCode = 200;
@@ -166,6 +153,34 @@ namespace RainbowMage.OverlayPlugin
                 Log(LogLevel.Error, Resources.WSStartFailed, e);
                 OnStateChanged?.Invoke(this, new StateChangedArgs(false, true));
             }
+        }
+
+        public static (bool, string) GetUrl(MiniParseOverlay overlay)
+        {
+            var cfg = Registry.Resolve<IPluginConfig>();
+            string argName = "HOST_PORT";
+
+            if (overlay.ModernApi)
+            {
+                argName = "OVERLAY_WS";
+            }
+
+            var url = Regex.Replace(overlay.Config.Url, @"[?&](?:HOST_PORT|OVERLAY_WS)=[^&]*", "");
+            if (url.Contains("?"))
+            {
+                url += "&";
+            } else
+            {
+                url += "?";
+            }
+
+            url += argName + "=ws";
+            if (cfg.WSServerSSL) url += "s";
+            url += "://" + cfg.WSServerIP + ":" + cfg.WSServerPort + "/";
+
+            if (argName == "OVERLAY_WS") url += "ws";
+
+            return (argName != "HOST_PORT" || overlay.Config.ActwsCompatibility, url);
         }
 
         public static string GetCertPath()
@@ -325,6 +340,33 @@ namespace RainbowMage.OverlayPlugin
                         break;
                     case "ChangePrimaryPlayer":
                         Send("{\"type\":\"broadcast\",\"msgtype\":\"SendCharName\",\"msg\":" + e.ToString(Formatting.None) + "}");
+                        break;
+                }
+            }
+
+            protected override void OnMessage(MessageEventArgs e)
+            {
+                JObject data = null;
+
+                try
+                {
+                    data = JObject.Parse(e.Data);
+                }
+                catch (JsonException ex)
+                {
+                    Log(LogLevel.Error, Resources.WSInvalidDataRecv, ex, e.Data);
+                    return;
+                }
+
+                if (!data.ContainsKey("type") || !data.ContainsKey("msgtype")) return;
+
+                switch (data["msgtype"].ToString())
+                {
+                    case "Capture":
+                        Log(LogLevel.Warning, "ACTWS Capture is not supported outside of overlays.");
+                        break;
+                    case "RequestEnd":
+                        ActGlobals.oFormActMain.EndCombat(true);
                         break;
                 }
             }

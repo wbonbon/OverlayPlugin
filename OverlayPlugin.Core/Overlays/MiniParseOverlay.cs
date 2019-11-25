@@ -15,16 +15,16 @@ namespace RainbowMage.OverlayPlugin.Overlays
 {
     public partial class MiniParseOverlay : OverlayBase<MiniParseOverlayConfig>
     {
-        protected bool modernApi = false;
         protected DateTime lastUrlChange;
         protected string lastLoadedUrl;
+        public bool ModernApi { get; protected set; }
 
         public MiniParseOverlay(MiniParseOverlayConfig config, string name)
             : base(config, name)
         {
             Config.ActwsCompatibilityChanged += (o, e) =>
             {
-                if (lastLoadedUrl != null) Navigate(lastLoadedUrl);
+                if (lastLoadedUrl != null && lastLoadedUrl != "about:blank") Navigate(lastLoadedUrl);
             };
             Config.NoFocusChanged += (o, e) =>
             {
@@ -71,6 +71,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             lastLoadedUrl = e.Url;
             Config.Url = e.Url;
             Overlay.Renderer.SetZoomLevel(Config.Zoom / 100.0);
+            Overlay.SetAcceptFocus(!Config.NoFocus);
 
             if (Config.ActwsCompatibility)
             {
@@ -89,6 +90,19 @@ namespace RainbowMage.OverlayPlugin.Overlays
                                 if (this.onmessage) this.onmessage({ data: JSON.stringify(msg) });
                             };
                             this.close = () => null;
+                            this.send = (msg) => {
+                                if (msg === '.') return;
+
+                                msg = JSON.parse(msg);
+                                switch (msg.msgtype) {
+                                    case 'Capture':
+                                        OverlayPluginApi.captureOverlay();
+                                        break;
+                                    case 'RequestEnd':
+                                        OverlayPluginApi.endEncounter();
+                                        break;
+                                }
+                            };
 
                             console.log(" + JsonConvert.SerializeObject(shimMsg) + @");
 
@@ -110,18 +124,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 Subscribe("LogLine");
                 Subscribe("ChangeZone");
                 Subscribe("ChangePrimaryPlayer");
-
-                // ACTWS overlays always accept input focus.
-                SetAcceptFocus(true);
             } else {
                 // Subscriptions are cleared on page navigation so we have to restore this after every load.
 
-                modernApi = false;
+                ModernApi = false;
                 Subscribe("CombatData");
                 Subscribe("LogLine");
-
-                // Reset the focus setting to make sure that a previously loaded overlay doesn't affect a different one.
-                SetAcceptFocus(false);
             }
         }
 
@@ -129,7 +137,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             if (Config.ActwsCompatibility)
             {
-                if (!url.Contains("HOST_PORT="))
+                if (!url.Contains("HOST_PORT=") && url != "about:blank")
                 {
                     if (!url.EndsWith("?"))
                     {
@@ -184,7 +192,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void HandleEvent(JObject e)
         {
-            if (modernApi)
+            if (ModernApi)
             {
                 base.HandleEvent(e);
             }
@@ -224,12 +232,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void InitModernAPI()
         {
-            if (!modernApi)
+            if (!ModernApi)
             {
                 // Clear the subscription set in PrepareWebsite().
                 Unsubscribe("CombatData");
                 Unsubscribe("LogLine");
-                modernApi = true;
+                ModernApi = true;
             }
         }
 

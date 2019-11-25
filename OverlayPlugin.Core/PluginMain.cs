@@ -26,6 +26,7 @@ namespace RainbowMage.OverlayPlugin
 
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
+        internal event EventHandler OverlaysChanged;
 
         public static Logger Logger { get; private set; }
         internal static string PluginDirectory { get; private set; }
@@ -224,6 +225,8 @@ namespace RainbowMage.OverlayPlugin
             overlay.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
             overlay.Start();
             this.Overlays.Add(overlay);
+
+            OverlaysChanged?.Invoke(this, null);
         }
 
         /// <summary>
@@ -234,6 +237,8 @@ namespace RainbowMage.OverlayPlugin
         {
             this.Overlays.Remove(overlay);
             overlay.Dispose();
+
+            OverlaysChanged?.Invoke(this, null);
         }
 
         /// <summary>
