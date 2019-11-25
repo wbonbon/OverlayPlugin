@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DIBitmap.cs" />
+    <Compile Include="DragHandler.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="OverlayForm.cs">
       <SubType>Form</SubType>

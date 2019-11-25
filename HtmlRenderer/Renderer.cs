@@ -58,6 +58,8 @@ namespace RainbowMage.HtmlRenderer
         {
             this._browser = new BrowserWrapper("about:blank", automaticallyCreateBrowser: false, form: _form);
             _browser.RequestHandler = new CustomRequestHandler(this);
+            _browser.MenuHandler = new ContextMenuHandler();
+            _browser.DragHandler = new DragHandler(_form);
             _browser.BrowserInitialized += _browser_BrowserInitialized;
             _browser.FrameLoadStart += Browser_FrameLoadStart;
             _browser.FrameLoadEnd += Browser_FrameLoadEnd;
@@ -569,7 +571,6 @@ MaxUploadsPerDay=0
             base(address, browserSettings, requestContext, automaticallyCreateBrowser)
         {
             this.form = form;
-            this.MenuHandler = new ContextMenuHandler();
         }
 
         void IRenderWebBrowser.OnPaint(PaintElementType type, Rect dirtyRect, IntPtr buffer, int width, int height)
