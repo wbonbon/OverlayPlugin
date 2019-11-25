@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin.Updater
@@ -59,6 +60,15 @@ namespace RainbowMage.OverlayPlugin.Updater
                         MessageBox.Show(string.Format(Resources.UpdateParseVersionError, ex.ToString()), Resources.UpdateTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }));
                     return (false, null, null);
+                }
+
+                try
+                {
+                    releaseNotes = Regex.Replace(releaseNotes, @"<!-- TRAILER BEGIN -->(?:[^<]|<(?!!-- TRAILER END -->))+<!-- TRAILER END -->", "");
+                }
+                catch (Exception ex)
+                {
+                    Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to remove trailers from release notes: {ex}");
                 }
 
                 return (remoteVersion.CompareTo(currentVersion) > 0, remoteVersion, releaseNotes);
