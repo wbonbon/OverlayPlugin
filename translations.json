@@ -746,7 +746,7 @@
         "MapESMiniParse": {
             "en": "MiniParseEventSource",
             "ko-KR": "MiniParse 고급 설정",
-            "zh-CN": "数据统计事件源设置"
+            "zh-CN": "设置"
         },
         "MapOverlayLabel": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
