@@ -163,7 +163,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                     {
                         _display.Log(string.Format(Resources.LogDownloadInterrupted, ex));
 
-                        if (retries > 0)
+                        if (retries > 0 && !cancel.IsCancellationRequested)
                         {
                             // If this is a curl exception, it's most likely network related. Wait a second
                             // before trying again. We don't want to spam the other side with download requests.
@@ -218,15 +218,14 @@ namespace RainbowMage.OverlayPlugin.Updater
             return true;
         }
 
-        private unsafe int DlProgressCallback(IntPtr clientp, long dltotal, long dlnow, long ultotal, long ulnow)
+        private bool DlProgressCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow)
         {
-            var resumed = (float) *(long*)clientp;
             var status = string.Format(Resources.StatusDownloadStarted, 1, 2);
 
             if (dltotal > 0)
-                _display.UpdateStatus((resumed + dlnow) / (resumed + dltotal), status);
+                _display.UpdateStatus(((float)resumed + dlnow) / ((float)resumed + dltotal), status);
 
-            return _token.IsCancellationRequested ? 1 : 0;
+            return _token.IsCancellationRequested;
         }
 
         public bool Extract(string archivePath)

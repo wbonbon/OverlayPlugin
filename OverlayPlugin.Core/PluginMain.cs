@@ -263,7 +263,7 @@ namespace RainbowMage.OverlayPlugin
             try { WSServer.Stop(); }
             catch { }
 
-            if (this.wsTabPage != null)
+            if (this.wsTabPage != null && this.wsTabPage.Parent != null)
                 ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
 
             Logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
