@@ -103,7 +103,7 @@ namespace RainbowMage.HtmlRenderer
             this.url = url;
             
             // Alt+Tab を押したときに表示されるプレビューから除外する
-            //HidePreview();
+            HidePreview();
         }
 
         /// <summary>
