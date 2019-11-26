@@ -3,7 +3,7 @@
         "BrowserCrashed": {
             "en": "Browser crashed! ({0}) Trying to restart.",
             "fr-FR": "Le navigateur a planté ! ({0}) Redémarrage.",
-            "ko-KR": "Browser crashed! ({0}) 다시 재시작하세요.",
+            "ko-KR": "Browser crashed! ({0}) 재시작하십시오.",
             "zh-CN": "浏览器崩溃了！({0})尝试重新启动。"
         }
     },
@@ -46,7 +46,7 @@
             "en": "Click [Add] button to configure overlays.",
             "fr-FR": "Cliquez [Ajouter] pour configurer les overlays.",
             "ja-JP": "[追加] バートンを押して、オーバーレイを設定してください",
-            "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주세요.",
+            "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주십시오.",
             "zh-CN": "点击[添加]按钮设置美化悬浮窗"
         },
         "tabPageMain.Text": {
@@ -69,14 +69,14 @@
             "en": "Automatically send error reports to the developer",
             "fr-FR": "Envoyer automatiquement les rapports d'erreur",
             "ja-JP": "エラーを自動で報告する",
-            "ko-KR": "자동으로 오류 보고",
+            "ko-KR": "자동으로 개발자에게 오류 보고",
             "zh-CN": "自动向开发者发送错误报告"
         },
         "cbHideOverlaysDuringCutscene.Text": {
             "en": "Automatically hide overlays during cutscenes",
             "fr-FR": "Cacher automatiquement les overlays lors des cinématiques",
             "ja-JP": "カットシーン中にオーバーレイを非表示にする",
-            "ko-KR": "컷씬동안 자동으로 오버레이 숨기기",
+            "ko-KR": "컷신 이벤트 중에는 자동으로 오버레이 숨기기",
             "zh-CN": "当过场动画时自动隐藏美化悬浮窗"
         },
         "cbHideOverlaysWhenNotActive.Text": {
@@ -112,6 +112,7 @@
         "buttonOK.Text": {
             "en": "OK",
             "fr-FR": "OK",
+            "ko-KR": "확인",
             "zh-CN": "确定"
         },
         "label1.Text": {
@@ -125,17 +126,19 @@
             "en": "Type",
             "fr-FR": "Type",
             "ja-JP": "種類",
-            "ko-KR": "형식",
+            "ko-KR": "유형",
             "zh-CN": "种类"
         },
         "label3.Text": {
             "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
+            "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
             "zh-CN": "对于大多数悬浮窗，您必须在此处选择MiniParse。 是的，即使Cactbot也需要MiniParse类型。\n\nLabel允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。\nSpellTimer显示ACT内置的技能冷却计时器，与SpecialSpellTimers和SPESPE无关。\n"
         }
     },
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "ctxMenuLinkCopy.Text": {
             "en": "Copy",
+            "ko-KR": "복사",
             "zh-CN": "复制"
         },
         "genSslBtn.Text": {
@@ -172,10 +175,12 @@
         },
         "label5.Text": {
             "en": "URL:",
+            "ko-KR": "URL:",
             "zh-CN": "悬浮窗链接："
         },
         "lblUrlConfidentWarning.Text": {
             "en": "This URL might not work if the overlay doesn't support ACTWebSocket.",
+            "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 주소는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
         "logDisplay.Text": {
@@ -202,6 +207,7 @@
         "statusLabel.Text": {
             "en": "Unknown",
             "fr-FR": "Inconnu",
+            "ko-KR": "알 수 없음",
             "zh-CN": "未知"
         },
         "stopBtn.Text": {
@@ -238,7 +244,7 @@
             "en": "Update DPS during log import",
             "fr-FR": "Mettre à jour le DPS pendant l'import du log",
             "ja-JP": "ログのインポート中にDPSを更新する",
-            "ko-KR": "로그 가져 오기 중에 DPS를 업데이트",
+            "ko-KR": "로그 가져 오기(import) 중에 DPS를 업데이트",
             "zh-CN": "在日志导入期间更新DPS"
         },
         "label5.Text": {
@@ -301,7 +307,7 @@
             "en": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
-            "ko-KR": "주소(URL)",
+            "ko-KR": "URL",
             "zh-CN": "美化模板路径"
         },
         "label5.Text": {
@@ -315,14 +321,14 @@
             "en": "Enable global hotkey",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용",
+            "ko-KR": "단축키 사용",
             "zh-CN": "启用美化 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키",
+            "ko-KR": "단축키",
             "zh-CN": "设置美化 开/关 快捷键"
         },
         "label9.Text": {
@@ -364,14 +370,14 @@
             "en": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
-            "ko-KR": "주소(URL)",
+            "ko-KR": "URL",
             "zh-CN": "美化模板路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
             "fr-FR": "Type de raccourci",
             "ja-JP": "ホットキータイプ",
-            "ko-KR": "핫 키 형식",
+            "ko-KR": "단축키 기능",
             "zh-CN": "快捷键功能"
         },
         "label2.Text": {
@@ -392,21 +398,21 @@
             "en": "Max. framerate",
             "fr-FR": "Rafraichissement max.",
             "ja-JP": "最大フレームレート",
-            "ko-KR": "최대 프레임 레이트",
+            "ko-KR": "최대 프레임 레이트 (FPS)",
             "zh-CN": "最大帧速率"
         },
         "label7.Text": {
             "en": "Enable global hotkey",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용",
+            "ko-KR": "단축키 사용",
             "zh-CN": "启用美化 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키",
+            "ko-KR": "단축키",
             "zh-CN": "设置美化 开/关 快捷键"
         },
         "label9.Text": {
@@ -447,14 +453,14 @@
             "en": "Reset Overlay Position",
             "fr-FR": "RAZ Position",
             "ja-JP": "オーバーレイの位置をリセットする",
-            "ko-KR": "오버레이 위치 리셋",
+            "ko-KR": "오버레이 위치 초기화",
             "zh-CN": "重置美化悬浮窗位置"
         },
         "checkActwsCompatbility.Text": {
             "en": "This is an overlay that requires ACTWebSocket",
             "fr-FR": "Cet overlay nécessite ACTWebSocket",
             "ja-JP": "このオーバーレイはACTWebSocketが必要",
-            "ko-KR": "해당 오버레이는 ACTWebSocket과 호환됩니다.",
+            "ko-KR": "오버레이를 ACTWebSocket으로 연결하기",
             "zh-CN": "此模板需要使用ACTWebSocket"
         },
         "checkLogConsoleMessages.Text": {
@@ -475,32 +481,33 @@
             "en": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
-            "ko-KR": "주소(URL)",
+            "ko-KR": "URL",
             "zh-CN": "美化模板路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
             "fr-FR": "Type de raccourci",
             "ja-JP": "ホットキータイプ",
-            "ko-KR": "핫 키 형식",
+            "ko-KR": "단축키 기능",
             "zh-CN": "快捷键功能"
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
             "fr-FR": "Cette option est seulement nécessaire si la skin de l'overlay n'est pas compatible d'origine avec OverlayPlugin",
             "ja-JP": "オーバーレイが通常のOverlayPluginと互換性がない場合のみ、このチェックを有効にして下さい。",
-            "ko-KR": "해당 오버레이 스킨이 일반 OverlayPlugin과 호환되지 않는 경우에만 이 기능을 사용하세요.",
+            "ko-KR": "오버레이를 OverlayPlugin으로 연결했을 때, 정상적으로 동작하지 않는다면 이 기능을 사용합니다.",
             "zh-CN": "仅当模板与OverlayPlugin不兼容时，才需要启用此选项。"
         },
         "label12.Text": {
             "en": "Use this if you can't find the overlay or for some reason can't resize it.",
             "fr-FR": "Utilisez cette option si vous ne trouvez ou ne pouvez pas redimensionner l'overlay",
             "ja-JP": "オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。",
-            "ko-KR": "해당 오버레이가 잘 보이지 않거나 크기 조정을 할 수 없는 경우에만 이 기능을 사용하세요.",
+            "ko-KR": "오버레이가 잘 보이지 않거나 크기 조정을 할 수 없는 경우에만 이 기능을 사용합니다.",
             "zh-CN": "如果您找不到美化悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label15.Text": {
             "en": "Zoom",
+            "ko-KR": "확대/축소",
             "ja-JP": "ズーム",
             "zh-CN": "缩放"
         },
@@ -529,28 +536,28 @@
             "en": "ACTWS Compatiblity",
             "fr-FR": "Compatibilité ACTWS",
             "ja-JP": "ACTWSの互換性",
-            "ko-KR": "ACTWS 호환",
+            "ko-KR": "ACTWS 호환성",
             "zh-CN": "ACTWS兼容性"
         },
         "label6.Text": {
             "en": "Max. framerate",
             "fr-FR": "Rafraichissement max.",
             "ja-JP": "最大フレームレート",
-            "ko-KR": "최대 프레임 레이트",
+            "ko-KR": "최대 프레임 레이트 (FPS)",
             "zh-CN": "最大帧速率"
         },
         "label7.Text": {
             "en": "Enable global hotkey",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용",
+            "ko-KR": "단축키 사용",
             "zh-CN": "启用美化 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키",
+            "ko-KR": "단축키",
             "zh-CN": "设置美化 开/关 快捷键"
         },
         "label9.Text": {
@@ -599,21 +606,21 @@
             "en": "Enable global hotkey",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "글로벌 핫 키 사용",
+            "ko-KR": "단축키 사용",
             "zh-CN": "启用美化 开/关 快捷键"
         },
         "label10.Text": {
             "en": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
-            "ko-KR": "주소(URL)",
+            "ko-KR": "URL",
             "zh-CN": "美化模板路径"
         },
         "label2.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
-            "ko-KR": "글로벌 핫 키",
+            "ko-KR": "단축키",
             "zh-CN": "设置美化 开/关 快捷键"
         },
         "label3.Text": {
@@ -627,14 +634,14 @@
             "en": "Hotkey Type",
             "fr-FR": "Type de raccourci",
             "ja-JP": "ホットキータイプ",
-            "ko-KR": "핫 키 형식",
+            "ko-KR": "단축키 기능",
             "zh-CN": "快捷键功能"
         },
         "label7.Text": {
             "en": "Max. framerate",
             "fr-FR": "Rafraichissement max.",
             "ja-JP": "最大フレームレート",
-            "ko-KR": "최대 프레임 레이트",
+            "ko-KR": "최대 프레임 레이트 (FPS)",
             "zh-CN": "最大帧速率"
         },
         "label8.Text": {
@@ -679,15 +686,18 @@
         },
         "EventHandlerException": {
             "en": "Failed to dispatch event {0} to {1}! {2}",
-            "fr-FR": "Impossible d'envoyer l'événement {0} à {1}! {2}"
+            "fr-FR": "Impossible d'envoyer l'événement {0} à {1}! {2}",
+            "ko-KR": "이벤트 {0}을 (를) {1}에 발송하지 못했습니다! {2}"
         },
         "FFXIVDataRepositoryException": {
             "en": "Failed to retrieve the FFXIV DataRepository: {0}",
-            "fr-FR": "Impossible de récupérer FFXIV DataRepository: {0}"
+            "fr-FR": "Impossible de récupérer FFXIV DataRepository: {0}",
+            "ko-KR": "FFXIV DataRepository을 검색하지 못했습니다 : {0}"
         },
         "FFXIVDataSubscriptionException": {
             "en": "Failed to retrieve the FFXIV DataSubscription: {0}",
-            "fr-FR": "Impossible de récupérer FFXIV DataSubscription: {0}"
+            "fr-FR": "Impossible de récupérer FFXIV DataSubscription: {0}",
+            "ko-KR": "FFXIV DataSubscription을 검색하지 못했습니다 : {0"
         },
         "GeneralTab": {
             "en": "General",
@@ -698,19 +708,19 @@
         "HotkeyActionToggleClickthrough": {
             "en": "Toggle clickthru",
             "fr-FR": "Clic à travers",
-            "ko-KR": "클릭 무시 토글(On/Off)",
+            "ko-KR": "클릭 무시 ON/OFF",
             "zh-CN": "切换悬浮窗 鼠标穿透"
         },
         "HotkeyActionToggleLock": {
             "en": "Toggle lock",
             "fr-FR": "Bloqué",
-            "ko-KR": "오버레이 잠금 토글(On/Off)",
+            "ko-KR": "오버레이 잠금 ON/OFF",
             "zh-CN": "切换悬浮窗 锁定"
         },
         "HotkeyActionToggleVisible": {
             "en": "Toggle visible/hide",
             "fr-FR": "Visible/Caché",
-            "ko-KR": "오버레이 보이기/숨기기 토글(On/Off)",
+            "ko-KR": "오버레이 표시 ON/OFF",
             "zh-CN": "切换悬浮窗 启用/隐藏"
         },
         "IncompatibleAddon": {
@@ -722,30 +732,30 @@
         "InitOverlayLocalFileIsMissing": {
             "en": "InitializeOverlay: Local file {0} does not exist!",
             "fr-FR": "InitializeOverlay: Le fichier local {0} n'existe pas !",
-            "ko-KR": "오버레이 초기화 : 로컬 파일 {0}이 없습니다!",
+            "ko-KR": "오버레이 초기화: 로컬 파일 {0}이 없습니다!",
             "zh-CN": "初始化插件：本地文件{0}不存在！"
         },
         "InitOverlayUrlError": {
             "en": "InitializeOverlay: URI parse error! Please reconfigure the URL. (Config.Url = {0}): {1}",
             "fr-FR": "InitializeOverlay: erreur d'analyse URI ! Reconfigurez l'URL. (Config.Url = {0}): {1}",
-            "ko-KR": "오버레이 초기화 : URL 파싱 오류! URL 경로를 다시 확인해 주세요. (Config.Url = {0}): {1}",
+            "ko-KR": "오버레이 초기화: URL 파싱 오류! URL 경로를 다시 확인해 주십시오. (Config.Url = {0}): {1}",
             "zh-CN": "初始化插件：路径解析错误！请重新设置美化模板路径(Config.Url = {0}): {1}"
         },
         "JsHandlerCallException": {
             "en": "JS Handler call failed: {0}",
             "fr-FR": "Appel JS Handler échoué : {0}",
-            "ko-KR": "JS 핸들러 호출 실패 : {0}",
+            "ko-KR": "JS 핸들러 호출 실패: {0}",
             "zh-CN": "JS处理程序调用失败: {0}"
         },
         "ListSortFailed": {
             "en": "Failed to sort list by {0}: {1}",
             "fr-FR": "Impossible de trier la liste par {0}: {1}",
-            "ko-KR": "{0}을 기준으로 정렬 실패 : {1}",
+            "ko-KR": "{0}을 기준으로 정렬 실패: {1}",
             "zh-CN": "以{0}: {1}排序列表失败"
         },
         "MapESMiniParse": {
             "en": "MiniParseEventSource",
-            "ko-KR": "MiniParse 고급 설정",
+            "ko-KR": "고급 설정",
             "zh-CN": "设置"
         },
         "MapOverlayLabel": {
@@ -761,16 +771,19 @@
         "MapOverlayShortLabel": {
             "#comment": "This name appears in the combo box for new overlays.",
             "en": "Label",
+            "ko-KR": "Label",
             "zh-CN": "标签"
         },
         "MapOverlayShortMiniParse": {
             "#comment": "This name appears in the combo box for new overlays.",
             "en": "MiniParse",
+            "ko-KR": "MiniParse",
             "zh-CN": "数据统计"
         },
         "MapOverlayShortSpellTimer": {
             "#comment": "This name appears in the combo box for new overlays.",
             "en": "SpellTimer",
+            "ko-KR": "SpellTimer",
             "zh-CN": "技能冷却"
         },
         "MapOverlaySpellTimer": {
@@ -780,55 +793,62 @@
         },
         "MissingEventDispatchError": {
             "en": "Tried to dispatch unregistered event type \"{0}\"!",
-            "fr-FR": "Envoi d'un type d'événement non enregistré \"{0}\"!"
+            "fr-FR": "Envoi d'un type d'événement non enregistré \"{0}\"!",
+            "ko-KR": "등록되지 않은 이벤트 유형 \"{0}\"(을/를) 발송하려고 했습니다!"
         },
         "MissingEventSubError": {
             "en": "Got a subscription for missing event \"{0}\"!",
-            "fr-FR": "Souscription pour un évènement manquant \"{0}\"!"
+            "fr-FR": "Souscription pour un évènement manquant \"{0}\"!",
+            "ko-KR": "누락된 이벤트 \"{0}\"에 대한 구독이 있습니다!"
         },
         "MissingHandlerError": {
             "en": "Tried to call missing handler \"{0}\"!",
-            "fr-FR": "Appel à un handler manquant \"{0}\"!"
+            "fr-FR": "Appel à un handler manquant \"{0}\"!",
+            "ko-KR": "존재하지 않는 핸들러 \"{0}\"(을/를) 호출하려고 했습니다!"
         },
         "NetworkParserInitException": {
             "en": "Failed to setup network parser: {0}",
             "fr-FR": "Echec de la configuration réseau du parser : {0}",
-            "zh-CN": "无法设置网络解析器：{0}"
+            "zh-CN": "无法设置网络解析器：{0}",
+            "ko-KR": "네트워크 파서를 설정하지 못했습니다 : {0}"
         },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
-            "fr-FR": "Appel d'un handler invalide reçu : {0}"
+            "fr-FR": "Appel d'un handler invalide reçu : {0}",
+            "ko-KR": "유효하지 않은 핸들러 호출을 수신했습니다 : {0}"
         },
         "OverlayApiMissingEventsField": {
             "en": "Missing events field in subscribe call: {0}!",
-            "fr-FR": "Champs d'évènements manquants dans l'appel de souscription : {0}!"
+            "fr-FR": "Champs d'évènements manquants dans l'appel de souscription : {0}!",
+            "ko-KR": "구독 호출에서 누락된 이벤트 필드 : {0}!"
         },
         "OverlayApiMissingEventsFieldUnsub": {
             "en": "Missing events field in unsubscribe call: {0}!",
-            "fr-FR": "Champs d'évènements manquants dans l'appel de déinscription : {0}!"
+            "fr-FR": "Champs d'évènements manquants dans l'appel de déinscription : {0}!",
+            "ko-KR": "구독 취소 호출에서 누락된 이벤트 필드 : {0}!"
         },
         "OverlayApiSubscribed": {
             "en": "{0}: Subscribed to {1}",
             "fr-FR": "{0}: Souscription à {1}",
-            "ko-KR": "{0} : 구독 {1}",
+            "ko-KR": "{0}: 구독 {1}",
             "zh-CN": "{0}：已订阅{1}"
         },
         "OverlayBaseRegisterHotkeyError": {
             "en": "Failed to register hotkey: {0}!",
             "fr-FR": "Impossible d'enregistrer le raccourci : {0}!",
-            "ko-KR": "핫 키 등록을 실패했습니다. : {0}!",
+            "ko-KR": "단축키 등록을 실패했습니다. : {0}!",
             "zh-CN": "注册热键：{0}失败！"
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
             "fr-FR": "Sélectionnez un type d'overlay.",
-            "ko-KR": "오버레이 형식을 선택하세요.",
+            "ko-KR": "오버레이 유형을 선택하세요.",
             "zh-CN": "请选择悬浮窗类型。"
         },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
             "fr-FR": "Impossible d'enregistrer le raccourci {0},{1} dans EnableHotKeys().!",
-            "ko-KR": "EnableHotKeys()에서 핫 키 {0}, {1}(을/를) 등록하지 못했습니다.",
+            "ko-KR": "EnableHotKeys()에서 단축키 {0}, {1}(을/를) 등록하지 못했습니다.",
             "zh-CN": "在EnableHotKeys()注册热键{0}, {1}失败。"
         },
         "TabsESLabel": {
@@ -838,7 +858,7 @@
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
             "fr-FR": "Impossible de supprimer le raccourci {0},{1} dans DisableHotKeys() !",
-            "ko-KR": "DisableHotKeys()에서 핫 키 {0}(을/를) 등록 취소하지 못했습니다.",
+            "ko-KR": "DisableHotKeys()에서 단축키 {0}(을/를) 등록 취소하지 못했습니다.",
             "zh-CN": "在DisableHotKeys()反注册热键{0}失败。"
         },
         "WSHandlerException": {
@@ -859,7 +879,7 @@
         "WSLoadingCert": {
             "en": "WS: Loading SSL certificate {0}...",
             "fr-FR": "WS : Chargement du certificat SSL  {0}...",
-            "ko-KR": "WS : SSL 인증서 {0} 로드 중...",
+            "ko-KR": "WS: SSL 인증서 {0} 로드 중...",
             "zh-CN": "WS：正在加载SSL证书{0}..."
         },
         "WSMessageSendFailed": {
@@ -876,18 +896,19 @@
         },
         "WSNotConfidentLink": {
             "en": "This link might not work if the overlay doesn't support ACTWebSocket.",
+            "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 링크는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
         "WSShutdownError": {
             "en": "WS: Failed to shutdown. {0}",
             "fr-FR": "WS : L'arrêt a échoué. {0}",
-            "ko-KR": "WS : 종료하지 못했습니다. {0} ",
+            "ko-KR": "WS: 종료하지 못했습니다. {0} ",
             "zh-CN": "WS:关闭失败：{0}"
         },
         "WSStartFailed": {
             "en": "WS: Failed to start: {0}",
             "fr-FR": "WS : Impossible de démarrer : {0}",
-            "ko-KR": "WS : 시작하지 못했습니다. {0} ",
+            "ko-KR": "WS: 시작하지 못했습니다. {0} ",
             "zh-CN": "WS:启动失败：{0}"
         },
         "WSUnsubFail": {
@@ -900,42 +921,52 @@
     "OverlayPlugin.Updater/CefMissingTab": {
         "btnOpenManual.Text": {
             "en": "Extract Downloaded File",
+            "ko-KR": "다운로드한 파일을 추출하기",
             "zh-CN": "提取已下载文件"
         },
         "btnStartAuto.Text": {
             "en": "Download and unpack the missing files",
+            "ko-KR": "누락된 파일을 다운로드하고 추출하기",
             "zh-CN": "下载并解压缩丢失的文件"
         },
         "label1.Text": {
             "en": "Some files which are required for OverlayPlugin to function are missing. This is normal if you just installed OverlayPlugin or recently updated it. The files are fairly big (> 150 MiB) and change rarely (at most once per month). To make updates easier for everyone, these files are split into a separate download.",
+            "ko-KR": "OverlayPlugin이 작동하는데 필요한 일부 파일이 존재하지 않습니다. 이는 만약에 최근에 플러그인을 설치했거나 업데이트했다면 정상입니다. 누구나 쉽게 업데이트할 수 있도록 별도로 관리하기 때문입니다. 누락된 파일은 아래 설치 솔루션을 통해 다운로드할 수 있고, 파일의 용량은 약 150MB 전후이며 거의 변경되지 않습니다. (업데이트 빈도 : 1개월 당 1회 정도)",
             "zh-CN": "丢失了某些OverlayPlugin所必须的关键文件。如果您刚刚安装OverlayPlugin或刚刚进行了更新，这个情况是正常的。这些文件很大（> 150 MiB）并且很少需要更改（每月最多一次）。为了使所有人都能轻松地进行更新，这些文件被拆分为单独下载。"
         },
         "label2.Text": {
             "en": "Use this if the automated installation doesn't work for you.",
+            "ko-KR": "자동 설치가 제대로 작동하지 않는 경우 이 기능을 사용합니다.",
             "zh-CN": "如果自动安装对您不起作用，请使用此选项。"
         },
         "label3.Text": {
             "en": "Download the following file and then open it using the button on the bottom:",
+            "ko-KR": "아래 링크를 클릭해서 파일을 다운로드한 후 하단의 버튼을 클릭해서 다운로드한 파일을 엽니다.",
             "zh-CN": "下载以下文件，然后使用底部的按钮将其打开："
         },
         "label4.Text": {
             "en": "Click the button below and let OverlayPlugin handle everything automatically. This should work for most people.",
+            "ko-KR": "아래 버튼을 클릭하면 OverlayPlugin 업데이트 관리자가 자동으로 문제 해결을 시작합니다. 이는 대부분의 유저들에게 권장합니다.",
             "zh-CN": "点击下面的按钮，让OverlayPlugin自动处理所有内容。 这应该适合于大多数人。"
         },
         "label5.Text": {
             "en": "If this doesn't work, take a look at the other tab.",
+            "ko-KR": "만약 다운로드 문제가 해결되지 않는다면 수동 설치를 시도합니다.",
             "zh-CN": "如果这对您不起作用，请查看另一个选项卡。"
         },
         "lnkManual.Text": {
             "en": "Please wait...",
+            "ko-KR": "기다려 주십시오...",
             "zh-CN": "请稍候..."
         },
         "tabPage1.Text": {
             "en": "Automated Installation",
+            "ko-KR": "자동 설치",
             "zh-CN": "自动安装"
         },
         "tabPage2.Text": {
             "en": "Manual Installation",
+            "ko-KR": "수동 설치",
             "zh-CN": "手动安装"
         }
     },
@@ -955,36 +986,39 @@
         "label.Text": {
             "en": "Please wait...",
             "fr-FR": "Veuillez patienter ...",
-            "ko-KR": "잠시만 기다려 주세요...",
+            "ko-KR": "잠시만 기다려 주십시오...",
             "zh-CN": "请稍候..."
         }
     },
     "OverlayPlugin.Updater/Resources": {
         "CreatingTempDirFailed": {
             "en": "Failed to create or empty the temporary directory \"{0}\": {1}",
+            "ko-KR": "임시 디렉토리 \"{0}\"(을/를) 생성하거나 비우지 못했습니다: {1}",
             "fr-FR": "Impossible de créer ou supprimer le répertoire temporaire \"{0}\": {1}",
             "zh-CN": "创建或清空缓存目录\"{0}\": {1}失败"
         },
         "DownloadFailedContentLengthMissing": {
             "en": "Download failed! The download has no file size (Content-Length header is missing).",
+            "ko-KR": "다운로드 실패! 다운로드 파일 크기가 없음 (Content-Length 헤더 누락)",
             "fr-FR": "Le téléchargement a échoué ! Le téléchargement est de taille nulle (l'en-tête Content-Length est manquant).",
             "zh-CN": "下载失败！下载没有文件大小（缺少内容长度头）。"
         },
         "ErrorTitle": {
             "en": "OverlayPlugin Error",
             "fr-FR": "Erreur OverlayPlugin",
-            "ko-KR": "OverlayPlugin 에러 발생",
+            "ko-KR": "OverlayPlugin 오류",
             "zh-CN": "OverlayPlugin错误"
         },
         "Exception": {
             "en": "Failed: {0}",
             "fr-FR": "Echec : {0}",
-            "ko-KR": "실패 : {0}",
+            "ko-KR": "실패: {0}",
             "zh-CN": "失败：{0}"
         },
         "LaunchingInstallerFailed": {
             "en": "Failed to launch installer: {0}",
             "fr-FR": "Impossible de lancer l'installeur : {0}",
+            "ko-KR": "설치 프로그램을 시작하지 못했습니다: {0}",
             "zh-CN": "打开安装程序失败：{0}"
         },
         "LogAbortedByUser": {
@@ -996,7 +1030,7 @@
         "LogBackingUpOldFiles": {
             "en": "Backing up old files...",
             "fr-FR": "Sauvegarde des anciens fichiers ...",
-            "ko-KR": "오래된 파일을 백업 중입니다...",
+            "ko-KR": "이전 파일을 백업 중입니다...",
             "zh-CN": "正在备份旧文件..."
         },
         "LogCleaningUp": {
@@ -1020,18 +1054,19 @@
         "LogDownloadFailed": {
             "en": "Download failed: {0}",
             "fr-FR": "Téléchargement échoué : {0}",
-            "ko-KR": "다운로드 실패 : {0}",
+            "ko-KR": "다운로드 실패: {0}",
             "zh-CN": "下载失败：{0}"
         },
         "LogDownloadInterrupted": {
             "en": "The download was interrupted: {0}",
             "fr-FR": "Le téléchargement a été interrompu : {0}",
-            "ko-KR": "다운로드가 중단되었습니다 : {0}",
+            "ko-KR": "다운로드 중단: {0}",
             "zh-CN": "下载被中断：{0}"
         },
         "LogDownloading": {
             "en": "Downloading \"{0}\" into {1}...",
             "fr-FR": "Téléchargement de \"{0}\" dans {1} ...",
+            "ko-KR": "\"{0}\"(을/를) {1}에 다운로드 중 ...",
             "zh-CN": "正在下载\"{0}\"至{1}..."
         },
         "LogExtractingFiles": {
@@ -1049,13 +1084,13 @@
         "LogFailedReplaceDirectory": {
             "en": "Failed to replace old directory: {0}",
             "fr-FR": "Impossible de remplacer l'ancier répertoire : {0}",
-            "ko-KR": "이전 디렉토리를 변경하지 못했습니다 : {0}",
+            "ko-KR": "이전 디렉토리를 변경하지 못했습니다: {0}",
             "zh-CN": "无法替换旧目录：{0}"
         },
         "LogFailedToDelete": {
             "en": "Failed to delete {0}: {1}",
             "fr-FR": "Impossible d'effacer {0}: {1}",
-            "ko-KR": "{0}(을/를) 삭제하지 못했습니다 : {1}",
+            "ko-KR": "{0}(을/를) 삭제하지 못했습니다: {1}",
             "zh-CN": "无法删除{0}：{1}"
         },
         "LogInstallerFailed": {
@@ -1097,7 +1132,7 @@
         "LogOverwritingOldFilesFailed": {
             "en": "Failed to overwrite old files: {0}\nWARNING: The plugin might be in an unusable state!!\nRun the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart.",
             "fr-FR": "Impossible d'écraser les anciens fichiers : {0} !\nATTENTION : Le plugin est peut-être dans un état instable !!\nRelancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas survivre au redémarrage d'ACT.",
-            "ko-KR": "이전 파일을 덮어 쓰지 못했습니다 : {0}\n 경고 : 플러그인을 사용할 수 없는 상태일 수도 있습니다 !!\n업데이트 확인을 다시 실행하거나 플러그인을 재설치하십시오. 그렇지 않으면 ACT 재시작 후에도 문제가 발생할 수 있습니다.",
+            "ko-KR": "이전 파일을 덮어 쓰지 못했습니다: {0}\n 경고 : 플러그인을 사용할 수 없는 상태일 수도 있습니다 !!\n업데이트 확인을 다시 실행하거나 플러그인을 재설치하십시오. 그렇지 않으면 ACT 재시작 후에도 문제가 발생할 수 있습니다.",
             "zh-CN": "无法覆写旧文件：{0}\n警告：插件可能处于无法使用的状态！！\n再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。"
         },
         "LogRemovingOldBackup": {
@@ -1139,7 +1174,7 @@
         "MsvcrtMissing": {
             "en": "You're missing the MS Visual C++ Redistributable for Visual Studio 2019.\nYou'll need that for OverlayPlugin. Install it now?",
             "fr-FR": "MS Visual C++ Redistributable pour Visual Studio 2019 est manquant.\nCe composant est nécessaire pour OverlayPlugin. L'installer maintenant ?",
-            "ko-KR": "Visual Studio 2019 용 MS Visual C ++ 재배포 가능 패키지가 누락되었습니다.\nOverlay Plugin에 필요합니다. 지금 설치하시겠습니까?",
+            "ko-KR": "Visual Studio 2019용 MS Visual C++ 재배포 가능 패키지가 누락되었습니다.\nOverlay Plugin에 필요합니다. 지금 설치하시겠습니까?",
             "zh-CN": "你没有安装MS Visual C++ Redistributable for Visual Studio 2019。\nOverlayPlugin运行需要它。现在安装？"
         },
         "OutOfRetries": {
@@ -1190,7 +1225,7 @@
             "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
             "en": "[{0}/{1}]: Launching installer...",
             "fr-FR": "[{0}/{1}] : Démarrage de l'installeur ...",
-            "ko-KR": "[{0}/{1}] : 설치 프로그램 시작 중 ...",
+            "ko-KR": "[{0}/{1}] : 설치 프로그램 시작 중...",
             "zh-CN": "[{0}/{1}]:正在运行安装程序...。"
         },
         "StatusPreparingExtraction": {
@@ -1215,7 +1250,7 @@
         "UpdateCheckException": {
             "en": "Failed to check for updates:\n{0}",
             "fr-FR": "Impossible de vérifier les mises à jour : \n{0}",
-            "ko-KR": "업데이트를 확인하지 못했습니다.:\n{0}",
+            "ko-KR": "업데이트를 확인하지 못했습니다:\n{0}",
             "zh-CN": "检查更新失败：\n{0}"
         },
         "UpdateCheckTitle": {
@@ -1319,20 +1354,20 @@
         "InitCef": {
             "en": "Initializing CEF...",
             "fr-FR": "Initialisation de CEF ...",
-            "ko-KR": "CEF를 초기화 중입니다...",
+            "ko-KR": "CEF를 초기화 중...",
             "zh-CN": "正在安装CEF..."
         },
         "InitRuntime": {
             "#comment": "Plugin status (in ACT's plugin list)",
             "en": "Initializing Runtime...",
             "fr-FR": "Initialisation Runtime",
-            "ko-KR": "런타임 초기화 중입니다...",
+            "ko-KR": "런타임 초기화 중...",
             "zh-CN": "正在安装运行库..."
         },
         "WaitingForAct": {
             "en": "Waiting for ACT to finish startup...",
             "fr-FR": "En attente d'ACT pour terminer le démarrage ...",
-            "ko-KR": "ACT 시작을 기다리는 중입니다...",
+            "ko-KR": "ACT 시작을 기다리는 중...",
             "zh-CN": "正在等待ACT启动完毕..."
         }
     }
