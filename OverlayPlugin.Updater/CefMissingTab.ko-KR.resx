@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label2.Text" xml:space="preserve">
+    <value>자동 설치가 제대로 작동하지 않는 경우 이 기능을 사용합니다.</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>아래 버튼을 클릭하면 OverlayPlugin 업데이트 관리자가 자동으로 문제 해결을 시작합니다. 이는 대부분의 유저들에게 권장합니다.</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>만약 다운로드 문제가 해결되지 않는다면 수동 설치를 시도합니다.</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>자동 설치</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>아래 링크를 클릭해서 파일을 다운로드한 후 하단의 버튼을 클릭해서 다운로드한 파일을 엽니다.</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>OverlayPlugin이 작동하는데 필요한 일부 파일이 존재하지 않습니다. 이는 만약에 최근에 플러그인을 설치했거나 업데이트했다면 정상입니다. 누구나 쉽게 업데이트할 수 있도록 별도로 관리하기 때문입니다. 누락된 파일은 아래 설치 솔루션을 통해 다운로드할 수 있고, 파일의 용량은 약 150MB 전후이며 거의 변경되지 않습니다. (업데이트 빈도 : 1개월 당 1회 정도)</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>수동 설치</value>
+  </data>
+  <data name="btnStartAuto.Text" xml:space="preserve">
+    <value>누락된 파일을 다운로드하고 추출하기</value>
+  </data>
+  <data name="lnkManual.Text" xml:space="preserve">
+    <value>기다려 주십시오...</value>
+  </data>
+  <data name="btnOpenManual.Text" xml:space="preserve">
+    <value>다운로드한 파일을 추출하기</value>
+  </data>
 </root>

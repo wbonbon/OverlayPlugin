@@ -131,7 +131,7 @@
   </data>
 
   <data name="label4.Text" xml:space="preserve">
-    <value>로그 가져 오기 중에 DPS를 업데이트</value>
+    <value>로그 가져 오기(import) 중에 DPS를 업데이트</value>
   </data>
 
   <data name="label5.Text" xml:space="preserve">

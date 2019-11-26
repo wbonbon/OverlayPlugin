@@ -119,6 +119,6 @@
   </resheader>
 
   <data name="BrowserCrashed" xml:space="preserve">
-    <value>Browser crashed! ({0}) 다시 재시작하세요.</value>
+    <value>Browser crashed! ({0}) 재시작하십시오.</value>
   </data>
 </root>

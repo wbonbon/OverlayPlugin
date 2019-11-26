@@ -127,7 +127,7 @@
     <value>추가</value>
   </data>
   <data name="label_ListEmpty.Text" xml:space="preserve">
-    <value>[추가] 버튼을 눌러서 오버레이를 설정해주세요.</value>
+    <value>[추가] 버튼을 눌러서 오버레이를 설정해주십시오.</value>
   </data>
   <data name="tabPageMain.Text" xml:space="preserve">
     <value>일반</value>

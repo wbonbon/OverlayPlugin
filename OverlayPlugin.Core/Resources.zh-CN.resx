@@ -222,5 +222,14 @@
     <value>标签美化悬浮窗</value>
   </data>
   <data name="MapESMiniParse" xml:space="preserve">
-    <value>数据统计事件源设置</value>
-  </data></root>
+    <value>设置</value>
+  </data>  <data name="DuplicateHandlerError" xml:space="preserve">
+    <value>名称{0}重复处理！</value>
+  </data>
+  <data name="WSNotConfidentLink" xml:space="preserve">
+    <value>如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。</value>
+  </data>
+  <data name="JsHandlerCallException" xml:space="preserve">
+    <value>JS处理程序调用失败: {0}</value>
+  </data>
+</root>

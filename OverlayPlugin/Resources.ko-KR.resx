@@ -138,15 +138,15 @@
   </data>
 
   <data name="InitCef" xml:space="preserve">
-    <value>CEF를 초기화 중입니다...</value>
+    <value>CEF를 초기화 중...</value>
   </data>
 
   <data name="WaitingForAct" xml:space="preserve">
-    <value>ACT 시작을 기다리는 중입니다...</value>
+    <value>ACT 시작을 기다리는 중...</value>
   </data>
 
   <data name="InitRuntime" xml:space="preserve">
-    <value>런타임 초기화 중입니다...</value>
+    <value>런타임 초기화 중...</value>
   </data>
 
   <data name="AssemblyResolverLoaded" xml:space="preserve">

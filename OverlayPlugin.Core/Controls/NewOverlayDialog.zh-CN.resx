@@ -132,4 +132,11 @@
     <value>确定</value>
   </data>
 
+  <data name="label3.Text" xml:space="preserve">
+    <value>对于大多数悬浮窗，您必须在此处选择MiniParse。 是的，即使Cactbot也需要MiniParse类型。
+
+Label允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。
+SpellTimer显示ACT内置的技能冷却计时器，与SpecialSpellTimers和SPESPE无关。
+</value>
+  </data>
 </root>

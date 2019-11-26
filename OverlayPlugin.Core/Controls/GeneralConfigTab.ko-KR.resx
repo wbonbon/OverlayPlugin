@@ -119,7 +119,7 @@
   </resheader>
 
   <data name="cbHideOverlaysDuringCutscene.Text" xml:space="preserve">
-    <value>컷씬동안 자동으로 오버레이 숨기기</value>
+    <value>컷신 이벤트 중에는 자동으로 오버레이 숨기기</value>
   </data>
 
   <data name="cbUpdateCheck.Text" xml:space="preserve">
@@ -127,7 +127,7 @@
   </data>
 
   <data name="cbErrorReports.Text" xml:space="preserve">
-    <value>자동으로 오류 보고</value>
+    <value>자동으로 개발자에게 오류 보고</value>
   </data>
 
   <data name="btnUpdateCheck.Text" xml:space="preserve">

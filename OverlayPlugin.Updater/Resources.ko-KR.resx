@@ -119,24 +119,24 @@
   </resheader>
 
   <data name="LogDownloadFailed" xml:space="preserve">
-    <value>다운로드 실패 : {0}</value>
+    <value>다운로드 실패: {0}</value>
   </data>
 
   <data name="StatusLaunchingInstaller" xml:space="preserve">
-    <value>[{0}/{1}] : 설치 프로그램 시작 중 ...</value>
+    <value>[{0}/{1}] : 설치 프로그램 시작 중...</value>
   </data>
 
   <data name="UpdateCheckException" xml:space="preserve">
-    <value>업데이트를 확인하지 못했습니다.:
+    <value>업데이트를 확인하지 못했습니다:
 {0}</value>
   </data>
 
   <data name="LogFailedToDelete" xml:space="preserve">
-    <value>{0}(을/를) 삭제하지 못했습니다 : {1}</value>
+    <value>{0}(을/를) 삭제하지 못했습니다: {1}</value>
   </data>
 
   <data name="ErrorTitle" xml:space="preserve">
-    <value>OverlayPlugin 에러 발생</value>
+    <value>OverlayPlugin 오류</value>
   </data>
 
   <data name="UpdateSuccess" xml:space="preserve">
@@ -148,7 +148,7 @@
   </data>
 
   <data name="LogBackingUpOldFiles" xml:space="preserve">
-    <value>오래된 파일을 백업 중입니다...</value>
+    <value>이전 파일을 백업 중입니다...</value>
   </data>
 
   <data name="UpdateCefDlFailed" xml:space="preserve">
@@ -156,7 +156,7 @@
   </data>
 
   <data name="LogOverwritingOldFilesFailed" xml:space="preserve">
-    <value>이전 파일을 덮어 쓰지 못했습니다 : {0}
+    <value>이전 파일을 덮어 쓰지 못했습니다: {0}
  경고 : 플러그인을 사용할 수 없는 상태일 수도 있습니다 !!
 업데이트 확인을 다시 실행하거나 플러그인을 재설치하십시오. 그렇지 않으면 ACT 재시작 후에도 문제가 발생할 수 있습니다.</value>
   </data>
@@ -174,7 +174,7 @@
   </data>
 
   <data name="LogDownloadInterrupted" xml:space="preserve">
-    <value>다운로드가 중단되었습니다 : {0}</value>
+    <value>다운로드 중단: {0}</value>
   </data>
 
   <data name="UpdateTitle" xml:space="preserve">
@@ -202,7 +202,7 @@
   </data>
 
   <data name="Exception" xml:space="preserve">
-    <value>실패 : {0}</value>
+    <value>실패: {0}</value>
   </data>
 
   <data name="StatusDone" xml:space="preserve">
@@ -234,7 +234,7 @@
   </data>
 
   <data name="LogFailedReplaceDirectory" xml:space="preserve">
-    <value>이전 디렉토리를 변경하지 못했습니다 : {0}</value>
+    <value>이전 디렉토리를 변경하지 못했습니다: {0}</value>
   </data>
 
   <data name="LogRestoringBackup" xml:space="preserve">
@@ -282,7 +282,7 @@
   </data>
 
   <data name="MsvcrtMissing" xml:space="preserve">
-    <value>Visual Studio 2019 용 MS Visual C ++ 재배포 가능 패키지가 누락되었습니다.
+    <value>Visual Studio 2019용 MS Visual C++ 재배포 가능 패키지가 누락되었습니다.
 Overlay Plugin에 필요합니다. 지금 설치하시겠습니까?</value>
   </data>
 
@@ -297,5 +297,17 @@ Overlay Plugin에 필요합니다. 지금 설치하시겠습니까?</value>
   <data name="UpdateParseVersionError" xml:space="preserve">
     <value>버전을 파싱하지 못했습니다:
 {0}</value>
+  </data>
+  <data name="DownloadFailedContentLengthMissing" xml:space="preserve">
+    <value>다운로드 실패! 다운로드 파일 크기가 없음 (Content-Length 헤더 누락)</value>
+  </data>
+  <data name="LogDownloading" xml:space="preserve">
+    <value>"{0}"(을/를) {1}에 다운로드 중 ...</value>
+  </data>
+  <data name="LaunchingInstallerFailed" xml:space="preserve">
+    <value>설치 프로그램을 시작하지 못했습니다: {0}</value>
+  </data>
+  <data name="CreatingTempDirFailed" xml:space="preserve">
+    <value>임시 디렉토리 "{0}"(을/를) 생성하거나 비우지 못했습니다: {1}</value>
   </data>
 </root>
