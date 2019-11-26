@@ -1,4 +1,5 @@
 try {
+    # This assumes Visual Studio 2019 is installed in C:. You might have to change this depending on your system.
     $VS_PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
 
     if ( -not (Test-Path "$VS_PATH")) {
@@ -18,7 +19,6 @@ try {
         exit 1
     }
 
-    # This assumes Visual Studio 2019 is installed in C:. You might have to change this depending on your system.
     $ENV:PATH = "$VS_PATH\MSBuild\Current\Bin;${ENV:PATH}";
 
     if ( -not (Test-Path .\OverlayPlugin.Updater\Resources\libcurl.dll)) {
@@ -45,8 +45,7 @@ try {
 
     echo "==> Building..."
 
-    dotnet restore "OverlayPlugin.sln"
-
+    msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln" -t:Restore
     msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln"
     if (-not $?) { exit 1 }
 
