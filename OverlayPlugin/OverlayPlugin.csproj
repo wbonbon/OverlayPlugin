@@ -114,9 +114,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(Platform) == x86 xcopy /Y /R /S "$(SolutionDir)Thirdparty\CefBinary_x86\*" "$(TargetDir)"
-if $(Platform) == x64 xcopy /Y /R /S "$(SolutionDir)Thirdparty\CefBinary_x64\*" "$(TargetDir)"
-xcopy /Y /R "$(SolutionDir)README.md" "$(TargetDir)"
+    <PostBuildEvent>xcopy /Y /R "$(SolutionDir)README"* "$(TargetDir)"
+
 xcopy /Y /R "$(SolutionDir)LICENSE.txt" "$(TargetDir)"
 </PostBuildEvent>
   </PropertyGroup>
