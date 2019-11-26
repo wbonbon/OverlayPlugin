@@ -2,7 +2,8 @@ try {
     $VS_PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community"
 
     if ( -not (Test-Path "$VS_PATH")) {
-        echo "Error: VS_PATH isn't set correctly! Update the variable in build.ps1 for your system or implement it with vswhere!"
+        echo "Error: VS_PATH isn't set correctly! Update the variable in build.ps1 for your system."
+        echo "... or implement it properly with vswhere and submit a PR. (Please)"
         exit 1
     }
 
@@ -20,9 +21,10 @@ try {
     # This assumes Visual Studio 2019 is installed in C:. You might have to change this depending on your system.
     $ENV:PATH = "$VS_PATH\MSBuild\Current\Bin;${ENV:PATH}";
 
-
-    if ( -not (Test-Path .\Thirdparty\curl\builds\libcurl.dll)) {
+    if ( -not (Test-Path .\OverlayPlugin.Updater\Resources\libcurl.dll)) {
         echo "==> Building cURL..."
+
+        mkdir .\OverlayPlugin.Updater\Resources
         cd Thirdparty\curl\winbuild
 
         echo "@call `"$VS_PATH\VC\Auxiliary\Build\vcvarsall.bat`" amd64"           | Out-File -Encoding ascii tmp_build.bat
@@ -35,13 +37,15 @@ try {
         del tmp_build.bat
 
         cd ..\builds
-        copy .\libcurl-vc16-x64-release-dll-ipv6-sspi-winssl\bin\libcurl.dll libcurl-x64.dll
-        copy .\libcurl-vc16-x86-release-dll-ipv6-sspi-winssl\bin\libcurl.dll libcurl.dll
+        copy .\libcurl-vc16-x64-release-dll-ipv6-sspi-winssl\bin\libcurl.dll ..\..\..\OverlayPlugin.Updater\Resources\libcurl-x64.dll
+        copy .\libcurl-vc16-x86-release-dll-ipv6-sspi-winssl\bin\libcurl.dll ..\..\..\OverlayPlugin.Updater\Resources\libcurl.dll
 
         cd ..\..\..
     }
 
     echo "==> Building..."
+
+    dotnet restore "OverlayPlugin.sln"
 
     msbuild -p:Configuration=Release -p:Platform=x64 "OverlayPlugin.sln"
     if (-not $?) { exit 1 }
@@ -67,13 +71,13 @@ try {
 
     if (Test-Path $archive) { rm $archive }
     7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources fr-FR zh-CN README.md `
-        LICENSE.txt libs\fr-FR libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll libs\*\libcurl.dll
+        LICENSE.txt libs\fr-FR libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll
 
     $archive = "..\OverlayPlugin-$version.zip"
 
     if (Test-Path $archive) { rm $archive }
     7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources fr-FR zh-CN README.md `
-        LICENSE.txt libs\fr-FR libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll libs\*\libcurl.dll
+        LICENSE.txt libs\fr-FR libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll
 } catch {
     Write-Error $Error[0]
 }
