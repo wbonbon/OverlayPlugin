@@ -129,12 +129,14 @@
             "zh-CN": "种类"
         },
         "label3.Text": {
-            "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n"
+            "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
+            "zh-CN": "对于大多数悬浮窗，您必须在此处选择MiniParse。 是的，即使Cactbot也需要MiniParse类型。\n\nLabel允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。\nSpellTimer显示ACT内置的技能冷却计时器，与SpecialSpellTimers和SPESPE无关。\n"
         }
     },
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "ctxMenuLinkCopy.Text": {
-            "en": "Copy"
+            "en": "Copy",
+            "zh-CN": "复制"
         },
         "genSslBtn.Text": {
             "en": "Generate SSL Certificate",
@@ -165,13 +167,16 @@
             "zh-CN": "状态："
         },
         "label4.Text": {
-            "en": "Overlay:"
+            "en": "Overlay:",
+            "zh-CN": "悬浮窗："
         },
         "label5.Text": {
-            "en": "URL:"
+            "en": "URL:",
+            "zh-CN": "悬浮窗链接："
         },
         "lblUrlConfidentWarning.Text": {
-            "en": "This URL might not work if the overlay doesn't support ACTWebSocket."
+            "en": "This URL might not work if the overlay doesn't support ACTWebSocket.",
+            "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
         "logDisplay.Text": {
             "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file with the password changeit in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL.",
@@ -657,7 +662,8 @@
         "DuplicateHandlerError": {
             "en": "Duplicate handler for name {0}!",
             "fr-FR": "Handler en double pour le nom {0}!",
-            "ko-KR": "이름 {0}에 대한 중복 처리!"
+            "ko-KR": "이름 {0}에 대한 중복 처리!",
+            "zh-CN": "名称{0}重复处理！"
         },
         "ErrorOverlayNameEmpty": {
             "en": "Name must not be empty or white space only.",
@@ -728,7 +734,8 @@
         "JsHandlerCallException": {
             "en": "JS Handler call failed: {0}",
             "fr-FR": "Appel JS Handler échoué : {0}",
-            "ko-KR": "JS 핸들러 호출 실패 : {0}"
+            "ko-KR": "JS 핸들러 호출 실패 : {0}",
+            "zh-CN": "JS处理程序调用失败: {0}"
         },
         "ListSortFailed": {
             "en": "Failed to sort list by {0}: {1}",
@@ -739,7 +746,7 @@
         "MapESMiniParse": {
             "en": "MiniParseEventSource",
             "ko-KR": "MiniParse 고급 설정",
-            "zh-CN": "数据统计事件源设置"
+            "zh-CN": "设置"
         },
         "MapOverlayLabel": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
@@ -868,7 +875,8 @@
             "zh-CN": "处理新订阅失败：{0}"
         },
         "WSNotConfidentLink": {
-            "en": "This link might not work if the overlay doesn't support ACTWebSocket."
+            "en": "This link might not work if the overlay doesn't support ACTWebSocket.",
+            "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
         "WSShutdownError": {
             "en": "WS: Failed to shutdown. {0}",
