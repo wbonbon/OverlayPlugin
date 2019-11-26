@@ -282,6 +282,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                             }
                             else
                             {
+                                Directory.CreateDirectory(Path.GetDirectoryName(outPath));
+
                                 using (var writer = File.OpenWrite(outPath))
                                 {
                                     reader.WriteEntryTo(writer);
