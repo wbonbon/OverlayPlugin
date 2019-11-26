@@ -40,14 +40,14 @@
             "en": "Add/Remove overlays",
             "fr-FR": "Ajout/Suppression overlays",
             "ko-KR": "추가/삭제 오버레이",
-            "zh-CN": "添加/删除模板"
+            "zh-CN": "添加/删除悬浮窗"
         },
         "label_ListEmpty.Text": {
             "en": "Click [Add] button to configure overlays.",
             "fr-FR": "Cliquez [Ajouter] pour configurer les overlays.",
             "ja-JP": "[追加] バートンを押して、オーバーレイを設定してください",
             "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주십시오.",
-            "zh-CN": "点击[添加]按钮设置美化悬浮窗"
+            "zh-CN": "点击[添加]按钮设置悬浮窗"
         },
         "tabPageMain.Text": {
             "en": "General",
@@ -77,14 +77,14 @@
             "fr-FR": "Cacher automatiquement les overlays lors des cinématiques",
             "ja-JP": "カットシーン中にオーバーレイを非表示にする",
             "ko-KR": "컷신 이벤트 중에는 자동으로 오버레이 숨기기",
-            "zh-CN": "当过场动画时自动隐藏美化悬浮窗"
+            "zh-CN": "当过场动画时自动隐藏悬浮窗"
         },
         "cbHideOverlaysWhenNotActive.Text": {
             "en": "Automatically hide overlays when the game is in the background",
             "fr-FR": "Cacher automatiquement les overlays quand le jeu est en fond de tâche",
             "ja-JP": "ACTまたはゲームがアクティブでない場合にオーバーレイを非表示にする",
             "ko-KR": "게임 비활성화일 때 자동으로 오버레이 숨기기",
-            "zh-CN": "当ACT和游戏全部最小化时自动隐藏美化悬浮窗"
+            "zh-CN": "当ACT和游戏全部最小化时自动隐藏悬浮窗"
         },
         "cbUpdateCheck.Text": {
             "en": "Automatically check for updates",
@@ -100,7 +100,7 @@
             "fr-FR": "Création d'un nouvel overlay",
             "ja-JP": "新しいオーバーレイ",
             "ko-KR": "새 오버레이 생성",
-            "zh-CN": "创建新的美化悬浮窗"
+            "zh-CN": "创建新的悬浮窗"
         },
         "buttonCancel.Text": {
             "en": "Cancel",
@@ -275,7 +275,7 @@
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
-            "zh-CN": "重新加载（用于更换模板后即时刷新）"
+            "zh-CN": "重新加载（用于更换悬浮窗后即时刷新）"
         },
         "buttonSelectFile.Text": {
             "en": "...",
@@ -301,14 +301,14 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化悬浮窗"
+            "zh-CN": "启用悬浮窗"
         },
         "label4.Text": {
             "en": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "ko-KR": "URL",
-            "zh-CN": "美化模板路径"
+            "zh-CN": "悬浮窗路径"
         },
         "label5.Text": {
             "en": "Display text as HTML",
@@ -322,21 +322,21 @@
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "단축키 사용",
-            "zh-CN": "启用美化 开/关 快捷键"
+            "zh-CN": "启用悬浮窗 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "단축키",
-            "zh-CN": "设置美化 开/关 快捷键"
+            "zh-CN": "设置悬浮窗 开/关 快捷键"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化悬浮窗"
+            "zh-CN": "锁定悬浮窗"
         }
     },
     "OverlayPlugin.Core/Overlays/LogParseConfigPanel": {
@@ -359,7 +359,7 @@
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
-            "zh-CN": "重新加载（用于更换模板后即时刷新）"
+            "zh-CN": "重新加载（用于更换悬浮窗后即时刷新）"
         },
         "buttonLogParseSelectFile.Text": {
             "en": "...",
@@ -371,7 +371,7 @@
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "ko-KR": "URL",
-            "zh-CN": "美化模板路径"
+            "zh-CN": "悬浮窗路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
@@ -392,7 +392,7 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化悬浮窗"
+            "zh-CN": "启用悬浮窗"
         },
         "label6.Text": {
             "en": "Max. framerate",
@@ -406,21 +406,21 @@
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "단축키 사용",
-            "zh-CN": "启用美化 开/关 快捷键"
+            "zh-CN": "启用悬浮窗 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "단축키",
-            "zh-CN": "设置美化 开/关 快捷键"
+            "zh-CN": "设置悬浮窗 开/关 快捷键"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化悬浮窗"
+            "zh-CN": "锁定悬浮窗"
         }
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
@@ -442,7 +442,7 @@
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
-            "zh-CN": "重新加载（用于更换模板后即时刷新）"
+            "zh-CN": "重新加载（用于更换悬浮窗后即时刷新）"
         },
         "buttonMiniParseSelectFile.Text": {
             "en": "...",
@@ -454,21 +454,21 @@
             "fr-FR": "RAZ Position",
             "ja-JP": "オーバーレイの位置をリセットする",
             "ko-KR": "오버레이 위치 초기화",
-            "zh-CN": "重置美化悬浮窗位置"
+            "zh-CN": "重置悬浮窗位置"
         },
         "checkActwsCompatbility.Text": {
             "en": "This is an overlay that requires ACTWebSocket",
             "fr-FR": "Cet overlay nécessite ACTWebSocket",
             "ja-JP": "このオーバーレイはACTWebSocketが必要",
             "ko-KR": "오버레이를 ACTWebSocket으로 연결하기",
-            "zh-CN": "此模板需要使用ACTWebSocket"
+            "zh-CN": "此悬浮窗需要使用ACTWebSocket"
         },
         "checkLogConsoleMessages.Text": {
             "en": "Show console messages from this overlay in the overlay log",
             "fr-FR": "Afficher les messages de cet overlay dans le log",
             "ja-JP": "オーバーレイのコンソールメッセージをログに表示する",
             "ko-KR": "오버레이 콘솔 메시지를 로그에 표시",
-            "zh-CN": "在模板日志中显示来自此模板的控制台消息"
+            "zh-CN": "在悬浮窗日志中显示来自此悬浮窗的控制台消息"
         },
         "checkNoFocus.Text": {
             "en": "Don't accept focus for this overlay",
@@ -482,7 +482,7 @@
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "ko-KR": "URL",
-            "zh-CN": "美化模板路径"
+            "zh-CN": "悬浮窗路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
@@ -496,14 +496,14 @@
             "fr-FR": "Cette option est seulement nécessaire si la skin de l'overlay n'est pas compatible d'origine avec OverlayPlugin",
             "ja-JP": "オーバーレイが通常のOverlayPluginと互換性がない場合のみ、このチェックを有効にして下さい。",
             "ko-KR": "오버레이를 OverlayPlugin으로 연결했을 때, 정상적으로 동작하지 않는다면 이 기능을 사용합니다.",
-            "zh-CN": "仅当模板与OverlayPlugin不兼容时，才需要启用此选项。"
+            "zh-CN": "仅当悬浮窗与OverlayPlugin不兼容时，才需要启用此选项。"
         },
         "label12.Text": {
             "en": "Use this if you can't find the overlay or for some reason can't resize it.",
             "fr-FR": "Utilisez cette option si vous ne trouvez ou ne pouvez pas redimensionner l'overlay",
             "ja-JP": "オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。",
             "ko-KR": "오버레이가 잘 보이지 않거나 크기 조정을 할 수 없는 경우에만 이 기능을 사용합니다.",
-            "zh-CN": "如果您找不到美化悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
+            "zh-CN": "如果您找不到悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label15.Text": {
             "en": "Zoom",
@@ -523,14 +523,14 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化悬浮窗"
+            "zh-CN": "启用悬浮窗"
         },
         "label4.Text": {
             "en": "Force white background",
             "fr-FR": "Forcer le fond en blanc",
             "ja-JP": "オーバーレイの背景を白にする",
             "ko-KR": "오버레이 배경을 흰색으로 변경하기",
-            "zh-CN": "在美化悬浮窗强制启用白色背景"
+            "zh-CN": "在悬浮窗下强制启用白色背景"
         },
         "label5.Text": {
             "en": "ACTWS Compatiblity",
@@ -551,21 +551,21 @@
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "단축키 사용",
-            "zh-CN": "启用美化 开/关 快捷键"
+            "zh-CN": "启用悬浮窗 开/关 快捷键"
         },
         "label8.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "단축키",
-            "zh-CN": "设置美化 开/关 快捷键"
+            "zh-CN": "设置悬浮窗 开/关 快捷键"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化悬浮窗"
+            "zh-CN": "锁定悬浮窗"
         },
         "lblNoFocus.Text": {
             "en": "No Focus",
@@ -595,7 +595,7 @@
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
-            "zh-CN": "重新加载（用于更换模板后即时刷新）"
+            "zh-CN": "重新加载（用于更换悬浮窗后即时刷新）"
         },
         "buttonSpellTimerSelectFile.Text": {
             "en": "...",
@@ -607,28 +607,28 @@
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "단축키 사용",
-            "zh-CN": "启用美化 开/关 快捷键"
+            "zh-CN": "启用悬浮窗 开/关 快捷键"
         },
         "label10.Text": {
             "en": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "ko-KR": "URL",
-            "zh-CN": "美化模板路径"
+            "zh-CN": "悬浮窗路径"
         },
         "label2.Text": {
             "en": "Global hotkey",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "단축키",
-            "zh-CN": "设置美化 开/关 快捷键"
+            "zh-CN": "设置悬浮窗 开/关 快捷键"
         },
         "label3.Text": {
             "en": "Lock overlay",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定美化悬浮窗"
+            "zh-CN": "锁定悬浮窗"
         },
         "label4.Text": {
             "en": "Hotkey Type",
@@ -656,7 +656,7 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用美化悬浮窗"
+            "zh-CN": "启用悬浮窗"
         }
     },
     "OverlayPlugin.Core/Resources": {
@@ -742,7 +742,7 @@
             "en": "InitializeOverlay: URI parse error! Please reconfigure the URL. (Config.Url = {0}): {1}",
             "fr-FR": "InitializeOverlay: erreur d'analyse URI ! Reconfigurez l'URL. (Config.Url = {0}): {1}",
             "ko-KR": "오버레이 초기화: URL 파싱 오류! URL 경로를 다시 확인해 주십시오. (Config.Url = {0}): {1}",
-            "zh-CN": "初始化插件：路径解析错误！请重新设置模板路径(Config.Url = {0}): {1}"
+            "zh-CN": "初始化插件：路径解析错误！请重新设置悬浮窗路径(Config.Url = {0}): {1}"
         },
         "JsHandlerCallException": {
             "en": "JS Handler call failed: {0}",
@@ -878,7 +878,7 @@
             "#comment": "Front page of the WebSocket server. A list of the currently active overlays is displayed underneath with links for WebSocket mode.",
             "en": "<h1>It Works!</h1>\n        <p>\n            If any of these links are displayed with a &quot;Local:&quot; prefix and not clickable then that's because\n            those overlays display local files and web browsers don't allow web sites to link to local files.\n        </p>\n        <p>\n            You'll have to copy &amp; paste that link into your address bar.\n        </p>",
             "fr-FR": "<h1>Ca fonctionne !</h1>\n        <p>\n             Si l'un de ces liens est affich&eacute; avec un pr&eacute;fixe &quot;Local:&quot; et qu'il ne peut pas &ecirc;tre cliqu&eacute;,\n            c'est que ces overlays affichent des fichiers locaux et que les navigateurs Web n'autorisent pas les sites Web &agrave; cr&eacute;er des liens vers des fichiers locaux.\n        </p>\n        <p>\n            Vous devrez copier et coller ce lien dans votre barre d'adresse\n        </p>",
-            "zh-CN": "<h1>It Works!</h1>\n        <p>\n            如果这些链接中有任何一个以&quot;Local:&quot;为前缀显示且不可点击，那是因为\n            这些模板显示本地文件，并且网页浏览器不允许网站链接到本地文件。\n        </p>\n        <p>\n            您必须复制&amp;并粘贴到您的地址栏中。\n        </p>"
+            "zh-CN": "<h1>It Works!</h1>\n        <p>\n            如果这些链接中有任何一个以&quot;Local:&quot;为前缀显示且不可点击，那是因为\n            这些悬浮窗显示本地文件，并且网页浏览器不允许网站链接到本地文件。\n        </p>\n        <p>\n            您必须复制&amp;并粘贴到您的地址栏中。\n        </p>"
         },
         "WSInvalidDataRecv": {
             "en": "Invalid data received: {0}; {1}",
@@ -1197,7 +1197,7 @@
             "en": "OverlayPlugin",
             "fr-FR": "OverlayPlugin",
             "ko-KR": "OverlayPlugin",
-            "zh-CN": "数据统计美化"
+            "zh-CN": "OverlayPlugin"
         },
         "StatusCancelled": {
             "en": "Cancelled!",
