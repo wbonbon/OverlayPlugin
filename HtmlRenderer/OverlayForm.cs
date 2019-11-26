@@ -104,6 +104,7 @@ namespace RainbowMage.HtmlRenderer
             
             // Alt+Tab を押したときに表示されるプレビューから除外する
             HidePreview();
+
         }
 
         /// <summary>
