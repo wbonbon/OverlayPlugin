@@ -3,7 +3,7 @@
         "BrowserCrashed": {
             "en": "Browser crashed! ({0}) Trying to restart.",
             "fr-FR": "Le navigateur a planté ! ({0}) Redémarrage.",
-            "ko-KR": "Browser crashed! ({0}) 다시 재시작하세요.",
+            "ko-KR": "Browser crashed! ({0}) 재시작하십시오.",
             "zh-CN": "浏览器崩溃了！({0})尝试重新启动。"
         }
     },
@@ -873,7 +873,7 @@
         "WSLoadingCert": {
             "en": "WS: Loading SSL certificate {0}...",
             "fr-FR": "WS : Chargement du certificat SSL  {0}...",
-            "ko-KR": "WS : SSL 인증서 {0} 로드 중...",
+            "ko-KR": "WS: SSL 인증서 {0} 로드 중...",
             "zh-CN": "WS：正在加载SSL证书{0}..."
         },
         "WSMessageSendFailed": {
@@ -895,13 +895,13 @@
         "WSShutdownError": {
             "en": "WS: Failed to shutdown. {0}",
             "fr-FR": "WS : L'arrêt a échoué. {0}",
-            "ko-KR": "WS : 종료하지 못했습니다. {0} ",
+            "ko-KR": "WS: 종료하지 못했습니다. {0} ",
             "zh-CN": "WS:关闭失败：{0}"
         },
         "WSStartFailed": {
             "en": "WS: Failed to start: {0}",
             "fr-FR": "WS : Impossible de démarrer : {0}",
-            "ko-KR": "WS : 시작하지 못했습니다. {0} ",
+            "ko-KR": "WS: 시작하지 못했습니다. {0} ",
             "zh-CN": "WS:启动失败：{0}"
         },
         "WSUnsubFail": {
