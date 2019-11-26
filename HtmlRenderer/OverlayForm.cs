@@ -34,6 +34,8 @@ namespace RainbowMage.HtmlRenderer
         private const int CP_NOCLOSE_BUTTON = 0x200;
         private const int WS_EX_NOACTIVATE = 0x08000000;
 
+        public Region DraggableRegion = null;
+
         public Renderer Renderer { get; private set; }
 
         private string url;
@@ -394,9 +396,13 @@ namespace RainbowMage.HtmlRenderer
         {
             if (!this.Locked && !isDragging)
             {
-                isDragging = true;
-                hasDragged = false;
-                offset = e.Location;
+                // If we have a draggable region defined, start dragging only if we're inside the region.
+                if (DraggableRegion == null || DraggableRegion.IsVisible(e.Location))
+                {
+                    isDragging = true;
+                    hasDragged = false;
+                    offset = e.Location;
+                }
             }
 
             this.Renderer.SendMouseUpDown(e.X, e.Y, GetMouseButtonType(e), false);

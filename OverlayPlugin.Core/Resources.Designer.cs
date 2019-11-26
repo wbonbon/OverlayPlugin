@@ -446,6 +446,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This link might not work if the overlay doesn&apos;t support ACTWebSocket..
+        /// </summary>
+        internal static string WSNotConfidentLink {
+            get {
+                return ResourceManager.GetString("WSNotConfidentLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WS: Failed to shutdown. {0}.
         /// </summary>
         internal static string WSShutdownError {

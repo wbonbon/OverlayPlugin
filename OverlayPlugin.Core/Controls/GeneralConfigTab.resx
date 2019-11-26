@@ -139,7 +139,7 @@
     <value>0</value>
   </data>
   <data name="cbErrorReports.Text" xml:space="preserve">
-    <value>Automatically report errors</value>
+    <value>Automatically send error reports to the developer</value>
   </data>
   <data name="&gt;&gt;cbErrorReports.Name" xml:space="preserve">
     <value>cbErrorReports</value>

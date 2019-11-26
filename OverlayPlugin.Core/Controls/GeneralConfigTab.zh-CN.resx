@@ -120,7 +120,7 @@
     <value>当ACT和游戏全部最小化时自动隐藏美化悬浮窗</value>
   </data>
   <data name="cbErrorReports.Text" xml:space="preserve">
-    <value>自动报告错误</value>
+    <value>自动向开发者发送错误报告</value>
   </data>
   <data name="btnUpdateCheck.Text" xml:space="preserve">
     <value>检查更新</value>

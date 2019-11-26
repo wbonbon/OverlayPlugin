@@ -11,6 +11,7 @@ namespace RainbowMage.OverlayPlugin
         public static TinyIoCContainer Container { get; private set; }
         private static List<Type> _overlays;
         private static List<IEventSource> _eventSources;
+        private static List<Type> _esQueue;
 
         public static IEnumerable<Type> Overlays
         {
@@ -35,6 +36,7 @@ namespace RainbowMage.OverlayPlugin
             Container = new TinyIoCContainer();
             _overlays = new List<Type>();
             _eventSources = new List<IEventSource>();
+            _esQueue = new List<Type>();
         }
 
         public static void Clear()
@@ -70,9 +72,9 @@ namespace RainbowMage.OverlayPlugin
             {
                 source.LoadConfig(Container.Resolve<IPluginConfig>());
                 source.Start();
-            }
 
-            EventSourceRegistered?.Invoke(null, new EventSourceRegisteredEventArgs(source));
+                EventSourceRegistered?.Invoke(null, new EventSourceRegisteredEventArgs(source));
+            }
         }
 
         public static void RegisterEventSource<T>()
@@ -81,7 +83,29 @@ namespace RainbowMage.OverlayPlugin
             var esType = typeof(T);
             Container.Register(esType);
 
-            RegisterEventSource((T) Container.Resolve(esType));
+            if (Container.CanResolve<IPluginConfig>())
+            {
+                RegisterEventSource((T)Container.Resolve(esType));
+            } else
+            {
+                _esQueue.Add(esType);
+            }
+        }
+
+        public static void StartEventSources()
+        {
+            foreach (var es in _esQueue)
+            {
+                RegisterEventSource((IEventSource)Container.Resolve(es));
+            }
+            _esQueue.Clear();
+
+            var config = Container.Resolve<IPluginConfig>();
+            foreach (var source in _eventSources)
+            {
+                source.LoadConfig(config);
+                source.Start();
+            }
         }
 
         #region Shortcuts

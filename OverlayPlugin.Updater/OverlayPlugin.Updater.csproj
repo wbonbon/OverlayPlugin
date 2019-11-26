@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -69,6 +71,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CefInstaller.cs" />
+    <Compile Include="CefMissingTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CefMissingTab.Designer.cs">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CurlWrapper.cs" />
     <Compile Include="Installer.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="ProgressDisplay.cs">
@@ -90,7 +99,28 @@
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Updater.cs" />
+    <EmbeddedResource Include="CefMissingTab.fr-FR.resx">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CefMissingTab.ja-JP.resx">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CefMissingTab.ko-KR.resx">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CefMissingTab.resx">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CefMissingTab.zh-CN.resx">
+      <DependentUpon>CefMissingTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProgressDisplay.fr-FR.resx">
+      <DependentUpon>ProgressDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDisplay.ja-JP.resx">
+      <DependentUpon>ProgressDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressDisplay.ko-KR.resx">
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressDisplay.resx">
@@ -100,12 +130,20 @@
       <DependentUpon>ProgressDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr-FR.resx" />
+    <EmbeddedResource Include="Resources.ja-JP.resx" />
+    <EmbeddedResource Include="Resources.ko-KR.resx" />
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.zh-CN.resx" />
     <EmbeddedResource Include="UpdateQuestionForm.fr-FR.resx">
+      <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateQuestionForm.ja-JP.resx">
+      <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateQuestionForm.ko-KR.resx">
       <DependentUpon>UpdateQuestionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateQuestionForm.resx">
@@ -122,5 +160,15 @@
       <Name>OverlayPlugin.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\libcurl.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\libcurl-x64.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
 </Project>

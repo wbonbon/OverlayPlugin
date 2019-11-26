@@ -40,6 +40,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkLock.Checked = config.IsLocked;
             this.textMiniParseUrl.Text = config.Url;
             this.checkActwsCompatbility.Checked = config.ActwsCompatibility;
+            this.lblNoFocus.Visible = config.ActwsCompatibility;
             this.checkNoFocus.Visible = config.ActwsCompatibility;
             this.checkNoFocus.Checked = config.NoFocus;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;

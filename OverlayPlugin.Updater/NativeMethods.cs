@@ -9,10 +9,12 @@ namespace RainbowMage.OverlayPlugin.Updater
 {
     static class NativeMethods
     {
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr LoadLibrary(string name);
 
         [DllImport("kernel32.dll")]
         public static extern void FreeLibrary(IntPtr handle);
+
+        
     }
 }

@@ -144,4 +144,12 @@
   <data name="label9.Text" xml:space="preserve">
     <value>위치 잠금</value>
   </data>
+
+  <data name="label1.Text" xml:space="preserve">
+    <value>주소(URL)</value>
+  </data>
+
+  <data name="label10.Text" xml:space="preserve">
+    <value>핫 키 형식</value>
+  </data>
 </root>

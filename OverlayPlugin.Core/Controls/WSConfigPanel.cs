@@ -31,6 +31,17 @@ namespace RainbowMage.OverlayPlugin
 
             UpdateStatus(null, new WSServer.StateChangedArgs(WSServer.IsRunning(), WSServer.IsFailed()));
             WSServer.OnStateChanged += UpdateStatus;
+
+            lblUrlConfidentWarning.Visible = false;
+            Registry.Resolve<PluginMain>().OverlaysChanged += (o, e) =>
+            {
+                RebuildOverlayOptions();
+            };
+
+            ctxMenuLinkCopy.Click += (o, e) =>
+            {
+                Clipboard.SetText(lnkOverlayUrl.Text);
+            };
         }
 
         private void UpdateStatus(object sender, WSServer.StateChangedArgs e)
@@ -218,6 +229,40 @@ namespace RainbowMage.OverlayPlugin
                     MessageBoxIcon.Error
                     );
             }
+        }
+
+        private void RebuildOverlayOptions()
+        {
+            cbOverlay.Items.Clear();
+
+            foreach (var overlay in Registry.Resolve<PluginMain>().Overlays)
+            {
+                if (overlay.GetType() == typeof(Overlays.MiniParseOverlay))
+                {
+                    cbOverlay.Items.Add(new
+                    {
+                        label = overlay.Config.Name,
+                        overlay
+                    });
+                }
+            }
+        }
+
+        private void cbOverlay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = cbOverlay.Items[cbOverlay.SelectedIndex];
+            var overlay = (Overlays.MiniParseOverlay) item.GetType().GetProperty("overlay").GetValue(item);
+            if (overlay == null) return;
+
+            var (confident, url) = WSServer.GetUrl(overlay);
+
+            lblUrlConfidentWarning.Visible = !confident;
+            lnkOverlayUrl.Text = url;
+        }
+
+        private void lnkOverlayUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(lnkOverlayUrl.Text);
         }
 
         private class ShowLineArgs : EventArgs

@@ -26,6 +26,7 @@ namespace RainbowMage.OverlayPlugin
 
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
+        internal event EventHandler OverlaysChanged;
 
         public static Logger Logger { get; private set; }
         internal static string PluginDirectory { get; private set; }
@@ -152,28 +153,30 @@ namespace RainbowMage.OverlayPlugin
                 initTimer.Interval = 300;
                 initTimer.Tick += (o, e) =>
                 {
-                    if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
+                    if (ActGlobals.oFormActMain == null)
                     {
+                        // Something went really wrong.
                         initTimer.Stop();
-                        
-                        Registry.Register(new KeyboardHook());
-
-                        LoadAddons();
-                        InitializeOverlays();
-                        controlPanel.InitializeOverlayConfigTabs();
-
-                        OverlayHider.Initialize();
-
-                        if (Config.WSServerRunning)
+                    } else if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
+                    {
+                        try
                         {
-                            try
+                            initTimer.Stop();
+                            Registry.Register(new KeyboardHook());
+
+                            LoadAddons();
+                            InitializeOverlays();
+                            controlPanel.InitializeOverlayConfigTabs();
+                            OverlayHider.Initialize();
+
+                            if (Config.WSServerRunning)
                             {
                                 WSServer.Initialize();
                             }
-                            catch (Exception ex)
-                            {
-                                Logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
-                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
                         }
                     }
                 };
@@ -222,6 +225,8 @@ namespace RainbowMage.OverlayPlugin
             overlay.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
             overlay.Start();
             this.Overlays.Add(overlay);
+
+            OverlaysChanged?.Invoke(this, null);
         }
 
         /// <summary>
@@ -232,6 +237,8 @@ namespace RainbowMage.OverlayPlugin
         {
             this.Overlays.Remove(overlay);
             overlay.Dispose();
+
+            OverlaysChanged?.Invoke(this, null);
         }
 
         /// <summary>
@@ -256,7 +263,7 @@ namespace RainbowMage.OverlayPlugin
             try { WSServer.Stop(); }
             catch { }
 
-            if (this.wsTabPage != null)
+            if (this.wsTabPage != null && this.wsTabPage.Parent != null)
                 ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
 
             Logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
@@ -288,6 +295,7 @@ namespace RainbowMage.OverlayPlugin
 
                 // Make sure the event source is ready before we load any overlays.
                 Registry.RegisterEventSource<MiniParseEventSource>();
+                Registry.StartEventSources();
 
                 Registry.RegisterOverlay<MiniParseOverlay>();
                 Registry.RegisterOverlay<SpellTimerOverlay>();
@@ -413,12 +421,6 @@ namespace RainbowMage.OverlayPlugin
 
             Registry.Register(Config);
             Registry.Register<IPluginConfig>(Config);
-
-            foreach (var es in Registry.EventSources)
-            {
-                es.LoadConfig(Config);
-                es.Start();
-            }
         }
 
         /// <summary>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WSConfigPanel));
             this.ipTxt = new System.Windows.Forms.TextBox();
             this.portTxt = new System.Windows.Forms.TextBox();
@@ -40,6 +41,14 @@
             this.stopBtn = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbOverlay = new System.Windows.Forms.ComboBox();
+            this.lnkOverlayUrl = new System.Windows.Forms.LinkLabel();
+            this.lblUrlConfidentWarning = new System.Windows.Forms.Label();
+            this.ctxMenuLink = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ctxMenuLinkCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMenuLink.SuspendLayout();
             this.SuspendLayout();
             // 
             // ipTxt
@@ -110,9 +119,58 @@
             resources.ApplyResources(this.statusLabel, "statusLabel");
             this.statusLabel.Name = "statusLabel";
             // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // cbOverlay
+            // 
+            this.cbOverlay.DisplayMember = "label";
+            this.cbOverlay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbOverlay.FormattingEnabled = true;
+            resources.ApplyResources(this.cbOverlay, "cbOverlay");
+            this.cbOverlay.Name = "cbOverlay";
+            this.cbOverlay.ValueMember = "overlay";
+            this.cbOverlay.SelectedIndexChanged += new System.EventHandler(this.cbOverlay_SelectedIndexChanged);
+            // 
+            // lnkOverlayUrl
+            // 
+            resources.ApplyResources(this.lnkOverlayUrl, "lnkOverlayUrl");
+            this.lnkOverlayUrl.ContextMenuStrip = this.ctxMenuLink;
+            this.lnkOverlayUrl.Name = "lnkOverlayUrl";
+            this.lnkOverlayUrl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOverlayUrl_LinkClicked);
+            // 
+            // lblUrlConfidentWarning
+            // 
+            resources.ApplyResources(this.lblUrlConfidentWarning, "lblUrlConfidentWarning");
+            this.lblUrlConfidentWarning.Name = "lblUrlConfidentWarning";
+            // 
+            // ctxMenuLink
+            // 
+            this.ctxMenuLink.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctxMenuLinkCopy});
+            this.ctxMenuLink.Name = "ctxMenuLink";
+            resources.ApplyResources(this.ctxMenuLink, "ctxMenuLink");
+            // 
+            // ctxMenuLinkCopy
+            // 
+            this.ctxMenuLinkCopy.Name = "ctxMenuLinkCopy";
+            resources.ApplyResources(this.ctxMenuLinkCopy, "ctxMenuLinkCopy");
+            // 
             // WSConfigPanel
             // 
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Controls.Add(this.lblUrlConfidentWarning);
+            this.Controls.Add(this.lnkOverlayUrl);
+            this.Controls.Add(this.cbOverlay);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.stopBtn);
@@ -126,6 +184,7 @@
             this.Controls.Add(this.ipTxt);
             this.Name = "WSConfigPanel";
             resources.ApplyResources(this, "$this");
+            this.ctxMenuLink.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,5 +203,12 @@
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbOverlay;
+        private System.Windows.Forms.LinkLabel lnkOverlayUrl;
+        private System.Windows.Forms.Label lblUrlConfidentWarning;
+        private System.Windows.Forms.ContextMenuStrip ctxMenuLink;
+        private System.Windows.Forms.ToolStripMenuItem ctxMenuLinkCopy;
     }
 }
