@@ -70,11 +70,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             lastLoadedUrl = e.Url;
             Config.Url = e.Url;
+
+            // Reset page-specific state
             Overlay.Renderer.SetZoomLevel(Config.Zoom / 100.0);
-            Overlay.SetAcceptFocus(!Config.NoFocus);
+            ModernApi = false;
 
             if (Config.ActwsCompatibility)
             {
+                Overlay.SetAcceptFocus(!Config.NoFocus);
+
                 var shimMsg = Resources.ActwsShimEnabled;
 
                 // Install a fake WebSocket so we can directly call the event handler.
@@ -125,9 +129,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 Subscribe("ChangeZone");
                 Subscribe("ChangePrimaryPlayer");
             } else {
-                // Subscriptions are cleared on page navigation so we have to restore this after every load.
+                // Reset page-specific state
+                Overlay.SetAcceptFocus(false);
 
-                ModernApi = false;
+                // Subscriptions are cleared on page navigation so we have to restore this after every load.
                 Subscribe("CombatData");
                 Subscribe("LogLine");
             }
@@ -192,11 +197,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         public override void HandleEvent(JObject e)
         {
-            if (ModernApi)
-            {
-                base.HandleEvent(e);
-            }
-            else if (Config.ActwsCompatibility)
+            if (Config.ActwsCompatibility)
             {
                 // NOTE: Keep this in sync with WSServer's LegacyHandler.
                 switch (e["type"].ToString())
@@ -214,6 +215,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
                         ExecuteScript("__OverlayPlugin_ws_faker({'type': 'broadcast', 'msgtype': 'SendCharName', 'msg': " + e.ToString(Formatting.None) + " });");
                         break;
                 }
+            }
+            else if(ModernApi)
+            {
+                base.HandleEvent(e);
             }
             else
             {
