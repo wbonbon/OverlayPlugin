@@ -111,6 +111,9 @@ for project in PROJECTS:
             if '.' in key and not key.endswith(ATTRIB_WHITELIST):
                 continue
 
+            if node.attrib.get('type', '') == 'System.Resources.ResXFileRef, System.Windows.Forms':
+                continue
+
             item = file_data.setdefault(key, {})
             item[lang] = node.find('value').text
 

@@ -131,6 +131,7 @@
         },
         "label3.Text": {
             "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
+            "ja-JP": "ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。\n\nLabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。\nSpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。",
             "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
             "zh-CN": "对于大多数悬浮窗，您必须在此处选择MiniParse。 是的，即使Cactbot也需要MiniParse类型。\n\nLabel允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。\nSpellTimer显示ACT内置的技能冷却计时器，与Hojoring的SpecialSpellTimers或SPESPE无关。\n"
         }
@@ -507,8 +508,8 @@
         },
         "label15.Text": {
             "en": "Zoom",
-            "ko-KR": "확대/축소",
             "ja-JP": "ズーム",
+            "ko-KR": "확대/축소",
             "zh-CN": "缩放"
         },
         "label2.Text": {
@@ -815,8 +816,8 @@
         "NetworkParserInitException": {
             "en": "Failed to setup network parser: {0}",
             "fr-FR": "Echec de la configuration réseau du parser : {0}",
-            "zh-CN": "无法设置网络解析器：{0}",
-            "ko-KR": "네트워크 파서를 설정하지 못했습니다 : {0}"
+            "ko-KR": "네트워크 파서를 설정하지 못했습니다 : {0}",
+            "zh-CN": "无法设置网络解析器：{0}"
         },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
@@ -1003,14 +1004,14 @@
     "OverlayPlugin.Updater/Resources": {
         "CreatingTempDirFailed": {
             "en": "Failed to create or empty the temporary directory \"{0}\": {1}",
-            "ko-KR": "임시 디렉토리 \"{0}\"(을/를) 생성하거나 비우지 못했습니다: {1}",
             "fr-FR": "Impossible de créer ou supprimer le répertoire temporaire \"{0}\": {1}",
+            "ko-KR": "임시 디렉토리 \"{0}\"(을/를) 생성하거나 비우지 못했습니다: {1}",
             "zh-CN": "创建或清空缓存目录\"{0}\": {1}失败"
         },
         "DownloadFailedContentLengthMissing": {
             "en": "Download failed! The download has no file size (Content-Length header is missing).",
-            "ko-KR": "다운로드 실패! 다운로드 파일 크기가 없음 (Content-Length 헤더 누락)",
             "fr-FR": "Le téléchargement a échoué ! Le téléchargement est de taille nulle (l'en-tête Content-Length est manquant).",
+            "ko-KR": "다운로드 실패! 다운로드 파일 크기가 없음 (Content-Length 헤더 누락)",
             "zh-CN": "下载失败！没有下载文件大小（Content-Length标头缺失）。"
         },
         "ErrorTitle": {
