@@ -64,11 +64,12 @@ namespace RainbowMage.OverlayPlugin
                 watch.Start();
 #endif
 
+                // ** Init phase 1
+                // Only init stuff here that works without the FFXIV plugin or addons (event sources, overlays).
+                // Everything else should be initialized in the second phase.
                 FFXIVExportVariables.Init();
-                NetworkParser.Init();
                 EventDispatcher.Init();
-
-                // LoadAddons();
+                Registry.Register(new KeyboardHook());
                 LoadConfig();
 
 #if DEBUG
@@ -162,13 +163,29 @@ namespace RainbowMage.OverlayPlugin
                         try
                         {
                             initTimer.Stop();
-                            Registry.Register(new KeyboardHook());
+
+                            // ** Init phase 2
+
+                            // Initialize the parser in the second phase since it needs the FFXIV plugin.
+                            // If OverlayPlugin is placed above the FFXIV plugin, it won't be available in the first
+                            // phase but it'll be loaded by the time we enter the second phase.
+                            NetworkParser.Init();
+
+                            // This timer runs on the UI thread (it has to since we create UI controls) but LoadAddons()
+                            // can block for some time. We run it on the background thread to avoid blocking the UI.
+                            // We can't run LoadAddons() in the first init phase since it checks other ACT plugins for
+                            // addons. Plugins below OverlayPlugin wouldn't have been loaded in the first init phase.
+                            // However, in the second phase all plugins have been loaded which means we can look for addons
+                            // in that list.
                             await Task.Run(LoadAddons);
 
+                            // Now that addons have been loaded, we can finish the overlay setup.
                             InitializeOverlays();
                             controlPanel.InitializeOverlayConfigTabs();
                             OverlayHider.Initialize();
 
+                            // WSServer has to start after the LoadAddons() call because clients can connect immediately
+                            // after it's initialized and that requires the event sources to be initialized.
                             if (Config.WSServerRunning)
                             {
                                 WSServer.Initialize();
