@@ -48,7 +48,7 @@ namespace RainbowMage.OverlayPlugin
             generalTab.Controls.Add(new GeneralConfigTab());
 
             PluginMain.Logger.RegisterListener(AddLogEntry);
-            Registry.EventSourceRegistered += AddEventSourceTab;
+            Registry.EventSourceRegistered += (o, e) => Invoke((Action)(() => AddEventSourceTab(o, e)));
         }
 
         protected override void Dispose(bool disposing)

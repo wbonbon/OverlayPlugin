@@ -12,6 +12,7 @@ namespace RainbowMage.OverlayPlugin
         private static List<Type> _overlays;
         private static List<IEventSource> _eventSources;
         private static List<Type> _esQueue;
+        private static bool _esReady = false;
 
         public static IEnumerable<Type> Overlays
         {
@@ -37,6 +38,7 @@ namespace RainbowMage.OverlayPlugin
             _overlays = new List<Type>();
             _eventSources = new List<IEventSource>();
             _esQueue = new List<Type>();
+            _esReady = false;
         }
 
         public static void Clear()
@@ -68,7 +70,7 @@ namespace RainbowMage.OverlayPlugin
 
             // If an event source is registered at runtime, we have to load the config
             // and start it immeditately.
-            if (Container.CanResolve<IPluginConfig>())
+            if (_esReady)
             {
                 source.LoadConfig(Container.Resolve<IPluginConfig>());
                 source.Start();
@@ -83,7 +85,7 @@ namespace RainbowMage.OverlayPlugin
             var esType = typeof(T);
             Container.Register(esType);
 
-            if (Container.CanResolve<IPluginConfig>())
+            if (_esReady)
             {
                 RegisterEventSource((T)Container.Resolve(esType));
             } else
@@ -99,6 +101,7 @@ namespace RainbowMage.OverlayPlugin
                 RegisterEventSource((IEventSource)Container.Resolve(es));
             }
             _esQueue.Clear();
+            _esReady = true;
 
             var config = Container.Resolve<IPluginConfig>();
             foreach (var source in _eventSources)

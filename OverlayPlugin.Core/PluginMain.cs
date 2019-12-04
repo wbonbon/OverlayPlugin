@@ -151,7 +151,7 @@ namespace RainbowMage.OverlayPlugin
 
                 initTimer = new Timer();
                 initTimer.Interval = 300;
-                initTimer.Tick += (o, e) =>
+                initTimer.Tick += async (o, e) =>
                 {
                     if (ActGlobals.oFormActMain == null)
                     {
@@ -163,8 +163,8 @@ namespace RainbowMage.OverlayPlugin
                         {
                             initTimer.Stop();
                             Registry.Register(new KeyboardHook());
+                            await Task.Run(LoadAddons);
 
-                            LoadAddons();
                             InitializeOverlays();
                             controlPanel.InitializeOverlayConfigTabs();
                             OverlayHider.Initialize();
@@ -275,6 +275,7 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void LoadAddons()
         {
+
             try
             {
                 // <プラグイン本体があるディレクトリ>\plugins\*.dll を検索する
