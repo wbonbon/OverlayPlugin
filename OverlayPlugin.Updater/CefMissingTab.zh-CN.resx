@@ -143,7 +143,7 @@
   </data>
 
   <data name="label2.Text" xml:space="preserve">
-    <value>如果自动安装对您不起作用，请使用此选项。</value>
+    <value>如果自动安装无法正常工作，请使用此选项。</value>
   </data>
 
   <data name="btnOpenManual.Text" xml:space="preserve">
@@ -155,6 +155,6 @@
   </data>
 
   <data name="label4.Text" xml:space="preserve">
-    <value>点击下面的按钮，让OverlayPlugin自动处理所有内容。 这应该适合于大多数人。</value>
+    <value>点击下面的按钮，让OverlayPlugin自动处理所有内容。建议大多数用户使用。</value>
   </data>
 </root>

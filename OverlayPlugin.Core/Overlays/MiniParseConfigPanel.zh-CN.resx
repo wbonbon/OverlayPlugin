@@ -120,28 +120,28 @@
     <value>最大帧速率</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>启用美化 开/关 快捷键</value>
+    <value>启用悬浮窗 开/关 快捷键</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
-    <value>仅当模板与OverlayPlugin不兼容时，才需要启用此选项。</value>
+    <value>仅当悬浮窗与OverlayPlugin不兼容时，才需要启用此选项。</value>
   </data>
   <data name="buttonMiniParseOpenDevTools.Text" xml:space="preserve">
     <value>启动Debug工具</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>美化模板路径</value>
+    <value>悬浮窗路径</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
-    <value>设置美化 开/关 快捷键</value>
+    <value>设置悬浮窗 开/关 快捷键</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>ACTWS兼容性</value>
   </data>
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
-    <value>重置美化悬浮窗位置</value>
+    <value>重置悬浮窗位置</value>
   </data>
   <data name="label12.Text" xml:space="preserve">
-    <value>如果您找不到美化悬浮窗或由于某种原因无法调整其大小时，请启用此选项。</value>
+    <value>如果您找不到悬浮窗或由于某种原因无法调整其大小时，请启用此选项。</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>鼠标穿透</value>
@@ -150,27 +150,27 @@
     <value>浏览</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>锁定美化悬浮窗</value>
+    <value>锁定悬浮窗</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
     <value>快捷键功能</value>
   </data>
   <data name="checkActwsCompatbility.Text" xml:space="preserve">
-    <value>此模板需要使用ACTWebSocket</value>
+    <value>此悬浮窗需要使用ACTWebSocket</value>
   </data>
   <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
-    <value>重新加载（用于更换模板后即时刷新）</value>
+    <value>重新加载（用于更换悬浮窗后即时刷新）</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>启用美化悬浮窗</value>
+    <value>启用悬浮窗</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>在美化悬浮窗强制启用白色背景</value>
+    <value>在悬浮窗下强制启用白色背景</value>
   </data>
 
 
   <data name="checkLogConsoleMessages.Text" xml:space="preserve">
-    <value>在模板日志中显示来自此模板的控制台消息</value>
+    <value>在悬浮窗日志中显示来自此悬浮窗的控制台消息</value>
   </data>
   <data name="checkNoFocus.Text" xml:space="preserve">
     <value>不焦点此悬浮窗</value>

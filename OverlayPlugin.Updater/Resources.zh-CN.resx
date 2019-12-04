@@ -144,7 +144,7 @@
     <value>正在恢复下载...</value>
   </data>
   <data name="OverlayPluginTitle" xml:space="preserve">
-    <value>数据统计美化</value>
+    <value>OverlayPlugin</value>
   </data>
   <data name="LaunchingInstallerFailed" xml:space="preserve">
     <value>打开安装程序失败：{0}</value>
@@ -156,7 +156,7 @@
     <value>[{0}/{1}]:正在准备解压缩...</value>
   </data>
   <data name="DownloadFailedContentLengthMissing" xml:space="preserve">
-    <value>下载失败！下载没有文件大小（缺少内容长度头）。</value>
+    <value>下载失败！没有下载文件大小（Content-Length标头缺失）。</value>
   </data>
   <data name="UpdateParseVersionError" xml:space="preserve">
     <value>解析版本失败:
@@ -209,7 +209,7 @@
   </data>
   <data name="MsvcrtMissing" xml:space="preserve">
     <value>你没有安装MS Visual C++ Redistributable for Visual Studio 2019。
-OverlayPlugin运行需要它。现在安装？</value>
+OverlayPlugin的运行需要它。现在安装？</value>
   </data>
   <data name="CreatingTempDirFailed" xml:space="preserve">
     <value>创建或清空缓存目录"{0}": {1}失败</value>

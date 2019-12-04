@@ -249,7 +249,7 @@
     <value>존재하지 않는 핸들러 "{0}"(을/를) 호출하려고 했습니다!</value>
   </data>
   <data name="FFXIVDataSubscriptionException" xml:space="preserve">
-    <value>FFXIV DataSubscription을 검색하지 못했습니다 : {0</value>
+    <value>FFXIV DataSubscription을 검색하지 못했습니다 : {0}</value>
   </data>
   <data name="FFXIVDataRepositoryException" xml:space="preserve">
     <value>FFXIV DataRepository을 검색하지 못했습니다 : {0}</value>
