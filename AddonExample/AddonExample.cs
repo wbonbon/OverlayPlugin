@@ -30,17 +30,6 @@ namespace AddonExample
             }
         }
 
-
-        public string Name
-        {
-            get { return "Addon Example"; }
-        }
-
-        public string Description
-        {
-            get { return "Addon Example Description"; }
-        }
-
         public void Init()
         {
             // Register EventSource
