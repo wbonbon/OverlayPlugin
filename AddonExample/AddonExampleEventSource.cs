@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace AddonExample
 {
 
-    public class AddonExampleEventSource : EventSourceBase, ILogger
+    public class AddonExampleEventSource : EventSourceBase
     {
         public AddonExampleEventSourceConfig Config { get; private set; }
 
@@ -87,6 +87,8 @@ namespace AddonExample
                 OnAddonExampleOriginalTimerFired(new JSEvents.OriginalTimerFiredEvent(Config.ExampleString + " fired!"));
             };
             originalTimer.Start();
+
+            this.Log(LogLevel.Info, "Plugin Started.");
         }
 
         public override void Stop()
@@ -122,26 +124,6 @@ namespace AddonExample
             ev["detail"] = JObject.FromObject(e);
             DispatchEvent(ev);
         }
-
-        public void LogDebug(string format, params object[] args)
-        {
-            this.Log(LogLevel.Debug, format, args);
-        }
-
-        public void LogError(string format, params object[] args)
-        {
-            this.Log(LogLevel.Error, format, args);
-        }
-
-        public void LogInfo(string format, params object[] args)
-        {
-            this.Log(LogLevel.Warning, format, args);
-        }
-
-        public void LogWarning(string format, params object[] args)
-        {
-            this.Log(LogLevel.Info, format, args);
-        }
     }
 
     public interface JSEvent
@@ -165,13 +147,4 @@ namespace AddonExample
             public string EventName() { return "onAddonExampleEmbeddedTimerFiredEvent"; }
         }
     }
-
-    public interface ILogger
-    {
-        void LogDebug(string format, params object[] args);
-        void LogError(string format, params object[] args);
-        void LogWarning(string format, params object[] args);
-        void LogInfo(string format, params object[] args);
-    }
-
 }
