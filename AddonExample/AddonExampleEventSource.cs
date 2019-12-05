@@ -14,14 +14,6 @@ namespace AddonExample
         // Original Timer
         System.Timers.Timer originalTimer;
 
-        // Events
-        public delegate void AddonExampleOriginalTimerFiredHandler(JSEvents.OriginalTimerFiredEvent e);
-        public event AddonExampleOriginalTimerFiredHandler OnAddonExampleOriginalTimerFired;
-
-        public delegate void AddonExampleEmbeddedTimerFiredHandler(JSEvents.EmbeddedTimerFiredEvent e);
-        public event AddonExampleEmbeddedTimerFiredHandler OnAddonExampleEmbeddedTimerFired;
-
-
         public AddonExampleEventSource(RainbowMage.OverlayPlugin.ILogger logger) : base(logger)
         {
             Name = "AddonExampleES";
@@ -65,12 +57,6 @@ namespace AddonExample
 
         public override void Start()
         {
-            // Reset Event Dispatcher
-            OnAddonExampleOriginalTimerFired -= (e) => DispatchToJS(e);
-            OnAddonExampleOriginalTimerFired += (e) => DispatchToJS(e);
-            OnAddonExampleEmbeddedTimerFired -= (e) => DispatchToJS(e);
-            OnAddonExampleEmbeddedTimerFired += (e) => DispatchToJS(e);
-
             // Start the embedded timer when using it.
             // Call base.Start() or timer.Change(0, interval) to start the embedded timer manually.
             base.Start();
@@ -84,7 +70,11 @@ namespace AddonExample
             };
             originalTimer.Elapsed += (obj, args) =>
             {
-                OnAddonExampleOriginalTimerFired(new JSEvents.OriginalTimerFiredEvent(Config.ExampleString + " fired!"));
+                DispatchEvent(JObject.FromObject(new
+                {
+                    type = "onAddonExampleOriginalTimerFiredEvent",
+                    message = "OriginalTimer fired! : " + Config.ExampleString
+                }));
             };
             originalTimer.Start();
 
@@ -107,7 +97,11 @@ namespace AddonExample
         /// </summary>
         protected override void Update()
         {
-            OnAddonExampleEmbeddedTimerFired(new JSEvents.EmbeddedTimerFiredEvent("fired!"));
+            DispatchEvent(JObject.FromObject(new
+            {
+                type = "onAddonExampleEmbeddedTimerFiredEvent",
+                message = "EmbeddedTimer fired!"
+            }));
         }
 
         public override void Dispose()
