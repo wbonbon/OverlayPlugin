@@ -1,3 +1,9 @@
+---
+layout: article
+sidebar:
+    nav: devs
+---
+
 # Event Types
 
 ## MiniParse

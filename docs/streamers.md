@@ -1,3 +1,7 @@
+---
+layout: article
+---
+
 # How to setup overlays in OBS
 
 ## Quick start
