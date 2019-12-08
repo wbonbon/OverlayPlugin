@@ -60,8 +60,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 var charName = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerName() ?? "YOU");
                 var charID = JsonConvert.SerializeObject(FFXIVRepository.GetPlayerID());
 
-                ExecuteScript(@"if (window.__OverlayPlugin_ws_faker) {
-                    __OverlayPlugin_ws_faker({ type: 'broadcast', msgtype: 'SendCharName', msg: { charName: " + charName + ", charID: " + charID + @" }});
+                ExecuteScript(@"var msg = { charName: " + charName + ", charID: " + charID + @" };
+                if (window.__OverlayPlugin_ws_faker) {
+                    __OverlayPlugin_ws_faker({ type: 'broadcast', msgtype: 'SendCharName', msg });
+                } else {
+                    window.__OverlayPlugin_char_msg = msg;
                 }");
             }
         }
@@ -86,6 +89,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     let realWS = window.WebSocket;
                     let queue = [];
                     window.__OverlayPlugin_ws_faker = (msg) => queue.push(msg);
+                    window.overlayWindowId = 'ACTWS_shim';
 
                     window.WebSocket = function(url) {
                         if (url.indexOf('ws://127.0.0.1/fake/') > -1)
@@ -114,6 +118,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                                 setTimeout(() => {
                                     queue.forEach(__OverlayPlugin_ws_faker);
                                     queue = null;
+
+                                    if (window.__OverlayPlugin_char_msg) this.__OverlayPlugin_ws_faker(window.__OverlayPlugin_char_msg);
                                 }, 100);
                             }
                         }
