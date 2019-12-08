@@ -159,9 +159,6 @@
     <Compile Include="WSServer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="resources\common.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="resources\enmity\aggrolist.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
