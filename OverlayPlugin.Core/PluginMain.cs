@@ -179,17 +179,20 @@ namespace RainbowMage.OverlayPlugin
                             // in that list.
                             await Task.Run(LoadAddons);
 
-                            // Now that addons have been loaded, we can finish the overlay setup.
-                            InitializeOverlays();
-                            controlPanel.InitializeOverlayConfigTabs();
-                            OverlayHider.Initialize();
-
-                            // WSServer has to start after the LoadAddons() call because clients can connect immediately
-                            // after it's initialized and that requires the event sources to be initialized.
-                            if (Config.WSServerRunning)
+                            ActGlobals.oFormActMain.Invoke((Action)(() =>
                             {
-                                WSServer.Initialize();
-                            }
+                                // Now that addons have been loaded, we can finish the overlay setup.
+                                InitializeOverlays();
+                                controlPanel.InitializeOverlayConfigTabs();
+                                OverlayHider.Initialize();
+
+                                // WSServer has to start after the LoadAddons() call because clients can connect immediately
+                                // after it's initialized and that requires the event sources to be initialized.
+                                if (Config.WSServerRunning)
+                                {
+                                    WSServer.Initialize();
+                                }
+                            }));
                         }
                         catch (Exception ex)
                         {
