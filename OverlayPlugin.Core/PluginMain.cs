@@ -67,6 +67,7 @@ namespace RainbowMage.OverlayPlugin
                 // ** Init phase 1
                 // Only init stuff here that works without the FFXIV plugin or addons (event sources, overlays).
                 // Everything else should be initialized in the second phase.
+                NativeMethods.Init();
                 FFXIVExportVariables.Init();
                 EventDispatcher.Init();
                 Registry.Register(new KeyboardHook());

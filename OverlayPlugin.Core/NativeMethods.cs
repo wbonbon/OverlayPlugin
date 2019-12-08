@@ -12,15 +12,20 @@ namespace RainbowMage.OverlayPlugin
     /// </summary>
     static class NativeMethods
     {
-
         static WinEventDelegate dele = null;
 
-        static NativeMethods()
+        public static void Init()
         {
-            dele = new WinEventDelegate(WinEventProc);
             ActiveWindowHandle = GetForegroundWindow();
-            SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
-            SetWinEventHook(EVENT_SYSTEM_MINIMIZEEND, EVENT_SYSTEM_MINIMIZEEND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
+
+            dele = new WinEventDelegate(WinEventProc);
+            var result = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
+            if (result == IntPtr.Zero)
+                Registry.Resolve<ILogger>().Log(LogLevel.Error, "Failed to register window foreground hook!");
+
+            result = SetWinEventHook(EVENT_SYSTEM_MINIMIZEEND, EVENT_SYSTEM_MINIMIZEEND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
+            if (result == IntPtr.Zero)
+                Registry.Resolve<ILogger>().Log(LogLevel.Error, "Failed to register window minimized hook!");
         }
 
         delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
