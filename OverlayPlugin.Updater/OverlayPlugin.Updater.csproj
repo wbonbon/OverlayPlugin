@@ -121,7 +121,7 @@
     <EmbeddedResource Include="Resources.ja-JP.resx" />
     <EmbeddedResource Include="Resources.ko-KR.resx" />
     <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.zh-CN.resx" />
