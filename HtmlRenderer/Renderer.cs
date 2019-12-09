@@ -400,6 +400,9 @@ namespace RainbowMage.HtmlRenderer
                 // Allow websites to play sound even if the user never interacted with that site (pretty common for our overlays)
                 cefSettings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
 
+                // Disable Flash. We don't need it and it can cause issues.
+                cefSettings.CefCommandLineArgs.Remove("enable-system-flash");
+
                 cefSettings.EnableAudio();
 
                 // Enables software compositing instead of GPU compositing -> less CPU load but no WebGL

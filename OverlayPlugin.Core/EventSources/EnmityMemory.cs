@@ -286,7 +286,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     continue;
 
                 byte[] c = memory.GetByteArray(p, CombatantMemory.Size);
-                Combatant combatant = GetMobFromByteArray(c, mychar.ID);
+                Combatant combatant = GetMobFromByteArray(c, mychar == null ? 0 : mychar.ID);
                 if (combatant == null)
                     continue;
                 if (seen.Contains(combatant.ID))
