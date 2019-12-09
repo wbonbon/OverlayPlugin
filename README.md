@@ -19,7 +19,13 @@ In ACT, go to the `Plugins` tab and then to the `OverlayPlugin.dll` tab. You'll 
 
 Example HTML files are in the `resources` folder.
 
-We also have [instructions for users who want to display their overlay in OBS](./STREAMER.md).
+We also have [instructions for users who want to display their overlay in OBS](https://ngld.github.io/OverlayPlugin/streamers).
+
+## Overlays
+
+* [A list of popular overlays](https://gist.github.com/ngld/e2217563bbbe1750c0917217f136687d#overlays)
+* [Documentation for creating your own](https://ngld.github.io/OverlayPlugin/devs/)
+
 
 ## Troubleshooting
 

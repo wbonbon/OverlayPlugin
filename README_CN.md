@@ -19,7 +19,7 @@
 
 示例HTML文件位于`resources`文件中。
 
-我们还为[想要在OBS中显示悬浮窗的用户](./STREAMER_CN.md)提供了说明文件。
+我们还为[想要在OBS中显示悬浮窗的用户](https://ngld.github.io/OverlayPlugin/streamers_cn)提供了说明文件。
 
 ## 故障排除
 
