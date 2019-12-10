@@ -79,7 +79,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OverlayPlugin Error.
+        ///   Looks up a localized string similar to {0} Error.
         /// </summary>
         public static string ErrorTitle {
             get {
@@ -472,7 +472,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OverlayPlugin Update Check.
+        ///   Looks up a localized string similar to {0} Update Check.
         /// </summary>
         public static string UpdateCheckTitle {
             get {
@@ -509,7 +509,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OverlayPlugin Update.
+        ///   Looks up a localized string similar to {0} Update.
         /// </summary>
         public static string UpdateTitle {
             get {

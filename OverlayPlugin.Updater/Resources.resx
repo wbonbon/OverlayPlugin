@@ -124,7 +124,8 @@
     <value>Download failed! The download has no file size (Content-Length header is missing).</value>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
-    <value>OverlayPlugin Error</value>
+    <value>{0} Error</value>
+    <comment>The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)</comment>
   </data>
   <data name="Exception" xml:space="preserve">
     <value>Failed: {0}</value>
@@ -262,7 +263,8 @@ You'll need that for OverlayPlugin. Install it now?</value>
 {0}</value>
   </data>
   <data name="UpdateCheckTitle" xml:space="preserve">
-    <value>OverlayPlugin Update Check</value>
+    <value>{0} Update Check</value>
+    <comment>The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)</comment>
   </data>
   <data name="UpdateFailedError" xml:space="preserve">
     <value>Failed to update the plugin. It might not load the next time you start ACT. Retry?</value>
@@ -275,6 +277,7 @@ You'll need that for OverlayPlugin. Install it now?</value>
     <value>The update was successful. Please restart ACT to load the new plugin version.</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>OverlayPlugin Update</value>
+    <value>{0} Update</value>
+    <comment>The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)</comment>
   </data>
 </root>

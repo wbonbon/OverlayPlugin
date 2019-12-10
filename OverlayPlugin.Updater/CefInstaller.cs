@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Threading;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
@@ -36,10 +38,9 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<bool> InstallCef(string cefPath, string archivePath = null)
         {
-            var lib = IntPtr.Zero;
             while (true)
             {
-                lib = NativeMethods.LoadLibrary("msvcp140.dll");
+                var lib = NativeMethods.LoadLibrary("msvcp140.dll");
                 if (lib != IntPtr.Zero)
                 {
                     NativeMethods.FreeLibrary(lib);
@@ -55,7 +56,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                 if (response == DialogResult.Yes)
                 {
-                    var installed = await Installer.InstallMsvcrt();
+                    var installed = await InstallMsvcrt();
 
                     if (!installed)
                     {
@@ -72,9 +73,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
             }
 
-            var url = GetUrl();
-
-            var result = await Installer.Run(archivePath == null ? url : archivePath, cefPath);
+            var result = await Installer.Run(archivePath == null ? GetUrl() : archivePath, cefPath, "OverlayPluginCef.tmp");
             if (!result || !Directory.Exists(cefPath))
             {
                 MessageBox.Show(
@@ -89,6 +88,66 @@ namespace RainbowMage.OverlayPlugin.Updater
                 File.WriteAllText(Path.Combine(cefPath, "version.txt"), CEF_VERSION);
                 return true;
             }
+        }
+
+        public static async Task<bool> InstallMsvcrt()
+        {
+            var inst = new Installer(Path.Combine(Path.GetTempPath(), "OverlayPlugin.tmp"), "msvcrt");
+            var exePath = Path.Combine(inst.TempDir, "vc_redist.x64.exe");
+
+            return await Task.Run(() =>
+            {
+                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
+                {
+                    inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
+                    inst.Display.Log(Resources.LogLaunchingInstaller);
+
+                    try
+                    {
+                        var proc = Process.Start(exePath);
+                        proc.WaitForExit();
+                        proc.Close();
+                    }
+                    catch (System.ComponentModel.Win32Exception ex)
+                    {
+                        inst.Display.Log(string.Format(Resources.LaunchingInstallerFailed, ex.Message));
+                        inst.Display.Log(Resources.LogRetry);
+
+                        using (var proc = new Process())
+                        {
+                            proc.StartInfo.FileName = exePath;
+                            proc.StartInfo.UseShellExecute = true;
+                            proc.Start();
+                        }
+
+                        var cancel = inst.Display.GetCancelToken();
+
+                        inst.Display.Log(Resources.LogInstallerWaiting);
+                        while (NativeMethods.LoadLibrary("msvcp140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
+                        {
+                            Thread.Sleep(500);
+                        }
+
+                        // Wait some more just to be sure that the installer is done.
+                        Thread.Sleep(1000);
+                    }
+
+                    inst.Cleanup();
+                    if (NativeMethods.LoadLibrary("msvcp140.dll") != IntPtr.Zero)
+                    {
+                        inst.Display.Close();
+                        return true;
+                    }
+                    else
+                    {
+                        inst.Display.UpdateStatus(1, Resources.StatusError);
+                        inst.Display.Log(Resources.LogInstallerFailed);
+                        return false;
+                    }
+                }
+
+                return false;
+            });
         }
     }
 }
