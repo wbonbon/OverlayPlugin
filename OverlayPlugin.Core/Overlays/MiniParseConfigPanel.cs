@@ -54,6 +54,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.comboHotkeyType.SelectedIndexChanged += ComboHotkeyMode_SelectedIndexChanged;
             this.checkLogConsoleMessages.Checked = config.LogConsoleMessages;
             this.tbZoom.Value = config.Zoom;
+            this.cbWhiteBg.Checked = config.ForceWhiteBackground;
         }
 
         private void SetupConfigEventHandlers()
@@ -277,8 +278,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void cbWhiteBg_CheckedChanged(object sender, EventArgs e)
         {
-            var color = this.cbWhiteBg.Checked ? "white" : "transparent";
-            this.overlay.ExecuteScript($"document.body.style.backgroundColor = \"{color}\";");
+            this.config.ForceWhiteBackground = this.cbWhiteBg.Checked;
         }
 
         private void checkNoFocus_CheckedChanged(object sender, EventArgs e)

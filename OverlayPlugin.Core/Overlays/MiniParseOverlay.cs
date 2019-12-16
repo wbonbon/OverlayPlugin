@@ -34,6 +34,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 Overlay.Renderer.SetZoomLevel(Config.Zoom / 100.0);
             };
+            Config.ForceWhiteBackgroundChanged += (o, e) =>
+            {
+                var color = Config.ForceWhiteBackground ? "white" : "transparent";
+                ExecuteScript($"document.body.style.backgroundColor = \"{color}\";");
+            };
 
             Overlay.Renderer.BrowserStartLoading += PrepareWebsite;
             Overlay.Renderer.BrowserLoad += FinishLoading;
@@ -77,6 +82,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             // Reset page-specific state
             Overlay.Renderer.SetZoomLevel(Config.Zoom / 100.0);
             ModernApi = false;
+
+            if (Config.ForceWhiteBackground)
+            {
+                ExecuteScript("document.body.style.backgroundColor = 'white';");
+            }
 
             if (Config.ActwsCompatibility)
             {
