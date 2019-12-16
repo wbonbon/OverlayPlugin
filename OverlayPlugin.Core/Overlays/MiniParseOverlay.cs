@@ -76,6 +76,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void PrepareWebsite(object sender, BrowserLoadEventArgs e)
         {
+            if (e.Url.StartsWith("about:blank"))
+                return;
+
             lastLoadedUrl = e.Url;
             Config.Url = e.Url;
 
