@@ -20,22 +20,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static async Task<bool> EnsureCef(string cefPath)
         {
-            var manifest = Path.Combine(cefPath, "version.txt");
-
-            if (File.Exists(manifest))
-            {
-                var installed = File.ReadAllText(manifest).Trim();
-                if (installed == CEF_VERSION)
-                {
-                    return true;
-                }
-            }
-
-            return await InstallCef(cefPath);
-        }
-
-        public static async Task<bool> InstallCef(string cefPath, string archivePath = null)
-        {
+            // Ensure we have a working MSVCRT first
             var lib = IntPtr.Zero;
             while (true)
             {
@@ -66,12 +51,29 @@ namespace RainbowMage.OverlayPlugin.Updater
                             MessageBoxIcon.Error
                         );
                     }
-                } else
+                }
+                else
                 {
                     return false;
                 }
             }
 
+            var manifest = Path.Combine(cefPath, "version.txt");
+
+            if (File.Exists(manifest))
+            {
+                var installed = File.ReadAllText(manifest).Trim();
+                if (installed == CEF_VERSION)
+                {
+                    return true;
+                }
+            }
+
+            return await InstallCef(cefPath);
+        }
+
+        public static async Task<bool> InstallCef(string cefPath, string archivePath = null)
+        {
             var url = GetUrl();
 
             var result = await Installer.Run(archivePath == null ? url : archivePath, cefPath);

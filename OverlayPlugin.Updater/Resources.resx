@@ -226,6 +226,10 @@ You'll need that for OverlayPlugin. Install it now?</value>
   <data name="OverlayPluginTitle" xml:space="preserve">
     <value>OverlayPlugin</value>
   </data>
+  <data name="SharpCompressOutdatedError" xml:space="preserve">
+    <value>The currently loaded version of SharpCompress is outdated!
+Make sure you load OverlayPlugin before any other plugins that also use SharpCompress (like ACTWebSocket).</value>
+  </data>
   <data name="StatusCancelled" xml:space="preserve">
     <value>Cancelled!</value>
   </data>

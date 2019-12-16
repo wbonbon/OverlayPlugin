@@ -381,6 +381,16 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The currently loaded version of SharpCompress is outdated!
+        ///Make sure you load OverlayPlugin before any other plugins that also use SharpCompress (like ACTWebSocket)..
+        /// </summary>
+        public static string SharpCompressOutdatedError {
+            get {
+                return ResourceManager.GetString("SharpCompressOutdatedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelled!.
         /// </summary>
         public static string StatusCancelled {
