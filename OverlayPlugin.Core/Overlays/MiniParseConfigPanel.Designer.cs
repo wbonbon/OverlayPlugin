@@ -339,9 +339,9 @@
             // 
             resources.ApplyResources(this.tbZoom, "tbZoom");
             this.tbZoom.Maximum = 400;
-            this.tbZoom.Minimum = 1;
+            this.tbZoom.Minimum = -200;
             this.tbZoom.Name = "tbZoom";
-            this.tbZoom.Value = 1;
+            this.tbZoom.Value = 100;
             this.tbZoom.ValueChanged += new System.EventHandler(this.tbZoom_ValueChanged);
             // 
             // btnResetZoom
