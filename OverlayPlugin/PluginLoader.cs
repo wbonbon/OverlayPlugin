@@ -78,6 +78,7 @@ namespace RainbowMage.OverlayPlugin
             } catch (Exception ex)
             {
                 logger.Log(LogLevel.Error, ex.ToString());
+                ActGlobals.oFormActMain.WriteDebugLog(ex.ToString());
             }
 
             await FinishInit();

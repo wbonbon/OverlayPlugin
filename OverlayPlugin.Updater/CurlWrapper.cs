@@ -11,6 +11,7 @@ namespace RainbowMage.OverlayPlugin.Updater
     {
         private static string USER_AGENT;
         private static bool initialized = false;
+        private static string initError = "";
 
         private static Dictionary<int, Download> downloadInfos = new Dictionary<int, Download>();
         private static int nextDownloadIdx = 1;
@@ -1318,13 +1319,18 @@ namespace RainbowMage.OverlayPlugin.Updater
             var result = NativeMethods.LoadLibrary(libPath);
 
             if (result == IntPtr.Zero)
-                throw new CurlException($"libcurl.dll load failed: {Marshal.GetLastWin32Error()}");
+            {
+                var msg = $"libcurl.dll load failed: {Marshal.GetLastWin32Error()}";
+                initError = msg;
+                throw new CurlException(msg);
+            }
 
             lock (_global_lock)
             {
                 if (curl_global_init(CURL_GLOBAL_NOTHING) != 0)
                 {
-                    throw new CurlException($"Init failed!");
+                    initError = "Init failed!";
+                    throw new CurlException("Init failed!");
                 }
 
                 initialized = true;
@@ -1340,7 +1346,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             ProgressInfoCallback info_cb, bool resume)
         {
             if (!initialized)
-                throw new CurlException("Not initialized!");
+                throw new CurlException("Not initialized! " + initError);
 
             var error = new byte[CURL_ERROR_SIZE];
             error[0] = 0;
