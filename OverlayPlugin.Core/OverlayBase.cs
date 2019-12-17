@@ -13,7 +13,7 @@ using RainbowMage.HtmlRenderer;
 
 namespace RainbowMage.OverlayPlugin
 {
-    public abstract class OverlayBase<TConfig> : IOverlay, IEventReceiver
+    public abstract class OverlayBase<TConfig> : IOverlay, IEventReceiver, IApiBase
         where TConfig: OverlayConfigBase
     {
         private bool disableLog = false;
@@ -99,9 +99,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                // FIXME: is this *really* correct way to get version of current assembly?
-                this.Overlay = new OverlayForm(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),
-                    this.Name, Config.Url, this.Config.MaxFrameRate, new OverlayApi(this));
+                this.Overlay = new OverlayForm(this.Name, Config.Url, this.Config.MaxFrameRate, new OverlayApi(this));
 
                 UpdateHotKey();
 
@@ -144,7 +142,6 @@ namespace RainbowMage.OverlayPlugin
                     Navigate(e.NewUrl);
                 };
 
-                this.Overlay.UpdateRender();
                 this.Overlay.Show();
 
                 this.Overlay.Visible = this.Config.IsVisible;

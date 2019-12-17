@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -21,6 +23,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleClickthrough, GlobalHotkeyType.ToggleClickthru),
             new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleLock, GlobalHotkeyType.ToggleLock)
         };
+
+        static bool once = false;
 
         public MiniParseConfigPanel(MiniParseOverlay overlay)
         {

@@ -200,6 +200,8 @@ namespace RainbowMage.OverlayPlugin
 
         public class SocketHandler : WebSocketBehavior, IEventReceiver
         {
+            public string Name => "WSHandler";
+
             public void HandleEvent(JObject e)
             {
                 SendAsync(e.ToString(Formatting.None), (success) =>
@@ -297,6 +299,7 @@ namespace RainbowMage.OverlayPlugin
 
         private class LegacyHandler : WebSocketBehavior, IEventReceiver
         {
+            public string Name => "WSLegacyHandler";
             protected override void OnOpen()
             {
                 base.OnOpen();

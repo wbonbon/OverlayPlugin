@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using RainbowMage.HtmlRenderer;
-using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -16,9 +15,9 @@ namespace RainbowMage.OverlayPlugin
         public static event EventHandler<SendMessageEventArgs> SendMessage;
         public static event EventHandler<SendMessageEventArgs> OverlayMessage;
 
-        IOverlay receiver;
+        IApiBase receiver;
 
-        public OverlayApi(IOverlay receiver)
+        public OverlayApi(IApiBase receiver)
         {
             this.receiver = receiver;
         }
@@ -58,58 +57,14 @@ namespace RainbowMage.OverlayPlugin
         // Also handles (un)subscription to make switching between this and WS easier.
         public void callHandler(string data, object callback)
         {
+            // Tell the overlay that the page is using the modern API.
+            receiver.InitModernAPI();
+
             Task.Run(() => {
-                try
+                var result = EventDispatcher.ProcessHandlerMessage(receiver, data);
+                if (callback != null)
                 {
-                    // Tell the overlay that the page is using the modern API.
-                    receiver.InitModernAPI();
-
-                    var message = JObject.Parse(data);
-                    if (!message.ContainsKey("call"))
-                    {
-                        PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiInvalidHandlerCall, data);
-                        return;
-                    }
-                
-                    var handler = message["call"].ToString();
-                    if (handler == "subscribe")
-                    {
-                        if (!message.ContainsKey("events"))
-                        {
-                            PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsField, data);
-                            return;
-                        }
-
-                        foreach (var name in message["events"].ToList())
-                        {
-                            EventDispatcher.Subscribe(name.ToString(), (IEventReceiver) receiver);
-                            PluginMain.Logger.Log(LogLevel.Debug, Resources.OverlayApiSubscribed, receiver.Name, name.ToString());
-                        }
-                        return;
-                    } else if (handler == "unsubscribe")
-                    {
-                        if (!message.ContainsKey("events"))
-                        {
-                            PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsFieldUnsub, data);
-                            return;
-                        }
-
-                        foreach (var name in message["events"].ToList())
-                        {
-                            EventDispatcher.Unsubscribe(name.ToString(), (IEventReceiver) receiver);
-                        }
-                        return;
-                    }
-
-                    var result = EventDispatcher.CallHandler(message);
-                    if (result != null && result.Type != JTokenType.Object) {
-                        throw new Exception("Handler response must be an object or null");
-                    }
-                    Renderer.ExecuteCallback(callback, result == null ? null : result.ToString(Newtonsoft.Json.Formatting.None));
-                }
-                catch (Exception e)
-                {
-                    PluginMain.Logger.Log(LogLevel.Error, Resources.JsHandlerCallException, e);
+                    Renderer.ExecuteCallback(callback, result?.ToString(Newtonsoft.Json.Formatting.None));
                 }
             });
         }

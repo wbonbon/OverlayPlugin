@@ -8,11 +8,11 @@ namespace RainbowMage.HtmlRenderer
 {
     class DragHandler : IDragHandler
     {
-        OverlayForm form;
+        Renderer renderer;
 
-        public DragHandler(OverlayForm form)
+        public DragHandler(Renderer form)
         {
-            this.form = form;
+            this.renderer = form;
         }
 
         public bool OnDragEnter(IWebBrowser chromiumWebBrowser, IBrowser browser, IDragData dragData, DragOperationsMask mask)
@@ -40,7 +40,7 @@ namespace RainbowMage.HtmlRenderer
                 }
             }
 
-            form.DraggableRegion = region;
+            renderer.DraggableRegion = region;
         }
     }
 }

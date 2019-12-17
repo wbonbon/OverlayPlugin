@@ -70,7 +70,9 @@
     <Compile Include="FFXIVMemory.cs" />
     <Compile Include="FFXIVExportVariables.cs" />
     <Compile Include="FFXIVRepository.cs" />
+    <Compile Include="IApiBase.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="MinimalApi.cs" />
     <Compile Include="NetworkParser.cs" />
     <Compile Include="OverlayApi.cs" />
     <Compile Include="EventDispatcher.cs" />

@@ -47,7 +47,15 @@
   <ItemGroup>
     <Compile Include="DIBitmap.cs" />
     <Compile Include="DragHandler.cs" />
+    <Compile Include="IRenderTarget.cs" />
+    <Compile Include="WinFormsRenderer.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="OverlayControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="OverlayControl.Designer.cs">
+      <DependentUpon>OverlayControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="OverlayForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +72,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="OverlayControl.resx">
+      <DependentUpon>OverlayControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </EmbeddedResource>

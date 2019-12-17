@@ -29,6 +29,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             SetupControlProperties();
             SetupConfigEventHandlers();
+
+            overlayControl1.Init("https://rawcdn.githack.com/quisquous/cactbot/fab33872baf28997747bbeb9628bf6248a18e06f/ui/config/config.html", 60);
+            MinimalApi.AttachTo(overlayControl1.Renderer);
         }
 
         private void SetupControlProperties()

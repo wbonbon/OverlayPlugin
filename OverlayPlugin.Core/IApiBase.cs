@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin
 {
-    interface IEventReceiver
+    interface IApiBase : IEventReceiver
     {
         string Name { get; }
 
-        void HandleEvent(JObject e);
+        void SetAcceptFocus(bool accept);
+
+        void OverlayMessage(string msg);
+
+        void InitModernAPI();
     }
 }

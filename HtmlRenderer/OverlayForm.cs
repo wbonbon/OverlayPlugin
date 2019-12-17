@@ -19,24 +19,18 @@ using Point = System.Drawing.Point;
 
 namespace RainbowMage.HtmlRenderer
 {
-    public partial class OverlayForm : Form
+    public partial class OverlayForm : Form, IWinFormsTarget
     {
         private DIBitmap surfaceBuffer;
-        private object surfaceBufferLocker = new object();
         private System.Threading.Timer zorderCorrector;
         private bool terminated = false;
-        private bool shiftKeyPressed = false;
-        private bool altKeyPressed = false;
-        private bool controlKeyPressed = false;
 
         private const int WS_EX_TOPMOST = 0x00000008;
         private const int WS_EX_LAYERED = 0x00080000;
         private const int CP_NOCLOSE_BUTTON = 0x200;
         private const int WS_EX_NOACTIVATE = 0x08000000;
 
-        public Region DraggableRegion = null;
-
-        public Renderer Renderer { get; private set; }
+        public WinFormsRenderer Renderer { get; private set; }
 
         private string url;
         public string Url
@@ -84,27 +78,19 @@ namespace RainbowMage.HtmlRenderer
 
         public bool Locked { get; set; }
 
-        public OverlayForm(string overlayVersion, string overlayName, string url, int maxFrameRate = 30, object api = null)
+        public OverlayForm(string overlayName, string url, int maxFrameRate = 30, object api = null)
         {
             InitializeComponent();
 
+            this.Renderer = new WinFormsRenderer(overlayName, url, this, api);
             this.maxFrameRate = maxFrameRate;
-            this.Renderer = new Renderer(overlayVersion, overlayName, this, api);
-            this.MouseWheel += OverlayForm_MouseWheel;
-            this.MouseDown += OverlayForm_MouseDown;
-            this.MouseUp += OverlayForm_MouseUp;
-            this.MouseMove += OverlayForm_MouseMove;
-            this.MouseLeave += OverlayForm_MouseLeave;
-            this.KeyDown += OverlayForm_KeyDown;
-            this.KeyUp += OverlayForm_KeyUp;
-            this.Resize += OverlayForm_Resize;
-            this.VisibleChanged += OverlayForm_VisibleChanged;
-
             this.url = url;
-            
+
+            this.Renderer.BrowserStartLoading += OverlayForm_Load;
+            this.Renderer.BeginRender();
+
             // Alt+Tab を押したときに表示されるプレビューから除外する
             HidePreview();
-
         }
 
         /// <summary>
@@ -178,7 +164,7 @@ namespace RainbowMage.HtmlRenderer
                 m.Msg == NativeMethods.WM_SYSKEYUP ||
                 m.Msg == NativeMethods.WM_SYSCHAR)
             {
-                OnKeyEvent(ref m);
+                Renderer.OnKeyEvent(ref m);
             }
         }
 
@@ -280,7 +266,7 @@ namespace RainbowMage.HtmlRenderer
 
         #endregion
 
-        public void RenderFrame(Rect dirtyRect, IntPtr buffer, int width, int height)
+        public void RenderFrame(PaintElementType type, Rect dirtyRect, IntPtr buffer, int width, int height)
         {
             if (!this.terminated)
             {
@@ -307,14 +293,6 @@ namespace RainbowMage.HtmlRenderer
                 {
 
                 }
-            }
-        }
-
-        public void UpdateRender()
-        {
-            if (this.Renderer != null)
-            {
-                this.Renderer.BeginRender(this.Width, this.Height, this.Url, this.maxFrameRate);
             }
         }
 
@@ -371,135 +349,6 @@ namespace RainbowMage.HtmlRenderer
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private void OverlayForm_Resize(object sender, EventArgs e)
-        {
-            if (this.Renderer != null)
-            {
-                this.Renderer.Resize(this.Width, this.Height);
-            }
-        }
-
-        private void OverlayForm_VisibleChanged(object sender, EventArgs e)
-        {
-            if (this.Renderer != null)
-            {
-                this.Renderer.SetVisible(this.Visible);
-            }
-        }
-
-        bool isDragging;
-        bool hasDragged;
-        Point offset;
-
-        private void OverlayForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (!this.Locked && !isDragging)
-            {
-                // If we have a draggable region defined, start dragging only if we're inside the region.
-                if (DraggableRegion == null || DraggableRegion.IsVisible(e.Location))
-                {
-                    isDragging = true;
-                    hasDragged = false;
-                    offset = e.Location;
-                }
-            }
-
-            this.Renderer.SendMouseUpDown(e.X, e.Y, GetMouseButtonType(e), false);
-        }
-
-        private void OverlayForm_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isDragging)
-            {
-                if (!hasDragged)
-                {
-                    // Only notify once
-                    hasDragged = true;
-                    this.Renderer.NotifyMoveStarted();
-                }
-
-                this.Location = new Point(
-                    e.X - offset.X + this.Location.X,
-                    e.Y - offset.Y + this.Location.Y);
-            }
-            else
-            {
-                this.Renderer.SendMouseMove(e.X, e.Y, GetMouseButtonType(e));
-            }
-        }
-
-        private void OverlayForm_MouseLeave(object sender, EventArgs e)
-        {
-            this.Renderer.SendMouseLeave();
-        }
-
-        private void OverlayForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            isDragging = false;
-
-            this.Renderer.SendMouseUpDown(e.X, e.Y, GetMouseButtonType(e), true);
-        }
-
-        private void OverlayForm_MouseWheel(object sender, MouseEventArgs e)
-        {
-            var flags = GetMouseEventFlags(e);
-
-            this.Renderer.SendMouseWheel(e.X, e.Y, e.Delta, shiftKeyPressed);
-        }
-
-        private MouseButtonType GetMouseButtonType(MouseEventArgs e)
-        {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                return MouseButtonType.Left;
-            }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Middle)
-            {
-                return MouseButtonType.Middle;
-            }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                return MouseButtonType.Right;
-            }
-            else
-            {
-                return MouseButtonType.Left; // 非対応のボタンは左クリックとして扱う
-            }
-        }
-
-        private CefEventFlags GetMouseEventFlags(MouseEventArgs e)
-        {
-            var flags = CefEventFlags.None;
-
-            if (e.Button == MouseButtons.Left)
-            {
-                flags |= CefEventFlags.LeftMouseButton;
-            }
-            else if (e.Button == MouseButtons.Middle)
-            {
-                flags |= CefEventFlags.MiddleMouseButton;
-            }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                flags |= CefEventFlags.RightMouseButton;
-            }
-
-            if (shiftKeyPressed)
-            {
-                flags |= CefEventFlags.ShiftDown;
-            }
-            if (altKeyPressed)
-            {
-                flags |= CefEventFlags.AltDown;
-            }
-            if (controlKeyPressed)
-            {
-                flags |= CefEventFlags.ControlDown;
-            }
-
-            return flags;
         }
 
         private bool IsOverlaysGameWindow()
@@ -570,130 +419,14 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        private void OverlayForm_KeyDown(object sender, KeyEventArgs e)
+        public void MovePopup(Rect rect)
         {
-            this.altKeyPressed = e.Alt;
-            this.shiftKeyPressed = e.Shift;
-            this.controlKeyPressed = e.Control;
+
         }
 
-        private void OverlayForm_KeyUp(object sender, KeyEventArgs e)
-        {
-            this.altKeyPressed = e.Alt;
-            this.shiftKeyPressed = e.Shift;
-            this.controlKeyPressed = e.Control;
-        }
-
-        private void OnKeyEvent(ref Message m)
+        public void SetPopupVisible(bool visible)
         {
 
-            var keyEvent = new KeyEvent();
-            keyEvent.WindowsKeyCode = m.WParam.ToInt32();
-            keyEvent.NativeKeyCode = (int)m.LParam.ToInt64();
-            keyEvent.IsSystemKey = m.Msg == NativeMethods.WM_SYSCHAR ||
-                                   m.Msg == NativeMethods.WM_SYSKEYDOWN ||
-                                   m.Msg == NativeMethods.WM_SYSKEYUP;
-
-            if (m.Msg == NativeMethods.WM_KEYDOWN || m.Msg == NativeMethods.WM_SYSKEYDOWN)
-            {
-                keyEvent.Type = KeyEventType.RawKeyDown;
-            }
-            else if (m.Msg == NativeMethods.WM_KEYUP || m.Msg == NativeMethods.WM_SYSKEYUP)
-            {
-                keyEvent.Type = KeyEventType.KeyUp;
-            }
-            else
-            {
-                keyEvent.Type = KeyEventType.Char;
-            }
-            keyEvent.Modifiers = GetKeyboardModifiers(ref m);
-
-            if (this.Renderer != null)
-            {
-                this.Renderer.SendKeyEvent(keyEvent);
-            }
-        }
-
-        private CefEventFlags GetKeyboardModifiers(ref Message m)
-        {
-            var modifiers = CefEventFlags.None;
-
-            if (shiftKeyPressed) modifiers |= CefEventFlags.ShiftDown;
-            if (controlKeyPressed) modifiers |= CefEventFlags.ControlDown;
-            if (altKeyPressed) modifiers |= CefEventFlags.AltDown;
-
-            if (IsKeyToggled(Keys.NumLock)) modifiers |= CefEventFlags.NumLockOn;
-            if (IsKeyToggled(Keys.Capital)) modifiers |= CefEventFlags.CapsLockOn;
-
-            switch ((Keys)m.WParam)
-            {
-                case Keys.Return:
-                    if (((m.LParam.ToInt64() >> 48) & 0x0100) != 0)
-                        modifiers |= CefEventFlags.IsKeyPad;
-                    break;
-                case Keys.Insert:
-                case Keys.Delete:
-                case Keys.Home:
-                case Keys.End:
-                case Keys.Prior:
-                case Keys.Next:
-                case Keys.Up:
-                case Keys.Down:
-                case Keys.Left:
-                case Keys.Right:
-                    if (!(((m.LParam.ToInt64() >> 48) & 0x0100) != 0))
-                        modifiers |= CefEventFlags.IsKeyPad;
-                    break;
-                case Keys.NumLock:
-                case Keys.NumPad0:
-                case Keys.NumPad1:
-                case Keys.NumPad2:
-                case Keys.NumPad3:
-                case Keys.NumPad4:
-                case Keys.NumPad5:
-                case Keys.NumPad6:
-                case Keys.NumPad7:
-                case Keys.NumPad8:
-                case Keys.NumPad9:
-                case Keys.Divide:
-                case Keys.Multiply:
-                case Keys.Subtract:
-                case Keys.Add:
-                case Keys.Decimal:
-                case Keys.Clear:
-                    modifiers |= CefEventFlags.IsKeyPad;
-                    break;
-                case Keys.Shift:
-                    if (shiftKeyPressed) modifiers |= CefEventFlags.IsLeft;
-                    else modifiers |= CefEventFlags.IsRight;
-                    break;
-                case Keys.Control:
-                    if (controlKeyPressed) modifiers |= CefEventFlags.IsLeft;
-                    else modifiers |= CefEventFlags.IsRight;
-                    break;
-                case Keys.Alt:
-                    if (altKeyPressed) modifiers |= CefEventFlags.IsLeft;
-                    else modifiers |= CefEventFlags.IsRight;
-                    break;
-                case Keys.LWin:
-                    modifiers |= CefEventFlags.IsLeft;
-                    break;
-                case Keys.RWin:
-                    modifiers |= CefEventFlags.IsRight;
-                    break;
-            }
-
-            return modifiers;
-        }
-
-        private bool IsKeyDown(Keys key)
-        {
-            return (NativeMethods.GetKeyState((int)key) & 0x8000) != 0;
-        }
-
-        private bool IsKeyToggled(Keys key)
-        {
-            return (NativeMethods.GetKeyState((int)key) & 1) == 1;
         }
     }
 }
