@@ -1201,7 +1201,8 @@
             "zh-CN": "OverlayPlugin"
         },
         "SharpCompressOutdatedError": {
-            "en": "The currently loaded version of SharpCompress is outdated!\nMake sure you load OverlayPlugin before any other plugins that also use SharpCompress (like ACTWebSocket)."
+            "en": "The currently loaded version of SharpCompress is outdated!\nMake sure you load OverlayPlugin before any other plugins that also use SharpCompress (like ACTWebSocket).",
+            "zh-CN": "当前加载的SharpCompress版本过旧！\n请确保先加载OverlayPlugin，再加载其他也使用SharpCompress的插件（例如ACTWebSocket）。"
         },
         "StatusCancelled": {
             "en": "Cancelled!",
