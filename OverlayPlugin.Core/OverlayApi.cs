@@ -46,7 +46,10 @@ namespace RainbowMage.OverlayPlugin
 
         public void endEncounter()
         {
-            ActGlobals.oFormActMain.EndCombat(true);
+            ActGlobals.oFormActMain.Invoke((Action)(() =>
+            {
+               ActGlobals.oFormActMain.EndCombat(true);
+            }));
         }
 
         public void setAcceptFocus(bool accept)
