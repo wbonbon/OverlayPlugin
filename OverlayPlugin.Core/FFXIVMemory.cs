@@ -12,12 +12,48 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public event ProcessChange OnProcessChange;
 
         private ILogger logger;
-        private Process process;
+        class ProcessContainer
+        {
+            public ProcessContainer(Process process)
+            {
+                this.Process = process;
+            }
+
+            private Process _process;
+            public Process Process
+            {
+                get { return _process; }
+                set
+                {
+                    _process = value;
+                    if(Handle != IntPtr.Zero)
+                    {
+                        try
+                        {
+                            NativeMethods.CloseHandle(Handle);
+                        }
+                        catch
+                        { }
+                    }
+                    if (_process != null && !_process.HasExited)
+                    {
+                        Handle = NativeMethods.OpenProcess(ProcessAccessFlags.VirtualMemoryRead, false, _process.Id);
+                    }
+                    else
+                    {
+                        Handle = IntPtr.Zero;
+                    }
+                }
+            }
+            public IntPtr Handle { get; private set; }
+        }
+
+        private ProcessContainer processContainer;
 
         public FFXIVMemory(ILogger logger)
         {
             this.logger = logger;
-            this.process = FindProcess();
+            this.processContainer = new ProcessContainer(FindProcess());
         }
 
         private Process FindProcess()
@@ -40,18 +76,18 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public bool IsValid()
         {
-            if (this.process != null && this.process.HasExited)
+            if (this.processContainer.Process != null && this.processContainer.Process.HasExited)
             {
-                this.process = null;
-                OnProcessChange.Invoke(this.process);
+                this.processContainer.Process = null;
+                OnProcessChange.Invoke(this.processContainer.Process);
             }
-            if (this.process != null)
+            if (this.processContainer.Process != null)
                 return true;
-            this.process = FindProcess();
-            if (this.process == null)
+            this.processContainer.Process = FindProcess();
+            if (this.processContainer.Process == null)
                 return false;
 
-            OnProcessChange.Invoke(this.process);
+            OnProcessChange.Invoke(this.processContainer.Process);
             return true;
         }
         public unsafe static string GetStringFromBytes(byte* source, int size)
@@ -97,7 +133,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             IntPtr zero = IntPtr.Zero;
             IntPtr nSize = new IntPtr(buffer.Length);
-            return NativeMethods.ReadProcessMemory(process.Handle, address, buffer, nSize, ref zero);
+            return NativeMethods.ReadProcessMemory(processContainer.Handle, address, buffer, nSize, ref zero);
         }
 
         /// <summary>
@@ -134,7 +170,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             int buffer_len = 1 * count;
             var buffer = new byte[buffer_len];
             var bytes_read = IntPtr.Zero;
-            bool ok = NativeMethods.ReadProcessMemory(process.Handle, addr, buffer, new IntPtr(buffer_len), ref bytes_read);
+            bool ok = NativeMethods.ReadProcessMemory(processContainer.Handle, addr, buffer, new IntPtr(buffer_len), ref bytes_read);
             if (!ok || bytes_read.ToInt32() != buffer_len)
                 return null;
             return buffer;
@@ -253,8 +289,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // from a 32bit offset into the array that we read from the process.
             const Int32 kMaxReadSize = 65536;
 
-            int module_memory_size = process.MainModule.ModuleMemorySize;
-            IntPtr process_start_addr = process.MainModule.BaseAddress;
+            int module_memory_size = processContainer.Process.MainModule.ModuleMemorySize;
+            IntPtr process_start_addr = processContainer.Process.MainModule.BaseAddress;
             IntPtr process_end_addr = IntPtr.Add(process_start_addr, module_memory_size);
 
             IntPtr read_start_addr = process_start_addr;
@@ -266,7 +302,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 IntPtr read_size = (IntPtr)Math.Min(bytes_left, kMaxReadSize);
 
                 IntPtr num_bytes_read = IntPtr.Zero;
-                if (NativeMethods.ReadProcessMemory(process.Handle, read_start_addr, read_buffer, read_size, ref num_bytes_read))
+                if (NativeMethods.ReadProcessMemory(processContainer.Handle, read_start_addr, read_buffer, read_size, ref num_bytes_read))
                 {
                     int max_search_offset = num_bytes_read.ToInt32() - pattern_array.Length - Math.Max(0, offset);
                     // With RIP we will read a 4byte pointer at the |offset|, else we read an 8byte pointer. Either
