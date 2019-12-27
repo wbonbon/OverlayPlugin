@@ -266,4 +266,8 @@ OverlayPlugin的运行需要它。现在安装？</value>
     <value>无法覆写旧文件：{0}
 警告：插件可能处于无法使用的状态！！
 再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。</value>
-  </data></root>
+  </data>  <data name="SharpCompressOutdatedError" xml:space="preserve">
+    <value>当前加载的SharpCompress版本过旧！
+请确保先加载OverlayPlugin，再加载其他也使用SharpCompress的插件（例如ACTWebSocket）。</value>
+  </data>
+</root>
