@@ -10,6 +10,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Net;
 using System.Diagnostics;
+using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -99,15 +100,9 @@ namespace RainbowMage.OverlayPlugin
                 {
                     logDisplay.AppendText("Downloading mkcert...\r\n");
 
-                    if ((ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls12) != SecurityProtocolType.Tls12)
-                    {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                    }
-                    var client = new WebClient();
-
                     try
                     {
-                        client.DownloadFile(MKCERT_DOWNLOAD, mkcertPath);
+                        CurlWrapper.Get(MKCERT_DOWNLOAD, new Dictionary<string, string>(), mkcertPath, null, false);
                     }
                     catch (Exception e)
                     {

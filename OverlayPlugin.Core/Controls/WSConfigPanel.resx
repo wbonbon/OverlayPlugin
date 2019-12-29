@@ -489,13 +489,13 @@ Afterwards, you should be able to enable SSL.</value>
     <value>17, 17</value>
   </metadata>
   <data name="ctxMenuLinkCopy.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>102, 22</value>
   </data>
   <data name="ctxMenuLinkCopy.Text" xml:space="preserve">
     <value>Copy</value>
   </data>
   <data name="ctxMenuLink.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 48</value>
+    <value>103, 26</value>
   </data>
   <data name="&gt;&gt;ctxMenuLink.Name" xml:space="preserve">
     <value>ctxMenuLink</value>
@@ -554,6 +554,9 @@ Afterwards, you should be able to enable SSL.</value>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="$this.AutoScroll" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>619, 441</value>
   </data>

@@ -45,9 +45,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.cbOverlay = new System.Windows.Forms.ComboBox();
             this.lnkOverlayUrl = new System.Windows.Forms.LinkLabel();
-            this.lblUrlConfidentWarning = new System.Windows.Forms.Label();
             this.ctxMenuLink = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ctxMenuLinkCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblUrlConfidentWarning = new System.Windows.Forms.Label();
             this.ctxMenuLink.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,11 +146,6 @@
             this.lnkOverlayUrl.Name = "lnkOverlayUrl";
             this.lnkOverlayUrl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOverlayUrl_LinkClicked);
             // 
-            // lblUrlConfidentWarning
-            // 
-            resources.ApplyResources(this.lblUrlConfidentWarning, "lblUrlConfidentWarning");
-            this.lblUrlConfidentWarning.Name = "lblUrlConfidentWarning";
-            // 
             // ctxMenuLink
             // 
             this.ctxMenuLink.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -163,8 +158,14 @@
             this.ctxMenuLinkCopy.Name = "ctxMenuLinkCopy";
             resources.ApplyResources(this.ctxMenuLinkCopy, "ctxMenuLinkCopy");
             // 
+            // lblUrlConfidentWarning
+            // 
+            resources.ApplyResources(this.lblUrlConfidentWarning, "lblUrlConfidentWarning");
+            this.lblUrlConfidentWarning.Name = "lblUrlConfidentWarning";
+            // 
             // WSConfigPanel
             // 
+            resources.ApplyResources(this, "$this");
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.lblUrlConfidentWarning);
             this.Controls.Add(this.lnkOverlayUrl);
@@ -183,7 +184,6 @@
             this.Controls.Add(this.portTxt);
             this.Controls.Add(this.ipTxt);
             this.Name = "WSConfigPanel";
-            resources.ApplyResources(this, "$this");
             this.ctxMenuLink.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

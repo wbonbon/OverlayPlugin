@@ -13,9 +13,6 @@ namespace RainbowMage.OverlayPlugin.Updater
         private static bool initialized = false;
         private static string initError = "";
 
-        private static Dictionary<int, Download> downloadInfos = new Dictionary<int, Download>();
-        private static int nextDownloadIdx = 1;
-
         private static object _global_lock = new object();
 
         #region CURL Header
@@ -1381,11 +1378,6 @@ namespace RainbowMage.OverlayPlugin.Updater
                 }
             }
 
-            // We store our DownloadInfo here and only pass an index to curl since we can't pass complicated objects
-            // to unmanaged code and we need this info in DataCallback() later.
-            var dlIdx = nextDownloadIdx++;
-            downloadInfos[dlIdx] = dlInfo;
-
             long resumePos = dlInfo.handle == null ? 0 : dlInfo.handle.Position;
 
             var handle = curl_easy_init();
@@ -1452,23 +1444,16 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
                 }
 
-                if (dlInfo.handle != null)
-                {
-                    dlInfo.handle.Close();
-                }
-
                 return dlInfo.builder?.ToString();
             } finally
             {
                 writePin.Free();
                 progressPin?.Free();
 
-                if (dlIdx > -1)
+                if (dlInfo != null)
                 {
                     if (dlInfo.handle != null)
                         dlInfo.handle.Close();
-
-                    downloadInfos.Remove(dlIdx);
                 }
 
                 if (header_list != IntPtr.Zero)
