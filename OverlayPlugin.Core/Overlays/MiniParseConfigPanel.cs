@@ -24,8 +24,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
             new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleLock, GlobalHotkeyType.ToggleLock)
         };
 
-        static bool once = false;
-
         public MiniParseConfigPanel(MiniParseOverlay overlay)
         {
             InitializeComponent();
@@ -48,17 +46,15 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkNoFocus.Visible = config.ActwsCompatibility;
             this.checkNoFocus.Checked = config.NoFocus;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;
-            this.checkEnableGlobalHotkey.Checked = config.GlobalHotkeyEnabled;
-            this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
-            this.textGlobalHotkey.Text = Util.GetHotkeyString(config.GlobalHotkeyModifiers, config.GlobalHotkey);
-            this.comboHotkeyType.DisplayMember = "Key";
-            this.comboHotkeyType.ValueMember = "Value";
-            this.comboHotkeyType.DataSource = hotkeyTypeDict;
-            this.comboHotkeyType.SelectedValue = config.GlobalHotkeyType;
-            this.comboHotkeyType.SelectedIndexChanged += ComboHotkeyMode_SelectedIndexChanged;
             this.checkLogConsoleMessages.Checked = config.LogConsoleMessages;
             this.tbZoom.Value = config.Zoom;
             this.cbWhiteBg.Checked = config.ForceWhiteBackground;
+
+            hotkeyColAction.DisplayMember = "Key";
+            hotkeyColAction.ValueMember = "Value";
+            hotkeyColAction.DataSource = hotkeyTypeDict;
+
+            hotkeyGridView.DataSource = new BindingList<GlobalHotkey>(config.GlobalHotkeys);
         }
 
         private void SetupConfigEventHandlers()
@@ -113,40 +109,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     this.nudMaxFrameRate.Value = e.NewFrameRate;
                 });
             };
-            this.config.GlobalHotkeyEnabledChanged += (o, e) =>
-            {
-                this.InvokeIfRequired(() =>
-                {
-                    this.checkEnableGlobalHotkey.Checked = e.NewGlobalHotkeyEnabled;
-                    this.textGlobalHotkey.Enabled = this.checkEnableGlobalHotkey.Checked;
-                });
-            };
-            this.config.GlobalHotkeyChanged += (o, e) =>
-            {
-                this.InvokeIfRequired(() =>
-                {
-                    this.textGlobalHotkey.Text = Util.GetHotkeyString(this.config.GlobalHotkeyModifiers, e.NewHotkey);
-                });
-            };
-            this.config.GlobalHotkeyModifiersChanged += (o, e) =>
-            {
-                this.InvokeIfRequired(() =>
-                {
-                    this.textGlobalHotkey.Text = Util.GetHotkeyString(e.NewHotkey, this.config.GlobalHotkey);
-                });
-            };
             this.config.LockChanged += (o, e) =>
             {
                 this.InvokeIfRequired(() =>
                 {
                     this.checkLock.Checked = e.IsLocked;
-                });
-            };
-            this.config.GlobalHotkeyTypeChanged += (o, e) =>
-            {
-                this.InvokeIfRequired(() =>
-                {
-                    this.comboHotkeyType.SelectedValue = e.NewHotkeyType;
                 });
             };
             this.config.ActwsCompatibilityChanged += (o, e) =>
@@ -194,20 +161,9 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.config.IsClickThru = checkMiniParseClickthru.Checked;
         }
 
-        private void textUrl_TextChanged(object sender, EventArgs e)
-        {
-            //this.config.Url = textMiniParseUrl.Text;
-        }
-
         private void textMiniParseUrl_Leave(object sender, EventArgs e)
         {
             this.config.Url = textMiniParseUrl.Text;
-        }
-
-        private void ComboHotkeyMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var value = (GlobalHotkeyType)this.comboHotkeyType.SelectedValue;
-            this.config.GlobalHotkeyType = value;
         }
 
         private void nudMaxFrameRate_ValueChanged(object sender, EventArgs e)
@@ -241,20 +197,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.overlay.Overlay.Renderer.showDevTools(false);
         }
 
-        private void checkBoxEnableGlobalHotkey_CheckedChanged(object sender, EventArgs e)
-        {
-            this.config.GlobalHotkeyEnabled = this.checkEnableGlobalHotkey.Checked;
-            this.textGlobalHotkey.Enabled = this.config.GlobalHotkeyEnabled;
-        }
-
-        private void textBoxGlobalHotkey_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.SuppressKeyPress = true;
-            var key = Util.RemoveModifiers(e.KeyCode, e.Modifiers);
-            this.config.GlobalHotkey = key;
-            this.config.GlobalHotkeyModifiers = e.Modifiers;
-        }
-
         private void checkLock_CheckedChanged(object sender, EventArgs e)
         {
             this.config.IsLocked = this.checkLock.Checked;
@@ -268,16 +210,6 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void CheckActwsCompatbility_CheckedChanged(object sender, EventArgs e)
         {
             this.config.ActwsCompatibility = checkActwsCompatbility.Checked;
-        }
-
-        private void textGlobalHotkey_Enter(object sender, EventArgs e)
-        {
-            Registry.Resolve<KeyboardHook>().DisableHotKeys();
-        }
-
-        private void textGlobalHotkey_Leave(object sender, EventArgs e)
-        {
-            Registry.Resolve<KeyboardHook>().EnableHotKeys();
         }
 
         private void cbWhiteBg_CheckedChanged(object sender, EventArgs e)
@@ -303,6 +235,130 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void btnResetZoom_Click(object sender, EventArgs e)
         {
             this.config.Zoom = 1;
+        }
+
+        private void btnAddHotkey_Click(object sender, EventArgs e)
+        {
+            config.GlobalHotkeys.Add(new GlobalHotkey());
+        }
+
+        private void btnRemoveHotkey_Click(object sender, EventArgs e)
+        {
+            for (var i = hotkeyGridView.SelectedRows.Count - 1; i >= 0; --i)
+            {
+                var row = hotkeyGridView.SelectedRows[i];
+                hotkeyGridView.Rows.Remove(row);
+            }
+        }
+
+        private void hotkeyGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.ColumnIndex > 0)
+            {
+                // If a user clicks on the hotkey cell, start editing immidiately.
+                hotkeyGridView.BeginEdit(false);
+            }
+        }
+
+        // The next three methods are a bit of a mess but they allow me to completely control how the values
+        // are displayed (Formatting), how the edit widget behaves (EditControlShowing) and how the values
+        // are stored (CellValidated).
+        // There are probably better ways to implement this but this works and is fairly short.
+        // If you're reading this and want to improve this section, feel free to submit a PR (or message me
+        // so we can discuss your ideas first).
+        // -- ngld
+        private void hotkeyGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex < config.GlobalHotkeys.Count)
+            {
+                var entry = config.GlobalHotkeys[e.RowIndex];
+                switch (e.ColumnIndex)
+                {
+                    case 0:
+                        e.Value = entry.Enabled;
+                        break;
+
+                    case 1:
+                        e.Value = Util.GetHotkeyString(entry.Modifiers, entry.Key);
+                        break;
+
+                    case 2:
+                        foreach (var item in hotkeyTypeDict)
+                        {
+                            if (item.Value == entry.Type)
+                            {
+                                e.Value = item.Key;
+                            }
+                        }
+                        break;
+                }
+                e.FormattingApplied = true;
+            }
+        }
+
+        private void hotkeyGridView_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs ce)
+        {
+            var entry = config.GlobalHotkeys[hotkeyGridView.CurrentCell.RowIndex];
+
+            switch (hotkeyGridView.CurrentCell.ColumnIndex)
+            {
+                case 1:
+                    var manager = Registry.Resolve<KeyboardHook>();
+                    manager.DisableHotKeys();
+
+                    KeyEventHandler keyHandler = (o, e) =>
+                    {
+                        e.SuppressKeyPress = true;
+                        var key = Util.RemoveModifiers(e.KeyCode, e.Modifiers);
+                        entry.Modifiers = e.Modifiers;
+                        entry.Key = key;
+                        ce.Control.Text = Util.GetHotkeyString(entry.Modifiers, entry.Key);
+                    };
+
+                    ce.Control.KeyDown += keyHandler;
+                    ce.Control.LostFocus += (o, e) =>
+                    {
+                        ce.Control.KeyDown -= keyHandler;
+                    };
+
+                    ce.Control.Disposed += (o, e) =>
+                    {
+                        manager.EnableHotKeys();
+                    };
+
+                    ce.Control.BackColor = SystemColors.ControlLightLight;
+                    break;
+            }
+        }
+
+        private void hotkeyGridView_CellValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= config.GlobalHotkeys.Count) return;
+
+            var entry = config.GlobalHotkeys[e.RowIndex];
+            var cells = hotkeyGridView.Rows[e.RowIndex].Cells;
+
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    if (cells[0].Value != null)
+                    {
+                        entry.Enabled = (bool)cells[0].Value;
+                    }
+                    break;
+
+                case 2:
+                    if (cells[2].Value != null)
+                    {
+                        entry.Type = (GlobalHotkeyType)cells[2].Value;
+                    }
+                    break;
+            }
+        }
+
+        private void btnApplyHotkeyChanges_Click(object sender, EventArgs e)
+        {
+            config.TriggerGlobalHotkeyChanged();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace RainbowMage.OverlayPlugin
     {
         private bool disableLog = false;
         private Action hotKeyCallback = null;
+        private List<Action> hotKeyCallbacks = new List<Action>();
 
         protected System.Timers.Timer timer;
         /// <summary>
@@ -40,7 +41,7 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         public TConfig Config { get; private set; }
 
-/// <summary>
+        /// <summary>
         /// プラグインの設定を取得します。
         /// </summary>
         public IPluginConfig PluginConfig { get; private set; }
@@ -180,39 +181,40 @@ namespace RainbowMage.OverlayPlugin
         {
             var hook = Registry.Resolve<KeyboardHook>();
 
-            // Clear the old hotkey
-            if (hotKeyCallback != null)
+            // Clear the old hotkeys
+            foreach (var cb in hotKeyCallbacks)
             {
-                hook.UnregisterHotKey(hotKeyCallback);
+                hook.UnregisterHotKey(cb);
             }
+            hotKeyCallbacks.Clear();
 
-            if (this.Config.GlobalHotkeyEnabled)
+            foreach (var entry in Config.GlobalHotkeys)
             {
-                var modifierKeys = GetModifierKey(this.Config.GlobalHotkeyModifiers);
-                var key = this.Config.GlobalHotkey;
-                var hotkeyType = this.Config.GlobalHotkeyType;
-
-                if (key != Keys.None)
+                if (entry.Enabled && entry.Key != Keys.None)
                 {
-                    switch (hotkeyType)
+                    var modifierKeys = GetModifierKey(entry.Modifiers);
+                    Action cb = null;
+
+                    switch (entry.Type)
                     {
                         case GlobalHotkeyType.ToggleVisible:
-                            hotKeyCallback = () => this.Config.IsVisible = !this.Config.IsVisible;
+                            cb = () => this.Config.IsVisible = !this.Config.IsVisible;
                             break;
                         case GlobalHotkeyType.ToggleClickthru:
-                            hotKeyCallback = () => this.Config.IsClickThru = !this.Config.IsClickThru;
+                            cb = () => this.Config.IsClickThru = !this.Config.IsClickThru;
                             break;
                         case GlobalHotkeyType.ToggleLock:
-                            hotKeyCallback = () => this.Config.IsLocked = !this.Config.IsLocked;
+                            cb = () => this.Config.IsLocked = !this.Config.IsLocked;
                             break;
                         default:
-                            hotKeyCallback = () => this.Config.IsVisible = !this.Config.IsVisible;
+                            cb = () => this.Config.IsVisible = !this.Config.IsVisible;
                             break;
                     }
 
+                    hotKeyCallbacks.Add(cb);
                     try
                     {
-                        hook.RegisterHotKey(modifierKeys, key, hotKeyCallback);
+                        hook.RegisterHotKey(modifierKeys, entry.Key, cb);
                     }
                     catch (Exception e)
                     {
@@ -266,8 +268,6 @@ namespace RainbowMage.OverlayPlugin
                 if (this.Overlay != null) this.Overlay.MaxFrameRate = this.Config.MaxFrameRate;
             };
             this.Config.GlobalHotkeyChanged += (o, e) => UpdateHotKey();
-            this.Config.GlobalHotkeyEnabledChanged += (o, e) => UpdateHotKey();
-            this.Config.GlobalHotkeyModifiersChanged += (o, e) => UpdateHotKey();
         }
 
         /// <summary>
@@ -293,9 +293,11 @@ namespace RainbowMage.OverlayPlugin
                     this.Overlay.Close();
                     this.Overlay.Dispose();
                 }
-                if (hotKeyCallback != null)
+
+                var hook = Registry.Resolve<KeyboardHook>();
+                foreach (var cb in hotKeyCallbacks)
                 {
-                    Registry.Resolve<KeyboardHook>().UnregisterHotKey(hotKeyCallback);
+                    hook.UnregisterHotKey(cb);
                 }
             }
             catch (Exception ex)
