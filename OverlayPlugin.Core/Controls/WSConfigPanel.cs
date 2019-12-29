@@ -257,7 +257,10 @@ namespace RainbowMage.OverlayPlugin
 
         private void lnkOverlayUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(lnkOverlayUrl.Text);
+            if (e.Button == MouseButtons.Left)
+            {
+                Process.Start(lnkOverlayUrl.Text);
+            }
         }
 
         private class ShowLineArgs : EventArgs
