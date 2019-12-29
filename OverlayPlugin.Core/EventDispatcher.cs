@@ -158,7 +158,7 @@ namespace RainbowMage.OverlayPlugin
                 var message = JObject.Parse(data);
                 if (!message.ContainsKey("call"))
                 {
-                    PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiInvalidHandlerCall, receiver.Name, data);
+                    PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiInvalidHandlerCall, receiver.Name + ": " + data);
                     return null;
                 }
 
@@ -167,7 +167,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     if (!message.ContainsKey("events"))
                     {
-                        PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsField, receiver.Name, data);
+                        PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsField, receiver.Name + ": " + data);
                         return null;
                     }
 
@@ -182,7 +182,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     if (!message.ContainsKey("events"))
                     {
-                        PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsFieldUnsub, receiver.Name, data);
+                        PluginMain.Logger.Log(LogLevel.Error, Resources.OverlayApiMissingEventsFieldUnsub, receiver.Name + ": " + data);
                         return null;
                     }
 

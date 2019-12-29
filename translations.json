@@ -254,6 +254,9 @@
             "ja-JP": "敵視情報の更新間隔 (ミリ秒)",
             "ko-KR": "전투 중 정보 업데이트 간격 (ms)",
             "zh-CN": "仇恨更新间隔（毫秒）"
+        },
+        "overlayControl1.Text": {
+            "en": "overlayControl1"
         }
     },
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
@@ -1332,6 +1335,9 @@
             "ko-KR": "ACT가 OverlayPlugin 버전({2})과 일치하지 않는 {0} {1}(을/를) 로드하려고 했습니다. 플러그인 로드를 중단합니다. \n\n이전 OverlayPlugin을 비활성화하고 ACT를 다시 시작하세요. 문제가 해결되지 않았다면 위에서 언급한 파일과 같은 디렉토리에 있는 OverlayPlugin*.dll, CEF 또는 HtmlRenderer.dll 파일을 제거하십시오.\n",
             "zh-CN": "ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。\n\n请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。\n"
         },
+        "AssemblyMissing": {
+            "en": "Failed to load {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete anything (like the libs folder)."
+        },
         "AssemblyResolverError": {
             "#comment": "Log message",
             "en": "AssemblyResolver: Error: {0}",
@@ -1358,6 +1364,12 @@
             "fr-FR": "Core et HtmlRenderer sont différents.",
             "ko-KR": "OverlayPlugin.Core 또는 HtmlRenderer의 버전이 OverlayPlugin 버전과 일치하지 않습니다.",
             "zh-CN": "核心或HtmlRenderer不匹配。"
+        },
+        "DependencyMissing": {
+            "en": "Failed to load dependency {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete any files."
+        },
+        "DependencyOutdated": {
+            "en": "Fatal: The loaded {0} version is older than expected ({1}  < {2})! This might cause strange bugs in OverlayPlugin and its addons."
         },
         "FailedToLoadCommon": {
             "#comment": "Plugin status (in ACT's plugin list)",
