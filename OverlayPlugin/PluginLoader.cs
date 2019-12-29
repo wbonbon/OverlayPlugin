@@ -72,6 +72,8 @@ namespace RainbowMage.OverlayPlugin
 
             pluginStatusText.Text = Resources.InitCef;
 
+            SanityChecker.CheckDependencyVersions();
+
             try
             {
                 CurlWrapper.Init(pluginDirectory);
