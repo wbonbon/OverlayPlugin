@@ -40,7 +40,6 @@
             this.checkSortDesc = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbUpdateDuringImport = new System.Windows.Forms.CheckBox();
-            this.overlayControl1 = new RainbowMage.HtmlRenderer.OverlayControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,7 +56,6 @@
             this.tableLayoutPanel1.Controls.Add(this.checkSortDesc, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.cbUpdateDuringImport, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.overlayControl1, 1, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // textEnmityInterval
@@ -118,13 +116,6 @@
             this.cbUpdateDuringImport.UseVisualStyleBackColor = true;
             this.cbUpdateDuringImport.CheckedChanged += new System.EventHandler(this.cbUpdateDuringImport_CheckedChanged);
             // 
-            // overlayControl1
-            // 
-            resources.ApplyResources(this.overlayControl1, "overlayControl1");
-            this.overlayControl1.MaxFrameRate = 0;
-            this.overlayControl1.Name = "overlayControl1";
-            this.overlayControl1.Url = null;
-            // 
             // MiniParseEventSourceConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -151,6 +142,5 @@
         private System.Windows.Forms.CheckBox cbUpdateDuringImport;
         private System.Windows.Forms.TextBox textEnmityInterval;
         private System.Windows.Forms.Label label5;
-        private HtmlRenderer.OverlayControl overlayControl1;
     }
 }

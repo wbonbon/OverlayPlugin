@@ -254,9 +254,6 @@
             "ja-JP": "敵視情報の更新間隔 (ミリ秒)",
             "ko-KR": "전투 중 정보 업데이트 간격 (ms)",
             "zh-CN": "仇恨更新间隔（毫秒）"
-        },
-        "overlayControl1.Text": {
-            "en": "overlayControl1"
         }
     },
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
