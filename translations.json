@@ -425,6 +425,15 @@
         }
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
+        "btnAddHotkey.Text": {
+            "en": "Add New Hotkey"
+        },
+        "btnApplyHotkeyChanges.Text": {
+            "en": "Apply Changes"
+        },
+        "btnRemoveHotkey.Text": {
+            "en": "Remove Selected Hotkey"
+        },
         "btnResetZoom.Text": {
             "en": "Reset",
             "ja-JP": "リセット",
@@ -477,6 +486,15 @@
             "ja-JP": "このオーバーレイにはフォーカスしない",
             "ko-KR": "이 오버레이에 포커스를 두지 않음 (키 입력 무시)",
             "zh-CN": "不焦点此悬浮窗"
+        },
+        "hotkeyColAction.HeaderText": {
+            "en": "Action"
+        },
+        "hotkeyColEnabled.HeaderText": {
+            "en": "Enabled"
+        },
+        "hotkeyColHotkey.HeaderText": {
+            "en": "Hotkey"
         },
         "label1.Text": {
             "en": "URL",
@@ -574,6 +592,18 @@
             "ja-JP": "フォーカスの無効",
             "ko-KR": "키 입력 무시",
             "zh-CN": "取消焦点"
+        },
+        "tabACTWS.Text": {
+            "en": "ACTWS"
+        },
+        "tabAdvanced.Text": {
+            "en": "Advanced"
+        },
+        "tabGeneral.Text": {
+            "en": "General"
+        },
+        "tabHotkeys.Text": {
+            "en": "Hotkeys"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
