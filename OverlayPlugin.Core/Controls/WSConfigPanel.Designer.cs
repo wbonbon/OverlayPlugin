@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WSConfigPanel));
             this.ipTxt = new System.Windows.Forms.TextBox();
             this.portTxt = new System.Windows.Forms.TextBox();
@@ -44,11 +43,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cbOverlay = new System.Windows.Forms.ComboBox();
-            this.lnkOverlayUrl = new System.Windows.Forms.LinkLabel();
-            this.ctxMenuLink = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ctxMenuLinkCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.lblUrlConfidentWarning = new System.Windows.Forms.Label();
-            this.ctxMenuLink.SuspendLayout();
+            this.txtOverlayUrl = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ipTxt
@@ -139,36 +135,24 @@
             this.cbOverlay.ValueMember = "overlay";
             this.cbOverlay.SelectedIndexChanged += new System.EventHandler(this.cbOverlay_SelectedIndexChanged);
             // 
-            // lnkOverlayUrl
-            // 
-            resources.ApplyResources(this.lnkOverlayUrl, "lnkOverlayUrl");
-            this.lnkOverlayUrl.ContextMenuStrip = this.ctxMenuLink;
-            this.lnkOverlayUrl.Name = "lnkOverlayUrl";
-            this.lnkOverlayUrl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOverlayUrl_LinkClicked);
-            // 
-            // ctxMenuLink
-            // 
-            this.ctxMenuLink.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctxMenuLinkCopy});
-            this.ctxMenuLink.Name = "ctxMenuLink";
-            resources.ApplyResources(this.ctxMenuLink, "ctxMenuLink");
-            // 
-            // ctxMenuLinkCopy
-            // 
-            this.ctxMenuLinkCopy.Name = "ctxMenuLinkCopy";
-            resources.ApplyResources(this.ctxMenuLinkCopy, "ctxMenuLinkCopy");
-            // 
             // lblUrlConfidentWarning
             // 
             resources.ApplyResources(this.lblUrlConfidentWarning, "lblUrlConfidentWarning");
             this.lblUrlConfidentWarning.Name = "lblUrlConfidentWarning";
             // 
+            // txtOverlayUrl
+            // 
+            resources.ApplyResources(this.txtOverlayUrl, "txtOverlayUrl");
+            this.txtOverlayUrl.Name = "txtOverlayUrl";
+            this.txtOverlayUrl.ReadOnly = true;
+            this.txtOverlayUrl.Click += new System.EventHandler(this.txtOverlayUrl_Click);
+            // 
             // WSConfigPanel
             // 
             resources.ApplyResources(this, "$this");
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Controls.Add(this.txtOverlayUrl);
             this.Controls.Add(this.lblUrlConfidentWarning);
-            this.Controls.Add(this.lnkOverlayUrl);
             this.Controls.Add(this.cbOverlay);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -184,7 +168,6 @@
             this.Controls.Add(this.portTxt);
             this.Controls.Add(this.ipTxt);
             this.Name = "WSConfigPanel";
-            this.ctxMenuLink.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,9 +189,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cbOverlay;
-        private System.Windows.Forms.LinkLabel lnkOverlayUrl;
         private System.Windows.Forms.Label lblUrlConfidentWarning;
-        private System.Windows.Forms.ContextMenuStrip ctxMenuLink;
-        private System.Windows.Forms.ToolStripMenuItem ctxMenuLinkCopy;
+        private System.Windows.Forms.TextBox txtOverlayUrl;
     }
 }

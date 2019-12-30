@@ -38,11 +38,6 @@ namespace RainbowMage.OverlayPlugin
             {
                 RebuildOverlayOptions();
             };
-
-            ctxMenuLinkCopy.Click += (o, e) =>
-            {
-                Clipboard.SetText(lnkOverlayUrl.Text);
-            };
         }
 
         private void UpdateStatus(object sender, WSServer.StateChangedArgs e)
@@ -252,15 +247,13 @@ namespace RainbowMage.OverlayPlugin
             var (confident, url) = WSServer.GetUrl(overlay);
 
             lblUrlConfidentWarning.Visible = !confident;
-            lnkOverlayUrl.Text = url;
+            txtOverlayUrl.Text = url;
         }
 
-        private void lnkOverlayUrl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void txtOverlayUrl_Click(object sender, EventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Process.Start(lnkOverlayUrl.Text);
-            }
+            txtOverlayUrl.SelectAll();
+            txtOverlayUrl.Copy();
         }
 
         private class ShowLineArgs : EventArgs
