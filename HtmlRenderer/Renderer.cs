@@ -44,6 +44,7 @@ namespace RainbowMage.HtmlRenderer
             this.overlayName = overlayName;
             this._target = target;
             this.lastUrl = url;
+            this._api = api;
 
             InitBrowser();
         }
