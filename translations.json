@@ -516,7 +516,8 @@
             "zh-CN": "悬浮窗路径"
         },
         "label10.Text": {
-            "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again."
+            "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again.",
+            "fr-FR": "Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué"
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
@@ -533,7 +534,8 @@
             "zh-CN": "如果您找不到悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label13.Text": {
-            "en": "Mute overlay when hidden"
+            "en": "Mute overlay when hidden",
+            "fr-FR": "Aucun son si caché"
         },
         "label15.Text": {
             "en": "Zoom",
@@ -579,13 +581,14 @@
         },
         "label7.Text": {
             "en": "Enable overlay",
-            "fr-FR": "Activer raccourci",
+            "fr-FR": "Activer overlay",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "단축키 사용",
             "zh-CN": "启用悬浮窗 开/关 快捷键"
         },
         "label8.Text": {
-            "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n"
+            "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n",
+            "fr-FR": "Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).\nCacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan et peut jouer des sons, collecter des statistiques, etc.\n"
         },
         "label9.Text": {
             "en": "Lock overlay",
