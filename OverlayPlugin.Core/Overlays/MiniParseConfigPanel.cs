@@ -271,7 +271,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void hotkeyGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.ColumnIndex > 0)
+            if (e.ColumnIndex > 0 && e.RowIndex >= 0)
             {
                 // If a user clicks on the hotkey cell, start editing immidiately.
                 hotkeyGridView.BeginEdit(false);
