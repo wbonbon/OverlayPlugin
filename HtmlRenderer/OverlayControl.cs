@@ -65,6 +65,15 @@ namespace RainbowMage.HtmlRenderer
             this.SetStyle(ControlStyles.Selectable | ControlStyles.UserMouse, true);
             this.SetStyle(ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, false);
 
+            lock (surfaceLock)
+            {
+                if (surfaceBuffer == null)
+                {
+                    // Make sure we have a valid buffer to avoid the "No buffer!" warning in OnPaint().
+                    surfaceBuffer = new Bitmap(Width, Height);
+                }
+            }
+
             this.Renderer = new WinFormsRenderer("", url, this, api);
             this.Renderer.Locked = true;
             this.Renderer.BeginRender();
