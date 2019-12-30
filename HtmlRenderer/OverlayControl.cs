@@ -14,6 +14,7 @@ namespace RainbowMage.HtmlRenderer
     {
         private bool terminated = false;
 
+        private object surfaceLock = new object();
         private Bitmap surfaceBuffer;
         private Bitmap popupBuffer;
         private Rectangle popupPosition;
@@ -70,6 +71,16 @@ namespace RainbowMage.HtmlRenderer
 
             this.MaxFrameRate = maxFrameRate;
             this.Url = url;
+
+            this.ContextMenuStrip = new ContextMenuStrip();
+            this.ContextMenuStrip.Items.Add("Reload").Click += (o, e) => this.Renderer.Reload();
+            this.ContextMenuStrip.Items.Add("Open DevTools").Click += (o, e) => this.Renderer.showDevTools();
+
+            this.Renderer.SetContextMenuCallback((int x, int y) =>
+            {
+                this.ContextMenuStrip.Show(this, new System.Drawing.Point() { X = x, Y = y });
+                return true;
+            });
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -126,7 +137,7 @@ namespace RainbowMage.HtmlRenderer
         {
             if (this.surfaceBuffer != null)
             {
-                lock (surfaceBuffer)
+                lock (surfaceLock)
                 {
                     e.Graphics.DrawImage(surfaceBuffer, 0, 0);
 
@@ -148,28 +159,28 @@ namespace RainbowMage.HtmlRenderer
             {
                 try
                 {
-                    Bitmap surface = type == PaintElementType.View ? surfaceBuffer : popupBuffer;
-                    if (surface != null && (surface.Width != width || surface.Height != height))
+                    lock (surfaceLock)
                     {
-                        surface.Dispose();
-                        surface = null;
-                    }
-
-                    if (surface == null)
-                    {
-                        surface = new Bitmap(width, height);
-                        if (type == PaintElementType.View)
+                        Bitmap surface = type == PaintElementType.View ? surfaceBuffer : popupBuffer;
+                        if (surface != null && (surface.Width != width || surface.Height != height))
                         {
-                            surfaceBuffer = surface;
+                            surface.Dispose();
+                            surface = null;
                         }
-                        else
-                        {
-                            popupBuffer = surface;
-                        }
-                    }
 
-                    lock (surfaceBuffer)
-                    {
+                        if (surface == null)
+                        {
+                            surface = new Bitmap(width, height);
+                            if (type == PaintElementType.View)
+                            {
+                                surfaceBuffer = surface;
+                            }
+                            else
+                            {
+                                popupBuffer = surface;
+                            }
+                        }
+
                         var data = surface.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppRgb);
                         NativeMethods.CopyMemory(data.Scan0, buffer, (uint)(width * height * 4));
                         surface.UnlockBits(data);

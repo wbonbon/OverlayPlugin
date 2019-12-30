@@ -26,6 +26,7 @@ namespace RainbowMage.HtmlRenderer
         private ChromiumWebBrowser _browser;
         protected IRenderTarget _target;
         private object _api;
+        private Func<int, int, bool> _ctxMenuCallback = null;
         private List<String> scriptQueue = new List<string>();
         private string urlToLoad = null;
         private string lastUrl = null;
@@ -51,7 +52,7 @@ namespace RainbowMage.HtmlRenderer
         {
             this._browser = new BrowserWrapper(lastUrl ?? "about:blank", automaticallyCreateBrowser: false, target: _target);
             _browser.RequestHandler = new CustomRequestHandler(this);
-            _browser.MenuHandler = new ContextMenuHandler();
+            _browser.MenuHandler = new ContextMenuHandler(_ctxMenuCallback);
             _browser.BrowserInitialized += _browser_BrowserInitialized;
             _browser.FrameLoadStart += Browser_FrameLoadStart;
             _browser.FrameLoadEnd += Browser_FrameLoadEnd;
@@ -70,6 +71,12 @@ namespace RainbowMage.HtmlRenderer
             _api = api;
             if (api != null)
                 _browser.JavascriptObjectRepository.Register("OverlayPluginApi", api, isAsync: true);
+        }
+
+        public void SetContextMenuCallback(Func<int, int, bool> ctxMenuCallback)
+        {
+            _ctxMenuCallback = ctxMenuCallback;
+            _browser.MenuHandler = new ContextMenuHandler(ctxMenuCallback);
         }
 
         private void _browser_BrowserInitialized(object sender, EventArgs e)
@@ -617,28 +624,6 @@ MaxUploadsPerDay=0
             screenX = (int) (contentX + target.Location.X);
             screenY = (int) (contentY + target.Location.Y);
 
-            return true;
-        }
-    }
-
-    internal class ContextMenuHandler : IContextMenuHandler
-    {
-        public void OnBeforeContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model)
-        {
-        }
-
-        public bool OnContextMenuCommand(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, CefMenuCommand commandId, CefEventFlags eventFlags)
-        {
-            return false;
-        }
-
-        public void OnContextMenuDismissed(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame)
-        {
-        }
-
-        public bool RunContextMenu(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback)
-        {
-            // Suppress the context menu.
             return true;
         }
     }

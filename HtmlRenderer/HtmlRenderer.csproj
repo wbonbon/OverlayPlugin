@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextMenuHandler.cs" />
     <Compile Include="DIBitmap.cs" />
     <Compile Include="DragHandler.cs" />
     <Compile Include="IRenderTarget.cs" />
