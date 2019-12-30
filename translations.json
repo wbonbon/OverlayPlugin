@@ -580,7 +580,7 @@
         },
         "label7.Text": {
             "en": "Enable overlay",
-            "fr-FR": "Activer raccourci",
+            "fr-FR": "Activer overlay",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "단축키 사용",
             "zh-CN": "启用悬浮窗 开/关 快捷键"
