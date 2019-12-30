@@ -296,7 +296,7 @@
             "zh-CN": "显示文字"
         },
         "label2.Text": {
-            "en": "Enable clickthru",
+            "en": "Enable clickthrough",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -387,7 +387,7 @@
             "zh-CN": "快捷键功能"
         },
         "label2.Text": {
-            "en": "Enable clickthru",
+            "en": "Enable clickthrough",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -516,11 +516,7 @@
             "zh-CN": "悬浮窗路径"
         },
         "label10.Text": {
-            "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again.",
-            "fr-FR": "Type de raccourci",
-            "ja-JP": "ホットキータイプ",
-            "ko-KR": "단축키 기능",
-            "zh-CN": "快捷键功能"
+            "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again."
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
@@ -589,11 +585,7 @@
             "zh-CN": "启用悬浮窗 开/关 快捷键"
         },
         "label8.Text": {
-            "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n",
-            "fr-FR": "Touche de raccourci",
-            "ja-JP": "グローバルホットキー",
-            "ko-KR": "단축키",
-            "zh-CN": "设置悬浮窗 开/关 快捷键"
+            "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n"
         },
         "label9.Text": {
             "en": "Lock overlay",
@@ -695,7 +687,7 @@
             "zh-CN": "最大帧速率"
         },
         "label8.Text": {
-            "en": "Enable clickthru",
+            "en": "Enable clickthrough",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -759,7 +751,7 @@
             "zh-CN": "通用"
         },
         "HotkeyActionToggleClickthrough": {
-            "en": "Toggle clickthru",
+            "en": "Toggle clickthrough",
             "fr-FR": "Clic à travers",
             "ko-KR": "클릭 무시 ON/OFF",
             "zh-CN": "切换悬浮窗 鼠标穿透"

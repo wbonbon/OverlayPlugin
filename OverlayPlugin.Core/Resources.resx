@@ -225,7 +225,7 @@
     <value>General</value>
   </data>
   <data name="HotkeyActionToggleClickthrough" xml:space="preserve">
-    <value>Toggle clickthru</value>
+    <value>Toggle clickthrough</value>
   </data>
   <data name="HotkeyActionToggleLock" xml:space="preserve">
     <value>Toggle lock</value>
