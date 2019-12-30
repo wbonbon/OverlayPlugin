@@ -534,7 +534,8 @@
             "zh-CN": "如果您找不到悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label13.Text": {
-            "en": "Mute overlay when hidden"
+            "en": "Mute overlay when hidden",
+            "fr-FR": "Aucun son si caché"
         },
         "label15.Text": {
             "en": "Zoom",
