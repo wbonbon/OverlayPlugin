@@ -63,7 +63,7 @@ class XmlUpdater:
             if self._key in self._trans:
                 new_value = self.escape(self._trans[self._key])
 
-                if old_value != new_value:
+                if old_value.strip() != new_value.strip():
                     print('Updating %s (%s -> %s)' % (self._key, old_value.decode('utf8'),
                                                       new_value.decode('utf8')))
 

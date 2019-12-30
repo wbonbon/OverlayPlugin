@@ -174,4 +174,34 @@
   </data>
   <data name="label15.Text" xml:space="preserve">
     <value>缩放</value>
-  </data></root>
+  </data>  <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
+    <value>已启用</value>
+  </data>
+  <data name="tabHotkeys.Text" xml:space="preserve">
+    <value>快捷键</value>
+  </data>
+  <data name="tabAdvanced.Text" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>通用</value>
+  </data>
+  <data name="btnAddHotkey.Text" xml:space="preserve">
+    <value>添加新快捷键</value>
+  </data>
+  <data name="hotkeyColAction.HeaderText" xml:space="preserve">
+    <value>行动</value>
+  </data>
+  <data name="tabACTWS.Text" xml:space="preserve">
+    <value>ACTWS</value>
+  </data>
+  <data name="btnRemoveHotkey.Text" xml:space="preserve">
+    <value>删除选定快捷键</value>
+  </data>
+  <data name="btnApplyHotkeyChanges.Text" xml:space="preserve">
+    <value>应用更改</value>
+  </data>
+  <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
+    <value>快捷键</value>
+  </data>
+</root>

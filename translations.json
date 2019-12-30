@@ -138,12 +138,6 @@
         }
     },
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
-        "ctxMenuLinkCopy.Text": {
-            "en": "Copy",
-            "fr-FR": "Copier",
-            "ko-KR": "복사",
-            "zh-CN": "复制"
-        },
         "genSslBtn.Text": {
             "en": "Generate SSL Certificate",
             "fr-FR": "Générer un certificat SSL",
