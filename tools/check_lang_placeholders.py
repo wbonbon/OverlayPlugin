@@ -47,3 +47,14 @@ for project in PROJECTS:
 
                     if placholder_count != param_count:
                         print('ERROR: Found params "%s" for string %s "%s" in %s!' % (params, key, msg['en'], fpath))
+
+    for key, trans in strings.items():
+        en_placeholders = len(PLACEHOLD_RE.findall(trans['en']))
+
+        for lang, value in trans.items():
+            if lang != 'en' and not lang.startswith('#'):
+                lang_placeholders = len(PLACEHOLD_RE.findall(value))
+
+                if lang_placeholders != en_placeholders:
+                    print('ERROR: Translation %s for %s in language %s has %d placeholders, expected %d!' %
+                          (key, project, lang, lang_placeholders, en_placeholders))
