@@ -913,7 +913,7 @@
         },
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
-            "fr-FR": "Impossible de supprimer le raccourci {0},{1} dans DisableHotKeys() !",
+            "fr-FR": "Impossible de supprimer le raccourci {0} dans DisableHotKeys() !",
             "ko-KR": "DisableHotKeys()에서 단축키 {0}(을/를) 등록 취소하지 못했습니다.",
             "zh-CN": "在DisableHotKeys()反注册热键{0}失败。"
         },
