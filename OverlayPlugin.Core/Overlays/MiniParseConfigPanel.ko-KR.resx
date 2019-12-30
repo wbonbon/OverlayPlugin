@@ -132,12 +132,6 @@
   <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
     <value>새로고침</value>
   </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>단축키 사용</value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>단축키</value>
-  </data>
   <data name="label9.Text" xml:space="preserve">
     <value>위치 잠금</value>
   </data>
@@ -164,10 +158,6 @@
 
   <data name="label11.Text" xml:space="preserve">
     <value>오버레이를 OverlayPlugin으로 연결했을 때, 정상적으로 동작하지 않는다면 이 기능을 사용합니다.</value>
-  </data>
-
-  <data name="label10.Text" xml:space="preserve">
-    <value>단축키 기능</value>
   </data>
 
   <data name="btnResetZoom.Text" xml:space="preserve">

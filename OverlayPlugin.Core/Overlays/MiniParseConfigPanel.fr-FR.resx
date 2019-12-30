@@ -151,9 +151,6 @@
   <data name="checkNoFocus.Text" xml:space="preserve">
     <value>Ne pas accepter le focus pour cet overlay</value>
   </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>Touche de raccourci</value>
-  </data>
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
     <value>RAZ Position</value>
   </data>
@@ -168,12 +165,6 @@
   </data>
   <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
     <value>Recharger l'overlay</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>Type de raccourci</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>Activer raccourci</value>
   </data>
   <data name="checkActwsCompatbility.Text" xml:space="preserve">
     <value>Cet overlay nécessite ACTWebSocket</value>

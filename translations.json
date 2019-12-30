@@ -587,10 +587,7 @@
         },
         "label7.Text": {
             "en": "Enable overlay",
-            "fr-FR": "Activer overlay",
-            "ja-JP": "グローバルホットキーを使用",
-            "ko-KR": "단축키 사용",
-            "zh-CN": "启用悬浮窗 开/关 快捷键"
+            "fr-FR": "Activer overlay"
         },
         "label8.Text": {
             "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n",

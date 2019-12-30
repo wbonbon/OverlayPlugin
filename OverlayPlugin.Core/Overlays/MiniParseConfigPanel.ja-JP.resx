@@ -238,17 +238,11 @@
   <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 24</value>
   </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>グローバルホットキーを使用</value>
-  </data>
   <data name="label8.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 192</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 24</value>
-  </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>グローバルホットキー</value>
   </data>
   <data name="checkEnableGlobalHotkey.Location" type="System.Drawing.Point, System.Drawing">
     <value>158, 171</value>
@@ -282,9 +276,6 @@
   </data>
   <data name="label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 22</value>
-  </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>ホットキータイプ</value>
   </data>
   <data name="comboHotkeyType.Location" type="System.Drawing.Point, System.Drawing">
     <value>156, 217</value>
