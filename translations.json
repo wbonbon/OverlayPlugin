@@ -174,12 +174,12 @@
         },
         "label4.Text": {
             "en": "Overlay:",
-            "fr-FR": "Overlay :',
+            "fr-FR": "Overlay :",
             "zh-CN": "悬浮窗："
         },
         "label5.Text": {
             "en": "URL:",
-            "fr-FR": "URL :',
+            "fr-FR": "URL :",
             "ko-KR": "URL:",
             "zh-CN": "悬浮窗链接："
         },
