@@ -432,15 +432,18 @@
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnAddHotkey.Text": {
             "en": "Add New Hotkey",
-            "fr-FR": "Ajouter nvx raccourci"
+            "fr-FR": "Ajouter nvx raccourci",
+            "zh-CN": "添加新快捷键"
         },
         "btnApplyHotkeyChanges.Text": {
             "en": "Apply Changes",
-            "fr-FR": "Appliquer les modifications"
+            "fr-FR": "Appliquer les modifications",
+            "zh-CN": "应用更改"
         },
         "btnRemoveHotkey.Text": {
             "en": "Remove Selected Hotkey",
-            "fr-FR": "Supprimer le raccourci sélectionné"
+            "fr-FR": "Supprimer le raccourci sélectionné",
+            "zh-CN": "删除选定快捷键"
         },
         "btnResetZoom.Text": {
             "en": "Reset",
@@ -498,15 +501,18 @@
         },
         "hotkeyColAction.HeaderText": {
             "en": "Action",
-            "fr-FR": "Action"
+            "fr-FR": "Action",
+            "zh-CN": "行动"
         },
         "hotkeyColEnabled.HeaderText": {
             "en": "Enabled",
-            "fr-FR": "Activé"
+            "fr-FR": "Activé",
+            "zh-CN": "已启用"
         },
         "hotkeyColHotkey.HeaderText": {
             "en": "Hotkey",
-            "fr-FR": "Raccourci"
+            "fr-FR": "Raccourci",
+            "zh-CN": "快捷键"
         },
         "label1.Text": {
             "en": "URL",
@@ -605,19 +611,23 @@
             "zh-CN": "取消焦点"
         },
         "tabACTWS.Text": {
-            "en": "ACTWS"
+            "en": "ACTWS",
+            "zh-CN": "ACTWS"
         },
         "tabAdvanced.Text": {
             "en": "Advanced",
-            "fr-FR": "Avancé"
+            "fr-FR": "Avancé",
+            "zh-CN": "高级"
         },
         "tabGeneral.Text": {
             "en": "General",
-            "fr-FR": "Général"
+            "fr-FR": "Général",
+            "zh-CN": "通用"
         },
         "tabHotkeys.Text": {
             "en": "Hotkeys",
-            "fr-FR": "Raccourcis"
+            "fr-FR": "Raccourcis",
+            "zh-CN": "快捷键"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
