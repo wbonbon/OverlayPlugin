@@ -17,7 +17,6 @@ namespace RainbowMage.OverlayPlugin
         where TConfig: OverlayConfigBase
     {
         private bool disableLog = false;
-        private Action hotKeyCallback = null;
         private List<Action> hotKeyCallbacks = new List<Action>();
 
         protected System.Timers.Timer timer;
@@ -71,6 +70,7 @@ namespace RainbowMage.OverlayPlugin
             InitializeOverlay();
             InitializeTimer();
             InitializeConfigHandlers();
+            UpdateHotKey();
         }
 
         public abstract Control CreateConfigControl();
@@ -101,8 +101,6 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 this.Overlay = new OverlayForm(this.Name, Config.Url, this.Config.MaxFrameRate, new OverlayApi(this));
-
-                UpdateHotKey();
 
                 // 画面外にウィンドウがある場合は、初期表示位置をシステムに設定させる
                 if (!Util.IsOnScreen(this.Overlay))
@@ -138,10 +136,11 @@ namespace RainbowMage.OverlayPlugin
                     if (Config.LogConsoleMessages)
                         Log(LogLevel.Info, "BrowserConsole: {0} (Source: {1}, Line: {2})", e.Message, e.Source, e.Line);
                 };
-                this.Config.UrlChanged += (o, e) =>
+
+                if (!this.Config.Disabled)
                 {
-                    Navigate(e.NewUrl);
-                };
+                    this.Overlay.Renderer.BeginRender();
+                }
 
                 this.Overlay.Show();
 
@@ -268,6 +267,10 @@ namespace RainbowMage.OverlayPlugin
                 if (this.Overlay != null) this.Overlay.MaxFrameRate = this.Config.MaxFrameRate;
             };
             this.Config.GlobalHotkeyChanged += (o, e) => UpdateHotKey();
+            this.Config.UrlChanged += (o, e) =>
+            {
+                Navigate(e.NewUrl);
+            };
         }
 
         /// <summary>

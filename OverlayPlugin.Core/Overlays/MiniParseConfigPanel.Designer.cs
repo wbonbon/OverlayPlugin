@@ -31,6 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiniParseConfigPanel));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.cbMuteHidden = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbEnableOverlay = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.textMiniParseUrl = new System.Windows.Forms.TextBox();
             this.buttonMiniParseSelectFile = new System.Windows.Forms.Button();
@@ -45,9 +51,13 @@
             this.cbWhiteBg = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabHotkeys = new System.Windows.Forms.TabPage();
+            this.btnApplyHotkeyChanges = new System.Windows.Forms.Button();
             this.btnRemoveHotkey = new System.Windows.Forms.Button();
             this.btnAddHotkey = new System.Windows.Forms.Button();
             this.hotkeyGridView = new System.Windows.Forms.DataGridView();
+            this.hotkeyColEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.hotkeyColHotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hotkeyColAction = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.label15 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -66,10 +76,6 @@
             this.buttonMiniParseOpenDevTools = new System.Windows.Forms.Button();
             this.buttonMiniParseReloadBrowser = new System.Windows.Forms.Button();
             this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
-            this.hotkeyColEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.hotkeyColHotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hotkeyColAction = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.btnApplyHotkeyChanges = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -96,6 +102,12 @@
             // tabGeneral
             // 
             resources.ApplyResources(this.tabGeneral, "tabGeneral");
+            this.tabGeneral.Controls.Add(this.cbMuteHidden);
+            this.tabGeneral.Controls.Add(this.label13);
+            this.tabGeneral.Controls.Add(this.label10);
+            this.tabGeneral.Controls.Add(this.label8);
+            this.tabGeneral.Controls.Add(this.cbEnableOverlay);
+            this.tabGeneral.Controls.Add(this.label7);
             this.tabGeneral.Controls.Add(this.tableLayoutPanel2);
             this.tabGeneral.Controls.Add(this.label1);
             this.tabGeneral.Controls.Add(this.label3);
@@ -109,6 +121,40 @@
             this.tabGeneral.Controls.Add(this.label12);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // cbMuteHidden
+            // 
+            resources.ApplyResources(this.cbMuteHidden, "cbMuteHidden");
+            this.cbMuteHidden.Name = "cbMuteHidden";
+            this.cbMuteHidden.UseVisualStyleBackColor = true;
+            this.cbMuteHidden.CheckedChanged += new System.EventHandler(this.cbMuteHidden_CheckedChanged);
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // cbEnableOverlay
+            // 
+            resources.ApplyResources(this.cbEnableOverlay, "cbEnableOverlay");
+            this.cbEnableOverlay.Name = "cbEnableOverlay";
+            this.cbEnableOverlay.UseVisualStyleBackColor = true;
+            this.cbEnableOverlay.CheckedChanged += new System.EventHandler(this.cbEnableOverlay_CheckedChanged);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
             // 
             // tableLayoutPanel2
             // 
@@ -198,6 +244,13 @@
             this.tabHotkeys.Name = "tabHotkeys";
             this.tabHotkeys.UseVisualStyleBackColor = true;
             // 
+            // btnApplyHotkeyChanges
+            // 
+            resources.ApplyResources(this.btnApplyHotkeyChanges, "btnApplyHotkeyChanges");
+            this.btnApplyHotkeyChanges.Name = "btnApplyHotkeyChanges";
+            this.btnApplyHotkeyChanges.UseVisualStyleBackColor = true;
+            this.btnApplyHotkeyChanges.Click += new System.EventHandler(this.btnApplyHotkeyChanges_Click);
+            // 
             // btnRemoveHotkey
             // 
             resources.ApplyResources(this.btnRemoveHotkey, "btnRemoveHotkey");
@@ -232,6 +285,21 @@
             this.hotkeyGridView.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.hotkeyGridView_CellMouseClick);
             this.hotkeyGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.hotkeyGridView_CellValidated);
             this.hotkeyGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.hotkeyGridView_EditingControlShowing);
+            // 
+            // hotkeyColEnabled
+            // 
+            resources.ApplyResources(this.hotkeyColEnabled, "hotkeyColEnabled");
+            this.hotkeyColEnabled.Name = "hotkeyColEnabled";
+            // 
+            // hotkeyColHotkey
+            // 
+            resources.ApplyResources(this.hotkeyColHotkey, "hotkeyColHotkey");
+            this.hotkeyColHotkey.Name = "hotkeyColHotkey";
+            // 
+            // hotkeyColAction
+            // 
+            resources.ApplyResources(this.hotkeyColAction, "hotkeyColAction");
+            this.hotkeyColAction.Name = "hotkeyColAction";
             // 
             // tabAdvanced
             // 
@@ -375,28 +443,6 @@
             this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
             this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
             // 
-            // hotkeyColEnabled
-            // 
-            resources.ApplyResources(this.hotkeyColEnabled, "hotkeyColEnabled");
-            this.hotkeyColEnabled.Name = "hotkeyColEnabled";
-            // 
-            // hotkeyColHotkey
-            // 
-            resources.ApplyResources(this.hotkeyColHotkey, "hotkeyColHotkey");
-            this.hotkeyColHotkey.Name = "hotkeyColHotkey";
-            // 
-            // hotkeyColAction
-            // 
-            resources.ApplyResources(this.hotkeyColAction, "hotkeyColAction");
-            this.hotkeyColAction.Name = "hotkeyColAction";
-            // 
-            // btnApplyHotkeyChanges
-            // 
-            resources.ApplyResources(this.btnApplyHotkeyChanges, "btnApplyHotkeyChanges");
-            this.btnApplyHotkeyChanges.Name = "btnApplyHotkeyChanges";
-            this.btnApplyHotkeyChanges.UseVisualStyleBackColor = true;
-            this.btnApplyHotkeyChanges.Click += new System.EventHandler(this.btnApplyHotkeyChanges_Click);
-            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -467,5 +513,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn hotkeyColHotkey;
         private System.Windows.Forms.DataGridViewComboBoxColumn hotkeyColAction;
         private System.Windows.Forms.Button btnApplyHotkeyChanges;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox cbEnableOverlay;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox cbMuteHidden;
+        private System.Windows.Forms.Label label13;
     }
 }

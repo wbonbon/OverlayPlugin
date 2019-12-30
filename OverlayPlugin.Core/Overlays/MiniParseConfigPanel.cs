@@ -49,6 +49,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkLogConsoleMessages.Checked = config.LogConsoleMessages;
             this.tbZoom.Value = config.Zoom;
             this.cbWhiteBg.Checked = config.ForceWhiteBackground;
+            this.cbEnableOverlay.Checked = !config.Disabled;
+            this.cbMuteHidden.Checked = config.MuteWhenHidden;
 
             hotkeyColAction.DisplayMember = "Key";
             hotkeyColAction.ValueMember = "Value";
@@ -135,6 +137,20 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 this.InvokeIfRequired(() =>
                 {
                     this.tbZoom.Value = this.config.Zoom;
+                });
+            };
+            this.config.DisabledChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.cbEnableOverlay.Checked = !this.config.Disabled;
+                });
+            };
+            this.config.MuteWhenHiddenChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.cbMuteHidden.Checked = this.config.MuteWhenHidden;
                 });
             };
         }
@@ -359,6 +375,16 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void btnApplyHotkeyChanges_Click(object sender, EventArgs e)
         {
             config.TriggerGlobalHotkeyChanged();
+        }
+
+        private void cbEnableOverlay_CheckedChanged(object sender, EventArgs e)
+        {
+            config.Disabled = !cbEnableOverlay.Checked;
+        }
+
+        private void cbMuteHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            config.MuteWhenHidden = cbMuteHidden.Checked;
         }
     }
 }

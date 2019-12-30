@@ -22,6 +22,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public MiniParseOverlay(MiniParseOverlayConfig config, string name)
             : base(config, name)
         {
+            if (Overlay == null) return;
+
             Config.ActwsCompatibilityChanged += (o, e) =>
             {
                 if (lastLoadedUrl != null && lastLoadedUrl != "about:blank") Navigate(lastLoadedUrl);
@@ -38,6 +40,28 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 var color = Config.ForceWhiteBackground ? "white" : "transparent";
                 ExecuteScript($"document.body.style.backgroundColor = \"{color}\";");
+            };
+            Config.DisabledChanged += (o, e) =>
+            {
+                if (Config.Disabled)
+                {
+                    Overlay.Renderer.EndRender();
+                    Overlay.ClearFrame();
+                } else
+                {
+                    Overlay.Renderer.BeginRender();
+                }
+            };
+            Config.VisibleChanged += (o, e) =>
+            {
+                if (Config.MuteWhenHidden)
+                {
+                    Overlay.Renderer.SetMuted(!Config.IsVisible);
+                }
+            };
+            Config.MuteWhenHiddenChanged += (o, e) =>
+            {
+                Overlay.Renderer.SetMuted(Config.MuteWhenHidden ? !Config.IsVisible : false);
             };
 
             Overlay.Renderer.BrowserStartLoading += PrepareWebsite;

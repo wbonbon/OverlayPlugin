@@ -11,6 +11,7 @@ namespace RainbowMage.OverlayPlugin
     public abstract class OverlayConfigBase : IOverlayConfig
     {
         public event EventHandler<VisibleStateChangedEventArgs> VisibleChanged;
+        public event EventHandler DisabledChanged;
         public event EventHandler<ThruStateChangedEventArgs> ClickThruChanged;
         public event EventHandler<UrlChangedEventArgs> UrlChanged;
         public event EventHandler<MaxFrameRateChangedEventArgs> MaxFrameRateChanged;
@@ -33,6 +34,23 @@ namespace RainbowMage.OverlayPlugin
                 {
                     this.isVisible = value;
                     VisibleChanged?.Invoke(this, new VisibleStateChangedEventArgs(this.isVisible));
+                }
+            }
+        }
+
+        private bool disabled;
+        public bool Disabled
+        {
+            get
+            {
+                return disabled;
+            }
+            set
+            {
+                if (disabled != value)
+                {
+                    disabled = value;
+                    DisabledChanged?.Invoke(this, new EventArgs());
                 }
             }
         }

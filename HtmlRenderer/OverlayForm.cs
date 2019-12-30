@@ -74,9 +74,17 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        public bool IsLoaded { get; private set; }
-
-        public bool Locked { get; set; }
+        public bool Locked
+        {
+            get
+            {
+                return Renderer.Locked;
+            }
+            set
+            {
+                Renderer.Locked = value;
+            }
+        }
 
         public OverlayForm(string overlayName, string url, int maxFrameRate = 30, object api = null)
         {
@@ -86,11 +94,22 @@ namespace RainbowMage.HtmlRenderer
             this.maxFrameRate = maxFrameRate;
             this.url = url;
 
-            this.Renderer.BrowserStartLoading += OverlayForm_Load;
-            this.Renderer.BeginRender();
-
             // Alt+Tab を押したときに表示されるプレビューから除外する
             HidePreview();
+
+            // Not sure if this is still necessary.
+            /*
+            zorderCorrector = new System.Threading.Timer((state) =>
+            {
+                if (this.Visible)
+                {
+                    if (!this.IsOverlaysGameWindow())
+                    {
+                        this.EnsureTopMost();
+                    }
+                }
+            }, null, 0, 1000);
+            */
         }
 
         /// <summary>
@@ -235,16 +254,13 @@ namespace RainbowMage.HtmlRenderer
 
         private void UpdateMouseClickThru()
         {
-            if (this.IsLoaded)
+            if (this.isClickThru)
             {
-                if (this.isClickThru)
-                {
-                    EnableMouseClickThru();
-                }
-                else
-                {
-                    DisableMouseClickThru();
-                }
+                EnableMouseClickThru();
+            }
+            else
+            {
+                DisableMouseClickThru();
             }
         }
 
@@ -296,24 +312,17 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        private void OverlayForm_Load(object sender, EventArgs e)
+        public void ClearFrame()
         {
-            this.IsLoaded = true;
-
-            UpdateMouseClickThru();
-
-            if (zorderCorrector == null)
+            if (!this.terminated)
             {
-                zorderCorrector = new System.Threading.Timer((state) =>
+                if (surfaceBuffer != null)
                 {
-                    if (this.Visible)
-                    {
-                        if (!this.IsOverlaysGameWindow())
-                        {
-                            this.EnsureTopMost();
-                        }
-                    }
-                }, null, 0, 1000);
+                    surfaceBuffer.Dispose();
+                }
+
+                surfaceBuffer = new DIBitmap(Width, Height);
+                UpdateLayeredWindowBitmap();
             }
         }
 

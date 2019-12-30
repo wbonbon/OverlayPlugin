@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using CefSharp;
-using CefSharp.Enums;
-using CefSharp.Structs;
 using Point = System.Drawing.Point;
-using System.Diagnostics;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -102,21 +99,16 @@ namespace RainbowMage.HtmlRenderer
 
         private MouseButtonType GetMouseButtonType(MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            switch (e.Button)
             {
-                return MouseButtonType.Left;
-            }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Middle)
-            {
-                return MouseButtonType.Middle;
-            }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                return MouseButtonType.Right;
-            }
-            else
-            {
-                return MouseButtonType.Left; // 非対応のボタンは左クリックとして扱う
+                case MouseButtons.Left:
+                    return MouseButtonType.Left;
+                case MouseButtons.Middle:
+                    return MouseButtonType.Middle;
+                case MouseButtons.Right:
+                    return MouseButtonType.Right;
+                default:
+                    return MouseButtonType.Left; // 非対応のボタンは左クリックとして扱う
             }
         }
 
@@ -132,7 +124,7 @@ namespace RainbowMage.HtmlRenderer
             {
                 flags |= CefEventFlags.MiddleMouseButton;
             }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right)
             {
                 flags |= CefEventFlags.RightMouseButton;
             }
@@ -169,10 +161,9 @@ namespace RainbowMage.HtmlRenderer
 
         public void OnKeyEvent(ref Message m)
         {
-
             var keyEvent = new KeyEvent();
             keyEvent.WindowsKeyCode = m.WParam.ToInt32();
-            keyEvent.NativeKeyCode = (int)m.LParam.ToInt64();
+            keyEvent.NativeKeyCode = (int) m.LParam.ToInt64();
             keyEvent.IsSystemKey = m.Msg == NativeMethods.WM_SYSCHAR ||
                                    m.Msg == NativeMethods.WM_SYSKEYDOWN ||
                                    m.Msg == NativeMethods.WM_SYSKEYUP;
@@ -190,8 +181,6 @@ namespace RainbowMage.HtmlRenderer
                 keyEvent.Type = KeyEventType.Char;
             }
             keyEvent.Modifiers = GetKeyboardModifiers(ref m);
-
-            Trace.WriteLine($"KeyCode: {keyEvent.WindowsKeyCode}, NativeKeyCode: {keyEvent.NativeKeyCode}, SystemKey: {keyEvent.IsSystemKey}, Type: {keyEvent.Type}, Modifiers: {keyEvent.Modifiers}");
 
             SendKeyEvent(keyEvent);
         }
@@ -266,11 +255,6 @@ namespace RainbowMage.HtmlRenderer
             }
 
             return modifiers;
-        }
-
-        private bool IsKeyDown(Keys key)
-        {
-            return (NativeMethods.GetKeyState((int)key) & 0x8000) != 0;
         }
 
         private bool IsKeyToggled(Keys key)

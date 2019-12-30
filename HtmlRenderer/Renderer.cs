@@ -28,6 +28,7 @@ namespace RainbowMage.HtmlRenderer
         private object _api;
         private List<String> scriptQueue = new List<string>();
         private string urlToLoad = null;
+        private string lastUrl = null;
 
         private int clickCount;
         private MouseButtonType lastClickButton;
@@ -41,19 +42,14 @@ namespace RainbowMage.HtmlRenderer
         {
             this.overlayName = overlayName;
             this._target = target;
-            this.urlToLoad = url;
+            this.lastUrl = url;
 
             InitBrowser();
-
-            if (api != null)
-            {
-                SetApi(api);
-            }
         }
 
         public void InitBrowser()
         {
-            this._browser = new BrowserWrapper(urlToLoad ?? "about:blank", automaticallyCreateBrowser: false, target: _target);
+            this._browser = new BrowserWrapper(lastUrl ?? "about:blank", automaticallyCreateBrowser: false, target: _target);
             _browser.RequestHandler = new CustomRequestHandler(this);
             _browser.MenuHandler = new ContextMenuHandler();
             _browser.BrowserInitialized += _browser_BrowserInitialized;
@@ -62,6 +58,11 @@ namespace RainbowMage.HtmlRenderer
             _browser.LoadError += Browser_LoadError;
             _browser.ConsoleMessage += Browser_ConsoleMessage;
             _browser.DragHandler = new DragHandler(this);
+
+            if (_api != null)
+            {
+                SetApi(_api);
+            }
         }
 
         public void SetApi(object api)
@@ -79,6 +80,11 @@ namespace RainbowMage.HtmlRenderer
 
         private void Browser_FrameLoadStart(object sender, FrameLoadStartEventArgs e)
         {
+            if (!e.Frame.IsMain)
+                return;
+
+            lastUrl = e.Url;
+
             if (_api != null)
             {
                 var initScript = @"(async () => {
@@ -122,6 +128,9 @@ namespace RainbowMage.HtmlRenderer
 
         private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
+            if (!e.Frame.IsMain)
+                return;
+
             if (urlToLoad != null)
             {
                 _browser.Load(urlToLoad);
@@ -170,6 +179,10 @@ namespace RainbowMage.HtmlRenderer
             if (_browser != null && _browser.IsBrowserInitialized)
             {
                 _browser.GetBrowser().CloseBrowser(true);
+                _browser.GetBrowserHost().CloseBrowser(true);
+                _browser.Dispose();
+
+                InitBrowser();
             }
         }
 
@@ -202,6 +215,14 @@ namespace RainbowMage.HtmlRenderer
             if (this._browser != null && this._browser.IsBrowserInitialized)
             {
                 this._browser.SetZoomLevel(zoom);
+            }
+        }
+
+        public void SetMuted(bool muted)
+        {
+            if (this._browser != null && this._browser.IsBrowserInitialized)
+            {
+                this._browser.GetBrowserHost().SetAudioMuted(muted);
             }
         }
 
