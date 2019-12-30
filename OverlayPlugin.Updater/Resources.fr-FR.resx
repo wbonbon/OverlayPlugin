@@ -230,7 +230,7 @@ Ce composant est nécessaire pour OverlayPlugin. L'installer maintenant ?</value
     <value>En attente de l'installeur pour quitter ...</value>
   </data>
   <data name="UpdateCefDlFailed" xml:space="preserve">
-    <value>Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin.</value>
+    <value>Impossible de télécharger CEF ! Vérifiez l'onglet OverlayPlugin.dll pour plus de détails.</value>
   </data>
   <data name="LogOverwritingOldFilesFailed" xml:space="preserve">
     <value>Impossible d'écraser les anciens fichiers : {0} !

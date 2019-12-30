@@ -136,7 +136,7 @@ Après, vous devriez pouvoir activer SSL.</value>
     <value>Démarrer</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Etat</value>
+    <value>Etat :</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
     <value>Port :</value>
@@ -146,4 +146,17 @@ Après, vous devriez pouvoir activer SSL.</value>
   </data>
   <data name="stopBtn.Text" xml:space="preserve">
     <value>Stop</value>
-  </data></root>
+  </data>
+  <data name="lblUrlConfidentWarning.Text" xml:space="preserve">
+    <value>Cette URL peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Overlay :</value>
+  </data>
+  <data name="ctxMenuLinkCopy.Text" xml:space="preserve">
+    <value>Copier</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>URL :</value>
+  </data>
+</root>

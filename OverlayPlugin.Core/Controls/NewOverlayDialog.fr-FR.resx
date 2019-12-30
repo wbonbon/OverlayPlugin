@@ -132,4 +132,12 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Création d'un nouvel overlay</value>
-  </data></root>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.
+
+Label vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.
+SpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.
+</value>
+  </data>
+</root>

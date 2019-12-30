@@ -197,7 +197,7 @@
     <value>WS : Chargement du certificat SSL  {0}...</value>
   </data>
   <data name="UnregisterHotkeyError" xml:space="preserve">
-    <value>Impossible de supprimer le raccourci {0},{1} dans DisableHotKeys() !</value>
+    <value>Impossible de supprimer le raccourci {0} dans DisableHotKeys() !</value>
   </data>
   <data name="NetworkParserInitException" xml:space="preserve">
     <value>Echec de la configuration réseau du parser : {0}</value>

@@ -117,4 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Installation manuelle</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Cliquez sur le bouton suivant et laissez OverlayPlugin gérer le tout en automatique. Fonctionnement normal pour la plupart des installations.</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Utilisez ceci si l'installation automatique ne fonctionne pas pour vous</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Certains fichier nécessaires au fonctionnement d'OverlayPlugin sont manquants. Cela est normal si vous venez juste de l'installer ou de le mettre à jour. Ces fichers sont assez gros (&gt;150 MiB) et sont rarement modifiés (au pire, un fois par mois). Afin de rendre les mises à jour plus simples pour tout le monde, ces fichiers sont découpés en plusieurs téléchargements</value>
+  </data>
+  <data name="btnStartAuto.Text" xml:space="preserve">
+    <value>Télécharge et décompresse les fichiers manquants</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>Installation automatique</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Télécharger le fichier suivant et ouvrez le en utilisant le bouton en bas :</value>
+  </data>
+  <data name="lnkManual.Text" xml:space="preserve">
+    <value>Veuillez patienter ...</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Si cela ne fonctionne pas, regardez dans l'autre onglet</value>
+  </data>
+  <data name="btnOpenManual.Text" xml:space="preserve">
+    <value>Extraction du fichier téléchargé</value>
+  </data>
 </root>

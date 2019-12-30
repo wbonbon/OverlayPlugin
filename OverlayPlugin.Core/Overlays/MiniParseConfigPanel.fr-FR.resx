@@ -177,4 +177,38 @@
   </data>
   <data name="checkActwsCompatbility.Text" xml:space="preserve">
     <value>Cet overlay nécessite ACTWebSocket</value>
-  </data></root>
+  </data>
+  <data name="btnResetZoom.Text" xml:space="preserve">
+    <value>RAZ</value>
+  </data>
+  <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
+    <value>Raccourci</value>
+  </data>
+  <data name="btnAddHotkey.Text" xml:space="preserve">
+    <value>Ajouter nvx raccourci</value>
+  </data>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="tabAdvanced.Text" xml:space="preserve">
+    <value>Avancé</value>
+  </data>
+  <data name="btnRemoveHotkey.Text" xml:space="preserve">
+    <value>Supprimer le raccourci sélectionné</value>
+  </data>
+  <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
+    <value>Activé</value>
+  </data>
+  <data name="hotkeyColAction.HeaderText" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="tabHotkeys.Text" xml:space="preserve">
+    <value>Raccourcis</value>
+  </data>
+  <data name="btnApplyHotkeyChanges.Text" xml:space="preserve">
+    <value>Appliquer les modifications</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+</root>
