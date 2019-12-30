@@ -131,6 +131,7 @@
         },
         "label3.Text": {
             "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
+            "fr-FR": "Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.\n\nLabel vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.\nSpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.\n",
             "ja-JP": "ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。\n\nLabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。\nSpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。",
             "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
             "zh-CN": "对于大多数悬浮窗，您必须在此处选择[数据统计]。 是的，即使Cactbot也需要[数据统计]类型。\n\n[标签]允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。\n[技能冷却]显示ACT内置的技能冷却计时器，与Hojoring的SpecialSpellTimers或SPESPE无关。\n"
@@ -139,6 +140,7 @@
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "ctxMenuLinkCopy.Text": {
             "en": "Copy",
+            "fr-FR": "Copier",
             "ko-KR": "복사",
             "zh-CN": "复制"
         },
@@ -165,22 +167,25 @@
         },
         "label3.Text": {
             "en": "Status:",
-            "fr-FR": "Etat",
+            "fr-FR": "Etat :",
             "ja-JP": "ステータス :",
             "ko-KR": "상태:",
             "zh-CN": "状态："
         },
         "label4.Text": {
             "en": "Overlay:",
+            "fr-FR": "Overlay :",
             "zh-CN": "悬浮窗："
         },
         "label5.Text": {
             "en": "URL:",
+            "fr-FR": "URL :",
             "ko-KR": "URL:",
             "zh-CN": "悬浮窗链接："
         },
         "lblUrlConfidentWarning.Text": {
             "en": "This URL might not work if the overlay doesn't support ACTWebSocket.",
+            "fr-FR": "Cette URL peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.",
             "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 주소는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
@@ -426,16 +431,20 @@
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnAddHotkey.Text": {
-            "en": "Add New Hotkey"
+            "en": "Add New Hotkey",
+            "fr-FR": "Ajouter nvx raccourci"
         },
         "btnApplyHotkeyChanges.Text": {
-            "en": "Apply Changes"
+            "en": "Apply Changes",
+            "fr-FR": "Appliquer les modifications"
         },
         "btnRemoveHotkey.Text": {
-            "en": "Remove Selected Hotkey"
+            "en": "Remove Selected Hotkey",
+            "fr-FR": "Supprimer le raccourci sélectionné"
         },
         "btnResetZoom.Text": {
             "en": "Reset",
+            "fr-FR": "RAZ",
             "ja-JP": "リセット",
             "ko-KR": "초기화",
             "zh-CN": "重设"
@@ -488,13 +497,16 @@
             "zh-CN": "不焦点此悬浮窗"
         },
         "hotkeyColAction.HeaderText": {
-            "en": "Action"
+            "en": "Action",
+            "fr-FR": "Action"
         },
         "hotkeyColEnabled.HeaderText": {
-            "en": "Enabled"
+            "en": "Enabled",
+            "fr-FR": "Activé"
         },
         "hotkeyColHotkey.HeaderText": {
-            "en": "Hotkey"
+            "en": "Hotkey",
+            "fr-FR": "Raccourci"
         },
         "label1.Text": {
             "en": "URL",
@@ -529,6 +541,7 @@
         },
         "label15.Text": {
             "en": "Zoom",
+            "fr-FR": "Zoom",
             "ja-JP": "ズーム",
             "ko-KR": "확대/축소",
             "zh-CN": "缩放"
@@ -600,13 +613,16 @@
             "en": "ACTWS"
         },
         "tabAdvanced.Text": {
-            "en": "Advanced"
+            "en": "Advanced",
+            "fr-FR": "Avancé"
         },
         "tabGeneral.Text": {
-            "en": "General"
+            "en": "General",
+            "fr-FR": "Général"
         },
         "tabHotkeys.Text": {
-            "en": "Hotkeys"
+            "en": "Hotkeys",
+            "fr-FR": "Raccourcis"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
@@ -900,7 +916,7 @@
         },
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
-            "fr-FR": "Impossible de supprimer le raccourci {0},{1} dans DisableHotKeys() !",
+            "fr-FR": "Impossible de supprimer le raccourci {0} dans DisableHotKeys() !",
             "ko-KR": "DisableHotKeys()에서 단축키 {0}(을/를) 등록 취소하지 못했습니다.",
             "zh-CN": "在DisableHotKeys()反注册热键{0}失败。"
         },
@@ -965,51 +981,61 @@
     "OverlayPlugin.Updater/CefMissingTab": {
         "btnOpenManual.Text": {
             "en": "Extract Downloaded File",
+            "fr-FR": "Extraction du fichier téléchargé",
             "ko-KR": "다운로드한 파일을 추출하기",
             "zh-CN": "提取已下载文件"
         },
         "btnStartAuto.Text": {
             "en": "Download and unpack the missing files",
+            "fr-FR": "Télécharge et décompresse les fichiers manquants",
             "ko-KR": "누락된 파일을 다운로드하고 추출하기",
             "zh-CN": "下载并解压缩丢失的文件"
         },
         "label1.Text": {
             "en": "Some files which are required for OverlayPlugin to function are missing. This is normal if you just installed OverlayPlugin or recently updated it. The files are fairly big (> 150 MiB) and change rarely (at most once per month). To make updates easier for everyone, these files are split into a separate download.",
+            "fr-FR": "Certains fichier nécessaires au fonctionnement d'OverlayPlugin sont manquants. Cela est normal si vous venez juste de l'installer ou de le mettre à jour. Ces fichers sont assez gros (>150 MiB) et sont rarement modifiés (au pire, un fois par mois). Afin de rendre les mises à jour plus simples pour tout le monde, ces fichiers sont découpés en plusieurs téléchargements",
             "ko-KR": "OverlayPlugin이 작동하는데 필요한 일부 파일이 존재하지 않습니다. 이는 만약에 최근에 플러그인을 설치했거나 업데이트했다면 정상입니다. 누구나 쉽게 업데이트할 수 있도록 별도로 관리하기 때문입니다. 누락된 파일은 아래 설치 솔루션을 통해 다운로드할 수 있고, 파일의 용량은 약 150MB 전후이며 거의 변경되지 않습니다. (업데이트 빈도 : 1개월 당 1회 정도)",
             "zh-CN": "丢失了某些OverlayPlugin所必须的关键文件。如果您刚刚安装OverlayPlugin或刚刚进行了更新，这个情况是正常的。这些文件很大（> 150 MiB）并且很少需要更改（每月最多一次）。为了使所有人都能轻松地进行更新，这些文件被拆分为单独下载。"
         },
         "label2.Text": {
             "en": "Use this if the automated installation doesn't work for you.",
+            "fr-FR": "Utilisez ceci si l'installation automatique ne fonctionne pas pour vous",
             "ko-KR": "자동 설치가 제대로 작동하지 않는 경우 이 기능을 사용합니다.",
             "zh-CN": "如果自动安装无法正常工作，请使用此选项。"
         },
         "label3.Text": {
             "en": "Download the following file and then open it using the button on the bottom:",
+            "fr-FR": "Télécharger le fichier suivant et ouvrez le en utilisant le bouton en bas :",
             "ko-KR": "아래 링크를 클릭해서 파일을 다운로드한 후 하단의 버튼을 클릭해서 다운로드한 파일을 엽니다.",
             "zh-CN": "下载以下文件，然后使用底部的按钮将其打开："
         },
         "label4.Text": {
             "en": "Click the button below and let OverlayPlugin handle everything automatically. This should work for most people.",
+            "fr-FR": "Cliquez sur le bouton suivant et laissez OverlayPlugin gérer le tout en automatique. Fonctionnement normal pour la plupart des installations.",
             "ko-KR": "아래 버튼을 클릭하면 OverlayPlugin 업데이트 관리자가 자동으로 문제 해결을 시작합니다. 이는 대부분의 유저들에게 권장합니다.",
             "zh-CN": "点击下面的按钮，让OverlayPlugin自动处理所有内容。建议大多数用户使用。"
         },
         "label5.Text": {
             "en": "If this doesn't work, take a look at the other tab.",
+            "fr-FR": "Si cela ne fonctionne pas, regardez dans l'autre onglet",
             "ko-KR": "만약 다운로드 문제가 해결되지 않는다면 수동 설치를 시도합니다.",
             "zh-CN": "如果这对您不起作用，请查看另一个选项卡。"
         },
         "lnkManual.Text": {
             "en": "Please wait...",
+            "fr-FR": "Veuillez patienter ...",
             "ko-KR": "기다려 주십시오...",
             "zh-CN": "请稍候..."
         },
         "tabPage1.Text": {
             "en": "Automated Installation",
+            "fr-FR": "Installation automatique",
             "ko-KR": "자동 설치",
             "zh-CN": "自动安装"
         },
         "tabPage2.Text": {
             "en": "Manual Installation",
+            "fr-FR": "Installation manuelle",
             "ko-KR": "수동 설치",
             "zh-CN": "手动安装"
         }
@@ -1291,7 +1317,7 @@
         },
         "UpdateCefDlFailed": {
             "en": "Failed to download CEF! Check the OverlayPlugin.dll tab for details.",
-            "fr-FR": "Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin.",
+            "fr-FR": "Impossible de télécharger CEF ! Vérifiez l'onglet OverlayPlugin.dll pour plus de détails.",
             "ko-KR": "CEF 패키지를 다운로드하지 못했습니다. OverlayPlugin을 사용할 수 없습니다.",
             "zh-CN": "下载CEF失败！检查OverlayPlugin.dll选项卡以获取详细信息。"
         },
@@ -1396,10 +1422,12 @@
             "zh-CN": "核心或HtmlRenderer不匹配。"
         },
         "DependencyMissing": {
-            "en": "Failed to load dependency {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete any files."
+            "en": "Failed to load dependency {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete any files.",
+            "fr-FR": "Impossible de charger les dépendences {0}: {1}\nVérifiez que vous avez extrait toute l'archive et n'avez pas effacé de fichiers."
         },
         "DependencyOutdated": {
-            "en": "Fatal: The loaded {0} version is older than expected ({1}  < {2})! This might cause strange bugs in OverlayPlugin and its addons."
+            "en": "Fatal: The loaded {0} version is older than expected ({1}  < {2})! This might cause strange bugs in OverlayPlugin and its addons.",
+            "fr-FR": "Fatal : La version {0} chargée est plus ancienne qu'attendue ({1}  < {2})! Cela peut causer des bugs étranges dans OverlayPlugin et ses addons."
         },
         "FailedToLoadCommon": {
             "#comment": "Plugin status (in ACT's plugin list)",
