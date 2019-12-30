@@ -426,13 +426,16 @@
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnAddHotkey.Text": {
-            "en": "Add New Hotkey"
+            "en": "Add New Hotkey",
+            "zh-CN": "添加新快捷键"
         },
         "btnApplyHotkeyChanges.Text": {
-            "en": "Apply Changes"
+            "en": "Apply Changes",
+            "zh-CN": "应用更改"
         },
         "btnRemoveHotkey.Text": {
-            "en": "Remove Selected Hotkey"
+            "en": "Remove Selected Hotkey",
+            "zh-CN": "删除选定快捷键"
         },
         "btnResetZoom.Text": {
             "en": "Reset",
@@ -488,13 +491,16 @@
             "zh-CN": "不焦点此悬浮窗"
         },
         "hotkeyColAction.HeaderText": {
-            "en": "Action"
+            "en": "Action",
+            "zh-CN": "行动"
         },
         "hotkeyColEnabled.HeaderText": {
-            "en": "Enabled"
+            "en": "Enabled",
+            "zh-CN": "已启用"
         },
         "hotkeyColHotkey.HeaderText": {
-            "en": "Hotkey"
+            "en": "Hotkey",
+            "zh-CN": "快捷键"
         },
         "label1.Text": {
             "en": "URL",
@@ -594,16 +600,20 @@
             "zh-CN": "取消焦点"
         },
         "tabACTWS.Text": {
-            "en": "ACTWS"
+            "en": "ACTWS",
+            "zh-CN": "ACTWS"
         },
         "tabAdvanced.Text": {
-            "en": "Advanced"
+            "en": "Advanced",
+            "zh-CN": "高级"
         },
         "tabGeneral.Text": {
-            "en": "General"
+            "en": "General",
+            "zh-CN": "通用"
         },
         "tabHotkeys.Text": {
-            "en": "Hotkeys"
+            "en": "Hotkeys",
+            "zh-CN": "快捷键"
         }
     },
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
