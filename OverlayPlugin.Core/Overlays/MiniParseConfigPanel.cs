@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace RainbowMage.OverlayPlugin.Overlays
 {
@@ -255,7 +253,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void btnAddHotkey_Click(object sender, EventArgs e)
         {
-            config.GlobalHotkeys.Add(new GlobalHotkey());
+            var list = (BindingList<GlobalHotkey>)hotkeyGridView.DataSource;
+            list.Add(new GlobalHotkey
+            {
+                Enabled = true
+            });
         }
 
         private void btnRemoveHotkey_Click(object sender, EventArgs e)
