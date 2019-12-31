@@ -517,7 +517,8 @@
         },
         "label10.Text": {
             "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again.",
-            "fr-FR": "Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué"
+            "fr-FR": "Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué",
+            "zh-CN": "如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动它。"
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
@@ -535,7 +536,8 @@
         },
         "label13.Text": {
             "en": "Mute overlay when hidden",
-            "fr-FR": "Aucun son si caché"
+            "fr-FR": "Aucun son si caché",
+            "zh-CN": "隐藏时使悬浮窗静音"
         },
         "label15.Text": {
             "en": "Zoom",
@@ -581,11 +583,13 @@
         },
         "label7.Text": {
             "en": "Enable overlay",
-            "fr-FR": "Activer overlay"
+            "fr-FR": "Activer overlay",
+            "zh-CN": "启用悬浮窗"
         },
         "label8.Text": {
             "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n",
-            "fr-FR": "Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).\nCacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan et peut jouer des sons, collecter des statistiques, etc.\n"
+            "fr-FR": "Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).\nCacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan et peut jouer des sons, collecter des statistiques, etc.\n",
+            "zh-CN": "禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。\n隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍然可以播放声音，收集统计信息等。\n"
         },
         "label9.Text": {
             "en": "Lock overlay",
@@ -1388,7 +1392,8 @@
             "zh-CN": "ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。\n\n请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。\n"
         },
         "AssemblyMissing": {
-            "en": "Failed to load {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete anything (like the libs folder)."
+            "en": "Failed to load {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete anything (like the libs folder).",
+            "zh-CN": "加载失败{0}: {1}\n确保您解压缩了整个插件压缩包，并且没有删除任何内容（比如libs文件夹）。"
         },
         "AssemblyResolverError": {
             "#comment": "Log message",
@@ -1419,11 +1424,13 @@
         },
         "DependencyMissing": {
             "en": "Failed to load dependency {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete any files.",
-            "fr-FR": "Impossible de charger les dépendences {0}: {1}\nVérifiez que vous avez extrait toute l'archive et n'avez pas effacé de fichiers."
+            "fr-FR": "Impossible de charger les dépendences {0}: {1}\nVérifiez que vous avez extrait toute l'archive et n'avez pas effacé de fichiers.",
+            "zh-CN": "加载依赖失败{0}: {1}\n确保您解压缩了整个插件压缩包，并且没有删除任何文件。"
         },
         "DependencyOutdated": {
             "en": "Fatal: The loaded {0} version is older than expected ({1}  < {2})! This might cause strange bugs in OverlayPlugin and its addons.",
-            "fr-FR": "Fatal : La version {0} chargée est plus ancienne qu'attendue ({1}  < {2})! Cela peut causer des bugs étranges dans OverlayPlugin et ses addons."
+            "fr-FR": "Fatal : La version {0} chargée est plus ancienne qu'attendue ({1}  < {2})! Cela peut causer des bugs étranges dans OverlayPlugin et ses addons.",
+            "zh-CN": "致命错误：已加载的{0}版本早于预期 ({1}  < {2})! 这可能会导致OverlayPlugin及其附件发生奇怪错误。"
         },
         "FailedToLoadCommon": {
             "#comment": "Plugin status (in ACT's plugin list)",
