@@ -484,7 +484,7 @@
             "fr-FR": "Afficher les messages de cet overlay dans le log",
             "ja-JP": "オーバーレイのコンソールメッセージをログに表示する",
             "ko-KR": "오버레이 콘솔 메시지를 로그에 표시",
-            "zh-CN": "在悬浮窗日志中显示来自此悬浮窗的控制台消息"
+            "zh-CN": "在日志中显示来自此悬浮窗的控制台消息"
         },
         "checkNoFocus.Text": {
             "en": "Don't accept focus for this overlay",
@@ -518,7 +518,7 @@
         "label10.Text": {
             "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again.",
             "fr-FR": "Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué",
-            "zh-CN": "如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动它。\n某些悬浮窗(如cactbot)锁定后方可生效。"
+            "zh-CN": "如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动。\n某些悬浮窗(如cactbot)锁定后方可正常工作。"
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
@@ -589,7 +589,7 @@
         "label8.Text": {
             "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n",
             "fr-FR": "Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).\nCacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan et peut jouer des sons, collecter des statistiques, etc.\n",
-            "zh-CN": "禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。\n隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍然可以播放声音，收集统计信息等。\n"
+            "zh-CN": "禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。\n隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍可以播放声音、收集统计信息等。\n"
         },
         "label9.Text": {
             "en": "Lock overlay",
