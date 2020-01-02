@@ -501,7 +501,7 @@
         "hotkeyColEnabled.HeaderText": {
             "en": "Enabled",
             "fr-FR": "Activé",
-            "zh-CN": "已启用"
+            "zh-CN": "启用"
         },
         "hotkeyColHotkey.HeaderText": {
             "en": "Hotkey",
