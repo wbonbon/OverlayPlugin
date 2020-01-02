@@ -195,7 +195,7 @@
     <value>标签</value>
   </data>
   <data name="HotkeyActionToggleVisible" xml:space="preserve">
-    <value>切换悬浮窗 启用/隐藏</value>
+    <value>切换悬浮窗 显示/隐藏</value>
   </data>
   <data name="HotkeyActionToggleClickthrough" xml:space="preserve">
     <value>切换悬浮窗 鼠标穿透</value>

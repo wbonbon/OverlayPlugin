@@ -144,7 +144,7 @@
     <value>浏览</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>锁定悬浮窗[某些悬浮窗(如cactbot)锁定后方可生效]</value>
+    <value>锁定悬浮窗</value>
   </data>
   <data name="checkActwsCompatbility.Text" xml:space="preserve">
     <value>此悬浮窗需要使用ACTWebSocket</value>
@@ -153,7 +153,7 @@
     <value>重新加载（用于更换悬浮窗后即时刷新）</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>启用悬浮窗</value>
+    <value>显示悬浮窗</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>在悬浮窗下强制启用白色背景</value>
@@ -161,7 +161,7 @@
 
 
   <data name="checkLogConsoleMessages.Text" xml:space="preserve">
-    <value>在悬浮窗日志中显示来自此悬浮窗的控制台消息</value>
+    <value>在日志中显示来自此悬浮窗的控制台消息</value>
   </data>
   <data name="checkNoFocus.Text" xml:space="preserve">
     <value>不焦点此悬浮窗</value>
@@ -175,7 +175,7 @@
   <data name="label15.Text" xml:space="preserve">
     <value>缩放</value>
   </data>  <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
-    <value>已启用</value>
+    <value>启用</value>
   </data>
   <data name="tabHotkeys.Text" xml:space="preserve">
     <value>快捷键</value>
@@ -190,7 +190,7 @@
     <value>添加新快捷键</value>
   </data>
   <data name="hotkeyColAction.HeaderText" xml:space="preserve">
-    <value>行动</value>
+    <value>行为</value>
   </data>
   <data name="tabACTWS.Text" xml:space="preserve">
     <value>ACTWS</value>
@@ -208,14 +208,15 @@
     <value>隐藏时使悬浮窗静音</value>
   </data>
   <data name="label10.Text" xml:space="preserve">
-    <value>如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动它。</value>
+    <value>如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动。
+某些悬浮窗(如cactbot)锁定后方可正常工作。</value>
   </data>
   <data name="label7.Text" xml:space="preserve">
     <value>启用悬浮窗</value>
   </data>
   <data name="label8.Text" xml:space="preserve">
     <value>禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。
-隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍然可以播放声音，收集统计信息等。
+隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍可以播放声音、收集统计信息等。
 </value>
   </data>
 </root>
