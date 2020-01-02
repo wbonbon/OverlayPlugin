@@ -301,7 +301,7 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用悬浮窗"
+            "zh-CN": "显示悬浮窗"
         },
         "label4.Text": {
             "en": "URL",
@@ -336,7 +336,7 @@
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定悬浮窗[某些悬浮窗(如cactbot)锁定后方可生效]"
+            "zh-CN": "锁定悬浮窗"
         }
     },
     "OverlayPlugin.Core/Overlays/LogParseConfigPanel": {
@@ -392,7 +392,7 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用悬浮窗"
+            "zh-CN": "显示悬浮窗"
         },
         "label6.Text": {
             "en": "Max. framerate",
@@ -420,7 +420,7 @@
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定悬浮窗[某些悬浮窗(如cactbot)锁定后方可生效]"
+            "zh-CN": "锁定悬浮窗"
         }
     },
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
@@ -496,7 +496,7 @@
         "hotkeyColAction.HeaderText": {
             "en": "Action",
             "fr-FR": "Action",
-            "zh-CN": "行动"
+            "zh-CN": "行为"
         },
         "hotkeyColEnabled.HeaderText": {
             "en": "Enabled",
@@ -518,7 +518,7 @@
         "label10.Text": {
             "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again.",
             "fr-FR": "Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué",
-            "zh-CN": "如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动它。"
+            "zh-CN": "如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动它。\n某些悬浮窗(如cactbot)锁定后方可生效。"
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
@@ -558,7 +558,7 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用悬浮窗"
+            "zh-CN": "显示悬浮窗"
         },
         "label4.Text": {
             "en": "Force white background",
@@ -596,7 +596,7 @@
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定悬浮窗[某些悬浮窗(如cactbot)锁定后方可生效]"
+            "zh-CN": "锁定悬浮窗"
         },
         "lblNoFocus.Text": {
             "en": "No Focus",
@@ -678,7 +678,7 @@
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
-            "zh-CN": "锁定悬浮窗[某些悬浮窗(如cactbot)锁定后方可生效]"
+            "zh-CN": "锁定悬浮窗"
         },
         "label4.Text": {
             "en": "Hotkey Type",
@@ -706,7 +706,7 @@
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
-            "zh-CN": "启用悬浮窗"
+            "zh-CN": "显示悬浮窗"
         }
     },
     "OverlayPlugin.Core/Resources": {
@@ -774,7 +774,7 @@
             "en": "Toggle visible/hide",
             "fr-FR": "Visible/Caché",
             "ko-KR": "오버레이 표시 ON/OFF",
-            "zh-CN": "切换悬浮窗 启用/隐藏"
+            "zh-CN": "切换悬浮窗 显示/隐藏"
         },
         "IncompatibleAddon": {
             "en": "Detected incompatible addon {0}. Please update as soon as possible!!",
