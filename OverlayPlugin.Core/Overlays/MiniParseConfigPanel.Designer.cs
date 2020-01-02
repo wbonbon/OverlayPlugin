@@ -55,9 +55,6 @@
             this.btnRemoveHotkey = new System.Windows.Forms.Button();
             this.btnAddHotkey = new System.Windows.Forms.Button();
             this.hotkeyGridView = new System.Windows.Forms.DataGridView();
-            this.hotkeyColEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.hotkeyColHotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.hotkeyColAction = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
             this.label15 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -76,6 +73,9 @@
             this.buttonMiniParseOpenDevTools = new System.Windows.Forms.Button();
             this.buttonMiniParseReloadBrowser = new System.Windows.Forms.Button();
             this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
+            this.hotkeyColEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.hotkeyColHotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.hotkeyColAction = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -286,21 +286,6 @@
             this.hotkeyGridView.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.hotkeyGridView_CellValidated);
             this.hotkeyGridView.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.hotkeyGridView_EditingControlShowing);
             // 
-            // hotkeyColEnabled
-            // 
-            resources.ApplyResources(this.hotkeyColEnabled, "hotkeyColEnabled");
-            this.hotkeyColEnabled.Name = "hotkeyColEnabled";
-            // 
-            // hotkeyColHotkey
-            // 
-            resources.ApplyResources(this.hotkeyColHotkey, "hotkeyColHotkey");
-            this.hotkeyColHotkey.Name = "hotkeyColHotkey";
-            // 
-            // hotkeyColAction
-            // 
-            resources.ApplyResources(this.hotkeyColAction, "hotkeyColAction");
-            this.hotkeyColAction.Name = "hotkeyColAction";
-            // 
             // tabAdvanced
             // 
             resources.ApplyResources(this.tabAdvanced, "tabAdvanced");
@@ -443,6 +428,21 @@
             this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
             this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
             // 
+            // hotkeyColEnabled
+            // 
+            resources.ApplyResources(this.hotkeyColEnabled, "hotkeyColEnabled");
+            this.hotkeyColEnabled.Name = "hotkeyColEnabled";
+            // 
+            // hotkeyColHotkey
+            // 
+            resources.ApplyResources(this.hotkeyColHotkey, "hotkeyColHotkey");
+            this.hotkeyColHotkey.Name = "hotkeyColHotkey";
+            // 
+            // hotkeyColAction
+            // 
+            resources.ApplyResources(this.hotkeyColAction, "hotkeyColAction");
+            this.hotkeyColAction.Name = "hotkeyColAction";
+            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -509,9 +509,6 @@
         private System.Windows.Forms.TabPage tabACTWS;
         private System.Windows.Forms.Button btnAddHotkey;
         private System.Windows.Forms.Button btnRemoveHotkey;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn hotkeyColEnabled;
-        private System.Windows.Forms.DataGridViewTextBoxColumn hotkeyColHotkey;
-        private System.Windows.Forms.DataGridViewComboBoxColumn hotkeyColAction;
         private System.Windows.Forms.Button btnApplyHotkeyChanges;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
@@ -519,5 +516,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox cbMuteHidden;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn hotkeyColEnabled;
+        private System.Windows.Forms.DataGridViewTextBoxColumn hotkeyColHotkey;
+        private System.Windows.Forms.DataGridViewComboBoxColumn hotkeyColAction;
     }
 }

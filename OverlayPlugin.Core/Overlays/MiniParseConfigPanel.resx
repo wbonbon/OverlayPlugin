@@ -788,8 +788,11 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
   <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
     <value>Enabled</value>
   </data>
+  <data name="hotkeyColEnabled.MinimumWidth" type="System.Int32, mscorlib">
+    <value>55</value>
+  </data>
   <data name="hotkeyColEnabled.Width" type="System.Int32, mscorlib">
-    <value>52</value>
+    <value>55</value>
   </data>
   <metadata name="hotkeyColHotkey.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
