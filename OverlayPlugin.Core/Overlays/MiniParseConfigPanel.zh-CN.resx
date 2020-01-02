@@ -204,4 +204,18 @@
   <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
     <value>快捷键</value>
   </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>隐藏时使悬浮窗静音</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动它。</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>启用悬浮窗</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。
+隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍然可以播放声音，收集统计信息等。
+</value>
+  </data>
 </root>
