@@ -138,6 +138,11 @@
         }
     },
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
+        "ctxMenuLinkCopy.Text": {
+            "fr-FR": "Copier",
+            "ko-KR": "복사",
+            "zh-CN": "复制"
+        },
         "genSslBtn.Text": {
             "en": "Generate SSL Certificate",
             "fr-FR": "Générer un certificat SSL",
@@ -427,18 +432,21 @@
         "btnAddHotkey.Text": {
             "en": "Add New Hotkey",
             "fr-FR": "Ajouter nvx raccourci",
+            "ja-JP": "ホットキー追加",
             "ko-KR": "새 단축키 추가",
             "zh-CN": "添加新快捷键"
         },
         "btnApplyHotkeyChanges.Text": {
             "en": "Apply Changes",
             "fr-FR": "Appliquer les modifications",
+            "ja-JP": "変更を適用",
             "ko-KR": "수정 내용 적용",
             "zh-CN": "应用更改"
         },
         "btnRemoveHotkey.Text": {
             "en": "Remove Selected Hotkey",
             "fr-FR": "Supprimer le raccourci sélectionné",
+            "ja-JP": "選択されたホットキーを削除",
             "ko-KR": "선택한 단축키 제거",
             "zh-CN": "删除选定快捷键"
         },
@@ -521,6 +529,7 @@
         "label10.Text": {
             "en": "If an overlay is locked, its location becomes fixed and you won't be able to move it until you unlock it again.",
             "fr-FR": "Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué",
+            "ja-JP": "オーバーレイをロックすると、サイズと位置が固定されます。",
             "zh-CN": "如果某悬浮窗被锁定，其位置将固定不变，只有将其再次解锁才能移动。\n某些悬浮窗(如cactbot)锁定后方可正常工作。"
         },
         "label11.Text": {
@@ -540,6 +549,7 @@
         "label13.Text": {
             "en": "Mute overlay when hidden",
             "fr-FR": "Aucun son si caché",
+            "ja-JP": "オーバーレイが隠れているときに\nミュートにする",
             "zh-CN": "隐藏时使悬浮窗静音"
         },
         "label15.Text": {
@@ -587,19 +597,21 @@
         "label7.Text": {
             "en": "Enable overlay",
             "fr-FR": "Activer overlay",
+            "ja-JP": "オーバレイを有効にする",
             "ko-KR": "오버레이 켜기",
             "zh-CN": "启用悬浮窗"
         },
         "label8.Text": {
             "en": "Disabling an overlay reduces CPU usage but also stops everything it's doing (i.e. sounds).\nHiding an overlay only turns it invisible. It still runs in the background and can still play sounds, collect statistics, etc.\n",
             "fr-FR": "Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).\nCacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan et peut jouer des sons, collecter des statistiques, etc.\n",
+            "ja-JP": "オーバーレイを「無効」にすると、CPUの使用量は減りますが、サウンドの再生等の実行中のすべての動作が停止します。\nオーバーレイを「非表示」にすると、オーバーレイが非表示になるだけです。サウンドの再生や統計情報の収集等のバックグラウンド処理は実行されます。",
             "ko-KR": "오버레이를 끄면 CPU 사용량을 줄이지만, 오버레이가 하는 모든 것을 중단시킵니다. (소리 등)\n오버레이를 표시하지 않는 것은 단순히 보이지 않게 할 뿐입니다. 여전히 백그라운드에서 소리를 내보내고, 통계를 수집하는 등의 일을 합니다.",
             "zh-CN": "禁用某个悬浮窗会减少CPU使用率，但也会停止它的所有工作（例如声音）。\n隐藏某个悬浮窗只会使其不可见，它仍然在后台运行，并仍可以播放声音、收集统计信息等。\n"
         },
         "label9.Text": {
             "en": "Lock overlay",
             "fr-FR": "Bloquer l'overlay",
-            "ja-JP": "移動とリサイズを制限する",
+            "ja-JP": "オーバーレイをロックする",
             "ko-KR": "위치 잠금",
             "zh-CN": "锁定悬浮窗"
         },

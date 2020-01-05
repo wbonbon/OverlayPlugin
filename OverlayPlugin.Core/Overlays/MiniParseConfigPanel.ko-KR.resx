@@ -182,4 +182,32 @@
   <data name="label15.Text" xml:space="preserve">
     <value>확대/축소</value>
   </data>
+  <data name="btnApplyHotkeyChanges.Text" xml:space="preserve">
+    <value>수정 내용 적용</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>오버레이를 끄면 CPU 사용량을 줄이지만, 오버레이가 하는 모든 것을 중단시킵니다. (소리 등)
+오버레이를 표시하지 않는 것은 단순히 보이지 않게 할 뿐입니다. 여전히 백그라운드에서 소리를 내보내고, 통계를 수집하는 등의 일을 합니다.</value>
+  </data>
+  <data name="tabACTWS.Text" xml:space="preserve">
+    <value>ACT 웹소켓</value>
+  </data>
+  <data name="tabAdvanced.Text" xml:space="preserve">
+    <value>고급</value>
+  </data>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>오버레이 켜기</value>
+  </data>
+  <data name="tabHotkeys.Text" xml:space="preserve">
+    <value>단축키</value>
+  </data>
+  <data name="btnAddHotkey.Text" xml:space="preserve">
+    <value>새 단축키 추가</value>
+  </data>
+  <data name="btnRemoveHotkey.Text" xml:space="preserve">
+    <value>선택한 단축키 제거</value>
+  </data>
 </root>

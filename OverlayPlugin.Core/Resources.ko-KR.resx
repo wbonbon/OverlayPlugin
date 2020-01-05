@@ -131,7 +131,7 @@
   </data>
 
   <data name="ActwsShimEnabled" xml:space="preserve">
-    <value>ACTWS 호환성을 활성화</value>
+    <value>ACT 웹소켓 호환성을 활성화</value>
   </data>
 
   <data name="IncompatibleAddon" xml:space="preserve">

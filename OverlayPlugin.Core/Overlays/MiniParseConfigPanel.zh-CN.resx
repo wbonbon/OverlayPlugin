@@ -314,4 +314,7 @@
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
     <value>重置悬浮窗位置</value>
   </data>
+  <data name="tabACTWS.Text" xml:space="preserve">
+    <value>ACTWS</value>
+  </data>
 </root>
