@@ -17,6 +17,7 @@ namespace RainbowMage.OverlayPlugin
         private static int ActorID_Offset = 0;
         private static int Category_Offset = 0;
         private static int Param1_Offset = 0;
+        private static int ActorControl142_Type = 0;
 
         /**
          * We use reflection to calculate the field offsets since there's no public Machina DLL we could link
@@ -42,6 +43,8 @@ namespace RainbowMage.OverlayPlugin
 
                 Category_Offset = GetOffset(ActorControl142, "category");
                 Param1_Offset = GetOffset(ActorControl142, "param1");
+
+                ActorControl142_Type = GetEnumValue(msgHeader.GetField("MessageType").FieldType, "ActorControl142");
 
                 FFXIVRepository.RegisterNetworkParser(Parse);
             } catch (Exception e)
@@ -79,6 +82,17 @@ namespace RainbowMage.OverlayPlugin
             return offset;
         }
 
+        private static int GetEnumValue(Type type, string name)
+        {
+            foreach (var value in type.GetEnumValues())
+            {
+                if (value.ToString() == name)
+                    return (int)value;
+            }
+
+            throw new Exception($"Enum value {name} not found in {type}!");
+        }
+
         public unsafe static void Parse(string id, long epoch, byte[] message)
         {
             if (message.Length >= ActorControl142_Size)
@@ -94,7 +108,7 @@ namespace RainbowMage.OverlayPlugin
                     OnOnlineStatusChanged?.Invoke(null, new OnlineStatusChangedArgs(packet->MessageHeader.ActorID, packet->param1));
                     */
 
-                    if (*((ushort*)&buffer[MessageType_Offset]) != 0x3be) return;
+                    if (*((ushort*)&buffer[MessageType_Offset]) != ActorControl142_Type) return;
                     if (*((UInt16*)&buffer[Category_Offset]) != 0x1f8) return;
 
                     OnOnlineStatusChanged?.Invoke(null, new OnlineStatusChangedArgs(*(uint*)&buffer[ActorID_Offset], *(uint*)&buffer[Param1_Offset]));
