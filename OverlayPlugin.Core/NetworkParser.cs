@@ -17,7 +17,7 @@ namespace RainbowMage.OverlayPlugin
         private static int ActorID_Offset = 0;
         private static int Category_Offset = 0;
         private static int Param1_Offset = 0;
-        private static int ActorControl142_Type = 0;
+        private static ushort ActorControl142_Type = 0;
 
         /**
          * We use reflection to calculate the field offsets since there's no public Machina DLL we could link
@@ -44,7 +44,7 @@ namespace RainbowMage.OverlayPlugin
                 Category_Offset = GetOffset(ActorControl142, "category");
                 Param1_Offset = GetOffset(ActorControl142, "param1");
 
-                ActorControl142_Type = GetEnumValue(msgHeader.GetField("MessageType").FieldType, "ActorControl142");
+                ActorControl142_Type = (ushort) GetEnumValue(msgHeader.GetField("MessageType").FieldType, "ActorControl142");
 
                 FFXIVRepository.RegisterNetworkParser(Parse);
             } catch (Exception e)
@@ -82,12 +82,12 @@ namespace RainbowMage.OverlayPlugin
             return offset;
         }
 
-        private static int GetEnumValue(Type type, string name)
+        private static object GetEnumValue(Type type, string name)
         {
             foreach (var value in type.GetEnumValues())
             {
                 if (value.ToString() == name)
-                    return (int)value;
+                    return Convert.ChangeType(value, Enum.GetUnderlyingType(type));
             }
 
             throw new Exception($"Enum value {name} not found in {type}!");
