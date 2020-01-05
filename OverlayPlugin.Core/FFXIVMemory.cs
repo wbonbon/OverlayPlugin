@@ -8,88 +8,79 @@ namespace RainbowMage.OverlayPlugin.EventSources
 {
     public class FFXIVMemory
     {
-        public delegate void ProcessChange(Process process);
-        public event ProcessChange OnProcessChange;
+        public event EventHandler OnProcessChange;
 
         private ILogger logger;
-        class ProcessContainer
-        {
-            public ProcessContainer(Process process)
-            {
-                this.Process = process;
-            }
-
-            private Process _process;
-            public Process Process
-            {
-                get { return _process; }
-                set
-                {
-                    _process = value;
-                    if(Handle != IntPtr.Zero)
-                    {
-                        try
-                        {
-                            NativeMethods.CloseHandle(Handle);
-                        }
-                        catch
-                        { }
-                    }
-                    if (_process != null && !_process.HasExited)
-                    {
-                        Handle = NativeMethods.OpenProcess(ProcessAccessFlags.VirtualMemoryRead, false, _process.Id);
-                    }
-                    else
-                    {
-                        Handle = IntPtr.Zero;
-                    }
-                }
-            }
-            public IntPtr Handle { get; private set; }
-        }
-
-        private ProcessContainer processContainer;
+        private Process process;
+        private IntPtr processHandle;
 
         public FFXIVMemory(ILogger logger)
         {
             this.logger = logger;
-            this.processContainer = new ProcessContainer(FindProcess());
+            FindProcess();
         }
 
-        private Process FindProcess()
+        private void FindProcess()
         {
-            Process process = FFXIVRepository.GetCurrentFFXIVProcess();
-            if (process == null)
-                return null;
-            if (process.ProcessName == "ffxiv")
+            if (processHandle != IntPtr.Zero)
+            {
+                if (process != null && !process.HasExited)
+                {
+                    // The current handle is still valid.
+                    return;
+                } else
+                {
+                    CloseProcessHandle();
+                }
+            }
+
+            Process proc = FFXIVRepository.GetCurrentFFXIVProcess();
+            if (proc == null || proc.HasExited)
+                return;
+
+            if (proc.ProcessName == "ffxiv")
             {
                 logger.Log(LogLevel.Error, "{0}", "DX9 is not supported.");
-                return null;
+                return;
             }
-            else if (process.ProcessName != "ffxiv_dx11")
+            else if (proc.ProcessName != "ffxiv_dx11")
             {
                 logger.Log(LogLevel.Error, "{0}", "Unknown ffxiv process.");
-                return null;
+                return;
             }
-            return process;
+
+            process = proc;
+            processHandle = NativeMethods.OpenProcess(ProcessAccessFlags.VirtualMemoryRead, false, proc.Id);
+        }
+
+        private void CloseProcessHandle()
+        {
+            NativeMethods.CloseHandle(processHandle);
+            processHandle = IntPtr.Zero;
+            process = null;
         }
 
         public bool IsValid()
         {
-            if (this.processContainer.Process != null && this.processContainer.Process.HasExited)
+            if (process != null && process.HasExited)
             {
-                this.processContainer.Process = null;
-                OnProcessChange.Invoke(this.processContainer.Process);
+                CloseProcessHandle();
+                OnProcessChange?.Invoke(this, null);
             }
-            if (this.processContainer.Process != null)
+            
+            if (processHandle != IntPtr.Zero)
                 return true;
-            this.processContainer.Process = FindProcess();
-            if (this.processContainer.Process == null)
-                return false;
 
-            OnProcessChange.Invoke(this.processContainer.Process);
+            FindProcess();
+            if (processHandle == IntPtr.Zero || process == null || process.HasExited)
+            {
+                return false;
+            }
+
+            OnProcessChange?.Invoke(this, null);
             return true;
         }
+
         public unsafe static string GetStringFromBytes(byte* source, int size)
         {
             var bytes = new byte[size];
@@ -133,7 +124,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             IntPtr zero = IntPtr.Zero;
             IntPtr nSize = new IntPtr(buffer.Length);
-            return NativeMethods.ReadProcessMemory(processContainer.Handle, address, buffer, nSize, ref zero);
+            return NativeMethods.ReadProcessMemory(processHandle, address, buffer, nSize, ref zero);
         }
 
         /// <summary>
@@ -170,7 +161,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             int buffer_len = 1 * count;
             var buffer = new byte[buffer_len];
             var bytes_read = IntPtr.Zero;
-            bool ok = NativeMethods.ReadProcessMemory(processContainer.Handle, addr, buffer, new IntPtr(buffer_len), ref bytes_read);
+            bool ok = NativeMethods.ReadProcessMemory(processHandle, addr, buffer, new IntPtr(buffer_len), ref bytes_read);
             if (!ok || bytes_read.ToInt32() != buffer_len)
                 return null;
             return buffer;
@@ -289,8 +280,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // from a 32bit offset into the array that we read from the process.
             const Int32 kMaxReadSize = 65536;
 
-            int module_memory_size = processContainer.Process.MainModule.ModuleMemorySize;
-            IntPtr process_start_addr = processContainer.Process.MainModule.BaseAddress;
+            int module_memory_size = process.MainModule.ModuleMemorySize;
+            IntPtr process_start_addr = process.MainModule.BaseAddress;
             IntPtr process_end_addr = IntPtr.Add(process_start_addr, module_memory_size);
 
             IntPtr read_start_addr = process_start_addr;
@@ -302,7 +293,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 IntPtr read_size = (IntPtr)Math.Min(bytes_left, kMaxReadSize);
 
                 IntPtr num_bytes_read = IntPtr.Zero;
-                if (NativeMethods.ReadProcessMemory(processContainer.Handle, read_start_addr, read_buffer, read_size, ref num_bytes_read))
+                if (NativeMethods.ReadProcessMemory(processHandle, read_start_addr, read_buffer, read_size, ref num_bytes_read))
                 {
                     int max_search_offset = num_bytes_read.ToInt32() - pattern_array.Length - Math.Max(0, offset);
                     // With RIP we will read a 4byte pointer at the |offset|, else we read an 8byte pointer. Either

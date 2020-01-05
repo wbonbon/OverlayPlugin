@@ -130,7 +130,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             GetPointerAddress();
         }
 
-        private void ResetPointers(Process process)
+        private void ResetPointers(object sender, EventArgs _)
         {
             charmapAddress = IntPtr.Zero;
             targetAddress = IntPtr.Zero;
@@ -161,6 +161,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             if (!HasValidPointers())
                 return false;
+
             return true;
         }
 
