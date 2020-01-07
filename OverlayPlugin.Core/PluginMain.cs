@@ -148,7 +148,7 @@ namespace RainbowMage.OverlayPlugin
 
                 if (Config.UpdateCheck)
                 {
-                    Updater.Updater.PerformUpdateIfNecessary(controlPanel, PluginDirectory);
+                    Updater.Updater.PerformUpdateIfNecessary(PluginDirectory);
                 }
 
                 initTimer = new Timer();
