@@ -17,7 +17,6 @@ namespace RainbowMage.OverlayPlugin.Updater
     {
         const string CHECK_URL = "https://api.github.com/repos/{REPO}/releases/latest";
         const string ALL_RELEASES_URL = "https://api.github.com/repos/{REPO}/releases";
-        const string DL = "https://github.com/{REPO}/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.7z";
 
         public static Task<(bool, Version, string, string)> CheckForGitHubUpdate(UpdaterOptions options)
         {
@@ -46,7 +45,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 {
                     var tmp = JObject.Parse(response);
                     remoteVersion = Version.Parse(tmp["tag_name"].ToString().Substring(1));
-                    if (remoteVersion.CompareTo(options.currentVersion) <= 1)
+                    if (remoteVersion <= options.currentVersion)
                     {
                         // Exit early if no new version is available.
                         return (false, remoteVersion, "", "");
@@ -57,12 +56,12 @@ namespace RainbowMage.OverlayPlugin.Updater
                     // JObject doesn't accept arrays so we have to package the response in a JSON object.
                     tmp = JObject.Parse("{\"content\":" + response + "}");
 
-                    downloadUrl = DL.Replace("{REPO}", options.repo).Replace("{VERSION}", remoteVersion.ToString());
+                    downloadUrl = options.downloadUrl.Replace("{REPO}", options.repo).Replace("{VERSION}", remoteVersion.ToString());
 
                     foreach (var rel in tmp["content"])
                     {
                         var version = Version.Parse(rel["tag_name"].ToString().Substring(1));
-                        if (version.CompareTo(options.currentVersion) < 1) break;
+                        if (version < options.currentVersion) break;
 
                         releaseNotes += "---\n\n# " + rel["name"].ToString() + "\n\n" + rel["body"].ToString() + "\n\n";
                     }
@@ -220,7 +219,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 (newVersion, remoteVersion, releaseNotes, downloadUrl) = await CheckForManifestUpdate(options);
             }
 
-            if (options.remoteVersion != null)
+            if (remoteVersion != null)
             {
                 options.lastCheck = DateTime.Now;
             }
@@ -262,8 +261,8 @@ namespace RainbowMage.OverlayPlugin.Updater
                 pluginDirectory = pluginDirectory,
                 lastCheck = config.LastUpdateCheck,
                 currentVersion = Assembly.GetExecutingAssembly().GetName().Version,
-                manifestUrl = "https://ngld.github.io/OverlayPlugin/latest.json",
-                notesUrl = "https://ngld.github.io/OverlayPlugin/notes.json"
+                repo = "ngld/OverlayPlugin",
+                downloadUrl = "https://github.com/{REPO}/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.7z",
             };
 
             await RunAutoUpdater(options, manualCheck);
@@ -271,7 +270,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         }
     }
 
-    public struct UpdaterOptions {
+    public class UpdaterOptions {
         public string project;
         public string pluginDirectory;
         public DateTime lastCheck;

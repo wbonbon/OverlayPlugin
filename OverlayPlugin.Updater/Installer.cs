@@ -218,7 +218,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                             var outPath = reader.Entry.Key;
                             if (stripDirs > 0)
                             {
-                                var parts = outPath.Split(Path.DirectorySeparatorChar);
+                                var parts = outPath.Split('/');
                                 if (parts.Length < stripDirs + 1)
                                 {
                                     continue;
