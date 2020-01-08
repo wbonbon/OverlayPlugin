@@ -280,6 +280,31 @@ namespace RainbowMage.OverlayPlugin
             this.tabControl.Update();
         }
 
+        private void buttonRename_Click(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab == null) // ???
+                tabControl.SelectedTab = tabControl.TabPages[0];
+
+            if (!((ConfigTabPage)tabControl.SelectedTab).IsOverlay)
+                return;
+
+            string selectedOverlayName = tabControl.SelectedTab.Name;
+            int selectedOverlayIndex = tabControl.TabPages.IndexOf(tabControl.SelectedTab);
+
+            var config = this.config.Overlays.Where(x => x.Name == selectedOverlayName).FirstOrDefault();
+            if (config == null)
+                return;
+
+            var dialog = new Controls.RenameOverlayDialog(config.Name);
+            if (dialog.ShowDialog(ParentForm) == DialogResult.OK)
+            {
+                config.Name = dialog.OverlayName;
+            }
+
+            tabControl.SelectedTab.Name = config.Name;
+            tabControl.Update();
+        }
+
         private void CheckBoxFollowLog_CheckedChanged(object sender, EventArgs e)
         {
             config.FollowLatestLog = checkBoxFollowLog.Checked;

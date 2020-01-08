@@ -29,6 +29,9 @@
             "ko-KR": "삭제",
             "zh-CN": "删除"
         },
+        "buttonRename.Text": {
+            "en": "Rename"
+        },
         "checkBoxFollowLog.Text": {
             "en": "Autoscroll the log",
             "fr-FR": "Défiler auto.",
@@ -140,12 +143,21 @@
             "zh-CN": "对于大多数悬浮窗，您必须在此处选择[数据统计]。 是的，即使Cactbot也需要[数据统计]类型。\n\n[标签]允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。\n[技能冷却]显示ACT内置的技能冷却计时器，与Hojoring的SpecialSpellTimers或SPESPE无关。\n"
         }
     },
-    "OverlayPlugin.Core/Controls/WSConfigPanel": {
-        "ctxMenuLinkCopy.Text": {
-            "fr-FR": "Copier",
-            "ko-KR": "복사",
-            "zh-CN": "复制"
+    "OverlayPlugin.Core/Controls/RenameOverlayDialog": {
+        "$this.Text": {
+            "en": "Rename Overlay"
         },
+        "btnCancel.Text": {
+            "en": "Cancel"
+        },
+        "btnOk.Text": {
+            "en": "OK"
+        },
+        "lblName.Text": {
+            "en": "Name"
+        }
+    },
+    "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "genSslBtn.Text": {
             "en": "Generate SSL Certificate",
             "fr-FR": "Générer un certificat SSL",
