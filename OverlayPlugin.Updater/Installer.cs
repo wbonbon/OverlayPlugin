@@ -91,7 +91,11 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
 
             _display.UpdateStatus(0, string.Format(Resources.StatusDownloadStarted, 1, 2));
-            _display.Log(string.Format(Resources.LogDownloading, url, dest));
+
+            // Avoid confusing users with the DO_NOT_DOWNLOAD extension. Users aren't supposed to manually download
+            // these files from the GH releases page so I added that extension and didn't expect people to pay
+            // attention to the download URL in the updater log.
+            _display.Log(string.Format(Resources.LogDownloading, url.Replace(".DO_NOT_DOWNLOAD", ""), dest));
 
             var success = false;
             var cancel = _display.GetCancelToken();
