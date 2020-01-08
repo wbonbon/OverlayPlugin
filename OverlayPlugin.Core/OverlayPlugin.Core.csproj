@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="OverlayBase.cs" />
     <Compile Include="OverlayConfigBase.cs" />
+    <Compile Include="OverlayZCorrector.cs" />
     <Compile Include="PluginConfig.cs" />
     <Compile Include="PluginMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

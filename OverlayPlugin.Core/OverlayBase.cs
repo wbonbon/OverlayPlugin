@@ -45,6 +45,8 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         public IPluginConfig PluginConfig { get; private set; }
         IOverlayConfig IOverlay.Config { get => Config; set => Config = (TConfig)value; }
+        IntPtr IOverlay.Handle { get => Overlay == null ? IntPtr.Zero : Overlay.Handle; }
+
         public bool Visible {
             get
             {

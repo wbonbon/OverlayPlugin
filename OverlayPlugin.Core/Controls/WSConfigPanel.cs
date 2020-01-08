@@ -68,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
         private void startBtn_Click(object sender, EventArgs e)
         {
             Config.WSServerRunning = true;
-            WSServer.Initialize();
+            WSServer.Init();
         }
 
         private void stopBtn_Click(object sender, EventArgs e)

@@ -26,6 +26,8 @@ namespace RainbowMage.OverlayPlugin
 
         bool Visible { get; set; }
 
+        IntPtr Handle { get; }
+
         Control CreateConfigControl();
 
         /// <summary>

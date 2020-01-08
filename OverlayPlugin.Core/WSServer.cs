@@ -24,7 +24,7 @@ namespace RainbowMage.OverlayPlugin
 
         public static EventHandler<StateChangedArgs> OnStateChanged;
 
-        public static void Initialize()
+        public static void Init()
         {
             _inst = new WSServer();
         }

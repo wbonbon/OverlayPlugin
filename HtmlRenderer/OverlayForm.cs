@@ -96,20 +96,6 @@ namespace RainbowMage.HtmlRenderer
 
             // Alt+Tab を押したときに表示されるプレビューから除外する
             HidePreview();
-
-            // Not sure if this is still necessary.
-            /*
-            zorderCorrector = new System.Threading.Timer((state) =>
-            {
-                if (this.Visible)
-                {
-                    if (!this.IsOverlaysGameWindow())
-                    {
-                        this.EnsureTopMost();
-                    }
-                }
-            }, null, 0, 1000);
-            */
         }
 
         /// <summary>
@@ -358,74 +344,6 @@ namespace RainbowMage.HtmlRenderer
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool IsOverlaysGameWindow()
-        {
-            var xivHandle = GetGameWindowHandle();
-            var handle = this.Handle;
-
-            while (handle != IntPtr.Zero)
-            {
-                // Overlayウィンドウよりも前面側にFF14のウィンドウがあった
-                if (handle == xivHandle)
-                {
-                    return false;
-                }
-
-                handle = NativeMethods.GetWindow(handle, NativeMethods.GW_HWNDPREV);
-            }
-
-            // 前面側にOverlayが存在する、もしくはFF14が起動していない
-            return true;
-        }
-
-        private void EnsureTopMost()
-        {
-            NativeMethods.SetWindowPos(
-                this.Handle,
-                NativeMethods.HWND_TOPMOST,
-                0, 0, 0, 0,
-                NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOACTIVATE);
-        }
-
-        private static object xivProcLocker = new object();
-        private static Process xivProc;
-        private static DateTime lastTry;
-        private static TimeSpan tryInterval = new TimeSpan(0, 0, 15);
-
-        private static IntPtr GetGameWindowHandle()
-        {
-            lock (xivProcLocker)
-            {
-                try
-                {
-                    // プロセスがすでに終了してるならプロセス情報をクリア
-                    if (xivProc != null && xivProc.HasExited)
-                    {
-                        xivProc = null;
-                    }
-
-                    // プロセス情報がなく、tryIntervalよりも時間が経っているときは新たに取得を試みる
-                    if (xivProc == null && DateTime.Now - lastTry > tryInterval)
-                    {
-                        xivProc = Process.GetProcessesByName("ffxiv").FirstOrDefault();
-                        if (xivProc == null)
-                        {
-                            xivProc = Process.GetProcessesByName("ffxiv_dx11").FirstOrDefault();
-                        }
-                        lastTry = DateTime.Now;
-                    }
-
-                    if (xivProc != null)
-                    {
-                        return xivProc.MainWindowHandle;
-                    }
-                }
-                catch (System.ComponentModel.Win32Exception) { }
-
-                return IntPtr.Zero;
-            }
         }
 
         public void MovePopup(Rect rect)
