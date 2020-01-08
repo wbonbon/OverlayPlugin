@@ -133,11 +133,20 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle clickthru.
+        ///   Looks up a localized string similar to Toggle clickthrough.
         /// </summary>
         internal static string HotkeyActionToggleClickthrough {
             get {
                 return ResourceManager.GetString("HotkeyActionToggleClickthrough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle enabled.
+        /// </summary>
+        internal static string HotkeyActionToggleEnabled {
+            get {
+                return ResourceManager.GetString("HotkeyActionToggleEnabled", resourceCulture);
             }
         }
         

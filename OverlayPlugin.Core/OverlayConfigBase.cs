@@ -246,7 +246,8 @@ namespace RainbowMage.OverlayPlugin
     {
         ToggleVisible,
         ToggleClickthru,
-        ToggleLock
+        ToggleLock,
+        ToogleEnabled,
     }
 
     public class GlobalHotkey

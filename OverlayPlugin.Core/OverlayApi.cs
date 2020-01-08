@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using RainbowMage.HtmlRenderer;
+using System.IO;
+using System.Reflection;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -50,6 +52,25 @@ namespace RainbowMage.OverlayPlugin
             {
                ActGlobals.oFormActMain.EndCombat(true);
             }));
+        }
+
+        public void makeScreenshot()
+        {
+            var actDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var screenshotDir = Path.Combine(actDir, "Screenshot");
+            var i = 0;
+            var filename = "";
+
+            Directory.CreateDirectory(screenshotDir);
+
+            do
+            {
+                filename = Path.Combine(screenshotDir, "ScreenShot_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + i + ".png");
+                i++;
+            } while (File.Exists(filename));
+
+            var bmp = receiver.Screenshot();
+            bmp.Save(filename);
         }
 
         public void setAcceptFocus(bool accept)

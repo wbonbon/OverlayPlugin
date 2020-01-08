@@ -39,7 +39,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void BtnUpdateCheck_Click(object sender, EventArgs e)
         {
-            Updater.Updater.PerformUpdateIfNecessary(this, PluginMain.PluginDirectory, true);
+            Updater.Updater.PerformUpdateIfNecessary(PluginMain.PluginDirectory, true);
         }
 
         private void CbErrorReports_CheckedChanged(object sender, EventArgs e)

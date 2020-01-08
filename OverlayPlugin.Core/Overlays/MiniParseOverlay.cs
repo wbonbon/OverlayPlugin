@@ -141,7 +141,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
                                 msg = JSON.parse(msg);
                                 switch (msg.msgtype) {
                                     case 'Capture':
-                                        OverlayPluginApi.captureOverlay();
+                                        OverlayPluginApi.makeScreenshot();
                                         break;
                                     case 'RequestEnd':
                                         OverlayPluginApi.endEncounter();

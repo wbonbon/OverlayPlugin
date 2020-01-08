@@ -1,5 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
+using System.Reflection;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 using CefSharp.OffScreen;
 using CefSharp.Structs;
 using CefSharp.Enums;
@@ -7,10 +13,7 @@ using CefSharp;
 using CefSharp.Internals;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.IO;
-using System.Windows.Forms;
-using System.Reflection;
-using System.Drawing;
+using System.Threading.Tasks;
 
 namespace RainbowMage.HtmlRenderer
 {
@@ -23,7 +26,7 @@ namespace RainbowMage.HtmlRenderer
         public event EventHandler<BrowserLoadEventArgs> BrowserLoad;
         public event EventHandler<BrowserConsoleLogEventArgs> BrowserConsoleLog;
 
-        private ChromiumWebBrowser _browser;
+        private BrowserWrapper _browser;
         protected IRenderTarget _target;
         private object _api;
         private Func<int, int, bool> _ctxMenuCallback = null;
@@ -363,6 +366,16 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
+        public Bitmap Screenshot()
+        {
+            if (_browser != null && _browser.IsBrowserInitialized)
+            {
+                return _browser.Screenshot();
+            }
+
+            return null;
+        }
+
         public void Dispose()
         {
             if (this._browser != null)
@@ -592,6 +605,8 @@ MaxUploadsPerDay=0
     internal class BrowserWrapper : ChromiumWebBrowser, IRenderWebBrowser
     {
         IRenderTarget target;
+        TaskCompletionSource<Bitmap> screenshotSource = null;
+        object screenshotLock = new object();
 
         public BrowserWrapper(string address = "", BrowserSettings browserSettings = null,
             RequestContext requestContext = null, bool automaticallyCreateBrowser = true, IRenderTarget target = null) :
@@ -600,9 +615,41 @@ MaxUploadsPerDay=0
             this.target = target;
         }
 
+        public Bitmap Screenshot()
+        {
+            lock (screenshotLock)
+            {
+                var source = new TaskCompletionSource<Bitmap>();
+                screenshotSource = source;
+                source.Task.Wait();
+
+                if (source.Task.Exception != null) throw source.Task.Exception;
+                return source.Task.Result;
+            }
+        }
+
         void IRenderWebBrowser.OnPaint(PaintElementType type, Rect dirtyRect, IntPtr buffer, int width, int height)
         {
-            target.RenderFrame(type, dirtyRect, buffer, width, height);
+            if (screenshotSource != null)
+            {
+                try
+                {
+                    var bmp = new Bitmap(width, height);
+                    var data = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+                    NativeMethods.CopyMemory(data.Scan0, buffer, (uint)(width * height * 4));
+                    bmp.UnlockBits(data);
+
+                    screenshotSource.SetResult(bmp);
+                    screenshotSource = null;
+                } catch (Exception ex)
+                {
+                    screenshotSource.SetException(ex);
+                    screenshotSource = null;
+                }
+            } else
+            {
+                target.RenderFrame(type, dirtyRect, buffer, width, height);
+            }
         }
 
         void IRenderWebBrowser.OnPopupSize(Rect rect)

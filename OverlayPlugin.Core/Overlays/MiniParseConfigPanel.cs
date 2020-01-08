@@ -19,7 +19,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         {
             new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleVisible, GlobalHotkeyType.ToggleVisible),
             new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleClickthrough, GlobalHotkeyType.ToggleClickthru),
-            new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleLock, GlobalHotkeyType.ToggleLock)
+            new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleLock, GlobalHotkeyType.ToggleLock),
+            new KeyValuePair<string, GlobalHotkeyType>(Resources.HotkeyActionToggleEnabled, GlobalHotkeyType.ToogleEnabled),
         };
 
         public MiniParseConfigPanel(MiniParseOverlay overlay)

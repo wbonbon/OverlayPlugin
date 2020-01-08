@@ -205,6 +205,9 @@ namespace RainbowMage.OverlayPlugin
                         case GlobalHotkeyType.ToggleLock:
                             cb = () => this.Config.IsLocked = !this.Config.IsLocked;
                             break;
+                        case GlobalHotkeyType.ToogleEnabled:
+                            cb = () => this.Config.Disabled = !this.Config.Disabled;
+                            break;
                         default:
                             cb = () => this.Config.IsVisible = !this.Config.IsVisible;
                             break;
@@ -218,6 +221,7 @@ namespace RainbowMage.OverlayPlugin
                     catch (Exception e)
                     {
                         Log(LogLevel.Error, Resources.OverlayBaseRegisterHotkeyError, e.Message);
+                        hotKeyCallbacks.Remove(cb);
                     }
                 }
             }
@@ -409,6 +413,11 @@ namespace RainbowMage.OverlayPlugin
         public virtual void InitModernAPI()
         {
 
+        }
+
+        public virtual Bitmap Screenshot()
+        {
+            return Overlay.Renderer.Screenshot();
         }
     }
 }

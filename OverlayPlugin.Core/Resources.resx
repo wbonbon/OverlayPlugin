@@ -269,4 +269,7 @@
   <data name="WSNotConfidentLink" xml:space="preserve">
     <value>This link might not work if the overlay doesn't support ACTWebSocket.</value>
   </data>
+  <data name="HotkeyActionToggleEnabled" xml:space="preserve">
+    <value>Toggle enabled</value>
+  </data>
 </root>
