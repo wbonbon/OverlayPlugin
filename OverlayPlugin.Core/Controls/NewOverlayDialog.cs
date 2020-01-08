@@ -68,7 +68,7 @@ namespace RainbowMage.OverlayPlugin
                 presetData = File.ReadAllText(presetFile);
             } catch(Exception ex)
             {
-                Registry.Resolve<ILogger>().Log(LogLevel.Error, $"NewOverlayDialog: Failed to load presets: {ex}");
+                Registry.Resolve<ILogger>().Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadPresets, ex));
             }
             
             presets = JsonConvert.DeserializeObject<Dictionary<string, OverlayPreset>>(presetData);
@@ -80,7 +80,7 @@ namespace RainbowMage.OverlayPlugin
 
             cbPreset.Items.Add(new OverlayPreset
             {
-                Name = "Custom",
+                Name = Resources.CustomPresetLabel,
                 Url = "special:custom",
             });
 
@@ -117,7 +117,7 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (preset == null)
                 {
-                    MessageBox.Show("Please select a preset!");
+                    MessageBox.Show(this, Resources.PromptSelectPreset, "OverlayPlugin", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     DialogResult = DialogResult.None;
                     return;
                 }
@@ -126,7 +126,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     if (cbType.SelectedItem == null)
                     {
-                        MessageBox.Show(Resources.PromptSelectOverlayType);
+                        MessageBox.Show(this, Resources.PromptSelectOverlayType, "OverlayPlugin", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         DialogResult = DialogResult.None;
                         return;
                     }
@@ -180,12 +180,12 @@ namespace RainbowMage.OverlayPlugin
                 switch (preset.Type)
                 {
                     case "MiniParse":
-                        var config = new Overlays.MiniParseOverlayConfig("Preview");
+                        var config = new Overlays.MiniParseOverlayConfig(Resources.OverlayPreviewName);
                         config.ActwsCompatibility = preset.Supports.Count == 1 && preset.Supports.Contains("actws");
                         config.Size = new Size(preset.Size[0], preset.Size[1]);
                         config.IsLocked = preset.Locked;
 
-                        var overlay = new Overlays.MiniParseOverlay(config, "Preview");
+                        var overlay = new Overlays.MiniParseOverlay(config, config.Name);
                         overlay.Preview = true;
                         config.Url = preset.Url;
 

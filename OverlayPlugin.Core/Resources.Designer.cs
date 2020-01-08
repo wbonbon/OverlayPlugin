@@ -70,11 +70,29 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        internal static string CustomPresetLabel {
+            get {
+                return ResourceManager.GetString("CustomPresetLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate handler for name {0}!.
         /// </summary>
         internal static string DuplicateHandlerError {
             get {
                 return ResourceManager.GetString("DuplicateHandlerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NewOverlayDialog: Failed to load presets: {0}.
+        /// </summary>
+        internal static string ErrorCouldNotLoadPresets {
+            get {
+                return ResourceManager.GetString("ErrorCouldNotLoadPresets", resourceCulture);
             }
         }
         
@@ -358,11 +376,29 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        internal static string OverlayPreviewName {
+            get {
+                return ResourceManager.GetString("OverlayPreviewName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select overlay type..
         /// </summary>
         internal static string PromptSelectOverlayType {
             get {
                 return ResourceManager.GetString("PromptSelectOverlayType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a preset..
+        /// </summary>
+        internal static string PromptSelectPreset {
+            get {
+                return ResourceManager.GetString("PromptSelectPreset", resourceCulture);
             }
         }
         

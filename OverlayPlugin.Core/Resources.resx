@@ -272,4 +272,18 @@
   <data name="HotkeyActionToggleEnabled" xml:space="preserve">
     <value>Toggle enabled</value>
   </data>
+  <data name="CustomPresetLabel" xml:space="preserve">
+    <value>Custom</value>
+    <comment>This is the name for the preset entry that allows the user to select a custom overlay type instead of using a preset.</comment>
+  </data>
+  <data name="ErrorCouldNotLoadPresets" xml:space="preserve">
+    <value>NewOverlayDialog: Failed to load presets: {0}</value>
+  </data>
+  <data name="OverlayPreviewName" xml:space="preserve">
+    <value>Preview</value>
+    <comment>This is used as the temporary name for the preview overlay.</comment>
+  </data>
+  <data name="PromptSelectPreset" xml:space="preserve">
+    <value>Please select a preset.</value>
+  </data>
 </root>
