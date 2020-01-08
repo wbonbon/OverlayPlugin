@@ -17,6 +17,10 @@ namespace RainbowMage.OverlayPlugin.Overlays
     {
         protected DateTime lastUrlChange;
         protected string lastLoadedUrl;
+        protected System.Threading.Timer previewTimer;
+
+        public bool Preview = false;
+
         public bool ModernApi { get; protected set; }
 
         public MiniParseOverlay(MiniParseOverlayConfig config, string name)
@@ -69,6 +73,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
             Overlay.Renderer.BrowserConsoleLog += Renderer_BrowserConsoleLog;
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            previewTimer?.Dispose();
+        }
+
         public override Control CreateConfigControl()
         {
             return new MiniParseConfigPanel(this);
@@ -95,6 +105,25 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 } else {
                     window.__OverlayPlugin_char_msg = msg;
                 }");
+            }
+
+            if (Preview)
+            {
+                try
+                {
+                    var previewPath = Path.Combine(PluginMain.PluginDirectory, "resources", "preview.json");
+                    var eventData = JObject.Parse(File.ReadAllText(previewPath));
+
+                    // Since we can't be sure when the overlay is ready to receive events, we'll just send one
+                    // per second (which is the same rate the real events are sent at).
+                    previewTimer = new System.Threading.Timer((state) =>
+                    {
+                        HandleEvent(eventData);
+                    }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+                } catch (Exception ex)
+                {
+                    Registry.Resolve<ILogger>().Log(LogLevel.Error, $"{Name}: Failed to load preview data: {ex}");
+                }
             }
         }
 

@@ -45,6 +45,8 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         void Stop();
 
+        void Reload();
+
         /// <summary>
         /// 指定した URL を表示します。
         /// </summary>

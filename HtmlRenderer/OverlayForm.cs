@@ -94,6 +94,8 @@ namespace RainbowMage.HtmlRenderer
             this.maxFrameRate = maxFrameRate;
             this.url = url;
 
+            ClearFrame();
+
             // Alt+Tab を押したときに表示されるプレビューから除外する
             HidePreview();
         }

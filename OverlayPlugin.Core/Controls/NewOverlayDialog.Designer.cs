@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -33,9 +20,11 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblType = new System.Windows.Forms.Label();
+            this.cbType = new System.Windows.Forms.ComboBox();
+            this.lblTypeDesc = new System.Windows.Forms.Label();
+            this.lblPreset = new System.Windows.Forms.Label();
+            this.cbPreset = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -63,22 +52,35 @@
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
-            // label2
+            // lblType
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.lblType, "lblType");
+            this.lblType.Name = "lblType";
             // 
-            // comboBox1
+            // cbType
             // 
-            resources.ApplyResources(this.comboBox1, "comboBox1");
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Name = "comboBox1";
+            resources.ApplyResources(this.cbType, "cbType");
+            this.cbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbType.FormattingEnabled = true;
+            this.cbType.Name = "cbType";
             // 
-            // label3
+            // lblTypeDesc
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(this.lblTypeDesc, "lblTypeDesc");
+            this.lblTypeDesc.Name = "lblTypeDesc";
+            // 
+            // lblPreset
+            // 
+            resources.ApplyResources(this.lblPreset, "lblPreset");
+            this.lblPreset.Name = "lblPreset";
+            // 
+            // cbPreset
+            // 
+            this.cbPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPreset.FormattingEnabled = true;
+            resources.ApplyResources(this.cbPreset, "cbPreset");
+            this.cbPreset.Name = "cbPreset";
+            this.cbPreset.SelectedIndexChanged += new System.EventHandler(this.cbPreset_SelectedIndexChanged);
             // 
             // NewOverlayDialog
             // 
@@ -86,9 +88,11 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cbPreset);
+            this.Controls.Add(this.lblPreset);
+            this.Controls.Add(this.lblTypeDesc);
+            this.Controls.Add(this.cbType);
+            this.Controls.Add(this.lblType);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonCancel);
@@ -110,8 +114,10 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.ComboBox cbType;
+        private System.Windows.Forms.Label lblTypeDesc;
+        private System.Windows.Forms.Label lblPreset;
+        private System.Windows.Forms.ComboBox cbPreset;
     }
 }

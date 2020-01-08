@@ -214,20 +214,14 @@ namespace RainbowMage.OverlayPlugin
                 {
                     this.tabControl.TabPages.Remove(this.tabPageMain);
                 }
-                CreateAndRegisterOverlay(newOverlayDialog.SelectedOverlayType, newOverlayDialog.OverlayName);
+                CreateAndRegisterOverlay(newOverlayDialog.SelectedOverlay);
             }
             
             newOverlayDialog.Dispose();
         }
 
-        private IOverlay CreateAndRegisterOverlay(Type overlayType, string name)
+        private IOverlay CreateAndRegisterOverlay(IOverlay overlay)
         {
-            var parameters = new NamedParameterOverloads();
-            parameters["config"] = null;
-            parameters["name"] = name;
-
-            var overlay = (IOverlay) Registry.Container.Resolve(overlayType, parameters);
-
             config.Overlays.Add(overlay.Config);
             pluginMain.RegisterOverlay(overlay);
 

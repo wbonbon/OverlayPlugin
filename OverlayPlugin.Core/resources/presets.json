@@ -1,0 +1,32 @@
+﻿{
+  "Kagerou": {
+    "type": "MiniParse",
+    "url": "https://hibiyasleep.github.io/kagerou/overlay/",
+    "size": [ 500, 300 ],
+    "supports": [ "legacy", "actws" ]
+  },
+  "MopiMopi": {
+    "type": "MiniParse",
+    "url": "https://haeruhaeru.github.io/mopimopi/",
+    "size": [ 600, 500 ],
+    "supports": [ "actws" ]
+  },
+  "Ember": {
+    "type": "MiniParse",
+    "url": "https://goldenchrysus.github.io/ffxiv/ember-overlay/",
+    "size": [ 600, 400 ],
+    "supports": [ "legacy", "actws" ]
+  },
+  "Horizoverlay": {
+    "type": "MiniParse",
+    "url": "https://bsides.github.io/horizoverlay/",
+    "size": [ "90%", 300 ],
+    "supports": [ "legacy", "actws" ]
+  },
+  "Ikegami": {
+    "type": "MiniParse",
+    "url": "https://idyllshi.re/ikegami/",
+    "size": [ "90%", 500 ],
+    "supports": [ "legacy", "actws" ]
+  }
+}

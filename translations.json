@@ -122,14 +122,14 @@
             "ko-KR": "이름",
             "zh-CN": "名称"
         },
-        "label2.Text": {
+        "lblType.Text": {
             "en": "Type",
             "fr-FR": "Type",
             "ja-JP": "種類",
             "ko-KR": "유형",
             "zh-CN": "种类"
         },
-        "label3.Text": {
+        "lblTypeDesc.Text": {
             "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
             "fr-FR": "Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.\n\nLabel vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.\nSpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.\n",
             "ja-JP": "ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。\n\nLabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。\nSpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。",
