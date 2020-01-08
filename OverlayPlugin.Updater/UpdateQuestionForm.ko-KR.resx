@@ -119,11 +119,11 @@
   </resheader>
 
   <data name="label1.Text" xml:space="preserve">
-    <value>현재 사용 가능한 OverlayPlugin의 새로운 업데이트가 있습니다. 지금 설치하시겠습니까?</value>
+    <value>현재 사용 가능한 {0}의 새로운 업데이트가 있습니다. 지금 설치하시겠습니까?</value>
   </data>
 
   <data name="$this.Text" xml:space="preserve">
-    <value>OverlayPlugin 업데이트</value>
+    <value>{0} 업데이트</value>
   </data>
 
   <data name="btnConfirm.Text" xml:space="preserve">

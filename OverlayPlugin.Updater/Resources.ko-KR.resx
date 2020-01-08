@@ -136,7 +136,7 @@
   </data>
 
   <data name="ErrorTitle" xml:space="preserve">
-    <value>OverlayPlugin 오류</value>
+    <value>{0} 오류</value>
   </data>
 
   <data name="UpdateSuccess" xml:space="preserve">
@@ -178,7 +178,7 @@
   </data>
 
   <data name="UpdateTitle" xml:space="preserve">
-    <value>OverlayPlugin 업데이트</value>
+    <value>{0} 업데이트</value>
   </data>
 
   <data name="OutOfRetries" xml:space="preserve">
@@ -270,7 +270,7 @@
   </data>
 
   <data name="UpdateCheckTitle" xml:space="preserve">
-    <value>OverlayPlugin 업데이트 확인</value>
+    <value>{0} 업데이트 확인</value>
   </data>
 
   <data name="UpdateFailedError" xml:space="preserve">

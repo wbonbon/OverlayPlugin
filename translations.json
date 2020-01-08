@@ -122,6 +122,9 @@
             "ko-KR": "이름",
             "zh-CN": "名称"
         },
+        "lblPreset.Text": {
+            "en": "Preset"
+        },
         "lblType.Text": {
             "en": "Type",
             "fr-FR": "Type",
@@ -785,6 +788,9 @@
             "ko-KR": "클릭 무시 ON/OFF",
             "zh-CN": "切换悬浮窗 鼠标穿透"
         },
+        "HotkeyActionToggleEnabled": {
+            "en": "Toggle enabled"
+        },
         "HotkeyActionToggleLock": {
             "en": "Toggle lock",
             "fr-FR": "Bloqué",
@@ -1095,10 +1101,11 @@
             "zh-CN": "下载失败！没有下载文件大小（Content-Length标头缺失）。"
         },
         "ErrorTitle": {
-            "en": "OverlayPlugin Error",
-            "fr-FR": "Erreur OverlayPlugin",
-            "ko-KR": "OverlayPlugin 오류",
-            "zh-CN": "OverlayPlugin错误"
+            "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
+            "en": "{0} Error",
+            "fr-FR": "Erreur {0}",
+            "ko-KR": "{0} 오류",
+            "zh-CN": "{0}错误"
         },
         "Exception": {
             "en": "Failed: {0}",
@@ -1349,10 +1356,11 @@
             "zh-CN": "检查更新失败：\n{0}"
         },
         "UpdateCheckTitle": {
-            "en": "OverlayPlugin Update Check",
-            "fr-FR": "Vérification des mises à jour",
-            "ko-KR": "OverlayPlugin 업데이트 확인",
-            "zh-CN": "OverlayPlugin检查更新"
+            "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
+            "en": "{0} Update Check",
+            "fr-FR": "{0}: Vérification des mises à jour",
+            "ko-KR": "{0} 업데이트 확인",
+            "zh-CN": "{0}检查更新"
         },
         "UpdateFailedError": {
             "en": "Failed to update the plugin. It might not load the next time you start ACT. Retry?",
@@ -1373,18 +1381,19 @@
             "zh-CN": "更新成功。请重新运行ACT来加载新版插件。"
         },
         "UpdateTitle": {
-            "en": "OverlayPlugin Update",
-            "fr-FR": "Mise à jour d'OverlayPlugin",
-            "ko-KR": "OverlayPlugin 업데이트",
-            "zh-CN": "OverlayPlugin更新"
+            "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
+            "en": "{0} Update",
+            "fr-FR": "Mise à jour d'{0}",
+            "ko-KR": "{0} 업데이트",
+            "zh-CN": "{0}更新"
         }
     },
     "OverlayPlugin.Updater/UpdateQuestionForm": {
         "$this.Text": {
-            "en": "OverlayPlugin Update",
-            "fr-FR": "Mise à jour d'OverlayPlugin",
-            "ko-KR": "OverlayPlugin 업데이트",
-            "zh-CN": "OverlayPlugin更新"
+            "en": "{0} Update",
+            "fr-FR": "Mise à jour d'{0}",
+            "ko-KR": "{0} 업데이트",
+            "zh-CN": "{0}更新"
         },
         "btnConfirm.Text": {
             "en": "Install Update",
@@ -1399,10 +1408,10 @@
             "zh-CN": "取消"
         },
         "label1.Text": {
-            "en": "There's a new update for OverlayPlugin available. Install it now?",
-            "fr-FR": "Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?",
-            "ko-KR": "현재 사용 가능한 OverlayPlugin의 새로운 업데이트가 있습니다. 지금 설치하시겠습니까?",
-            "zh-CN": "发现一个可用的OverlayPlugin更新。现在安装？"
+            "en": "There's a new update for {0} available. Install it now?",
+            "fr-FR": "{0}: Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?",
+            "ko-KR": "현재 사용 가능한 {0}의 새로운 업데이트가 있습니다. 지금 설치하시겠습니까?",
+            "zh-CN": "发现一个可用的{0}更新。现在安装？"
         }
     },
     "OverlayPlugin/Resources": {

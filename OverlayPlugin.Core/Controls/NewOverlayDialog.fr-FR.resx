@@ -140,4 +140,14 @@ Label vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des 
 SpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.
 </value>
   </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="lblTypeDesc.Text" xml:space="preserve">
+    <value>Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.
+
+Label vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.
+SpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.
+</value>
+  </data>
 </root>

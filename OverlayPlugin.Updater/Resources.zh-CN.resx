@@ -123,7 +123,7 @@
 {0}</value>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
-    <value>OverlayPlugin错误</value>
+    <value>{0}错误</value>
   </data>
   <data name="LogRetry" xml:space="preserve">
     <value>正在重试...</value>
@@ -181,7 +181,7 @@
     <value>解压缩被用户终止。</value>
   </data>
   <data name="UpdateCheckTitle" xml:space="preserve">
-    <value>OverlayPlugin检查更新</value>
+    <value>{0}检查更新</value>
   </data>
   <data name="UpdateCefDlFailed" xml:space="preserve">
     <value>下载CEF失败！检查OverlayPlugin.dll选项卡以获取详细信息。</value>
@@ -215,7 +215,7 @@ OverlayPlugin的运行需要它。现在安装？</value>
     <value>创建或清空缓存目录"{0}": {1}失败</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>OverlayPlugin更新</value>
+    <value>{0}更新</value>
   </data>
   <data name="StatusCancelled" xml:space="preserve">
     <value>已取消！</value>

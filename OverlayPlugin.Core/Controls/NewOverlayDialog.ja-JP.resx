@@ -143,4 +143,13 @@ SpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellT
   <data name="$this.Text" xml:space="preserve">
     <value>新しいオーバーレイ</value>
   </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>種類</value>
+  </data>
+  <data name="lblTypeDesc.Text" xml:space="preserve">
+    <value>ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。
+
+LabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。
+SpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。</value>
+  </data>
 </root>

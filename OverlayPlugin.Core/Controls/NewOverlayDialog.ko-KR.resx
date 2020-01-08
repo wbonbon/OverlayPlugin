@@ -152,4 +152,14 @@ SpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스
   <data name="buttonOK.Text" xml:space="preserve">
     <value>확인</value>
   </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>유형</value>
+  </data>
+  <data name="lblTypeDesc.Text" xml:space="preserve">
+    <value>대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.
+
+Label 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.
+SpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.
+</value>
+  </data>
 </root>
