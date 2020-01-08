@@ -41,9 +41,8 @@
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker">
       <HintPath>..\Thirdparty\ACT\Advanced Combat Tracker.exe</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml" />
@@ -148,6 +147,7 @@
     <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
       <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
       <Name>OverlayPlugin.Common</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

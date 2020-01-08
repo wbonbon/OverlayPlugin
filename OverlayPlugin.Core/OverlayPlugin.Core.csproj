@@ -381,14 +381,17 @@
     <ProjectReference Include="..\HtmlRenderer\HtmlRenderer.csproj">
       <Project>{e2bc6483-b966-4a4a-b4cc-d50a4bd73af3}</Project>
       <Name>HtmlRenderer</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\OverlayPlugin.Common\OverlayPlugin.Common.csproj">
       <Project>{423fcbfc-dd3b-415f-be29-7a4a46614b79}</Project>
       <Name>OverlayPlugin.Common</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\OverlayPlugin.Updater\OverlayPlugin.Updater.csproj">
       <Project>{82b1d288-51a6-411f-a5f9-e37c6a72e7da}</Project>
       <Name>OverlayPlugin.Updater</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -396,7 +399,9 @@
     <Content Include="resources\presets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="resources\preview.json" />
+    <Content Include="resources\preview.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
