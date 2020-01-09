@@ -446,21 +446,21 @@
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnAddHotkey.Text": {
             "en": "Add New Hotkey",
-            "fr-FR": "Ajouter nvx raccourci",
+            "fr-FR": "Nouveau raccourci",
             "ja-JP": "ホットキー追加",
             "ko-KR": "새 단축키 추가",
             "zh-CN": "添加新快捷键"
         },
         "btnApplyHotkeyChanges.Text": {
             "en": "Apply Changes",
-            "fr-FR": "Appliquer les modifications",
+            "fr-FR": "Appliquer",
             "ja-JP": "変更を適用",
             "ko-KR": "수정 내용 적용",
             "zh-CN": "应用更改"
         },
         "btnRemoveHotkey.Text": {
             "en": "Remove Selected Hotkey",
-            "fr-FR": "Supprimer le raccourci sélectionné",
+            "fr-FR": "Supprimer raccourci",
             "ja-JP": "選択されたホットキーを削除",
             "ko-KR": "선택한 단축키 제거",
             "zh-CN": "删除选定快捷键"
@@ -611,7 +611,7 @@
         },
         "label7.Text": {
             "en": "Enable overlay",
-            "fr-FR": "Activer overlay",
+            "fr-FR": "Activer l'overlay",
             "ja-JP": "オーバレイを有効にする",
             "ko-KR": "오버레이 켜기",
             "zh-CN": "启用悬浮窗"
@@ -754,7 +754,8 @@
         },
         "CustomPresetLabel": {
             "#comment": "This is the name for the preset entry that allows the user to select a custom overlay type instead of using a preset.",
-            "en": "Custom"
+            "en": "Custom",
+            "fr": "Personnalisé"
         },
         "DuplicateHandlerError": {
             "en": "Duplicate handler for name {0}!",
@@ -763,7 +764,8 @@
             "zh-CN": "名称{0}重复处理！"
         },
         "ErrorCouldNotLoadPresets": {
-            "en": "NewOverlayDialog: Failed to load presets: {0}"
+            "en": "NewOverlayDialog: Failed to load presets: {0}",
+            "fr": "NewOverlayDialog: Impossible de charger les préréglages : {0}"
         },
         "ErrorOverlayNameEmpty": {
             "en": "Name must not be empty or white space only.",
@@ -946,7 +948,8 @@
         },
         "OverlayPreviewName": {
             "#comment": "This is used as the temporary name for the preview overlay.",
-            "en": "Preview"
+            "en": "Preview",
+            "fr": "Aperçu"
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
@@ -955,7 +958,8 @@
             "zh-CN": "请选择悬浮窗类型。"
         },
         "PromptSelectPreset": {
-            "en": "Please select a preset."
+            "en": "Please select a preset.",
+            "fr": "Sélectionnez un préréglage."
         },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
