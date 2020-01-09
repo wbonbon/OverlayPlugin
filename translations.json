@@ -145,16 +145,20 @@
     },
     "OverlayPlugin.Core/Controls/RenameOverlayDialog": {
         "$this.Text": {
-            "en": "Rename Overlay"
+            "en": "Rename Overlay",
+            "zh-CN": "重命名悬浮窗"
         },
         "btnCancel.Text": {
-            "en": "Cancel"
+            "en": "Cancel",
+            "zh-CN": "取消"
         },
         "btnOk.Text": {
-            "en": "OK"
+            "en": "OK",
+            "zh-CN": "确定"
         },
         "lblName.Text": {
-            "en": "Name"
+            "en": "Name",
+            "zh-CN": "名称"
         }
     },
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
@@ -763,7 +767,8 @@
             "zh-CN": "名称{0}重复处理！"
         },
         "ErrorCouldNotLoadPresets": {
-            "en": "NewOverlayDialog: Failed to load presets: {0}"
+            "en": "NewOverlayDialog: Failed to load presets: {0}",
+            "zh-CN": "新悬浮窗对话框：加载预设失败：{0}"
         },
         "ErrorOverlayNameEmpty": {
             "en": "Name must not be empty or white space only.",
@@ -946,7 +951,8 @@
         },
         "OverlayPreviewName": {
             "#comment": "This is used as the temporary name for the preview overlay.",
-            "en": "Preview"
+            "en": "Preview",
+            "zh-CN": "预览"
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
@@ -956,6 +962,7 @@
         },
         "PromptSelectPreset": {
             "en": "Please select a preset."
+            "zh-CN": "请选择一个预设。"
         },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
