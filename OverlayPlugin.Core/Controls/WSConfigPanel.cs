@@ -206,7 +206,7 @@ namespace RainbowMage.OverlayPlugin
         private void ipTxt_Leave(object sender, EventArgs e)
         {
             IPAddress addr = null;
-            if (IPAddress.TryParse(ipTxt.Text, out addr))
+            if (ipTxt.Text == "*" || IPAddress.TryParse(ipTxt.Text, out addr))
             {
                 Config.WSServerIP = ipTxt.Text;
             }

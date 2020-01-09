@@ -74,7 +74,14 @@ namespace RainbowMage.OverlayPlugin
                 var sslPath = GetCertPath();
                 var secure = cfg.WSServerSSL && File.Exists(sslPath);
 
-                _server = new HttpServer(IPAddress.Parse(cfg.WSServerIP), cfg.WSServerPort, secure);
+                if (cfg.WSServerIP == "*")
+                {
+                    _server = new HttpServer(cfg.WSServerPort, secure);
+                } else
+                {
+                    _server = new HttpServer(IPAddress.Parse(cfg.WSServerIP), cfg.WSServerPort, secure);
+                }
+                
                 _server.ReuseAddress = true;
                 _server.Log.Output += (LogData d, string msg) =>
                 {
@@ -176,7 +183,13 @@ namespace RainbowMage.OverlayPlugin
 
             url += argName + "=ws";
             if (cfg.WSServerSSL) url += "s";
-            url += "://" + cfg.WSServerIP + ":" + cfg.WSServerPort + "/";
+            url += "://";
+            if (cfg.WSServerIP == "*" || cfg.WSServerIP == "0.0.0.0")
+                url += "127.0.0.1";
+            else
+                url += cfg.WSServerIP;
+
+            url += ":" + cfg.WSServerPort + "/";
 
             if (argName == "OVERLAY_WS") url += "ws";
 
