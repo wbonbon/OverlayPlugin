@@ -60,7 +60,11 @@ namespace RainbowMage.OverlayPlugin
             cbType.DisplayMember = "Key";
             cbType.SelectedIndex = 0;
 
+#if DEBUG
+            var presetFile = Path.Combine(PluginMain.PluginDirectory, "libs", "resources", "presets.json");
+#else
             var presetFile = Path.Combine(PluginMain.PluginDirectory, "resources", "presets.json");
+#endif
             var presetData = "{}";
 
             try
@@ -76,6 +80,11 @@ namespace RainbowMage.OverlayPlugin
             {
                 pair.Value.Name = pair.Key;
                 cbPreset.Items.Add(pair.Value);
+            }
+
+            foreach (var item in Registry.OverlayPresets)
+            {
+                cbPreset.Items.Add(item);
             }
 
             cbPreset.Items.Add(new OverlayPreset
@@ -208,15 +217,15 @@ namespace RainbowMage.OverlayPlugin
         }
 
         [JsonObject(NamingStrategyType = typeof(Newtonsoft.Json.Serialization.SnakeCaseNamingStrategy))]
-        private class OverlayPreset
+        private class OverlayPreset : IOverlayPreset
         {
-            public string Name;
-            public string Type;
-            public string Url;
+            public string Name { get; set; }
+            public string Type { get; set; }
+            public string Url { get; set; }
             [JsonIgnore]
-            public int[] Size;
-            public bool Locked;
-            public List<string> Supports;
+            public int[] Size { get; set; }
+            public bool Locked { get; set; }
+            public List<string> Supports { get; set; }
 
             [JsonExtensionData]
             private IDictionary<string, JToken> _others;

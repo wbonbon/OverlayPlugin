@@ -13,22 +13,13 @@ namespace RainbowMage.OverlayPlugin
         private static List<IEventSource> _eventSources;
         private static List<Type> _esQueue;
         private static bool _esReady = false;
+        private static List<IOverlayPreset> _overlayPresets;
 
-        public static IEnumerable<Type> Overlays
-        {
-            get
-            {
-                return _overlays;
-            }
-        }
+        public static IEnumerable<Type> Overlays => _overlays;
 
-        public static IEnumerable<IEventSource> EventSources
-        {
-            get
-            {
-                return _eventSources;
-            }
-        }
+        public static IEnumerable<IEventSource> EventSources => _eventSources;
+
+        public static IReadOnlyList<IOverlayPreset> OverlayPresets => _overlayPresets;
 
         public static event EventHandler<EventSourceRegisteredEventArgs> EventSourceRegistered;
 
@@ -39,6 +30,7 @@ namespace RainbowMage.OverlayPlugin
             _eventSources = new List<IEventSource>();
             _esQueue = new List<Type>();
             _esReady = false;
+            _overlayPresets = new List<IOverlayPreset>();
         }
 
         public static void Clear()
@@ -92,6 +84,11 @@ namespace RainbowMage.OverlayPlugin
             {
                 _esQueue.Add(esType);
             }
+        }
+
+        public static void RegisterOverlayPreset(IOverlayPreset preset)
+        {
+            _overlayPresets.Add(preset);
         }
 
         public static void StartEventSources()

@@ -52,6 +52,7 @@
     <Compile Include="IOverlayAddonV2.cs" />
     <Compile Include="IOverlayConfig.cs" />
     <Compile Include="IEventSource.cs" />
+    <Compile Include="IOverlayPreset.cs" />
     <Compile Include="IPluginConfig.cs" />
     <Compile Include="OverlayConfigList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
