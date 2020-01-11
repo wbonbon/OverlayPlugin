@@ -176,7 +176,7 @@
     <value>Raccourci</value>
   </data>
   <data name="btnAddHotkey.Text" xml:space="preserve">
-    <value>Ajouter nvx raccourci</value>
+    <value>Nouveau raccourci</value>
   </data>
   <data name="tabGeneral.Text" xml:space="preserve">
     <value>Général</value>
@@ -185,7 +185,7 @@
     <value>Avancé</value>
   </data>
   <data name="btnRemoveHotkey.Text" xml:space="preserve">
-    <value>Supprimer le raccourci sélectionné</value>
+    <value>Supprimer raccourci</value>
   </data>
   <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
     <value>Activé</value>
@@ -197,7 +197,7 @@
     <value>Raccourcis</value>
   </data>
   <data name="btnApplyHotkeyChanges.Text" xml:space="preserve">
-    <value>Appliquer les modifications</value>
+    <value>Appliquer</value>
   </data>
   <data name="label15.Text" xml:space="preserve">
     <value>Zoom</value>
@@ -211,7 +211,7 @@ Cacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan
 </value>
   </data>
   <data name="label7.Text" xml:space="preserve">
-    <value>Activer overlay</value>
+    <value>Activer l'overlay</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
     <value>Aucun son si caché</value>

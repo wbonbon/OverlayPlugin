@@ -137,4 +137,10 @@ SpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE S
   <data name="$this.Text" xml:space="preserve">
     <value>Création d'un nouvel overlay</value>
   </data>
+  <data name="buttonOK.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

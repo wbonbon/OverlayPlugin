@@ -262,4 +262,16 @@
   <data name="EventHandlerException" xml:space="preserve">
     <value>无法将事件{0}发送到{1}！ {2}</value>
   </data>
+  <data name="ErrorCouldNotLoadPresets" xml:space="preserve">
+    <value>新悬浮窗对话框：加载预设悬浮窗失败：{0}</value>
+  </data>
+  <data name="PromptSelectPreset" xml:space="preserve">
+    <value>请选择一个预设悬浮窗。</value>
+  </data>
+  <data name="OverlayPreviewName" xml:space="preserve">
+    <value>预览</value>
+  </data>
+  <data name="CustomPresetLabel" xml:space="preserve">
+    <value>自订</value>
+  </data>
 </root>
