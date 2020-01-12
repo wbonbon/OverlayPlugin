@@ -12,6 +12,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         private static string USER_AGENT;
         private static bool initialized = false;
         private static string initError = "";
+        private static string pluginDirectory = null;
 
         private static object _global_lock = new object();
 
@@ -1299,6 +1300,10 @@ namespace RainbowMage.OverlayPlugin.Updater
 
         public static void Init(string pluginDirectory)
         {
+            CurlWrapper.pluginDirectory = pluginDirectory;
+        }
+
+        private static void _init() {
             USER_AGENT = "ngld/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             var libPath = Path.Combine(pluginDirectory, "libs", Environment.Is64BitProcess ? "x64" : "x86", "libcurl.dll");
@@ -1343,7 +1348,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             ProgressInfoCallback info_cb, bool resume)
         {
             if (!initialized)
-                throw new CurlException("Not initialized! " + initError);
+                _init();
 
             var error = new byte[CURL_ERROR_SIZE];
             error[0] = 0;
@@ -1409,6 +1414,10 @@ namespace RainbowMage.OverlayPlugin.Updater
                     curl_easy_setopt(handle, CURLoption.REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
                     curl_easy_setopt(handle, CURLoption.MAXREDIRS, 10L);
                     curl_easy_setopt(handle, CURLoption.USERAGENT, USER_AGENT);
+                    
+                    // Disable ALPN since we don't need it and it breaks on Wine.
+                    // Revisit once HTTP/2.0 becomes more important.
+                    curl_easy_setopt(handle, CURLoption.SSL_ENABLE_ALPN, 0L);
 
                     if (downloadDest == null)
                     {
