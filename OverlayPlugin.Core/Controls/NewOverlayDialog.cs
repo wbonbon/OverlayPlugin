@@ -119,7 +119,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            var preset = (OverlayPreset)cbPreset.SelectedItem;
+            var preset = (IOverlayPreset)cbPreset.SelectedItem;
             var name = textBox1.Text;
 
             if (NameValidator(name))
@@ -168,7 +168,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void cbPreset_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var preset = (OverlayPreset)cbPreset.SelectedItem;
+            var preset = (IOverlayPreset)cbPreset.SelectedItem;
 
             if (preset.Url == "special:custom")
             {

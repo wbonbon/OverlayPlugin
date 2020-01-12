@@ -111,7 +111,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 try
                 {
+#if DEBUG
+                    var previewPath = Path.Combine(PluginMain.PluginDirectory, "libs", "resources", "preview.json");
+#else
                     var previewPath = Path.Combine(PluginMain.PluginDirectory, "resources", "preview.json");
+#endif
                     var eventData = JObject.Parse(File.ReadAllText(previewPath));
 
                     // Since we can't be sure when the overlay is ready to receive events, we'll just send one
