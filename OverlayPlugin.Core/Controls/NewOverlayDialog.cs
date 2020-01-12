@@ -196,12 +196,17 @@ namespace RainbowMage.OverlayPlugin
                 switch (preset.Type)
                 {
                     case "MiniParse":
+#if DEBUG
+                        var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/libs/resources";
+#else
+                        var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/resources";
+#endif
                         var config = new Overlays.MiniParseOverlayConfig(Resources.OverlayPreviewName)
                         {
                             ActwsCompatibility = preset.Supports.Count == 1 && preset.Supports.Contains("actws"),
                             Size = new Size(preset.Size[0], preset.Size[1]),
                             IsLocked = preset.Locked,
-                            Url = preset.Url,
+                            Url = preset.Url.Replace("%%", resourcesPath),
                         };
 
                         var overlay = new Overlays.MiniParseOverlay(config, config.Name);

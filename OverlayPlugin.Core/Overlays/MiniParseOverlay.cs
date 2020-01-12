@@ -123,6 +123,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
                     previewTimer = new System.Threading.Timer((state) =>
                     {
                         HandleEvent(eventData);
+
+                        ExecuteScript("document.dispatchEvent(new CustomEvent('onExampleShowcase', null));");
                     }, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
                 } catch (Exception ex)
                 {
