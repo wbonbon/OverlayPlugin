@@ -148,7 +148,11 @@ namespace RainbowMage.OverlayPlugin
                     SelectedOverlay = (IOverlay)Registry.Container.Resolve(overlayType, parameters);
                 } else
                 {
+                    // Store the current preview position and size in the config object...
                     preview.SavePositionAndSize();
+
+                    // ... and update the name as well.
+                    preview.Config.Name = name;
 
                     if (preview.GetType() == typeof(Overlays.MiniParseOverlay))
                     {

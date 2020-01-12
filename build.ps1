@@ -53,8 +53,17 @@ try {
 
     cd out\Release
 
-    rm -Recurse resources
-    mv libs\resources .
+    if (Test-Path OverlayPlugin) { rm -Recurse OverlayPlugin }
+    mkdir OverlayPlugin\libs
+
+    cp @("OverlayPlugin.dll", "OverlayPlugin.dll.config", "README.md", "LICENSE.txt") OverlayPlugin
+    cp -Recurse libs\resources OverlayPlugin
+    cp -Recurse libs\*.dll OverlayPlugin\libs
+
+    # Translations
+    cp -Recurse @("fr-FR", "ja-JP", "ko-KR", "zh-CN") OverlayPlugin
+    cp -Recurse @("libs\fr-FR", "libs\ja-JP", "libs\ko-KR", "libs\zh-CN") OverlayPlugin\libs
+
 
     $text = [System.IO.File]::ReadAllText("$PWD\..\..\OverlayPlugin\Properties\AssemblyInfo.cs");
     $regex = [regex]::New('\[assembly: AssemblyVersion\("([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+"\)');
@@ -69,14 +78,14 @@ try {
     $archive = "..\OverlayPlugin-$version.7z"
 
     if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources fr-FR zh-CN README.md `
-        LICENSE.txt libs\fr-FR libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll
+    cd OverlayPlugin
+    7z a ..\$archive .
+    cd ..
 
     $archive = "..\OverlayPlugin-$version.zip"
 
     if (Test-Path $archive) { rm $archive }
-    7z a $archive "-x!*.xml" "-x!*.pdb" OverlayPlugin.dll OverlayPlugin.dll.config resources fr-FR zh-CN README.md `
-        LICENSE.txt libs\fr-FR libs\ja-JP libs\ko-KR libs\zh-CN libs\*.dll
+    7z a $archive OverlayPlugin
 } catch {
     Write-Error $Error[0]
 }
