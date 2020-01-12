@@ -286,4 +286,7 @@
   <data name="PromptSelectPreset" xml:space="preserve">
     <value>Please select a preset.</value>
   </data>
+  <data name="PresetUsesUnsupportedType" xml:space="preserve">
+    <value>Preset {0} uses unsupported type {1}!</value>
+  </data>
 </root>

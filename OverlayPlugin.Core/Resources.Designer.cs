@@ -385,6 +385,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preset {0} uses unsupported type {1}!.
+        /// </summary>
+        internal static string PresetUsesUnsupportedType {
+            get {
+                return ResourceManager.GetString("PresetUsesUnsupportedType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select overlay type..
         /// </summary>
         internal static string PromptSelectOverlayType {

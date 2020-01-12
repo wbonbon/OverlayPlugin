@@ -148,8 +148,11 @@ namespace RainbowMage.OverlayPlugin
                     SelectedOverlay = (IOverlay)Registry.Container.Resolve(overlayType, parameters);
                 } else
                 {
+                    preview.SavePositionAndSize();
+
                     if (preview.GetType() == typeof(Overlays.MiniParseOverlay))
                     {
+                        // Reconstruct the overlay to reset the preview state.
                         SelectedOverlay = new Overlays.MiniParseOverlay((Overlays.MiniParseOverlayConfig) preview.Config, name);
                     }
                     else
@@ -189,16 +192,22 @@ namespace RainbowMage.OverlayPlugin
                 switch (preset.Type)
                 {
                     case "MiniParse":
-                        var config = new Overlays.MiniParseOverlayConfig(Resources.OverlayPreviewName);
-                        config.ActwsCompatibility = preset.Supports.Count == 1 && preset.Supports.Contains("actws");
-                        config.Size = new Size(preset.Size[0], preset.Size[1]);
-                        config.IsLocked = preset.Locked;
+                        var config = new Overlays.MiniParseOverlayConfig(Resources.OverlayPreviewName)
+                        {
+                            ActwsCompatibility = preset.Supports.Count == 1 && preset.Supports.Contains("actws"),
+                            Size = new Size(preset.Size[0], preset.Size[1]),
+                            IsLocked = preset.Locked,
+                            Url = preset.Url,
+                        };
 
                         var overlay = new Overlays.MiniParseOverlay(config, config.Name);
                         overlay.Preview = true;
-                        config.Url = preset.Url;
 
                         preview = overlay;
+                        break;
+
+                    default:
+                        Registry.Resolve<ILogger>().Log(LogLevel.Error, string.Format(Resources.PresetUsesUnsupportedType, preset.Name, preset.Type));
                         break;
                 }
             }
