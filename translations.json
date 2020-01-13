@@ -30,7 +30,8 @@
             "zh-CN": "删除"
         },
         "buttonRename.Text": {
-            "en": "Rename"
+            "en": "Rename",
+            "zh-CN": "重命名"
         },
         "checkBoxFollowLog.Text": {
             "en": "Autoscroll the log",
@@ -126,7 +127,8 @@
             "zh-CN": "名称"
         },
         "lblPreset.Text": {
-            "en": "Preset"
+            "en": "Preset",
+            "zh-CN": "预设"
         },
         "lblType.Text": {
             "en": "Type",
