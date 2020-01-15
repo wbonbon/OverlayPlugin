@@ -47,6 +47,12 @@
     "size": [300, 400],
     "supports": ["modern"]
   },
+  "SkillDisplay": {
+    "type": "MiniParse",
+    "url": "https://rawrington.github.io/SkillDisplay/",
+    "size": [800, 300],
+    "supports": ["actws"]
+  },
   "Basic RainbowMage": {
     "type": "MiniParse",
     "url": "%%/miniparse.html",
