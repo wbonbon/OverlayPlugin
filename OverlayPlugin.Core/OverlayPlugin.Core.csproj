@@ -158,6 +158,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TriggIntegration.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Controls\WSConfigPanel.cs">
       <SubType>UserControl</SubType>

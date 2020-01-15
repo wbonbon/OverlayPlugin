@@ -172,6 +172,8 @@ namespace RainbowMage.OverlayPlugin
                             // phase but it'll be loaded by the time we enter the second phase.
                             NetworkParser.Init();
 
+                            TriggIntegration.Init();
+
                             // This timer runs on the UI thread (it has to since we create UI controls) but LoadAddons()
                             // can block for some time. We run it on the background thread to avoid blocking the UI.
                             // We can't run LoadAddons() in the first init phase since it checks other ACT plugins for
