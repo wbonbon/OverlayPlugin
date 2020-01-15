@@ -61,6 +61,24 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update check for {0} through ACT failed, retrying with GitHub API..
+        /// </summary>
+        public static string ActUpdateCheckFailed {
+            get {
+                return ResourceManager.GetString("ActUpdateCheckFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ACT Update check for {0} failed, falling back to GitHub API: {1}.
+        /// </summary>
+        public static string ActUpdateException {
+            get {
+                return ResourceManager.GetString("ActUpdateException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to create or empty the temporary directory &quot;{0}&quot;: {1}.
         /// </summary>
         public static string CreatingTempDirFailed {

@@ -22,29 +22,51 @@ namespace RainbowMage.OverlayPlugin.Updater
         {
             return Task.Run(() =>
             {
-                Version remoteVersion;
+                Version remoteVersion = null;
                 string response;
-                try
+
+                Registry.Resolve<ILogger>().Log(LogLevel.Debug, "Checking for updates...");
+
+                if (options.actPluginId > 0)
                 {
-                    response = CurlWrapper.Get(CHECK_URL.Replace("{REPO}", options.repo));
+                    try
+                    {
+                        response = ActGlobals.oFormActMain.PluginGetRemoteVersion(options.actPluginId);
+                        if (!response.StartsWith("v") || !Version.TryParse(response.Substring(1), out remoteVersion))
+                        {
+                            Registry.Resolve<ILogger>().Log(LogLevel.Warning, string.Format(Resources.ActUpdateCheckFailed, options.project));
+                        }
+                    } catch (Exception ex)
+                    {
+                        Registry.Resolve<ILogger>().Log(LogLevel.Error, string.Format(Resources.ActUpdateException, options.project, ex));
+                    }
                 }
-                catch (CurlException ex)
+
+                if (remoteVersion == null)
                 {
-                    MessageBox.Show(
-                        string.Format(Resources.UpdateCheckException, ex.ToString()),
-                        string.Format(Resources.UpdateCheckTitle, options.project),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error
-                    );
-                    return (false, null, "", "");
+                    try
+                    {
+                        response = CurlWrapper.Get(CHECK_URL.Replace("{REPO}", options.repo));
+
+                        var tmp = JObject.Parse(response);
+                        remoteVersion = Version.Parse(tmp["tag_name"].ToString().Substring(1));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            string.Format(Resources.UpdateCheckException, ex.ToString()),
+                            string.Format(Resources.UpdateCheckTitle, options.project),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error
+                        );
+                        return (false, null, "", "");
+                    }
                 }
 
                 var releaseNotes = "";
                 var downloadUrl = "";
                 try
                 {
-                    var tmp = JObject.Parse(response);
-                    remoteVersion = Version.Parse(tmp["tag_name"].ToString().Substring(1));
                     if (remoteVersion <= options.currentVersion)
                     {
                         // Exit early if no new version is available.
@@ -54,7 +76,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                     response = CurlWrapper.Get(ALL_RELEASES_URL.Replace("{REPO}", options.repo));
 
                     // JObject doesn't accept arrays so we have to package the response in a JSON object.
-                    tmp = JObject.Parse("{\"content\":" + response + "}");
+                    var tmp = JObject.Parse("{\"content\":" + response + "}");
 
                     downloadUrl = options.downloadUrl.Replace("{REPO}", options.repo).Replace("{VERSION}", remoteVersion.ToString());
 
@@ -261,8 +283,10 @@ namespace RainbowMage.OverlayPlugin.Updater
                 pluginDirectory = pluginDirectory,
                 lastCheck = config.LastUpdateCheck,
                 currentVersion = Assembly.GetExecutingAssembly().GetName().Version,
+                checkInterval = TimeSpan.FromMinutes(5),
                 repo = "ngld/OverlayPlugin",
                 downloadUrl = "https://github.com/{REPO}/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.7z",
+                actPluginId = 77,
             };
 
             await RunAutoUpdater(options, manualCheck);
@@ -276,11 +300,15 @@ namespace RainbowMage.OverlayPlugin.Updater
         public DateTime lastCheck;
         public Version currentVersion;
         public Version remoteVersion;
+        public TimeSpan checkInterval = TimeSpan.FromDays(1);
         public int strippedDirs;
 
         // GitHub parameters
         public string repo;
         public string downloadUrl;
+
+        // GitHub+ACT parameters
+        public int actPluginId;
 
         // Manifest parameters
         public string manifestUrl;
