@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using Markdig;
+using System.Runtime.CompilerServices;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
@@ -24,8 +25,6 @@ namespace RainbowMage.OverlayPlugin.Updater
             {
                 Version remoteVersion = null;
                 string response;
-
-                Registry.Resolve<ILogger>().Log(LogLevel.Debug, "Checking for updates...");
 
                 if (options.actPluginId > 0)
                 {
@@ -116,10 +115,17 @@ namespace RainbowMage.OverlayPlugin.Updater
                     Registry.Resolve<ILogger>().Log(LogLevel.Error, $"Failed to remove trailers from release notes: {ex}");
                 }
 
-                releaseNotes = Markdown.ToHtml(releaseNotes);
+                releaseNotes = RenderMarkdown(releaseNotes);
 
                 return (remoteVersion.CompareTo(options.currentVersion) > 0, remoteVersion, releaseNotes, downloadUrl);
             });
+        }
+
+        // Move this into its own method to make sure that we only load the Markdown parser if we need it.
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static string RenderMarkdown(string input)
+        {
+            return Markdown.ToHtml(input);
         }
 
         public static Task<(bool, Version, string, string)> CheckForManifestUpdate(UpdaterOptions options)
@@ -223,7 +229,7 @@ namespace RainbowMage.OverlayPlugin.Updater
         public static async Task RunAutoUpdater(UpdaterOptions options, bool manualCheck = false)
         {
             // Only check once per day.
-            if (!manualCheck && options.lastCheck != null && (DateTime.Now - options.lastCheck).TotalDays < 1)
+            if (!manualCheck && options.lastCheck != null && (DateTime.Now - options.lastCheck) < options.checkInterval)
             {
                 return;
             }
