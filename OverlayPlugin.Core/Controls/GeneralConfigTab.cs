@@ -83,5 +83,10 @@ namespace RainbowMage.OverlayPlugin
             config.HideOverlayDuringCutscene = cbHideOverlaysDuringCutscene.Checked;
             OverlayHider.UpdateOverlays();
         }
+
+        private void lnkGithubRepo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(lnkGithubRepo.Text);
+        }
     }
 }

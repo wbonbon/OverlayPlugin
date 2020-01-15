@@ -25,6 +25,7 @@
             this.lblTypeDesc = new System.Windows.Forms.Label();
             this.lblPreset = new System.Windows.Forms.Label();
             this.cbPreset = new System.Windows.Forms.ComboBox();
+            this.lblPresetDescription = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -82,21 +83,27 @@
             this.cbPreset.Name = "cbPreset";
             this.cbPreset.SelectedIndexChanged += new System.EventHandler(this.cbPreset_SelectedIndexChanged);
             // 
+            // lblPresetDescription
+            // 
+            resources.ApplyResources(this.lblPresetDescription, "lblPresetDescription");
+            this.lblPresetDescription.Name = "lblPresetDescription";
+            // 
             // NewOverlayDialog
             // 
             this.AcceptButton = this.buttonOK;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.lblPresetDescription);
             this.Controls.Add(this.cbPreset);
             this.Controls.Add(this.lblPreset);
             this.Controls.Add(this.lblTypeDesc);
             this.Controls.Add(this.cbType);
-            this.Controls.Add(this.lblType);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.lblType);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -119,5 +126,6 @@
         private System.Windows.Forms.Label lblTypeDesc;
         private System.Windows.Forms.Label lblPreset;
         private System.Windows.Forms.ComboBox cbPreset;
+        private System.Windows.Forms.Label lblPresetDescription;
     }
 }

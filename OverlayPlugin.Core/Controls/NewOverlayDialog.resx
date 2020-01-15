@@ -250,7 +250,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblType.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>9</value>
   </data>
   <data name="cbType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -274,7 +274,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbType.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="lblTypeDesc.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -289,8 +289,7 @@
     <value>4</value>
   </data>
   <data name="lblTypeDesc.Text" xml:space="preserve">
-    <value>For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.
-
+    <value>For most overlays you have to select MiniParse here.
 Label allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.
 SpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.
 </value>
@@ -305,7 +304,7 @@ SpellTimer displays ACT's built in spell timers and has nothing to do with Speci
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTypeDesc.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="lblPreset.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -332,13 +331,13 @@ SpellTimer displays ACT's built in spell timers and has nothing to do with Speci
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblPreset.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="cbPreset.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 70</value>
+    <value>14, 69</value>
   </data>
   <data name="cbPreset.Size" type="System.Drawing.Size, System.Drawing">
-    <value>418, 21</value>
+    <value>419, 21</value>
   </data>
   <data name="cbPreset.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -353,6 +352,39 @@ SpellTimer displays ACT's built in spell timers and has nothing to do with Speci
     <value>$this</value>
   </data>
   <data name="&gt;&gt;cbPreset.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblPresetDescription.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="lblPresetDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 99</value>
+  </data>
+  <data name="lblPresetDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>418, 159</value>
+  </data>
+  <data name="lblPresetDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="lblPresetDescription.Text" xml:space="preserve">
+    <value>Once you have selected a preset above, you'll see a preview.
+You can move the preview around by dragging it with your mouse.
+To resize the preview, drag the bottom right corner.
+
+If you want to use an overlay that isn't listed, select the Custom preset and the correct overlay type.
+
+If you want to add new presets, send a PR to the GitHub repo (you can find a link on the General tab).</value>
+  </data>
+  <data name="&gt;&gt;lblPresetDescription.Name" xml:space="preserve">
+    <value>lblPresetDescription</value>
+  </data>
+  <data name="&gt;&gt;lblPresetDescription.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPresetDescription.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblPresetDescription.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

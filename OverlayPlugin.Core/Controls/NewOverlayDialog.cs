@@ -156,8 +156,13 @@ namespace RainbowMage.OverlayPlugin
 
                     if (preview.GetType() == typeof(Overlays.MiniParseOverlay))
                     {
+                        // Reconstruct the overlay config to get rid of any event handlers the previous overlay
+                        // registered. I should probably write a proper Dispose() implementation in MiniParseOverlay instead
+                        // but this is much shorter and does the job just as well.
+                        var config = JsonConvert.DeserializeObject<Overlays.MiniParseOverlayConfig>(JsonConvert.SerializeObject(preview.Config));
+
                         // Reconstruct the overlay to reset the preview state.
-                        SelectedOverlay = new Overlays.MiniParseOverlay((Overlays.MiniParseOverlayConfig) preview.Config, name);
+                        SelectedOverlay = new Overlays.MiniParseOverlay(config, name);
                     }
                     else
                     {
@@ -182,6 +187,7 @@ namespace RainbowMage.OverlayPlugin
                 lblType.Visible = true;
                 cbType.Visible = true;
                 lblTypeDesc.Visible = true;
+                lblPresetDescription.Visible = false;
 
                 if (preview != null) preview.Visible = false;
             }
@@ -190,6 +196,7 @@ namespace RainbowMage.OverlayPlugin
                 lblType.Visible = false;
                 cbType.Visible = false;
                 lblTypeDesc.Visible = false;
+                lblPresetDescription.Visible = true;
 
                 if (preview != null) preview.Dispose();
 
@@ -206,11 +213,11 @@ namespace RainbowMage.OverlayPlugin
                             ActwsCompatibility = preset.Supports.Count == 1 && preset.Supports.Contains("actws"),
                             Size = new Size(preset.Size[0], preset.Size[1]),
                             IsLocked = preset.Locked,
-                            Url = preset.Url.Replace("%%", resourcesPath),
                         };
 
                         var overlay = new Overlays.MiniParseOverlay(config, config.Name);
                         overlay.Preview = true;
+                        overlay.Navigate(preset.Url.Replace("%%", resourcesPath));
 
                         preview = overlay;
                         break;

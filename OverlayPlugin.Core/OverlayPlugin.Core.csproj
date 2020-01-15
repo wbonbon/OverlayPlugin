@@ -276,6 +276,9 @@
     <EmbeddedResource Include="Controls\RenameOverlayDialog.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RenameOverlayDialog.zh-CN.resx">
+      <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\WSConfigPanel.fr-FR.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
