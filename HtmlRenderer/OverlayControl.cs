@@ -199,10 +199,10 @@ namespace RainbowMage.HtmlRenderer
 
                     if (type == PaintElementType.View)
                     {
-                        Invalidate(new Region(dnDirtyRect));
+                        Invalidate(new Region(dnDirtyRect), true);
                     } else
                     {
-                        Invalidate();
+                        Invalidate(true);
                     }
                 }
                 catch (Exception ex)
