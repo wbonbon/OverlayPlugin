@@ -96,6 +96,12 @@
             "ja-JP": "アップデートを自動で確認する",
             "ko-KR": "자동으로 업데이트 확인하기",
             "zh-CN": "自动检查更新"
+        },
+        "lblGithub.Text": {
+            "en": "GitHub Repo:"
+        },
+        "lnkGithubRepo.Text": {
+            "en": "https://github.com/ngld/OverlayPlugin"
         }
     },
     "OverlayPlugin.Core/Controls/NewOverlayDialog": {
@@ -130,6 +136,9 @@
             "en": "Preset",
             "zh-CN": "预设"
         },
+        "lblPresetDescription.Text": {
+            "en": "Once you have selected a preset above, you'll see a preview.\nYou can move the preview around by dragging it with your mouse.\nTo resize the preview, drag the bottom right corner.\n\nIf you want to use an overlay that isn't listed, select the Custom preset and the correct overlay type.\n\nIf you want to add new presets, send a PR to the GitHub repo (you can find a link on the General tab)."
+        },
         "lblType.Text": {
             "en": "Type",
             "fr-FR": "Type",
@@ -138,7 +147,7 @@
             "zh-CN": "种类"
         },
         "lblTypeDesc.Text": {
-            "en": "For most overlays you have to select MiniParse here. Yes, even Cactbot needs the MiniParse type.\n\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
+            "en": "For most overlays you have to select MiniParse here.\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
             "fr-FR": "Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.\n\nLabel vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.\nSpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.\n",
             "ja-JP": "ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。\n\nLabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。\nSpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。",
             "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
@@ -960,6 +969,9 @@
             "fr-FR": "Aperçu",
             "zh-CN": "预览"
         },
+        "PresetUsesUnsupportedType": {
+            "en": "Preset {0} uses unsupported type {1}!"
+        },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
             "fr-FR": "Sélectionnez un type d'overlay.",
@@ -1128,6 +1140,14 @@
         }
     },
     "OverlayPlugin.Updater/Resources": {
+        "ActUpdateCheckFailed": {
+            "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
+            "en": "Update check for {0} through ACT failed, retrying with GitHub API."
+        },
+        "ActUpdateException": {
+            "#comment": "The first placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
+            "en": "ACT Update check for {0} failed, falling back to GitHub API: {1}"
+        },
         "CreatingTempDirFailed": {
             "en": "Failed to create or empty the temporary directory \"{0}\": {1}",
             "fr-FR": "Impossible de créer ou supprimer le répertoire temporaire \"{0}\": {1}",
