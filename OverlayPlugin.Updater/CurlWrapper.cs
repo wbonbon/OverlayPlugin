@@ -1419,6 +1419,15 @@ namespace RainbowMage.OverlayPlugin.Updater
                     // Revisit once HTTP/2.0 becomes more important.
                     curl_easy_setopt(handle, CURLoption.SSL_ENABLE_ALPN, 0L);
 
+                    // Apply the Windows proxy config to libcurl
+                    var proxy = System.Net.WebRequest.DefaultWebProxy;
+                    var reqUri = new Uri(url);
+                    if (proxy != null && !proxy.IsBypassed(reqUri))
+                    {
+                        var proxyUrl = proxy.GetProxy(reqUri).ToString();
+                        curl_easy_setopt(handle, CURLoption.PROXY, proxyUrl);
+                    }
+
                     if (downloadDest == null)
                     {
                         curl_easy_setopt(handle, CURLoption.TIMEOUT, 60L);
