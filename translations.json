@@ -972,7 +972,8 @@
             "zh-CN": "预览"
         },
         "PresetUsesUnsupportedType": {
-            "en": "Preset {0} uses unsupported type {1}!"
+            "en": "Preset {0} uses unsupported type {1}!",
+            "zh-CN": "预设{0}使用不受支持的类型{1}！"
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
