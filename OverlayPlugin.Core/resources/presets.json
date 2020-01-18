@@ -58,5 +58,29 @@
     "url": "%%/miniparse.html",
     "size": [700, 300],
     "supports": ["modern"]
-  }
+  },
+  "Target Bar": {
+    "type": "MiniParse",
+    "url": "%%/targetbars/target.html",
+    "size": [500, 600],
+    "supports": ["modern"]
+  },
+  "Focus Target Bar": {
+    "type": "MiniParse",
+    "url": "%%/targetbars/focus_target.html",
+    "size": [500, 600],
+    "supports": ["modern"]
+  },
+  "Hover Target Bar": {
+    "type": "MiniParse",
+    "url": "%%/targetbars/hover_target.html",
+    "size": [500, 600],
+    "supports": ["modern"]
+  },
+  "Target of Target Bar": {
+    "type": "MiniParse",
+    "url": "%%/targetbars/target_of_target.html",
+    "size": [500, 600],
+    "supports": ["modern"]
+  },
 }
