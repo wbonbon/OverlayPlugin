@@ -73,6 +73,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 });
             });
 
+            RegisterEventHandler("saveData", (msg) => {
+                var key = msg["key"].ToString();
+                if (key == null)
+                    return null;
+
+                Config.OverlayData[key] = msg["data"];
+                return null;
+            });
+
+            RegisterEventHandler("loadData", (msg) => {
+                var key = msg["key"].ToString();
+                if (key == null)
+                    return null;
+
+                if (!Config.OverlayData.ContainsKey(key))
+                    return null;
+
+                var ret = new JObject();
+                ret["key"] = key;
+                ret["data"] = Config.OverlayData[key];
+                return ret;
+            });
+
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
             NetworkParser.OnOnlineStatusChanged += (o, e) =>
             {
