@@ -331,6 +331,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not find Machina or the FFXIV plugin. This is only an issue if you&apos;re using ACT with FFXIV..
+        /// </summary>
+        internal static string NetworkParserNoFfxiv {
+            get {
+                return ResourceManager.GetString("NetworkParserNoFfxiv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Received invalid handler call: {0}.
         /// </summary>
         internal static string OverlayApiInvalidHandlerCall {

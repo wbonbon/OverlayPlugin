@@ -948,6 +948,9 @@
             "ko-KR": "네트워크 파서를 설정하지 못했습니다 : {0}",
             "zh-CN": "无法设置网络解析器：{0}"
         },
+        "NetworkParserNoFfxiv": {
+            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV."
+        },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
             "fr-FR": "Appel d'un handler invalide reçu : {0}",
