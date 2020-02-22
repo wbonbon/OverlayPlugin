@@ -42,7 +42,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         // Event Source
 
-        public MiniParseEventSourceConfig Config { get; set; }
+        public BuiltinEventConfig Config { get; set; }
 
         public MiniParseEventSource(ILogger logger) : base(logger)
         {
@@ -109,8 +109,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
             };
 
             FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
-
-            InitializeEnmityEventSource();
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
@@ -221,24 +219,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override Control CreateConfigControl()
         {
-            return new MiniParseEventSourceConfigPanel(this);
+            return null;
         }
 
         public override void LoadConfig(IPluginConfig config)
         {
-            this.Config = MiniParseEventSourceConfig.LoadConfig(config);
+            this.Config = Registry.Resolve<BuiltinEventConfig>();
 
             this.Config.UpdateIntervalChanged += (o, e) =>
             {
                 this.Start();
             };
-
-            LoadEnmityConfig();
         }
 
         public override void SaveConfig(IPluginConfig config)
         {
-            this.Config.SaveConfig(config);
+            
         }
 
         public override void Start()

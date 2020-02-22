@@ -4,21 +4,22 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
-    partial class MiniParseEventSource : EventSourceBase
+    public class EnmityEventSource : EventSourceBase
     {
         private EnmityMemory memory;
-        private Timer enmityTimer;
-        private const int defaultEnmityInterval = 100;
 
         // General information about the target, focus target, hover target.  Also, enmity entries for main target.
         private const string EnmityTargetDataEvent = "EnmityTargetData";
         // All of the mobs with aggro on the player.  Equivalent of the sidebar aggro list in game.
         private const string EnmityAggroListEvent = "EnmityAggroList";
 
-        public void InitializeEnmityEventSource()
+        public BuiltinEventConfig Config { get; set; }
+
+        public EnmityEventSource(ILogger logger) : base(logger)
         {
             this.memory = new EnmityMemory(logger);
 
@@ -27,17 +28,27 @@ namespace RainbowMage.OverlayPlugin.EventSources
             });
         }
 
-        public void LoadEnmityConfig()
+        public override Control CreateConfigControl()
         {
-            enmityTimer = new Timer(UpdateEnmity, null, Timeout.Infinite, this.Config.EnmityIntervalMs);
-            enmityTimer.Change(0, this.Config.EnmityIntervalMs);
+            return null;
+        }
+
+        public override void LoadConfig(IPluginConfig cfg)
+        {
+            this.Config = Registry.Resolve<BuiltinEventConfig>();
+
+            timer.Change(0, this.Config.EnmityIntervalMs);
             this.Config.EnmityIntervalChanged += (o, e) =>
             {
-                enmityTimer.Change(0, this.Config.EnmityIntervalMs);
+                timer.Change(0, this.Config.EnmityIntervalMs);
             };
         }
 
-        protected void UpdateEnmity(object state)
+        public override void SaveConfig(IPluginConfig config)
+        {
+        }
+
+        protected override void Update()
         {
             try
             {
@@ -58,7 +69,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 if (targetData)
                 {
-                    this.DispatchEvent(CreateTargetData(combatants));
+                    // See CreateTargetData() below
+                    //this.DispatchEvent(CreateTargetData(combatants));
                 }
                 if (aggroList)
                 {
@@ -95,6 +107,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         internal JObject CreateTargetData(List<Combatant> combatants)
         {
+            // TODO: Update the following code for the new memory structure
+
             EnmityTargetDataObject enmity = new EnmityTargetDataObject();
             try
             {

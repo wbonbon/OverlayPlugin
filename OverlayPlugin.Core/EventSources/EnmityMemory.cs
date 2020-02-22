@@ -101,8 +101,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IntPtr enmityAddress = IntPtr.Zero;
         private IntPtr aggroAddress = IntPtr.Zero;
 
-        private const string charmapSignature = "488b420848c1e8033da701000077248bc0488d0d";
-        private const string targetSignature = "41bc000000e041bd01000000493bc47555488d0d";
+        private const string charmapSignature = "574883EC??488B1D????????488BF233D2";
+        private const string targetSignature = "483935????????7520483935????????7517";
         private const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
 
         // Offsets from the signature to find the correct address.

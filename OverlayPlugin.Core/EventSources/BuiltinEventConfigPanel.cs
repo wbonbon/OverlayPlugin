@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
-    partial class MiniParseEventSourceConfigPanel : UserControl
+    partial class BuiltinEventConfigPanel : UserControl
     {
-        private MiniParseEventSourceConfig config;
+        private BuiltinEventConfig config;
 
         static readonly List<KeyValuePair<string, string>> sortKeyDict = new List<KeyValuePair<string, string>>()
         {
@@ -21,11 +21,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
             new KeyValuePair<string, string>("HPS", "enchps"),
         };
 
-        public MiniParseEventSourceConfigPanel(MiniParseEventSource source)
+        public BuiltinEventConfigPanel()
         {
             InitializeComponent();
 
-            this.config = source.Config;
+            this.config = Registry.Resolve<BuiltinEventConfig>();
 
             SetupControlProperties();
             SetupConfigEventHandlers();

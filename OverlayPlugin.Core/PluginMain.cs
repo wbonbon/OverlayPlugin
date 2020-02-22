@@ -316,10 +316,11 @@ namespace RainbowMage.OverlayPlugin
                     }
                 }
 
-                var Addons = new List<IOverlayAddonV2>();
+                Registry.Register(BuiltinEventConfig.LoadConfig(Config));
 
-                // Make sure the event source is ready before we load any overlays.
+                // Make sure the event sources are ready before we load any overlays.
                 Registry.RegisterEventSource<MiniParseEventSource>();
+                Registry.RegisterEventSource<EnmityEventSource>();
                 Registry.StartEventSources();
 
                 Registry.RegisterOverlay<MiniParseOverlay>();
@@ -327,6 +328,7 @@ namespace RainbowMage.OverlayPlugin
                 Registry.RegisterOverlay<LabelOverlay>();
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
+                var Addons = new List<IOverlayAddonV2>();
 
                 foreach (var plugin in ActGlobals.oFormActMain.ActPlugins)
                 {

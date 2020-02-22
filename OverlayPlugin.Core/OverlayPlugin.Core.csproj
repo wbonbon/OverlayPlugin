@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\out\Debug\libs\</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -95,11 +95,11 @@
     <Compile Include="Overlays\LogParseLoglineReader.cs" />
     <Compile Include="Overlays\LogParseOverlay.cs" />
     <Compile Include="Overlays\LogParseOverlayConfig.cs" />
-    <Compile Include="EventSources\MiniParseEventSourceConfigPanel.cs">
+    <Compile Include="EventSources\BuiltinEventConfigPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EventSources\MiniParseEventSourceConfigPanel.Designer.cs">
-      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    <Compile Include="EventSources\BuiltinEventConfigPanel.Designer.cs">
+      <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="EventSources\MiniParseEventSource.cs" />
     <Compile Include="Overlays\MiniParseOverlayConfig.cs" />
@@ -129,7 +129,7 @@
       <DependentUpon>MiniParseConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Overlays\MiniParseOverlay.cs" />
-    <Compile Include="EventSources\MiniParseEventSourceConfig.cs" />
+    <Compile Include="EventSources\BuiltinEventConfig.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Controls\NewOverlayDialog.cs">
       <SubType>Form</SubType>
@@ -291,11 +291,11 @@
     <EmbeddedResource Include="Controls\WSConfigPanel.zh-CN.resx">
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.fr-FR.resx">
-      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.fr-FR.resx">
+      <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.zh-CN.resx">
-      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.zh-CN.resx">
+      <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LabelOverlayConfigPanel.fr-FR.resx">
       <DependentUpon>LabelOverlayConfigPanel.cs</DependentUpon>
@@ -324,14 +324,14 @@
     <EmbeddedResource Include="Overlays\LogParseConfigPanel.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.ja-JP.resx">
-      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.ja-JP.resx">
+      <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.ko-KR.resx">
-      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.ko-KR.resx">
+      <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EventSources\MiniParseEventSourceConfigPanel.resx">
-      <DependentUpon>MiniParseEventSourceConfigPanel.cs</DependentUpon>
+    <EmbeddedResource Include="EventSources\BuiltinEventConfigPanel.resx">
+      <DependentUpon>BuiltinEventConfigPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Overlays\LogParseConfigPanel.zh-CN.resx">
       <DependentUpon>LogParseConfigPanel.cs</DependentUpon>

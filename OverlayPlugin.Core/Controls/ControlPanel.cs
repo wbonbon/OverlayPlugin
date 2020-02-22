@@ -16,7 +16,7 @@ namespace RainbowMage.OverlayPlugin
     {
         PluginMain pluginMain;
         PluginConfig config;
-        TabPage generalTab;
+        TabPage generalTab, eventTab;
 
         static Dictionary<string, string> esNames = new Dictionary<string, string>
         {
@@ -46,6 +46,13 @@ namespace RainbowMage.OverlayPlugin
                 Text = "",
             };
             generalTab.Controls.Add(new GeneralConfigTab());
+
+            eventTab = new ConfigTabPage
+            {
+                Name = Resources.EventConfigTab,
+                Text = "",
+            };
+            eventTab.Controls.Add(new EventSources.BuiltinEventConfigPanel());
 
             PluginMain.Logger.RegisterListener(AddLogEntry);
             Registry.EventSourceRegistered += (o, e) => Invoke((Action)(() => AddEventSourceTab(o, e)));
@@ -108,6 +115,7 @@ namespace RainbowMage.OverlayPlugin
         {
             tabControl.TabPages.Clear();
             tabControl.TabPages.Add(generalTab);
+            tabControl.TabPages.Add(eventTab);
 
             foreach (var source in Registry.EventSources)
             {
@@ -158,7 +166,7 @@ namespace RainbowMage.OverlayPlugin
             var tabPage = new ConfigTabPage
             {
                 Name = source.Name,
-                Text = Resources.TabsESLabel + " " + label,
+                Text = "",
                 IsEventSource = true,
             };
 

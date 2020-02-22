@@ -115,6 +115,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event Settings.
+        /// </summary>
+        internal static string EventConfigTab {
+            get {
+                return ResourceManager.GetString("EventConfigTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to dispatch event {0} to {1}! {2}.
         /// </summary>
         internal static string EventHandlerException {
