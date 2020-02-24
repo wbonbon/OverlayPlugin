@@ -31,6 +31,7 @@
         },
         "buttonRename.Text": {
             "en": "Rename",
+            "fr-FR": "Renommer",
             "ko-KR": "이름 바꾸기",
             "zh-CN": "重命名"
         },
@@ -136,11 +137,13 @@
         },
         "lblPreset.Text": {
             "en": "Preset",
+            "fr-FR": "Preset",
             "ja-JP": "プリセット",
             "zh-CN": "预设"
         },
         "lblPresetDescription.Text": {
             "en": "Once you have selected a preset above, you'll see a preview.\nYou can move the preview around by dragging it with your mouse.\nTo resize the preview, drag the bottom right corner.\n\nIf you want to use an overlay that isn't listed, select the Custom preset and the correct overlay type.\n\nIf you want to add new presets, send a PR to the GitHub repo (you can find a link on the General tab).",
+            "fr-FR": "Une fois un preset choisi, un aperçu sera affiché.\nVous pouvez déplacer l'aperçu en l'attrapant avec votre souris.\nPour redimensionner l'aperçu, attrapez le coin inférieur droit.\n\nSi vous voulez utiliser un overlay qui n'est pas dans la liste, choisissez Personnalisé et le bon type d'overlay.\n\nSi vous voulez ajouter un nouveau preset, faites un PR sur le repo GitHub (un lien est présent sur l'onglet Général).",
             "ja-JP": "上記のプリセットを選択するとプレビューが表示されます。\nプレビューはマウスでドラッグして移動できます。まらサイズを変更するには右下の端をドラッグします。\n\nリストに無いオーバーレイを使用する場合は Custom を選択して適切なタイプを選択して下さい。\n\n新しいプリセットを追加するには GitHub で Pull Request を送って下さい。\n(リンクは General タブにあります。)",
             "zh-CN": "选择上方的预设后，您将看到其预览。\n您可以通过使用鼠标拖动来移动预览。\n要调整预览的大小，请拖动其右下角。\n\n如果要使用未列出的悬浮窗，请选择“自订”预设和正确的悬浮窗种类。\n\n如果要添加新的预设，请发送PR到GitHub项目（可以在“通用”选项卡中找到链接）。"
         },
@@ -162,18 +165,22 @@
     "OverlayPlugin.Core/Controls/RenameOverlayDialog": {
         "$this.Text": {
             "en": "Rename Overlay",
+            "fr-FR": "Renommer l'overlay",
             "zh-CN": "重命名悬浮窗"
         },
         "btnCancel.Text": {
             "en": "Cancel",
+            "fr-FR": "Annuler",
             "zh-CN": "取消"
         },
         "btnOk.Text": {
             "en": "OK",
+            "fr-FR": "OK",
             "zh-CN": "确定"
         },
         "lblName.Text": {
             "en": "Name",
+            "fr-FR": "Nom",
             "zh-CN": "名称"
         }
     },
@@ -993,6 +1000,7 @@
         },
         "PresetUsesUnsupportedType": {
             "en": "Preset {0} uses unsupported type {1}!",
+            "fr-FR": "Le preset {0} utilise un type non supporté {1} !",
             "ko-KR": "{0} 프리셋은 지원하지 않는 형식 {1}을 사용합니다!",
             "zh-CN": "预设{0}使用不受支持的类型{1}！"
         },
@@ -1004,7 +1012,7 @@
         },
         "PromptSelectPreset": {
             "en": "Please select a preset.",
-            "fr-FR": "Sélectionnez un préréglage.",
+            "fr-FR": "Sélectionnez un preset.",
             "zh-CN": "请选择一个预设悬浮窗。"
         },
         "RegisterHotkeyError": {
@@ -1059,6 +1067,7 @@
         },
         "WSNotConfidentLink": {
             "en": "This link might not work if the overlay doesn't support ACTWebSocket.",
+            "fr-FR": "Ce lien peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.",
             "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 링크는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
@@ -1167,12 +1176,14 @@
         "ActUpdateCheckFailed": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
             "en": "Update check for {0} through ACT failed, retrying with GitHub API.",
+            "fr-FR": "La vérification de {0} via ACT a échoué. Nouvel essai avec l'API GitHub",
             "ja-JP": "ACTでの {0} のアップデートチェックが失敗しました. GitHub API をリトライします.",
             "zh-CN": "通过ACT检查{0}的更新失败，正在使用GitHub API重试。"
         },
         "ActUpdateException": {
             "#comment": "The first placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
             "en": "ACT Update check for {0} failed, falling back to GitHub API: {1}",
+            "fr-FR": "La vérification de la mise à jour ACT {0} a échoué, retour sur l'API GitHub : {1}",
             "ja-JP": "ACTでの {0} のアップデートチェックが失敗しました. GitHub API に戻ります: {1}",
             "zh-CN": "{0}的ACT检查更新失败，正在回退至GitHub API: {1}"
         },
@@ -1522,7 +1533,7 @@
         "UpdateTitle": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
             "en": "{0} Update",
-            "fr-FR": "Mise à jour d'{0}",
+            "fr-FR": "Mise à jour de {0}",
             "ja-JP": "{0} アップデート",
             "ko-KR": "{0} 업데이트",
             "zh-CN": "{0}更新"
@@ -1531,7 +1542,7 @@
     "OverlayPlugin.Updater/UpdateQuestionForm": {
         "$this.Text": {
             "en": "{0} Update",
-            "fr-FR": "Mise à jour d'{0}",
+            "fr-FR": "Mise à jour de {0}",
             "ko-KR": "{0} 업데이트",
             "zh-CN": "{0}更新"
         },
@@ -1563,6 +1574,7 @@
         },
         "AssemblyMissing": {
             "en": "Failed to load {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete anything (like the libs folder).",
+            "fr-FR": "Impossible de charger {0}: {1}\nAssurez vous d'avoir extrait l'ensemble de l'archive du plugin et de n'avoir rien supprimé (comme le répertoire libs).",
             "ko-KR": "불러오기 실패 {0}: {1}\n플러그인 압축 파일 안의 내용물을 빠짐없이 전부 해제했는지, 삭제하진 않았는지 확인하세요. (libs 폴더 등)",
             "zh-CN": "加载失败{0}: {1}\n确保您解压缩了整个插件压缩包，并且没有删除任何内容（比如libs文件夹）。"
         },
