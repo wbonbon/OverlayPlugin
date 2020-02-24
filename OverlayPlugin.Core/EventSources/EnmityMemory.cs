@@ -114,8 +114,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         // Offsets from the targetAddress to find the correct target type.
         private const int targetTargetOffset = 176;
-        private const int focusTargetOffset = 184;
-        private const int hoverTargetOffset = 248;
+        private const int focusTargetOffset = 248;
+        private const int hoverTargetOffset = 208;
 
         // Constants.
         private const uint emptyID = 0xE0000000;
