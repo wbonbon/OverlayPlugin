@@ -136,7 +136,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 success = false;
             }
 
-            logger.Log(LogLevel.Info, "Found enmity memory for 5.2.");
             logger.Log(LogLevel.Debug, "charmapAddress: 0x{0:X}", charmapAddress.ToInt64());
             logger.Log(LogLevel.Debug, "enmityAddress: 0x{0:X}", enmityAddress.ToInt64());
             logger.Log(LogLevel.Debug, "aggroAddress: 0x{0:X}", aggroAddress.ToInt64());
@@ -150,6 +149,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (!success)
             {
                 logger.Log(LogLevel.Error, "Failed to memory scan 5.2: {0}.", String.Join(",", fail));
+            } else
+            {
+                logger.Log(LogLevel.Info, "Found enmity memory for 5.2.");
             }
 
             return success;

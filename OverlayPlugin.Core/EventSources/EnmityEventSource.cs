@@ -42,11 +42,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             this.Config = Registry.Resolve<BuiltinEventConfig>();
 
-            timer.Change(0, this.Config.EnmityIntervalMs);
             this.Config.EnmityIntervalChanged += (o, e) =>
             {
                 timer.Change(0, this.Config.EnmityIntervalMs);
             };
+        }
+
+        public override void Start()
+        {
+            timer.Change(0, this.Config.EnmityIntervalMs);
         }
 
         public override void SaveConfig(IPluginConfig config)
