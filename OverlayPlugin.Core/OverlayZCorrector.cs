@@ -23,6 +23,11 @@ namespace RainbowMage.OverlayPlugin
             timer = new Timer(EnsureOverlaysAreOverGame, null, span, span);
         }
 
+        public static void DeInit()
+        {
+            timer.Change(0, -1);
+        }
+
         private static void EnsureOverlaysAreOverGame(object _)
         {
             var watch = new Stopwatch();

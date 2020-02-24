@@ -12,6 +12,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
     {
         private EnmityMemory memory;
         private List<EnmityMemory> memoryCandidates;
+        private bool memoryValid = false;
+
+        const int MEMORY_SCAN_INTERVAL = 3000;
 
         // General information about the target, focus target, hover target.  Also, enmity entries for main target.
         private const string EnmityTargetDataEvent = "EnmityTargetData";
@@ -44,13 +47,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             this.Config.EnmityIntervalChanged += (o, e) =>
             {
-                timer.Change(0, this.Config.EnmityIntervalMs);
+                if (memory != null)
+                    timer.Change(0, this.Config.EnmityIntervalMs);
             };
         }
 
         public override void Start()
         {
-            timer.Change(0, this.Config.EnmityIntervalMs);
+            memoryValid = false;
+            timer.Change(0, MEMORY_SCAN_INTERVAL);
         }
 
         public override void SaveConfig(IPluginConfig config)
@@ -80,7 +85,20 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
 
                 if (memory == null || !memory.IsValid())
+                {
+                    if (memoryValid)
+                    {
+                        timer.Change(MEMORY_SCAN_INTERVAL, MEMORY_SCAN_INTERVAL);
+                        memoryValid = false;
+                    }
+
                     return;
+                } else if (!memoryValid)
+                {
+                    // Increase the update interval now that we found our memory
+                    timer.Change(this.Config.EnmityIntervalMs, this.Config.EnmityIntervalMs);
+                    memoryValid = true;
+                }
 
                 bool targetData = HasSubscriber(EnmityTargetDataEvent);
                 bool aggroList = HasSubscriber(EnmityAggroListEvent);

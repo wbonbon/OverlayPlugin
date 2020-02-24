@@ -271,6 +271,7 @@ namespace RainbowMage.OverlayPlugin
         public void DeInitPlugin()
         {
             SaveConfig();
+            OverlayZCorrector.DeInit();
 
             if (controlPanel != null) controlPanel.Dispose();
 
