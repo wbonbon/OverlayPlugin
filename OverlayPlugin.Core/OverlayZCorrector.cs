@@ -19,7 +19,7 @@ namespace RainbowMage.OverlayPlugin
             main = Registry.Resolve<PluginMain>();
             logger = Registry.Resolve<ILogger>();
 
-            var span = TimeSpan.FromSeconds(10);
+            var span = TimeSpan.FromSeconds(3);
             timer = new Timer(EnsureOverlaysAreOverGame, null, span, span);
         }
 
@@ -57,7 +57,7 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
-            logger.Log(LogLevel.Debug, $"ZReorder: Took {watch.Elapsed.TotalSeconds}s.");
+            // logger.Log(LogLevel.Debug, $"ZReorder: Took {watch.Elapsed.TotalSeconds}s.");
         }
     }
 }
