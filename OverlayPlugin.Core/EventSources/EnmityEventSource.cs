@@ -11,6 +11,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
     public class EnmityEventSource : EventSourceBase
     {
         private EnmityMemory memory;
+        private List<EnmityMemory> memoryCandidates;
 
         // General information about the target, focus target, hover target.  Also, enmity entries for main target.
         private const string EnmityTargetDataEvent = "EnmityTargetData";
@@ -21,7 +22,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public EnmityEventSource(ILogger logger) : base(logger)
         {
-            this.memory = new EnmityMemory(logger);
+            // this.memory = new EnmityMemory(logger);
+            memoryCandidates = new List<EnmityMemory>()
+            {
+                new EnmityMemory52(logger), new EnmityMemory50(logger)
+            };
 
             RegisterEventTypes(new List<string> {
                 EnmityTargetDataEvent, EnmityAggroListEvent,
@@ -56,6 +61,19 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 #endif
+
+                if (memory == null)
+                {
+                    foreach (var candidate in memoryCandidates)
+                    {
+                        if (candidate.IsValid())
+                        {
+                            memory = candidate;
+                            memoryCandidates = null;
+                            break;
+                        }
+                    }
+                }
 
                 if (memory == null || !memory.IsValid())
                     return;
