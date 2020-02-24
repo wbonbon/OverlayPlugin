@@ -109,10 +109,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         // Offsets from the signature to find the correct address.
         private const int charmapSignatureOffset = 0;
         private const int targetSignatureOffset = 0;
-        private const int enmitySignatureOffset = -4648;
-
-        // Offset from the enmityAddress to find various enmity data structures.
-        private const int aggroEnmityOffset = 0x908;
+        private const int enmitySignatureOffset = -2608;
+        private const int aggroEnmityOffset = -2336;
 
         // Offsets from the targetAddress to find the correct target type.
         private const int targetTargetOffset = 176;
@@ -193,8 +191,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             list = memory.SigScan(enmitySignature, 0, bRIP);
             if (list != null && list.Count > 0)
             {
-                enmityAddress = list[0] + enmitySignatureOffset;
-                aggroAddress = IntPtr.Add(enmityAddress, aggroEnmityOffset);
+                enmityAddress = IntPtr.Add(list[0], enmitySignatureOffset);
+                aggroAddress = IntPtr.Add(list[0], aggroEnmityOffset);
             }
             else
             {
@@ -220,6 +218,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             logger.Log(LogLevel.Debug, "charmapAddress: 0x{0:X}", charmapAddress.ToInt64());
             logger.Log(LogLevel.Debug, "enmityAddress: 0x{0:X}", enmityAddress.ToInt64());
+            logger.Log(LogLevel.Debug, "aggroAddress: 0x{0:X}", aggroAddress.ToInt64());
             logger.Log(LogLevel.Debug, "targetAddress: 0x{0:X}", targetAddress.ToInt64());
             Combatant c = GetSelfCombatant();
             if (c != null)
@@ -429,28 +428,27 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
-        [StructLayout(LayoutKind.Explicit, Size=72)]
+        [StructLayout(LayoutKind.Explicit, Size=8)]
         struct EnmityListEntry
         {
             public static int Size => Marshal.SizeOf(typeof(EnmityListEntry));
 
-            [FieldOffset(0x38)]
+            [FieldOffset(0x00)]
             public uint ID;
 
-            [FieldOffset(0x3C)]
+            [FieldOffset(0x04)]
             public uint Enmity;
         }
 
         // A byte[] -> EnmityListEntry[] converter.
         // Owns the memory and returns out EnmityListEntry objects from it.
-        // Both the enmity list and the aggro list use this same structure.
         private class EnmityList
         {
             public int numEntries = 0;
             private byte[] buffer;
 
-            public const short maxEntries = 31;
-            public const int numEntryOffset = 0x8F8;
+            public const short maxEntries = 31; // or 32?
+            public const int numEntryOffset = 256;
             // The number of entries is a short at the end of the array of entries.  Hence, +2.
             public const int totalBytesSize = numEntryOffset + 2;
 
@@ -512,6 +510,53 @@ namespace RainbowMage.OverlayPlugin.EventSources
             return result;
         }
 
+        [StructLayout(LayoutKind.Explicit, Size = 72)]
+        struct AggroListEntry
+        {
+            public static int Size => Marshal.SizeOf(typeof(AggroListEntry));
+
+            [FieldOffset(0x38)]
+            public uint ID;
+
+            [FieldOffset(0x3C)]
+            public uint Enmity;
+        }
+
+        // A byte[] -> AggroListEntry[] converter.
+        // Owns the memory and returns out AggroListEntry objects from it.
+        private class AggroList
+        {
+            public int numEntries = 0;
+            private byte[] buffer;
+
+            public const short maxEntries = 31;
+            public const int numEntryOffset = 0x8F8;
+            // The number of entries is a short at the end of the array of entries.  Hence, +2.
+            public const int totalBytesSize = numEntryOffset + 2;
+
+            public unsafe AggroListEntry GetEntry(int i)
+            {
+                fixed (byte* p = buffer)
+                {
+                    return *(AggroListEntry*)&p[i * AggroListEntry.Size];
+                }
+            }
+
+            public unsafe AggroList(byte[] buffer)
+            {
+                Debug.Assert(maxEntries * AggroListEntry.Size <= totalBytesSize);
+                Debug.Assert(buffer.Length >= totalBytesSize);
+
+                this.buffer = buffer;
+                fixed (byte* p = buffer) numEntries = Math.Min((short)p[numEntryOffset], maxEntries);
+            }
+        }
+
+        private AggroList ReadAggroList(IntPtr address)
+        {
+            return new AggroList(memory.GetByteArray(address, AggroList.totalBytesSize));
+        }
+
         // Converts an EnmityList into a List<AggroEntry>.
         public unsafe List<AggroEntry> GetAggroList(List<Combatant> combatantList)
         {
@@ -526,10 +571,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             var result = new List<AggroEntry>();
 
-            EnmityList list = ReadEnmityList(aggroAddress);
+            AggroList list = ReadAggroList(aggroAddress);
             for (int i = 0; i < list.numEntries; i++)
             {
-                EnmityListEntry e = list.GetEntry(i);
+                AggroListEntry e = list.GetEntry(i);
                 if (e.ID <= 0)
                     continue;
                 Combatant c = combatantList.Find(x => x.ID == e.ID);
