@@ -96,6 +96,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
     {
         private FFXIVMemory memory;
         private ILogger logger;
+        private DateTime lastSigScan = DateTime.MinValue;
 
         private IntPtr charmapAddress = IntPtr.Zero;
         private IntPtr targetAddress = IntPtr.Zero;
@@ -169,6 +170,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (!memory.IsValid())
                 return false;
 
+            // Don't scan too often to avoid excessive CPU load
+            if ((DateTime.Now - lastSigScan) < TimeSpan.FromSeconds(5))
+                return false;
+
+            lastSigScan = DateTime.Now;
             bool success = true;
             bool bRIP = true;
 
