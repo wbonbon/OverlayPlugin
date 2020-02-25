@@ -601,7 +601,7 @@
             "en": "Mute overlay when hidden",
             "fr-FR": "Aucun son si caché",
             "ja-JP": "オーバーレイが隠れているときに\nミュートにする",
-            "ko-KR": "오버레이가 숨겨진 상태일 때 음소거 하기",
+            "ko-KR": "숨겨진 상태일 때 음소거하기",
             "zh-CN": "隐藏时使悬浮窗静音"
         },
         "label15.Text": {

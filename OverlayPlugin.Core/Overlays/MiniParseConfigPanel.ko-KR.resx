@@ -217,7 +217,7 @@
     <value>활성화</value>
   </data>
   <data name="label13.Text" xml:space="preserve">
-    <value>오버레이가 숨겨진 상태일 때 음소거 하기</value>
+    <value>숨겨진 상태일 때 음소거하기</value>
   </data>
   <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
     <value>단축키</value>
