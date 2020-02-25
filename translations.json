@@ -1524,7 +1524,7 @@
         },
         "UpdateSliderDetails": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)\nThis text is displayed in ACT's restart prompt. ACT already asks the user to restart so we don't have to.",
-            "en": "{0} was updated successfully."
+            "en": "{0} was updated successfully.",
             "zh-CN": "{0}已成功更新。"
         },
         "UpdateSuccess": {
