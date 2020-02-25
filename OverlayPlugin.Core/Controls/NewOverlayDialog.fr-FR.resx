@@ -117,19 +117,42 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Type</value>
-  </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Annuler</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 13</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Nom</value>
   </data>
+  <data name="lblTypeDesc.Text" xml:space="preserve">
+    <value>Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.
+
+Label vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.
+SpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.
+</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Création d'un nouvel overlay</value>
-  </data></root>
+  </data>
+  <data name="buttonOK.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="lblPreset.Text" xml:space="preserve">
+    <value>Preset</value>
+  </data>
+  <data name="lblPresetDescription.Text" xml:space="preserve">
+    <value>Une fois un preset choisi, un aperçu sera affiché.
+Vous pouvez déplacer l'aperçu en l'attrapant avec votre souris.
+Pour redimensionner l'aperçu, attrapez le coin inférieur droit.
+
+Si vous voulez utiliser un overlay qui n'est pas dans la liste, choisissez Personnalisé et le bon type d'overlay.
+
+Si vous voulez ajouter un nouveau preset, faites un PR sur le repo GitHub (un lien est présent sur l'onglet Général).</value>
+  </data>
+</root>

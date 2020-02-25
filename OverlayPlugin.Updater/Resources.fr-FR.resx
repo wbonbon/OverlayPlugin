@@ -122,7 +122,7 @@
     <value>Impossible d'effacer {0}: {1}</value>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
-    <value>Erreur OverlayPlugin</value>
+    <value>Erreur {0}</value>
   </data>
   <data name="UpdateSuccess" xml:space="preserve">
     <value>Mise à jour réalisée avec succès. Redémarrez ACT pour charger la nouvelle version.</value>
@@ -177,7 +177,7 @@
     <value>Annulé par l'utilisateur.</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>Mise à jour d'OverlayPlugin</value>
+    <value>Mise à jour de {0}</value>
   </data>
   <data name="MsvcrtMissing" xml:space="preserve">
     <value>MS Visual C++ Redistributable pour Visual Studio 2019 est manquant.
@@ -230,7 +230,7 @@ Ce composant est nécessaire pour OverlayPlugin. L'installer maintenant ?</value
     <value>En attente de l'installeur pour quitter ...</value>
   </data>
   <data name="UpdateCefDlFailed" xml:space="preserve">
-    <value>Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin. Réessayer ?</value>
+    <value>Impossible de télécharger CEF ! Vérifiez l'onglet OverlayPlugin.dll pour plus de détails.</value>
   </data>
   <data name="LogOverwritingOldFilesFailed" xml:space="preserve">
     <value>Impossible d'écraser les anciens fichiers : {0} !
@@ -244,7 +244,7 @@ Relancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas sur
     <value>OverlayPlugin</value>
   </data>
   <data name="UpdateCheckTitle" xml:space="preserve">
-    <value>Vérification des mises à jour</value>
+    <value>{0}: Vérification des mises à jour</value>
   </data>
   <data name="LogLaunchingInstaller" xml:space="preserve">
     <value>Démarrage de l'installeur</value>
@@ -266,4 +266,10 @@ Relancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas sur
   </data>
   <data name="LogCleaningUp" xml:space="preserve">
     <value>Nettoyage ...</value>
-  </data></root>
+  </data>  <data name="ActUpdateException" xml:space="preserve">
+    <value>La vérification de la mise à jour ACT {0} a échoué, retour sur l'API GitHub : {1}</value>
+  </data>
+  <data name="ActUpdateCheckFailed" xml:space="preserve">
+    <value>La vérification de {0} via ACT a échoué. Nouvel essai avec l'API GitHub</value>
+  </data>
+</root>

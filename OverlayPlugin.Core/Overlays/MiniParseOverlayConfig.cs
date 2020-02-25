@@ -11,6 +11,8 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public event EventHandler<CompatbilityChangedArgs> ActwsCompatibilityChanged;
         public event EventHandler NoFocusChanged;
         public event EventHandler ZoomChanged;
+        public event EventHandler ForceWhiteBackgroundChanged;
+        public event EventHandler MuteWhenHiddenChanged;
 
         private bool actwsCompatibility;
         public bool ActwsCompatibility
@@ -56,6 +58,40 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 {
                     this.zoom = value;
                     ZoomChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
+        public bool forceWhiteBackground;
+        public bool ForceWhiteBackground
+        {
+            get
+            {
+                return this.forceWhiteBackground;
+            }
+            set
+            {
+                if (this.forceWhiteBackground != value)
+                {
+                    this.forceWhiteBackground = value;
+                    ForceWhiteBackgroundChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
+        private bool muteWhenHidden;
+        public bool MuteWhenHidden
+        {
+            get
+            {
+                return muteWhenHidden;
+            }
+            set
+            {
+                if (muteWhenHidden != value)
+                {
+                    muteWhenHidden = value;
+                    MuteWhenHiddenChanged?.Invoke(this, new EventArgs());
                 }
             }
         }

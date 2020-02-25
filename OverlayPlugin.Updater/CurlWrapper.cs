@@ -7,16 +7,12 @@ using System.IO;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
-    public unsafe static class CurlWrapper
+    public static class CurlWrapper
     {
         private static string USER_AGENT;
         private static bool initialized = false;
-
-        private static Dictionary<int, StringBuilder> recvBuffers = new Dictionary<int, StringBuilder>();
-        private static int nextRecvIdx = 1;
-
-        private static Dictionary<int, DownloadInfo> downloadInfos = new Dictionary<int, DownloadInfo>();
-        private static int nextDownloadIdx = 1;
+        private static string initError = "";
+        private static string pluginDirectory = null;
 
         private static object _global_lock = new object();
 
@@ -42,14 +38,13 @@ namespace RainbowMage.OverlayPlugin.Updater
         [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern CURLcode curl_easy_setopt(IntPtr handle, CURLoption option, string parameter);
 
-        [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern CURLcode curl_easy_setopt(IntPtr handle, CURLoption option, byte* buffer);
-
-        delegate UIntPtr write_callback(byte* ptr, UIntPtr size, UIntPtr nmemb, IntPtr userdata);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        delegate UIntPtr write_callback(IntPtr ptr, UIntPtr size, UIntPtr nmemb, IntPtr userdata);
 
         [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern CURLcode curl_easy_setopt(IntPtr handle, CURLoption option, write_callback callback);
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public delegate int progress_callback(IntPtr clientp, long dltotal, long dlnow, long ultotal, long ulnow);
 
         [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -58,10 +53,10 @@ namespace RainbowMage.OverlayPlugin.Updater
         [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern CURLcode curl_easy_getinfo(IntPtr curl, CURLINFO info, out long value);
 
-        [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern IntPtr curl_slist_append(IntPtr list, string item);
 
-        [DllImport("libcurl.dll")]
+        [DllImport("libcurl.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void curl_slist_free_all(IntPtr list);
 
         private const long CURL_GLOBAL_SSL = 1 << 0; /* no purpose since since 7.57.0 */
@@ -1301,19 +1296,43 @@ namespace RainbowMage.OverlayPlugin.Updater
         };
         #endregion
 
+        public delegate bool ProgressInfoCallback(long resumed, long dltotal, long dlnow, long ultotal, long ulnow);
+
         public static void Init(string pluginDirectory)
         {
+            CurlWrapper.pluginDirectory = pluginDirectory;
+        }
+
+        private static void _init() {
             USER_AGENT = "ngld/OverlayPlugin v" + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             var libPath = Path.Combine(pluginDirectory, "libs", Environment.Is64BitProcess ? "x64" : "x86", "libcurl.dll");
+            if (!File.Exists(libPath))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(libPath));
+
+                using (var stream = File.OpenWrite(libPath))
+                {
+                    var data = Environment.Is64BitProcess ? Resources.libcurl_x64 : Resources.libcurl;
+                    stream.Write(data, 0, data.Length);
+                }
+            }
+
             var result = NativeMethods.LoadLibrary(libPath);
-            Registry.Resolve<ILogger>().Log(LogLevel.Info, $"Test: {result}; {libPath} {Marshal.GetLastWin32Error()}");
+
+            if (result == IntPtr.Zero)
+            {
+                var msg = $"libcurl.dll load failed: {Marshal.GetLastWin32Error()}";
+                initError = msg;
+                throw new CurlException(msg);
+            }
 
             lock (_global_lock)
             {
                 if (curl_global_init(CURL_GLOBAL_NOTHING) != 0)
                 {
-                    throw new CurlException($"Init failed!");
+                    initError = "Init failed!";
+                    throw new CurlException("Init failed!");
                 }
 
                 initialized = true;
@@ -1325,33 +1344,24 @@ namespace RainbowMage.OverlayPlugin.Updater
             return Get(url, new Dictionary<string, string>(), null, null, false);
         }
 
-        public static string Get(string url, Dictionary<string, string> headers, string downloadDest,
-            progress_callback info_cb, bool resume)
+        public static unsafe string Get(string url, Dictionary<string, string> headers, string downloadDest,
+            ProgressInfoCallback info_cb, bool resume)
         {
             if (!initialized)
-                throw new CurlException("Not initialized!");
-
-            var handle = curl_easy_init();
-            if (handle == IntPtr.Zero)
-                throw new CurlException("curl_easy_init() failed!");
+                _init();
 
             var error = new byte[CURL_ERROR_SIZE];
             error[0] = 0;
 
             var header_list = IntPtr.Zero;
-            StringBuilder response = null;
-            DownloadInfo dlInfo = null;
-            int bufferIdx = -1, dlIdx = -1;
+            var dlInfo = new Download();
 
             if (downloadDest == null)
             {
-                response = new StringBuilder();
-                bufferIdx = nextRecvIdx++;
-                recvBuffers[bufferIdx] = response;
+                // We have to return the response later as a string so we use a StringBuilder as the download destination.
+                dlInfo.builder = new StringBuilder();
             } else
             {
-                dlInfo = new DownloadInfo();
-
                 if (resume)
                 {
                     try
@@ -1371,9 +1381,26 @@ namespace RainbowMage.OverlayPlugin.Updater
                 {
                     dlInfo.handle = File.Open(downloadDest, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
                 }
+            }
 
-                dlIdx = nextDownloadIdx++;
-                downloadInfos[dlIdx] = dlInfo;
+            long resumePos = dlInfo.handle == null ? 0 : dlInfo.handle.Position;
+
+            var handle = curl_easy_init();
+            if (handle == IntPtr.Zero || handle == null)
+                throw new CurlException("curl_easy_init() failed!");
+
+            // Pin the delegates we pass to cURL to make sure the GC doesn't remove them.
+            var writeDele = new write_callback(dlInfo.DataCallback);
+            var writePin = GCHandle.Alloc(writeDele);
+
+            progress_callback progressDele = null;
+            GCHandle? progressPin = null;
+
+            if (info_cb != null)
+            {
+                dlInfo.infoCallback = info_cb;
+                progressDele = new progress_callback(dlInfo.ProgressWrapperCallback);
+                progressPin = GCHandle.Alloc(progressDele);
             }
 
             try
@@ -1381,29 +1408,36 @@ namespace RainbowMage.OverlayPlugin.Updater
                 fixed (byte* errorPtr = error)
                 {
                     curl_easy_setopt(handle, CURLoption.URL, url);
-                     curl_easy_setopt(handle, CURLoption.ERRORBUFFER, errorPtr);
+                    curl_easy_setopt(handle, CURLoption.ERRORBUFFER, (IntPtr) errorPtr);
                     curl_easy_setopt(handle, CURLoption.ACCEPT_ENCODING, "");
                     curl_easy_setopt(handle, CURLoption.FOLLOWLOCATION, 1L);
                     curl_easy_setopt(handle, CURLoption.REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
                     curl_easy_setopt(handle, CURLoption.MAXREDIRS, 10L);
                     curl_easy_setopt(handle, CURLoption.USERAGENT, USER_AGENT);
+                    
+                    // Disable ALPN since we don't need it and it breaks on Wine.
+                    // Revisit once HTTP/2.0 becomes more important.
+                    curl_easy_setopt(handle, CURLoption.SSL_ENABLE_ALPN, 0L);
+
+                    // Apply the Windows proxy config to libcurl
+                    var proxy = System.Net.WebRequest.DefaultWebProxy;
+                    var reqUri = new Uri(url);
+                    if (proxy != null && !proxy.IsBypassed(reqUri))
+                    {
+                        var proxyUrl = proxy.GetProxy(reqUri).ToString();
+                        curl_easy_setopt(handle, CURLoption.PROXY, proxyUrl);
+                    }
 
                     if (downloadDest == null)
                     {
                         curl_easy_setopt(handle, CURLoption.TIMEOUT, 60L);
-
-                        curl_easy_setopt(handle, CURLoption.WRITEFUNCTION, MemoryWriter);
-                        curl_easy_setopt(handle, CURLoption.WRITEDATA, (IntPtr)bufferIdx);
-                    } else
-                    {
-                        curl_easy_setopt(handle, CURLoption.WRITEFUNCTION, FileWriter);
-                        curl_easy_setopt(handle, CURLoption.WRITEDATA, (IntPtr)dlIdx);
                     }
 
-                    /*if (info_cb != null)
+                    curl_easy_setopt(handle, CURLoption.WRITEFUNCTION, writeDele);
+
+                    if (info_cb != null)
                     {
-                        curl_easy_setopt(handle, CURLoption.XFERINFOFUNCTION, info_cb);
-                        curl_easy_setopt(handle, CURLoption.XFERINFODATA, (IntPtr) dlInfo.handle.Position);
+                        curl_easy_setopt(handle, CURLoption.XFERINFOFUNCTION, progressDele);
                         curl_easy_setopt(handle, CURLoption.NOPROGRESS, 0L);
                     }
 
@@ -1411,12 +1445,14 @@ namespace RainbowMage.OverlayPlugin.Updater
                     {
                         header_list = curl_slist_append(header_list, pair.Key + ": " + pair.Value);
                     }
-                    curl_easy_setopt(handle, CURLoption.HTTPHEADER, header_list);*/
+                    curl_easy_setopt(handle, CURLoption.HTTPHEADER, header_list);
 
                     var result = curl_easy_perform(handle);
+                    if (dlInfo.exception != null) throw dlInfo.exception;
+
                     if (result != CURLcode.CURLE_OK)
                     {
-                        throw new CurlException($"Request to \"{url}\" failed: {result}; {Encoding.UTF8.GetString(error)}");
+                        throw new CurlException($"Request to \"{url}\" failed: {result}; {Encoding.UTF8.GetString(error).Trim('\0')}");
                     }
 
                     curl_easy_getinfo(handle, CURLINFO.RESPONSE_CODE, out long code);
@@ -1426,23 +1462,16 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
                 }
 
-                if (dlInfo != null)
-                {
-                    dlInfo.handle.Close();
-                }
-
-                return response == null ? null : response.ToString();
+                return dlInfo.builder?.ToString();
             } finally
             {
-                if (bufferIdx > -1)
-                    recvBuffers.Remove(bufferIdx);
+                writePin.Free();
+                progressPin?.Free();
 
-                if (dlIdx > -1)
+                if (dlInfo != null)
                 {
                     if (dlInfo.handle != null)
                         dlInfo.handle.Close();
-
-                    downloadInfos.Remove(dlIdx);
                 }
 
                 if (header_list != IntPtr.Zero)
@@ -1452,52 +1481,62 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
         }
 
-        [AllowReversePInvokeCalls()]
-        private static UIntPtr MemoryWriter(byte* ptr, UIntPtr size, UIntPtr nmemb, IntPtr userdata)
-        {
-            StringBuilder response;
-            if (recvBuffers.TryGetValue((int) userdata, out response)) {
-                var total_size = (uint)size * (uint)nmemb;
-
-                response.Append(Encoding.UTF8.GetString(ptr, (int) total_size));
-                return (UIntPtr)total_size;
-            } else
-            {
-                return (UIntPtr)0;
-            }
-        }
-
-        [AllowReversePInvokeCalls()]
-        private static UIntPtr FileWriter(byte* ptr, UIntPtr size, UIntPtr nmemb, IntPtr userdata)
-        {
-            DownloadInfo info;
-            return UIntPtr.Zero;
-
-            if (downloadInfos.TryGetValue((int) userdata, out info))
-            {
-                var total_size = (uint)size * (uint)nmemb;
-                
-                if (info.buffer == null || info.buffer.Length < total_size)
-                {
-                    info.buffer = new byte[total_size + 1024];
-                }
-
-                // This is ugly but the easiest way to do this for now (unless we want to call FileStream.Write()
-                // for each byte).
-                Marshal.Copy((IntPtr) ptr, info.buffer, 0, (int) total_size);
-                info.handle.Write(info.buffer, 0, (int)total_size);
-
-                return (UIntPtr)total_size;
-            } else
-            {
-                return (UIntPtr)0;
-            }
-        }
-
-        private class DownloadInfo
+        private class Download
         {
             public byte[] buffer;
             public FileStream handle;
+            public StringBuilder builder;
+            public Exception exception;
+            public long resumed = 0;
+            public ProgressInfoCallback infoCallback;
+
+            public UIntPtr DataCallback(IntPtr ptr, UIntPtr size, UIntPtr nmemb, IntPtr userdata)
+            {
+                var total_size = (int)((uint)size * (uint)nmemb);
+                try
+                {
+                    if (buffer == null || buffer.Length < total_size)
+                    {
+                        buffer = new byte[total_size + 1024];
+                    }
+
+                    // This is ugly but the easiest way to do this for now (unless we want to call FileStream.Write()
+                    // for each byte).
+                    Marshal.Copy(ptr, buffer, 0, total_size);
+
+                    if (handle != null)
+                    {
+                        handle.Write(buffer, 0, total_size);
+                    }
+                    else if (builder != null)
+                    {
+                        builder.Append(Encoding.UTF8.GetString(buffer, 0, total_size));
+                    }
+                    else
+                    {
+                        throw new CurlException("Missing handle or builder!");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                    return (UIntPtr)0;
+                }
+
+                return (UIntPtr)total_size;
+            }
+
+            public int ProgressWrapperCallback(IntPtr clientp, long dltotal, long dlnow, long ultotal, long ulnow)
+            {
+                try
+                {
+                    return infoCallback(resumed, dltotal, dlnow, ultotal, ulnow) ? 1 : 0;
+                } catch (Exception ex)
+                {
+                    exception = ex;
+                    return 1;
+                }
+            }
         }
     }
 

@@ -119,13 +119,13 @@
   </resheader>
 
   <data name="$this.Text" xml:space="preserve">
-    <value>Mise à jour d'OverlayPlugin</value>
+    <value>Mise à jour de {0}</value>
   </data>
   <data name="btnConfirm.Text" xml:space="preserve">
     <value>Installer la mise à jour</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
-    <value>Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?</value>
+    <value>{0}: Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?</value>
   </data>
   <data name="btnDeny.Text" xml:space="preserve">
     <value>Annuler</value>

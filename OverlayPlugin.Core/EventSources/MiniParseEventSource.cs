@@ -42,7 +42,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         // Event Source
 
-        public MiniParseEventSourceConfig Config { get; set; }
+        public BuiltinEventConfig Config { get; set; }
 
         public MiniParseEventSource(ILogger logger) : base(logger)
         {
@@ -73,6 +73,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 });
             });
 
+            RegisterEventHandler("saveData", (msg) => {
+                var key = msg["key"].ToString();
+                if (key == null)
+                    return null;
+
+                Config.OverlayData[key] = msg["data"];
+                return null;
+            });
+
+            RegisterEventHandler("loadData", (msg) => {
+                var key = msg["key"].ToString();
+                if (key == null)
+                    return null;
+
+                if (!Config.OverlayData.ContainsKey(key))
+                    return null;
+
+                var ret = new JObject();
+                ret["key"] = key;
+                ret["data"] = Config.OverlayData[key];
+                return ret;
+            });
+
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
             NetworkParser.OnOnlineStatusChanged += (o, e) =>
             {
@@ -86,8 +109,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
             };
 
             FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
-
-            InitializeEnmityEventSource();
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
@@ -198,24 +219,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override Control CreateConfigControl()
         {
-            return new MiniParseEventSourceConfigPanel(this);
+            return null;
         }
 
         public override void LoadConfig(IPluginConfig config)
         {
-            this.Config = MiniParseEventSourceConfig.LoadConfig(config);
+            this.Config = Registry.Resolve<BuiltinEventConfig>();
 
             this.Config.UpdateIntervalChanged += (o, e) =>
             {
                 this.Start();
             };
-
-            LoadEnmityConfig();
         }
 
         public override void SaveConfig(IPluginConfig config)
         {
-            this.Config.SaveConfig(config);
+            
         }
 
         public override void Start()
@@ -281,8 +300,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
 #if DEBUG
-            //var stopwatch = new Stopwatch();
-            //stopwatch.Start();
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 #endif
 
             var allies = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.GetAllies();
@@ -350,18 +369,18 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             obj["isActive"] = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active ? "true" : "false";
 
-#if DEBUG
-            //stopwatch.Stop();
-            //Log(LogLevel.Trace, "CreateUpdateScript: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
+#if TRACE
+            stopwatch.Stop();
+            Log(LogLevel.Trace, "CreateUpdateScript: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
             return obj;
         }
 
         private List<KeyValuePair<CombatantData, Dictionary<string, string>>> GetCombatantList(List<CombatantData> allies)
         {
-#if DEBUG
-            //var stopwatch = new Stopwatch();
-            //stopwatch.Start();
+#if TRACE
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 #endif
 
             var combatantList = new List<KeyValuePair<CombatantData, Dictionary<string, string>>>();
@@ -412,9 +431,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
             );
 
-#if DEBUG
-            //stopwatch.Stop();
-            //Log(LogLevel.Trace, "GetCombatantList: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
+#if TRACE
+            stopwatch.Stop();
+            Log(LogLevel.Trace, "GetCombatantList: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
 
             return combatantList;
@@ -422,9 +441,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private Dictionary<string, string> GetEncounterDictionary(List<CombatantData> allies)
         {
-#if DEBUG
-            //var stopwatch = new Stopwatch();
-            //stopwatch.Start();
+#if TRACE
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
 #endif
 
             var encounterDict = new Dictionary<string, string>();
@@ -462,9 +481,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
             }
 
-#if DEBUG
-            //stopwatch.Stop();
-            //Log(LogLevel.Trace, "GetEncounterDictionary: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
+#if TRACE
+            stopwatch.Stop();
+            Log(LogLevel.Trace, "GetEncounterDictionary: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
 
             return encounterDict;

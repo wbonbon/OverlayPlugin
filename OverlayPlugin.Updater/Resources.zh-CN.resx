@@ -123,7 +123,7 @@
 {0}</value>
   </data>
   <data name="ErrorTitle" xml:space="preserve">
-    <value>OverlayPlugin错误</value>
+    <value>{0}错误</value>
   </data>
   <data name="LogRetry" xml:space="preserve">
     <value>正在重试...</value>
@@ -144,7 +144,7 @@
     <value>正在恢复下载...</value>
   </data>
   <data name="OverlayPluginTitle" xml:space="preserve">
-    <value>数据统计美化</value>
+    <value>OverlayPlugin</value>
   </data>
   <data name="LaunchingInstallerFailed" xml:space="preserve">
     <value>打开安装程序失败：{0}</value>
@@ -156,7 +156,7 @@
     <value>[{0}/{1}]:正在准备解压缩...</value>
   </data>
   <data name="DownloadFailedContentLengthMissing" xml:space="preserve">
-    <value>下载失败！下载没有文件大小（缺少内容长度头）。</value>
+    <value>下载失败！没有下载文件大小（Content-Length标头缺失）。</value>
   </data>
   <data name="UpdateParseVersionError" xml:space="preserve">
     <value>解析版本失败:
@@ -181,10 +181,10 @@
     <value>解压缩被用户终止。</value>
   </data>
   <data name="UpdateCheckTitle" xml:space="preserve">
-    <value>OverlayPlugin检查更新</value>
+    <value>{0}检查更新</value>
   </data>
   <data name="UpdateCefDlFailed" xml:space="preserve">
-    <value>下载CEF失败！您将不能使用OverlayPlugin。重试？</value>
+    <value>下载CEF失败！检查OverlayPlugin.dll选项卡以获取详细信息。</value>
   </data>
   <data name="Exception" xml:space="preserve">
     <value>失败：{0}</value>
@@ -209,13 +209,13 @@
   </data>
   <data name="MsvcrtMissing" xml:space="preserve">
     <value>你没有安装MS Visual C++ Redistributable for Visual Studio 2019。
-OverlayPlugin运行需要它。现在安装？</value>
+OverlayPlugin的运行需要它。现在安装？</value>
   </data>
   <data name="CreatingTempDirFailed" xml:space="preserve">
     <value>创建或清空缓存目录"{0}": {1}失败</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>OverlayPlugin更新</value>
+    <value>{0}更新</value>
   </data>
   <data name="StatusCancelled" xml:space="preserve">
     <value>已取消！</value>
@@ -266,4 +266,14 @@ OverlayPlugin运行需要它。现在安装？</value>
     <value>无法覆写旧文件：{0}
 警告：插件可能处于无法使用的状态！！
 再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。</value>
-  </data></root>
+  </data>  <data name="SharpCompressOutdatedError" xml:space="preserve">
+    <value>当前加载的SharpCompress版本过旧！
+请确保先加载OverlayPlugin，再加载其他也使用SharpCompress的插件（例如ACTWebSocket）。</value>
+  </data>
+  <data name="ActUpdateException" xml:space="preserve">
+    <value>{0}的ACT检查更新失败，正在回退至GitHub API: {1}</value>
+  </data>
+  <data name="ActUpdateCheckFailed" xml:space="preserve">
+    <value>通过ACT检查{0}的更新失败，正在使用GitHub API重试。</value>
+  </data>
+</root>

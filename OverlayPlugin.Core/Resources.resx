@@ -225,7 +225,7 @@
     <value>General</value>
   </data>
   <data name="HotkeyActionToggleClickthrough" xml:space="preserve">
-    <value>Toggle clickthru</value>
+    <value>Toggle clickthrough</value>
   </data>
   <data name="HotkeyActionToggleLock" xml:space="preserve">
     <value>Toggle lock</value>
@@ -265,5 +265,34 @@
   </data>
   <data name="TabsESLabel" xml:space="preserve">
     <value>Event Source</value>
+  </data>
+  <data name="WSNotConfidentLink" xml:space="preserve">
+    <value>This link might not work if the overlay doesn't support ACTWebSocket.</value>
+  </data>
+  <data name="HotkeyActionToggleEnabled" xml:space="preserve">
+    <value>Toggle enabled</value>
+  </data>
+  <data name="CustomPresetLabel" xml:space="preserve">
+    <value>Custom</value>
+    <comment>This is the name for the preset entry that allows the user to select a custom overlay type instead of using a preset.</comment>
+  </data>
+  <data name="ErrorCouldNotLoadPresets" xml:space="preserve">
+    <value>NewOverlayDialog: Failed to load presets: {0}</value>
+  </data>
+  <data name="OverlayPreviewName" xml:space="preserve">
+    <value>Preview</value>
+    <comment>This is used as the temporary name for the preview overlay.</comment>
+  </data>
+  <data name="PromptSelectPreset" xml:space="preserve">
+    <value>Please select a preset.</value>
+  </data>
+  <data name="PresetUsesUnsupportedType" xml:space="preserve">
+    <value>Preset {0} uses unsupported type {1}!</value>
+  </data>
+  <data name="NetworkParserNoFfxiv" xml:space="preserve">
+    <value>Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV.</value>
+  </data>
+  <data name="EventConfigTab" xml:space="preserve">
+    <value>Event Settings</value>
   </data>
 </root>

@@ -70,11 +70,29 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        internal static string CustomPresetLabel {
+            get {
+                return ResourceManager.GetString("CustomPresetLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate handler for name {0}!.
         /// </summary>
         internal static string DuplicateHandlerError {
             get {
                 return ResourceManager.GetString("DuplicateHandlerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NewOverlayDialog: Failed to load presets: {0}.
+        /// </summary>
+        internal static string ErrorCouldNotLoadPresets {
+            get {
+                return ResourceManager.GetString("ErrorCouldNotLoadPresets", resourceCulture);
             }
         }
         
@@ -93,6 +111,15 @@ namespace RainbowMage.OverlayPlugin {
         internal static string ErrorOverlayNameNotUnique {
             get {
                 return ResourceManager.GetString("ErrorOverlayNameNotUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Settings.
+        /// </summary>
+        internal static string EventConfigTab {
+            get {
+                return ResourceManager.GetString("EventConfigTab", resourceCulture);
             }
         }
         
@@ -133,11 +160,20 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggle clickthru.
+        ///   Looks up a localized string similar to Toggle clickthrough.
         /// </summary>
         internal static string HotkeyActionToggleClickthrough {
             get {
                 return ResourceManager.GetString("HotkeyActionToggleClickthrough", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle enabled.
+        /// </summary>
+        internal static string HotkeyActionToggleEnabled {
+            get {
+                return ResourceManager.GetString("HotkeyActionToggleEnabled", resourceCulture);
             }
         }
         
@@ -304,6 +340,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not find Machina or the FFXIV plugin. This is only an issue if you&apos;re using ACT with FFXIV..
+        /// </summary>
+        internal static string NetworkParserNoFfxiv {
+            get {
+                return ResourceManager.GetString("NetworkParserNoFfxiv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Received invalid handler call: {0}.
         /// </summary>
         internal static string OverlayApiInvalidHandlerCall {
@@ -349,11 +394,38 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        internal static string OverlayPreviewName {
+            get {
+                return ResourceManager.GetString("OverlayPreviewName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preset {0} uses unsupported type {1}!.
+        /// </summary>
+        internal static string PresetUsesUnsupportedType {
+            get {
+                return ResourceManager.GetString("PresetUsesUnsupportedType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select overlay type..
         /// </summary>
         internal static string PromptSelectOverlayType {
             get {
                 return ResourceManager.GetString("PromptSelectOverlayType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a preset..
+        /// </summary>
+        internal static string PromptSelectPreset {
+            get {
+                return ResourceManager.GetString("PromptSelectPreset", resourceCulture);
             }
         }
         
@@ -442,6 +514,15 @@ namespace RainbowMage.OverlayPlugin {
         internal static string WSNewSubFail {
             get {
                 return ResourceManager.GetString("WSNewSubFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This link might not work if the overlay doesn&apos;t support ACTWebSocket..
+        /// </summary>
+        internal static string WSNotConfidentLink {
+            get {
+                return ResourceManager.GetString("WSNotConfidentLink", resourceCulture);
             }
         }
         

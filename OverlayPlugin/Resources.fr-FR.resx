@@ -146,4 +146,16 @@ Vérifier que l'ancien OverlayPlugin est désactivé et relancez ACT. Si le prob
   </data>
   <data name="InitCef" xml:space="preserve">
     <value>Initialisation de CEF ...</value>
-  </data></root>
+  </data>
+  <data name="DependencyOutdated" xml:space="preserve">
+    <value>Fatal : La version {0} chargée est plus ancienne qu'attendue ({1}  &lt; {2})! Cela peut causer des bugs étranges dans OverlayPlugin et ses addons.</value>
+  </data>
+  <data name="DependencyMissing" xml:space="preserve">
+    <value>Impossible de charger les dépendences {0}: {1}
+Vérifiez que vous avez extrait toute l'archive et n'avez pas effacé de fichiers.</value>
+  </data>
+  <data name="AssemblyMissing" xml:space="preserve">
+    <value>Impossible de charger {0}: {1}
+Assurez vous d'avoir extrait l'ensemble de l'archive du plugin et de n'avoir rien supprimé (comme le répertoire libs).</value>
+  </data>
+</root>

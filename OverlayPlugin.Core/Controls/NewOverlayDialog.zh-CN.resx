@@ -116,20 +116,46 @@
   </resheader>
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>  <data name="$this.Text" xml:space="preserve">
-    <value>创建新的美化悬浮窗</value>
+  </resheader>
+  <data name="buttonOK.Text" xml:space="preserve">
+    <value>确定</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>取消</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
   <data name="label1.Text" xml:space="preserve">
     <value>名称</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
+  <data name="lblType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>28, 13</value>
+  </data>
+  <data name="lblType.Text" xml:space="preserve">
     <value>种类</value>
   </data>
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>确定</value>
-  </data>
+  <data name="lblTypeDesc.Text" xml:space="preserve">
+    <value>对于大多数悬浮窗，您必须在此处选择[数据统计]。 是的，即使Cactbot也需要[数据统计]类型。
 
+[标签]允许您在屏幕上显示静态文本或HTML。对于笔记和技能循环提醒很实用。
+[技能冷却]显示ACT内置的技能冷却计时器，与Hojoring的SpecialSpellTimers或SPESPE无关。
+</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>创建新的悬浮窗</value>
+  </data>
+  <data name="lblPreset.Text" xml:space="preserve">
+    <value>预设</value>
+  </data>
+  <data name="lblPresetDescription.Text" xml:space="preserve">
+    <value>选择上方的预设后，您将看到其预览。
+您可以通过使用鼠标拖动来移动预览。
+要调整预览的大小，请拖动其右下角。
+
+如果要使用未列出的悬浮窗，请选择“自订”预设和正确的悬浮窗种类。
+
+如果要添加新的预设，请发送PR到GitHub项目（可以在“通用”选项卡中找到链接）。</value>
+  </data>
 </root>

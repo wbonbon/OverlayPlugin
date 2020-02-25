@@ -151,9 +151,6 @@
   <data name="checkNoFocus.Text" xml:space="preserve">
     <value>Ne pas accepter le focus pour cet overlay</value>
   </data>
-  <data name="label8.Text" xml:space="preserve">
-    <value>Touche de raccourci</value>
-  </data>
   <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
     <value>RAZ Position</value>
   </data>
@@ -169,12 +166,54 @@
   <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
     <value>Recharger l'overlay</value>
   </data>
-  <data name="label10.Text" xml:space="preserve">
-    <value>Type de raccourci</value>
-  </data>
-  <data name="label7.Text" xml:space="preserve">
-    <value>Activer raccourci</value>
-  </data>
   <data name="checkActwsCompatbility.Text" xml:space="preserve">
     <value>Cet overlay nécessite ACTWebSocket</value>
-  </data></root>
+  </data>
+  <data name="btnResetZoom.Text" xml:space="preserve">
+    <value>RAZ</value>
+  </data>
+  <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
+    <value>Raccourci</value>
+  </data>
+  <data name="btnAddHotkey.Text" xml:space="preserve">
+    <value>Nouveau raccourci</value>
+  </data>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="tabAdvanced.Text" xml:space="preserve">
+    <value>Avancé</value>
+  </data>
+  <data name="btnRemoveHotkey.Text" xml:space="preserve">
+    <value>Supprimer raccourci</value>
+  </data>
+  <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
+    <value>Activé</value>
+  </data>
+  <data name="hotkeyColAction.HeaderText" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="tabHotkeys.Text" xml:space="preserve">
+    <value>Raccourcis</value>
+  </data>
+  <data name="btnApplyHotkeyChanges.Text" xml:space="preserve">
+    <value>Appliquer</value>
+  </data>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Si un overlay est bloqué, sa position devient fixe et vous ne pourrez pas le bouger avant de l'avoir débloqué</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Désactiver un overlay réduit la charge CPU mais arrête également toutes ses fonctionnalités (sons, etc.).
+Cacher un overlay le rend invisible. Il reste en fonctionnement en arrière plan et peut jouer des sons, collecter des statistiques, etc.
+</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Activer l'overlay</value>
+  </data>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Aucun son si caché</value>
+  </data>
+</root>
