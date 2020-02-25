@@ -163,7 +163,7 @@
         },
         "lblPresetDescription.Text": {
             "en": "Once you have selected a preset above, you'll see a preview.\nYou can move the preview around by dragging it with your mouse.\nTo resize the preview, drag the bottom right corner.\n\nIf you want to use an overlay that isn't listed, select the Custom preset and the correct overlay type.\n\nIf you want to add new presets, send a PR to the GitHub repo (you can find a link on the General tab).",
-            "de-DE": "Nachdem Sie oben eine Voreinstellung ausgewählt haben, wird eine Vorschau angezeigt.\nSie können die Vorschau verschieben, indem Sie sie mit der Maus ziehen.\nUm die Größe der Vorschau zu ändern, ziehen Sie die untere rechte Ecke.\n\nWenn Sie ein Overlay verwenden möchten, das nicht aufgeführt ist, wählen Sie die "Benutzerdefinierte" Voreinstellung und den richtigen Overlay-Typ aus.\n\nWenn Sie neue Voreinstellungen hinzufügen möchten, sende einen PR an das GitHub-Repo (einen Link finden Sie auf der Registerkarte Allgemein).",
+            "de-DE": "Nachdem Sie oben eine Voreinstellung ausgewählt haben, wird eine Vorschau angezeigt.\nSie können die Vorschau verschieben, indem Sie sie mit der Maus ziehen.\nUm die Größe der Vorschau zu ändern, ziehen Sie die untere rechte Ecke.\n\nWenn Sie ein Overlay verwenden möchten, das nicht aufgeführt ist, wählen Sie die \"Benutzerdefinierte\" Voreinstellung und den richtigen Overlay-Typ aus.\n\nWenn Sie neue Voreinstellungen hinzufügen möchten, sende einen PR an das GitHub-Repo (einen Link finden Sie auf der Registerkarte Allgemein).",
             "fr-FR": "Une fois un preset choisi, un aperçu sera affiché.\nVous pouvez déplacer l'aperçu en l'attrapant avec votre souris.\nPour redimensionner l'aperçu, attrapez le coin inférieur droit.\n\nSi vous voulez utiliser un overlay qui n'est pas dans la liste, choisissez Personnalisé et le bon type d'overlay.\n\nSi vous voulez ajouter un nouveau preset, faites un PR sur le repo GitHub (un lien est présent sur l'onglet Général).",
             "ja-JP": "上記のプリセットを選択するとプレビューが表示されます。\nプレビューはマウスでドラッグして移動できます。まらサイズを変更するには右下の端をドラッグします。\n\nリストに無いオーバーレイを使用する場合は Custom を選択して適切なタイプを選択して下さい。\n\n新しいプリセットを追加するには GitHub で Pull Request を送って下さい。\n(リンクは General タブにあります。)",
             "zh-CN": "选择上方的预设后，您将看到其预览。\n您可以通过使用鼠标拖动来移动预览。\n要调整预览的大小，请拖动其右下角。\n\n如果要使用未列出的悬浮窗，请选择“自订”预设和正确的悬浮窗种类。\n\n如果要添加新的预设，请发送PR到GitHub项目（可以在“通用”选项卡中找到链接）。"
@@ -1191,7 +1191,7 @@
         },
         "WSHandlerException": {
             "en": "WS: Handler call failed: {0}",
-            "de-DE": "WS: Handler-Aufruf fehlgeschlagen: {0}"
+            "de-DE": "WS: Handler-Aufruf fehlgeschlagen: {0}",
             "zh-CN": "WS：处理程序调用失败：{0}"
         },
         "WSIndexPage": {
