@@ -115,7 +115,7 @@
         },
         "lblGithub.Text": {
             "en": "GitHub Repo:",
-            "de": "GitHub Repo:",
+            "de-DE": "GitHub Repo:",
             "zh-CN": "GitHub项目："
         },
         "lnkGithubRepo.Text": {
@@ -163,6 +163,7 @@
         },
         "lblPresetDescription.Text": {
             "en": "Once you have selected a preset above, you'll see a preview.\nYou can move the preview around by dragging it with your mouse.\nTo resize the preview, drag the bottom right corner.\n\nIf you want to use an overlay that isn't listed, select the Custom preset and the correct overlay type.\n\nIf you want to add new presets, send a PR to the GitHub repo (you can find a link on the General tab).",
+            "de-DE": "Nachdem Sie oben eine Voreinstellung ausgewählt haben, wird eine Vorschau angezeigt.\nSie können die Vorschau verschieben, indem Sie sie mit der Maus ziehen.\nUm die Größe der Vorschau zu ändern, ziehen Sie die untere rechte Ecke.\n\nWenn Sie ein Overlay verwenden möchten, das nicht aufgeführt ist, wählen Sie die "Benutzerdefinierte" Voreinstellung und den richtigen Overlay-Typ aus.\n\nWenn Sie neue Voreinstellungen hinzufügen möchten, sende einen PR an das GitHub-Repo (einen Link finden Sie auf der Registerkarte Allgemein).",
             "fr-FR": "Une fois un preset choisi, un aperçu sera affiché.\nVous pouvez déplacer l'aperçu en l'attrapant avec votre souris.\nPour redimensionner l'aperçu, attrapez le coin inférieur droit.\n\nSi vous voulez utiliser un overlay qui n'est pas dans la liste, choisissez Personnalisé et le bon type d'overlay.\n\nSi vous voulez ajouter un nouveau preset, faites un PR sur le repo GitHub (un lien est présent sur l'onglet Général).",
             "ja-JP": "上記のプリセットを選択するとプレビューが表示されます。\nプレビューはマウスでドラッグして移動できます。まらサイズを変更するには右下の端をドラッグします。\n\nリストに無いオーバーレイを使用する場合は Custom を選択して適切なタイプを選択して下さい。\n\n新しいプリセットを追加するには GitHub で Pull Request を送って下さい。\n(リンクは General タブにあります。)",
             "zh-CN": "选择上方的预设后，您将看到其预览。\n您可以通过使用鼠标拖动来移动预览。\n要调整预览的大小，请拖动其右下角。\n\n如果要使用未列出的悬浮窗，请选择“自订”预设和正确的悬浮窗种类。\n\n如果要添加新的预设，请发送PR到GitHub项目（可以在“通用”选项卡中找到链接）。"
@@ -177,6 +178,7 @@
         },
         "lblTypeDesc.Text": {
             "en": "For most overlays you have to select MiniParse here.\nLabel allows you to display static text or HTML on your screen. Useful for notes and rotation reminders.\nSpellTimer displays ACT's built in spell timers and has nothing to do with SpecialSpellTimers / SPESPE.\n",
+            "de-DE": "Für die meisten Overlays müssen Sie hier MiniParse auswählen.\nLabel ermöglicht die Anzeige von statischem Text oder HTML auf Ihrem Bildschirm. Nützlich für Notizen und Rotationserinnerungen.\nSpellTimer zeigt die in ACT integrierten Spell-Timer an und hat nichts damit zu tun SpecialSpellTimers / SPESPE.\n",
             "fr-FR": "Pour la plupart des overlays, vous devez sélectionner MiniParse. Oui, même Cacbot doit être de type MiniParse.\n\nLabel vous permet d'afficher du texte ou du HTML à l'écran (pratique pour des notes ou rotations.\nSpellTimer Affiche les timers intégrés d'ACT et n'a rien à voir avec SPESPE SpecialSpellTimers d'Hojoring.\n",
             "ja-JP": "ほとんどのオーバーレイはMiniParseを選択してください。CactbotもMiniParseを使用してください。\n\nLabelはディスプレイにテキストやHTMLを表示する際に使用します。メモ用途に適しています。\nSpellTimerはACT内蔵のスペルタイマーを表示します。SpecialSpellTimers(スペスペ)用ではありません。",
             "ko-KR": "대부분의 오버레이는 MiniParse 유형을 선택합니다. cactbot 오버레이도 마찬가지로 MiniParse 유형을 필요로 합니다.\n\nLabel 유형을 사용하면 오버레이에 텍스트나 HTML을 표시할 수 있습니다. 메모나 반복 알림 표시에 유용합니다.\nSpellTimer는 ACT에 내장된 스펠 타이머를 표시하며, Hojoring의 스페스페와는 아무런 관련이 없습니다.\n",
@@ -263,6 +265,7 @@
         },
         "lblUrlConfidentWarning.Text": {
             "en": "This URL might not work if the overlay doesn't support ACTWebSocket.",
+            "de-DE": "Diese URL wird möglicherweise nicht funktionieren wenn das Overlay ACTWebSocket nicht unterstützt.",
             "fr-FR": "Cette URL peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.",
             "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 주소는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
@@ -544,6 +547,7 @@
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnAddHotkey.Text": {
             "en": "Add New Hotkey",
+            "de-DE": "Neuen Hotkey hinzufügen",
             "fr-FR": "Nouveau raccourci",
             "ja-JP": "ホットキー追加",
             "ko-KR": "새 단축키 추가",
@@ -551,6 +555,7 @@
         },
         "btnApplyHotkeyChanges.Text": {
             "en": "Apply Changes",
+            "de-DE": "Änderungen übernehmen",
             "fr-FR": "Appliquer",
             "ja-JP": "変更を適用",
             "ko-KR": "수정 내용 적용",
@@ -558,6 +563,7 @@
         },
         "btnRemoveHotkey.Text": {
             "en": "Remove Selected Hotkey",
+            "de-DE": "Entferne selektierten Hotkey",
             "fr-FR": "Supprimer raccourci",
             "ja-JP": "選択されたホットキーを削除",
             "ko-KR": "선택한 단축키 제거",
@@ -627,12 +633,14 @@
         },
         "hotkeyColAction.HeaderText": {
             "en": "Action",
+            "de-DE": "Aktion",
             "fr-FR": "Action",
             "ko-KR": "행동",
             "zh-CN": "行为"
         },
         "hotkeyColEnabled.HeaderText": {
             "en": "Enabled",
+            "de-DE": "Aktiviert",
             "fr-FR": "Activé",
             "ko-KR": "활성화",
             "zh-CN": "启用"
@@ -678,6 +686,7 @@
         },
         "label13.Text": {
             "en": "Mute overlay when hidden",
+            "de-DE": "Verstumme Overlay wenn versteckt",
             "fr-FR": "Aucun son si caché",
             "ja-JP": "オーバーレイが隠れているときに\nミュートにする",
             "ko-KR": "오버레이가 숨겨진 상태일 때 음소거 하기",
@@ -765,23 +774,27 @@
         },
         "tabACTWS.Text": {
             "en": "ACTWS",
+            "de-DE": "ACTWS",
             "ko-KR": "ACT 웹소켓",
             "zh-CN": "ACTWS"
         },
         "tabAdvanced.Text": {
             "en": "Advanced",
+            "de-DE": "Erweitert",
             "fr-FR": "Avancé",
             "ko-KR": "고급",
             "zh-CN": "高级"
         },
         "tabGeneral.Text": {
             "en": "General",
+            "de-DE": "Allgemein",
             "fr-FR": "Général",
             "ko-KR": "일반",
             "zh-CN": "通用"
         },
         "tabHotkeys.Text": {
             "en": "Hotkeys",
+            "de-DE": "Hotkeys",
             "fr-FR": "Raccourcis",
             "ko-KR": "단축키",
             "zh-CN": "快捷键"
@@ -894,6 +907,7 @@
         "CustomPresetLabel": {
             "#comment": "This is the name for the preset entry that allows the user to select a custom overlay type instead of using a preset.",
             "en": "Custom",
+            "de-DE": "Benutzerdefiniert",
             "fr-FR": "Personnalisé",
             "zh-CN": "自订"
         },
@@ -964,7 +978,8 @@
             "zh-CN": "切换悬浮窗 鼠标穿透"
         },
         "HotkeyActionToggleEnabled": {
-            "en": "Toggle enabled"
+            "en": "Toggle enabled",
+            "de-DE": "Umschalten aktiviert"
         },
         "HotkeyActionToggleLock": {
             "en": "Toggle lock",
@@ -1089,7 +1104,8 @@
             "zh-CN": "无法设置网络解析器：{0}"
         },
         "NetworkParserNoFfxiv": {
-            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV."
+            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV.",
+            "de-DE": "Machina oder das FFXIV-Plugin konnten nicht gefunden werden. Dies ist nur dann ein Problem, wenn Sie ACT mit FFXIV verwenden."
         },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
@@ -1129,12 +1145,14 @@
         "OverlayPreviewName": {
             "#comment": "This is used as the temporary name for the preview overlay.",
             "en": "Preview",
+            "de-DE": "Vorschau",
             "fr-FR": "Aperçu",
             "ko-KR": "미리 보기",
             "zh-CN": "预览"
         },
         "PresetUsesUnsupportedType": {
             "en": "Preset {0} uses unsupported type {1}!",
+            "de-DE": "Voreinstellung {0} benutzt eine nicht unterstütze Art {1}!",
             "fr-FR": "Le preset {0} utilise un type non supporté {1} !",
             "ko-KR": "{0} 프리셋은 지원하지 않는 형식 {1}을 사용합니다!",
             "zh-CN": "预设{0}使用不受支持的类型{1}！"
@@ -1148,6 +1166,7 @@
         },
         "PromptSelectPreset": {
             "en": "Please select a preset.",
+            "de-DE": "Bitte wähle eineVoreinstellung aus.",
             "fr-FR": "Sélectionnez un preset.",
             "zh-CN": "请选择一个预设悬浮窗。"
         },
@@ -1212,6 +1231,7 @@
         },
         "WSNotConfidentLink": {
             "en": "This link might not work if the overlay doesn't support ACTWebSocket.",
+            "de-DE": "Dieser Link funktioniert eventuel nicht wenn das Overlay ACTWebSocket nicht unterstützt.",
             "fr-FR": "Ce lien peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.",
             "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 링크는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
@@ -1241,60 +1261,70 @@
     "OverlayPlugin.Updater/CefMissingTab": {
         "btnOpenManual.Text": {
             "en": "Extract Downloaded File",
+            "de-DE": "Heruntergeladene Datei extrahieren",
             "fr-FR": "Extraction du fichier téléchargé",
             "ko-KR": "다운로드한 파일을 추출하기",
             "zh-CN": "提取已下载文件"
         },
         "btnStartAuto.Text": {
             "en": "Download and unpack the missing files",
+            "de-DE": "Laden Sie die fehlenden Dateien herunter und entpacken Sie sie",
             "fr-FR": "Télécharge et décompresse les fichiers manquants",
             "ko-KR": "누락된 파일을 다운로드하고 추출하기",
             "zh-CN": "下载并解压缩丢失的文件"
         },
         "label1.Text": {
             "en": "Some files which are required for OverlayPlugin to function are missing. This is normal if you just installed OverlayPlugin or recently updated it. The files are fairly big (> 150 MiB) and change rarely (at most once per month). To make updates easier for everyone, these files are split into a separate download.",
+            "de-DE": "Einige Dateien, die für die Funktion von OverlayPlugin erforderlich sind, fehlen. Dies ist normal, wenn Sie OverlayPlugin gerade installiert oder kürzlich aktualisiert haben. Die Dateien sind ziemlich groß (> 150 MiB) und ändern sich selten (höchstens einmal pro Monat). Um Updates für alle einfacher zu machen, werden diese Dateien in einen separaten Download aufgeteilt.",
             "fr-FR": "Certains fichier nécessaires au fonctionnement d'OverlayPlugin sont manquants. Cela est normal si vous venez juste de l'installer ou de le mettre à jour. Ces fichers sont assez gros (>150 MiB) et sont rarement modifiés (au pire, un fois par mois). Afin de rendre les mises à jour plus simples pour tout le monde, ces fichiers sont découpés en plusieurs téléchargements",
             "ko-KR": "OverlayPlugin이 작동하는데 필요한 일부 파일이 존재하지 않습니다. 이는 만약에 최근에 플러그인을 설치했거나 업데이트했다면 정상입니다. 누구나 쉽게 업데이트할 수 있도록 별도로 관리하기 때문입니다. 누락된 파일은 아래 설치 솔루션을 통해 다운로드할 수 있고, 파일의 용량은 약 150MB 전후이며 거의 변경되지 않습니다. (업데이트 빈도 : 1개월 당 1회 정도)",
             "zh-CN": "丢失了某些OverlayPlugin所必须的关键文件。如果您刚刚安装OverlayPlugin或刚刚进行了更新，这个情况是正常的。这些文件很大（> 150 MiB）并且很少需要更改（每月最多一次）。为了使所有人都能轻松地进行更新，这些文件被拆分为单独下载。"
         },
         "label2.Text": {
             "en": "Use this if the automated installation doesn't work for you.",
+            "de-DE": "Verwenden Sie diese Option, wenn die automatische Installation für Sie nicht funktioniert.",
             "fr-FR": "Utilisez ceci si l'installation automatique ne fonctionne pas pour vous",
             "ko-KR": "자동 설치가 제대로 작동하지 않는 경우 이 기능을 사용합니다.",
             "zh-CN": "如果自动安装无法正常工作，请使用此选项。"
         },
         "label3.Text": {
             "en": "Download the following file and then open it using the button on the bottom:",
+            "de-DE": "Laden Sie die folgende Datei herunter und öffnen Sie sie mit der Schaltfläche unten:",
             "fr-FR": "Télécharger le fichier suivant et ouvrez le en utilisant le bouton en bas :",
             "ko-KR": "아래 링크를 클릭해서 파일을 다운로드한 후 하단의 버튼을 클릭해서 다운로드한 파일을 엽니다.",
             "zh-CN": "下载以下文件，然后使用底部的按钮将其打开："
         },
         "label4.Text": {
             "en": "Click the button below and let OverlayPlugin handle everything automatically. This should work for most people.",
+            "de-DE": "Klicken Sie auf die Schaltfläche unten und lassen Sie OverlayPlugin alles automatisch erledigen. Dies sollte für die Meisten funktionieren.",
             "fr-FR": "Cliquez sur le bouton suivant et laissez OverlayPlugin gérer le tout en automatique. Fonctionnement normal pour la plupart des installations.",
             "ko-KR": "아래 버튼을 클릭하면 OverlayPlugin 업데이트 관리자가 자동으로 문제 해결을 시작합니다. 이는 대부분의 유저들에게 권장합니다.",
             "zh-CN": "点击下面的按钮，让OverlayPlugin自动处理所有内容。建议大多数用户使用。"
         },
         "label5.Text": {
             "en": "If this doesn't work, take a look at the other tab.",
+            "de-DE": "Wenn dies nicht funktioniert, schauen Sie sich den anderen Tab an.",
             "fr-FR": "Si cela ne fonctionne pas, regardez dans l'autre onglet",
             "ko-KR": "만약 다운로드 문제가 해결되지 않는다면 수동 설치를 시도합니다.",
             "zh-CN": "如果这对您不起作用，请查看另一个选项卡。"
         },
         "lnkManual.Text": {
             "en": "Please wait...",
+            "de-DE": "Bitte warten...",
             "fr-FR": "Veuillez patienter ...",
             "ko-KR": "기다려 주십시오...",
             "zh-CN": "请稍候..."
         },
         "tabPage1.Text": {
             "en": "Automated Installation",
+            "de-DE": "Automatische Installation",
             "fr-FR": "Installation automatique",
             "ko-KR": "자동 설치",
             "zh-CN": "自动安装"
         },
         "tabPage2.Text": {
             "en": "Manual Installation",
+            "de-DE": "Manuelle Installation",
             "fr-FR": "Installation manuelle",
             "ko-KR": "수동 설치",
             "zh-CN": "手动安装"
@@ -1327,6 +1357,7 @@
         "ActUpdateCheckFailed": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
             "en": "Update check for {0} through ACT failed, retrying with GitHub API.",
+            "de-DE": "Update-Überprüfung für {0} durch ACT ist fehlgeschlagen, neuer Versuch per GitHub API.",
             "fr-FR": "La vérification de {0} via ACT a échoué. Nouvel essai avec l'API GitHub",
             "ja-JP": "ACTでの {0} のアップデートチェックが失敗しました. GitHub API をリトライします.",
             "zh-CN": "通过ACT检查{0}的更新失败，正在使用GitHub API重试。"
@@ -1334,6 +1365,7 @@
         "ActUpdateException": {
             "#comment": "The first placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)",
             "en": "ACT Update check for {0} failed, falling back to GitHub API: {1}",
+            "de-DE": "ACT Update-Überprüfung für {0} ist fehlgeschlagen, greife auf GitHub API zurück: {1}",
             "fr-FR": "La vérification de la mise à jour ACT {0} a échoué, retour sur l'API GitHub : {1}",
             "ja-JP": "ACTでの {0} のアップデートチェックが失敗しました. GitHub API に戻ります: {1}",
             "zh-CN": "{0}的ACT检查更新失败，正在回退至GitHub API: {1}"
@@ -1604,6 +1636,7 @@
         },
         "SharpCompressOutdatedError": {
             "en": "The currently loaded version of SharpCompress is outdated!\nMake sure you load OverlayPlugin before any other plugins that also use SharpCompress (like ACTWebSocket).",
+            "de-DE": "Die aktuell geladene Version von SharpCompress ist veraltet!\nStellen Sie sicher, dass Sie OverlayPlugin vor allen anderen Plugins laden, die ebenfalls SharpCompress verwenden (wie ACTWebSocket).",
             "ja-JP": "現在の SharpCompress のバージョンが古いです!\nSharpCompress を使用する他のプラグインの前に、必ずOverlayPluginをロードしてください.",
             "zh-CN": "当前加载的SharpCompress版本过旧！\n请确保先加载OverlayPlugin，再加载其他也使用SharpCompress的插件（例如ACTWebSocket）。"
         },
@@ -1718,7 +1751,8 @@
         },
         "UpdateSliderDetails": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)\nThis text is displayed in ACT's restart prompt. ACT already asks the user to restart so we don't have to.",
-            "en": "{0} was updated successfully."
+            "en": "{0} was updated successfully.",
+            "de-DE": "{0} wurde erfolgreich geupdatet."
         },
         "UpdateSuccess": {
             "en": "The update was successful. Please restart ACT to load the new plugin version.",
@@ -1778,6 +1812,7 @@
         },
         "AssemblyMissing": {
             "en": "Failed to load {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete anything (like the libs folder).",
+            "de-DE": "Fehler beim Laden von {0}: {1}\nStellen Sie sicher, dass Sie das gesamte Plugin-Archiv extrahiert und nichts gelöscht haben (zB den libs-Ordner).",
             "fr-FR": "Impossible de charger {0}: {1}\nAssurez vous d'avoir extrait l'ensemble de l'archive du plugin et de n'avoir rien supprimé (comme le répertoire libs).",
             "ko-KR": "불러오기 실패 {0}: {1}\n플러그인 압축 파일 안의 내용물을 빠짐없이 전부 해제했는지, 삭제하진 않았는지 확인하세요. (libs 폴더 등)",
             "zh-CN": "加载失败{0}: {1}\n确保您解压缩了整个插件压缩包，并且没有删除任何内容（比如libs文件夹）。"
@@ -1815,12 +1850,14 @@
         },
         "DependencyMissing": {
             "en": "Failed to load dependency {0}: {1}\nMake sure you extracted the whole plugin archive and didn't delete any files.",
+            "de-DE": "Fehler beim Laden der Abhängigkeit {0}: {1}\nStellen Sie sicher, dass Sie das gesamte Plugin-Archiv extrahiert und keine Dateien gelöscht haben.",
             "fr-FR": "Impossible de charger les dépendences {0}: {1}\nVérifiez que vous avez extrait toute l'archive et n'avez pas effacé de fichiers.",
             "ko-KR": "의존성 불러오기 실패 {0}: {1}\n플러그인 압축 파일 안의 내용물을 빠짐없이 전부 해제했는지, 삭제하진 않았는지 확인하세요.",
             "zh-CN": "加载依赖失败{0}: {1}\n确保您解压缩了整个插件压缩包，并且没有删除任何文件。"
         },
         "DependencyOutdated": {
             "en": "Fatal: The loaded {0} version is older than expected ({1}  < {2})! This might cause strange bugs in OverlayPlugin and its addons.",
+            "de-DE": "Schwerwiegend: Die geladene {0} -Version ist älter als erwartet ({1} <{2})! Dies kann zu seltsamen Fehlern in OverlayPlugin und seinen Addons führen.",
             "fr-FR": "Fatal : La version {0} chargée est plus ancienne qu'attendue ({1}  < {2})! Cela peut causer des bugs étranges dans OverlayPlugin et ses addons.",
             "ko-KR": "Fatal : 로드된 {0} 버전은 필요한 버전보다 낮은 버전입니다({1}  < {2})! OverlayPlugin과 애드온들에서 이상한 버그가 발생하는 원인이 될 수 있습니다.",
             "zh-CN": "致命错误：已加载的{0}版本早于预期 ({1}  < {2})! 这可能会导致OverlayPlugin及其附件发生奇怪错误。"
