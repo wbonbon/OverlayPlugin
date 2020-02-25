@@ -2,6 +2,7 @@
     "HtmlRenderer/Resources": {
         "BrowserCrashed": {
             "en": "Browser crashed! ({0}) Trying to restart.",
+            "de-DE": "Der Browser ist abgestürzt! ({0}) Versuche Neustart!",
             "fr-FR": "Le navigateur a planté ! ({0}) Redémarrage.",
             "zh-CN": "浏览器崩溃了！({0})尝试重新启动。"
         }
@@ -9,12 +10,14 @@
     "OverlayPlugin.Core/Controls/ControlPanel": {
         "buttonClearLog.Text": {
             "en": "Clear Log",
+            "de-DE": "Log leeren",
             "fr-FR": "Effacer Log",
             "ja-JP": "ログのクリア",
             "zh-CN": "清空记录"
         },
         "buttonNewOverlay.Text": {
             "en": "New",
+            "de-DE": "Neu",
             "fr-FR": "Nouveau",
             "ja-JP": "追加",
             "ko-KR": "추가",
@@ -22,6 +25,7 @@
         },
         "buttonRemoveOverlay.Text": {
             "en": "Remove",
+            "de-DE": "Entfernen",
             "fr-FR": "Supprimer",
             "ja-JP": "削除",
             "ko-KR": "삭제",
@@ -29,17 +33,20 @@
         },
         "checkBoxFollowLog.Text": {
             "en": "Autoscroll the log",
+            "de-DE": "Scroll den Log automatisch",
             "fr-FR": "Défiler auto.",
             "ja-JP": "ログの自動スクロール",
             "zh-CN": "自动滚动日志"
         },
         "groupBox2.Text": {
             "en": "Add/Remove overlays",
+            "de-DE": "Hinzufügen/Entfernen eines Overlays",
             "fr-FR": "Ajout/Suppression overlays",
             "zh-CN": "添加/删除模板"
         },
         "label_ListEmpty.Text": {
             "en": "Click [Add] button to configure overlays.",
+            "de-DE": "Klicke den [Hinzufügen] Knopf, um das Overlay zu konfigurieren.",
             "fr-FR": "Cliquez [Ajouter] pour configurer les overlays.",
             "ja-JP": "[追加] バートンを押して、オーバーレイを設定してください",
             "ko-KR": "[추가] 버튼을 눌러서 오버레이를 설정해주세요.",
@@ -47,6 +54,7 @@
         },
         "tabPageMain.Text": {
             "en": "General",
+            "de-DE": "Allgemein",
             "fr-FR": "Général",
             "ja-JP": "設定",
             "ko-KR": "일반",
@@ -56,30 +64,35 @@
     "OverlayPlugin.Core/Controls/GeneralConfigTab": {
         "btnUpdateCheck.Text": {
             "en": "Check For Updates",
+            "de-DE": "Auf Updates überprüfen",
             "fr-FR": "Vérifier les MàJ",
             "ja-JP": "アップデートの確認",
             "zh-CN": "检查更新"
         },
         "cbErrorReports.Text": {
             "en": "Automatically report errors",
+            "de-DE": "Berichte Fehle automatisch ",
             "fr-FR": "Envoyer automatiquement les rapports d'erreur",
             "ja-JP": "エラーを自動で報告する",
             "zh-CN": "自动报告错误"
         },
         "cbHideOverlaysDuringCutscene.Text": {
             "en": "Automatically hide overlays during cutscenes",
+            "de-DE": "Overlays automatisch während Zwischensequenzen ausblenden",
             "fr-FR": "Cacher automatiquement les overlays lors des cinématiques",
             "ja-JP": "カットシーン中にオーバーレイを非表示にする",
             "zh-CN": "当过场动画时自动隐藏美化悬浮窗"
         },
         "cbHideOverlaysWhenNotActive.Text": {
             "en": "Automatically hide overlays when the game is in the background",
+            "de-DE": "Overlays automatisch ausblenden, wenn das Spiel im Hintergund läuft",
             "fr-FR": "Cacher automatiquement les overlays quand le jeu est en fond de tâche",
             "ja-JP": "ACTまたはゲームがアクティブでない場合にオーバーレイを非表示にする",
             "zh-CN": "当ACT和游戏全部最小化时自动隐藏美化悬浮窗"
         },
         "cbUpdateCheck.Text": {
             "en": "Automatically check for updates",
+            "de-DE": "Automatisch auf Updates überprüfen",
             "fr-FR": "Rechercher les mises à jour automatiquement",
             "ja-JP": "アップデートを自動で確認する",
             "zh-CN": "自动检查更新"
@@ -88,6 +101,7 @@
     "OverlayPlugin.Core/Controls/NewOverlayDialog": {
         "$this.Text": {
             "en": "Create new overlay",
+            "de-DE": "Erstelle ein neues Overlay",
             "fr-FR": "Création d'un nouvel overlay",
             "ja-JP": "新しいオーバーレイ",
             "ko-KR": "새 오버레이",
@@ -95,6 +109,7 @@
         },
         "buttonCancel.Text": {
             "en": "Cancel",
+            "de-DE": "Abbrechen",
             "fr-FR": "Annuler",
             "ja-JP": "キャンセル",
             "ko-KR": "취소",
@@ -102,11 +117,13 @@
         },
         "buttonOK.Text": {
             "en": "OK",
+            "de-DE": "OK",
             "fr-FR": "OK",
             "zh-CN": "确定"
         },
         "label1.Text": {
             "en": "Name",
+            "de-DE": "Name",
             "fr-FR": "Nom",
             "ja-JP": "名前",
             "ko-KR": "이름",
@@ -114,6 +131,7 @@
         },
         "label2.Text": {
             "en": "Type",
+            "de-DE": "Art",
             "fr-FR": "Type",
             "ja-JP": "種類",
             "ko-KR": "형식",
@@ -123,53 +141,62 @@
     "OverlayPlugin.Core/Controls/WSConfigPanel": {
         "genSslBtn.Text": {
             "en": "Generate SSL Certificate",
+            "de-DE": "SSL Zertifikat generieren",
             "fr-FR": "Générer un certificat SSL",
             "ja-JP": "SSL証明書を作成する",
             "zh-CN": "生成SSL证书"
         },
         "label1.Text": {
             "en": "IP Address:",
+            "de-DE": "IP Addresse:",
             "fr-FR": "Adresse IP :",
             "ja-JP": "IPアドレス :",
             "zh-CN": "IP地址"
         },
         "label2.Text": {
             "en": "Port:",
+            "de-DE": "Port:",
             "fr-FR": "Port :",
             "ja-JP": "ポート :",
             "zh-CN": "端口："
         },
         "label3.Text": {
             "en": "Status:",
+            "de-DE": "Status:",
             "fr-FR": "Etat",
             "ja-JP": "ステータス :",
             "zh-CN": "状态："
         },
         "logDisplay.Text": {
             "en": "SSL can only be enabled if you have a SSL certificate. You can either click the button above to automatically generate one or place a PKCS#12 file with the password changeit in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 and restart ACT.\n\nAfterwards, you should be able to enable SSL.",
+            "de-DE": "SSL kann nur aktiviert werden, wenn ein SSL-Zertifikat vorhanden ist. Klicke auf die Schaltfläche oben, um es automatisch zu generieren, oder platzieren eine PKCS#12 Datei mit dem Kennwort in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 und starte ACT neu.\n\nDanach sollte SSL aktiviert werden können.",
             "fr-FR": "SSL ne peut être activé que si vous avez un certificat SSL. Vous pouvez soit cliquer sur le bouton ci-dessus pour en générer automatiquement un, soit placer un fichier PKCS#12 avec le mot de passe dans %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 et relancer ACT.\n\nAprès, vous devriez pouvoir activer SSL.",
             "ja-JP": "SSLを有効にするにはSSL証明書が必要です。上のボタンを押して証明書を作成するか、 証明書がある場合はパスワードを changeit に設定した PKCS#12 ファイルを %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 に保存して下さい。設定後はACTを再起動して下さい。\n\nSSL証明書の準備が完了したら、SSLを有効にすることが出来ます。",
             "zh-CN": "只有拥有SSL证书，才能启用SSL。您可以单击上方的按钮自动生成一个，或将PKCS#12文件放置在%AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12中并重新启动ACT。\n\n然后，您将可以启用SSL。"
         },
         "sslBox.Text": {
             "en": "Enable SSL",
+            "de-DE": "Aktiviere SSL",
             "fr-FR": "Activer SSL",
             "ja-JP": "SSLを有効にする",
             "zh-CN": "启用SSL"
         },
         "startBtn.Text": {
             "en": "Start",
+            "de-DE": "Start",
             "fr-FR": "Démarrer",
             "ja-JP": "スタート",
             "zh-CN": "启用"
         },
         "statusLabel.Text": {
             "en": "Unknown",
+            "de-DE": "Unbekannt",
             "fr-FR": "Inconnu",
             "zh-CN": "未知"
         },
         "stopBtn.Text": {
             "en": "Stop",
+            "de-DE": "Stop",
             "fr-FR": "Stop",
             "ja-JP": "ストップ",
             "zh-CN": "停止"
@@ -178,30 +205,35 @@
     "OverlayPlugin.Core/EventSources/MiniParseEventSourceConfigPanel": {
         "label1.Text": {
             "en": "Sort By",
+            "de-DE": "Sortieren nach",
             "fr-FR": "Trier par",
             "ja-JP": "ソート順",
             "zh-CN": "排序方式"
         },
         "label2.Text": {
             "en": "DPS update interval seconds",
+            "de-DE": "Sekunden des DPS-Aktualisierungsintervalls",
             "fr-FR": "Intervalle de rafraichissement DPS (s)",
             "ja-JP": "DPSの更新間隔",
             "zh-CN": "DPS更新间隔"
         },
         "label3.Text": {
             "en": "Sort Descending (highest first)",
+            "de-DE": "Absteigend sortieren (Höchster Wert zuerst)",
             "fr-FR": "Tri descendant",
             "ja-JP": "逆順にソート",
             "zh-CN": "降序排列"
         },
         "label4.Text": {
             "en": "Update DPS during log import",
+            "de-DE": "Aktualisieren der DPS während des Logimports",
             "fr-FR": "Mettre à jour le DPS pendant l'import du log",
             "ja-JP": "ログのインポート中にDPSを更新する",
             "zh-CN": "在日志导入期间更新DPS"
         },
         "label5.Text": {
             "en": "Enmity update interval (ms)",
+            "de-DE": "Aktualisierungsintervall der Feindschaft (ms)",
             "fr-FR": "Rafraichissement aggro (ms)",
             "ja-JP": "敵視情報の更新間隔 (ミリ秒)",
             "zh-CN": "仇恨更新间隔（毫秒）"
@@ -210,6 +242,7 @@
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
         "buttonCopyUpdateScript.Text": {
             "en": "Copy the update variable to clipboard",
+            "de-DE": "Kopieren Sie die Aktualisierungsvariable in die Zwischenablage",
             "fr-FR": "Copier la variable dans le presse papier",
             "ja-JP": "変数をクリップボードにコピー",
             "ko-KR": "업데이트 값 복사",
@@ -217,6 +250,7 @@
         },
         "buttonOpenDevTools.Text": {
             "en": "Open DevTools",
+            "de-DE": "Öffne Entwicklerwerkzeuge",
             "fr-FR": "Ouvrir DevTools",
             "ja-JP": "DevToolsを開く",
             "ko-KR": "개발자 도구 열기",
@@ -224,6 +258,7 @@
         },
         "buttonReloadBrowser.Text": {
             "en": "Reload overlay",
+            "de-DE": "Overlay neu laden",
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
@@ -231,11 +266,13 @@
         },
         "buttonSelectFile.Text": {
             "en": "...",
+            "de-DE": "...",
             "fr-FR": "...",
             "zh-CN": "浏览"
         },
         "label1.Text": {
             "en": "Text",
+            "de-DE": "Text",
             "fr-FR": "Texte",
             "ja-JP": "表示するテキスト",
             "ko-KR": "표시할 텍스트",
@@ -243,6 +280,7 @@
         },
         "label2.Text": {
             "en": "Enable clickthru",
+            "de-DE": "Durchklicken aktiviere",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -250,6 +288,7 @@
         },
         "label3.Text": {
             "en": "Show overlay",
+            "de-DE": "Overlay anzeigen",
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
@@ -257,6 +296,7 @@
         },
         "label4.Text": {
             "en": "URL",
+            "de-DE": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "ko-KR": "URL",
@@ -264,6 +304,7 @@
         },
         "label5.Text": {
             "en": "Display text as HTML",
+            "de-DE": "Zeige Text als HTML",
             "fr-FR": "Afficher texte en tant qu'HTML",
             "ja-JP": "テキストをHTMLとして表示",
             "ko-KR": "텍스트를 HTML로 표시",
@@ -271,6 +312,7 @@
         },
         "label7.Text": {
             "en": "Enable global hotkey",
+            "de-DE": "Aktiviere globale Hotkeys",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "글로벌 핫 키 사용",
@@ -278,6 +320,7 @@
         },
         "label8.Text": {
             "en": "Global hotkey",
+            "de-DE": "Globale Hotkeys",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "글로벌 핫 키",
@@ -285,6 +328,7 @@
         },
         "label9.Text": {
             "en": "Lock overlay",
+            "de-DE": "Overlay sperren",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
@@ -294,6 +338,7 @@
     "OverlayPlugin.Core/Overlays/LogParseConfigPanel": {
         "buttonLogParseCopyActXiv.Text": {
             "en": "Copy the update variable to clipboard",
+            "de-DE": "Kopieren Sie die Aktualisierungsvariable in die Zwischenablage",
             "fr-FR": "Copier la variable dans le presse papier",
             "ja-JP": "変数をクリップボードにコピー",
             "ko-KR": "업데이트 값 복사",
@@ -301,6 +346,7 @@
         },
         "buttonLogParseOpenDevTools.Text": {
             "en": "Open DevTools",
+            "de-DE": "Öffne Entwicklerwerkzeuge",
             "fr-FR": "Ouvrir DevTools",
             "ja-JP": "DevToolsを開く",
             "ko-KR": "개발자 도구 열기",
@@ -308,6 +354,7 @@
         },
         "buttonLogParseReloadBrowser.Text": {
             "en": "Reload overlay",
+            "de-DE": "Overlay neu laden",
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
@@ -315,23 +362,27 @@
         },
         "buttonLogParseSelectFile.Text": {
             "en": "...",
+            "de-DE": "...",
             "fr-FR": "...",
             "zh-CN": "浏览"
         },
         "label1.Text": {
             "en": "URL",
+            "de-DE": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "zh-CN": "美化模板路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
+            "de-DE": "Hotkey Art",
             "fr-FR": "Type de raccourci",
             "ja-JP": "ホットキータイプ",
             "zh-CN": "快捷键功能"
         },
         "label2.Text": {
             "en": "Enable clickthru",
+            "de-DE": "Durchklicken aktiviere",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -339,6 +390,7 @@
         },
         "label3.Text": {
             "en": "Show overlay",
+            "de-DE": "Overlay anzeigen",
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
@@ -346,6 +398,7 @@
         },
         "label6.Text": {
             "en": "Max. framerate",
+            "de-DE": "Max. Bildrate",
             "fr-FR": "Rafraichissement max.",
             "ja-JP": "最大フレームレート",
             "ko-KR": "최대 프레임 레이트",
@@ -353,6 +406,7 @@
         },
         "label7.Text": {
             "en": "Enable global hotkey",
+            "de-DE": "Aktiviere globale Hotkeys",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "글로벌 핫 키 사용",
@@ -360,6 +414,7 @@
         },
         "label8.Text": {
             "en": "Global hotkey",
+            "de-DE": "Globale Hotkeys",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "글로벌 핫 키",
@@ -367,6 +422,7 @@
         },
         "label9.Text": {
             "en": "Lock overlay",
+            "de-DE": "Overlay sperren",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
@@ -376,11 +432,13 @@
     "OverlayPlugin.Core/Overlays/MiniParseConfigPanel": {
         "btnResetZoom.Text": {
             "en": "Reset",
+            "de-DE": "Zurücksetzen",
             "ja-JP": "リセット",
             "zh-CN": "重设"
         },
         "buttonMiniParseOpenDevTools.Text": {
             "en": "Open DevTools",
+            "de-DE": "Öffne Entwicklerwerkzeuge",
             "fr-FR": "Ouvrir DevTools",
             "ja-JP": "DevToolsを開く",
             "ko-KR": "개발자 도구 열기",
@@ -388,6 +446,7 @@
         },
         "buttonMiniParseReloadBrowser.Text": {
             "en": "Reload overlay",
+            "de-DE": "Overlay neu laden",
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
@@ -395,64 +454,75 @@
         },
         "buttonMiniParseSelectFile.Text": {
             "en": "...",
+            "de-DE": "...",
             "fr-FR": "...",
             "zh-CN": "浏览"
         },
         "buttonResetOverlayPosition.Text": {
             "en": "Reset Overlay Position",
+            "de-DE": "Overlay Position zurücksetzen",
             "fr-FR": "RAZ Position",
             "ja-JP": "オーバーレイの位置をリセットする",
             "zh-CN": "重置美化悬浮窗位置"
         },
         "checkActwsCompatbility.Text": {
             "en": "This is an overlay that requires ACTWebSocket",
+            "de-DE": "Dies ist ein Overlay, welches ACTWebSocket benötigt",
             "fr-FR": "Cet overlay nécessite ACTWebSocket",
             "ja-JP": "このオーバーレイはACTWebSocketが必要",
             "zh-CN": "此模板需要使用ACTWebSocket"
         },
         "checkLogConsoleMessages.Text": {
             "en": "Show console messages from this overlay in the overlay log",
+            "de-DE": "Zeige Konsolennachrichten von diesem Overlay im Overlaylog",
             "fr-FR": "Afficher les messages de cet overlay dans le log",
             "ja-JP": "オーバーレイのコンソールメッセージをログに表示する",
             "zh-CN": "在模板日志中显示来自此模板的控制台消息"
         },
         "checkNoFocus.Text": {
             "en": "Don't accept focus for this overlay",
+            "de-DE": "Fokus dieses Overlays nicht akzeptieren",
             "fr-FR": "Ne pas accepter le focus pour cet overlay",
             "ja-JP": "このオーバーレイにはフォーカスしない",
             "zh-CN": "不焦点此悬浮窗"
         },
         "label1.Text": {
             "en": "URL",
+            "de-DE": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "zh-CN": "美化模板路径"
         },
         "label10.Text": {
             "en": "Hotkey Type",
+            "de-DE": "Hotkey Art",
             "fr-FR": "Type de raccourci",
             "ja-JP": "ホットキータイプ",
             "zh-CN": "快捷键功能"
         },
         "label11.Text": {
             "en": "You only need to enable the above option if the overlay skin isn't compatible with OverlayPlugin normally.",
+            "de-DE": "Diese Option muss nur aktiviert werden, wenn der Overlay-Skin normalerweise nicht kompatibel mit dem OverlayPlugin ist",
             "fr-FR": "Cette option est seulement nécessaire si la skin de l'overlay n'est pas compatible d'origine avec OverlayPlugin",
             "ja-JP": "オーバーレイが通常のOverlayPluginと互換性がない場合のみ、このチェックを有効にして下さい。",
             "zh-CN": "仅当模板与OverlayPlugin不兼容时，才需要启用此选项。"
         },
         "label12.Text": {
             "en": "Use this if you can't find the overlay or for some reason can't resize it.",
+            "de-DE": "Benutze diese Option, wenn du die Größe des Overlays nicht verändern kannst.",
             "fr-FR": "Utilisez cette option si vous ne trouvez ou ne pouvez pas redimensionner l'overlay",
             "ja-JP": "オーバーレイが見つからない、リサイズが出来なくなった場合等に使用して下さい。",
             "zh-CN": "如果您找不到美化悬浮窗或由于某种原因无法调整其大小时，请启用此选项。"
         },
         "label15.Text": {
             "en": "Zoom",
+            "de-DE": "Zoom",
             "ja-JP": "ズーム",
             "zh-CN": "缩放"
         },
         "label2.Text": {
             "en": "Enable clickthru",
+            "de-DE": "Durchklicken aktiviere",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -460,6 +530,7 @@
         },
         "label3.Text": {
             "en": "Show overlay",
+            "de-DE": "Overlay anzeigen",
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
@@ -467,18 +538,21 @@
         },
         "label4.Text": {
             "en": "Force white background",
+            "de-DE": "Erzwinge weißen Hintergrund",
             "fr-FR": "Forcer le fond en blanc",
             "ja-JP": "オーバーレイの背景を白にする",
             "zh-CN": "在美化悬浮窗强制启用白色背景"
         },
         "label5.Text": {
             "en": "ACTWS Compatiblity",
+            "de-DE": "ACTWS Kompatibilität",
             "fr-FR": "Compatibilité ACTWS",
             "ja-JP": "ACTWSの互換性",
             "zh-CN": "ACTWS兼容性"
         },
         "label6.Text": {
             "en": "Max. framerate",
+            "de-DE": "Max. Bildrate",
             "fr-FR": "Rafraichissement max.",
             "ja-JP": "最大フレームレート",
             "ko-KR": "최대 프레임 레이트",
@@ -486,6 +560,7 @@
         },
         "label7.Text": {
             "en": "Enable global hotkey",
+            "de-DE": "Aktiviere globale Hotkeys",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "글로벌 핫 키 사용",
@@ -493,6 +568,7 @@
         },
         "label8.Text": {
             "en": "Global hotkey",
+            "de-DE": "Globale Hotkeys",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "글로벌 핫 키",
@@ -500,6 +576,7 @@
         },
         "label9.Text": {
             "en": "Lock overlay",
+            "de-DE": "Overlay sperren",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
@@ -507,6 +584,7 @@
         },
         "lblNoFocus.Text": {
             "en": "No Focus",
+            "de-DE": "Kein Fokus",
             "fr-FR": "Pas de focus",
             "ja-JP": "フォーカスの無効",
             "zh-CN": "取消焦点"
@@ -515,6 +593,7 @@
     "OverlayPlugin.Core/Overlays/SpellTimerConfigPanel": {
         "buttonCopyVariable.Text": {
             "en": "Copy the update variable to clipboard",
+            "de-DE": "Kopieren Sie die Aktualisierungsvariable in die Zwischenablage",
             "fr-FR": "Copier la variable dans le presse papier",
             "ja-JP": "変数をクリップボードにコピー",
             "ko-KR": "업데이트 값 복사",
@@ -522,6 +601,7 @@
         },
         "buttonOpenDevTools.Text": {
             "en": "Open DevTools",
+            "de-DE": "Öffne Entwicklerwerkzeuge",
             "fr-FR": "Ouvrir DevTools",
             "ja-JP": "DevToolsを開く",
             "ko-KR": "개발자 도구 열기",
@@ -529,6 +609,7 @@
         },
         "buttonReloadBrowser.Text": {
             "en": "Reload overlay",
+            "de-DE": "Overlay neu laden",
             "fr-FR": "Recharger l'overlay",
             "ja-JP": "オーバーレイの表示をリロード",
             "ko-KR": "새로고침",
@@ -536,11 +617,13 @@
         },
         "buttonSpellTimerSelectFile.Text": {
             "en": "...",
+            "de-DE": "...",
             "fr-FR": "...",
             "zh-CN": "浏览"
         },
         "label1.Text": {
             "en": "Enable global hotkey",
+            "de-DE": "Aktiviere globale Hotkeys",
             "fr-FR": "Activer raccourci",
             "ja-JP": "グローバルホットキーを使用",
             "ko-KR": "글로벌 핫 키 사용",
@@ -548,12 +631,14 @@
         },
         "label10.Text": {
             "en": "URL",
+            "de-DE": "URL",
             "fr-FR": "URL",
             "ja-JP": "表示するURL",
             "zh-CN": "美化模板路径"
         },
         "label2.Text": {
             "en": "Global hotkey",
+            "de-DE": "Globale Hotkeys",
             "fr-FR": "Touche de raccourci",
             "ja-JP": "グローバルホットキー",
             "ko-KR": "글로벌 핫 키",
@@ -561,6 +646,7 @@
         },
         "label3.Text": {
             "en": "Lock overlay",
+            "de-DE": "Overlay sperren",
             "fr-FR": "Bloquer l'overlay",
             "ja-JP": "移動とリサイズを制限する",
             "ko-KR": "위치 잠금",
@@ -568,12 +654,14 @@
         },
         "label4.Text": {
             "en": "Hotkey Type",
+            "de-DE": "Hotkey Art",
             "fr-FR": "Type de raccourci",
             "ja-JP": "ホットキータイプ",
             "zh-CN": "快捷键功能"
         },
         "label7.Text": {
             "en": "Max. framerate",
+            "de-DE": "Max. Bildrate",
             "fr-FR": "Rafraichissement max.",
             "ja-JP": "最大フレームレート",
             "ko-KR": "최대 프레임 레이트",
@@ -581,6 +669,7 @@
         },
         "label8.Text": {
             "en": "Enable clickthru",
+            "de-DE": "Durchklicken aktiviere",
             "fr-FR": "Activer cliquer à travers",
             "ja-JP": "クリックを透過させる",
             "ko-KR": "클릭 무시",
@@ -588,6 +677,7 @@
         },
         "label9.Text": {
             "en": "Show overlay",
+            "de-DE": "Overlay anzeigen",
             "fr-FR": "Afficher l'overlay",
             "ja-JP": "オーバーレイを表示する",
             "ko-KR": "오버레이 표시",
@@ -597,212 +687,257 @@
     "OverlayPlugin.Core/Resources": {
         "ActwsShimEnabled": {
             "en": "ACTWS compatibility shim enabled.",
+            "de-DE": "ACTWS Kompatibilität aktiviert.",
             "fr-FR": "Compatibilité ACTWS activé.",
             "zh-CN": "ACTWS兼容性功能已启用。"
         },
         "DuplicateHandlerError": {
             "en": "Duplicate handler for name {0}!",
+            "de-DE": "Doppelter Handler für Name {0}!",
             "fr-FR": "Handler en double pour le nom {0}!"
         },
         "ErrorOverlayNameEmpty": {
             "en": "Name must not be empty or white space only.",
+            "de-DE": "Der Name darf nicht leer sein oder nur aus Leerzeichen bestehen",
             "fr-FR": "Le nom ne doit pas être vide ou composé seulement d'espaces",
             "zh-CN": "名称不得为空或只有空格。"
         },
         "ErrorOverlayNameNotUnique": {
             "en": "Name should be unique.",
+            "de-DE": "Der Name sollte einzigartig sein.",
             "fr-FR": "Le nom doit être unique",
             "zh-CN": "名称不得重复。"
         },
         "EventHandlerException": {
             "en": "Failed to dispatch event {0} to {1}! {2}",
+            "de-DE": "Ereignis {0} konnte nicht an {1} gesendet werden! {2}",
             "fr-FR": "Impossible d'envoyer l'événement {0} à {1}! {2}"
         },
         "FFXIVDataRepositoryException": {
             "en": "Failed to retrieve the FFXIV DataRepository: {0}",
+            "de-DE": "FFXIV Daten-Repository konnte nicht abgerufen werden: {0}",
             "fr-FR": "Impossible de récupérer FFXIV DataRepository: {0}"
         },
         "FFXIVDataSubscriptionException": {
             "en": "Failed to retrieve the FFXIV DataSubscription: {0}",
+            "de-DE": "FFXIV Daten-Subscription konnte nicht abgerufen werden: {0}",
             "fr-FR": "Impossible de récupérer FFXIV DataSubscription: {0}"
         },
         "GeneralTab": {
             "en": "General",
+            "en": "Allgemein",
             "fr-FR": "Général",
             "zh-CN": "通用"
         },
         "HotkeyActionToggleClickthrough": {
             "en": "Toggle clickthru",
+            "de-DE": "Durchklicken aktiviere",
             "fr-FR": "Clic à travers",
             "zh-CN": "切换悬浮窗 鼠标穿透"
         },
         "HotkeyActionToggleLock": {
             "en": "Toggle lock",
+            "de-DE": "Sperren umschalten",
             "fr-FR": "Bloqué",
             "zh-CN": "切换悬浮窗 锁定"
         },
         "HotkeyActionToggleVisible": {
             "en": "Toggle visible/hide",
+            "de-DE": "sichtbar/versteckt umschalten",
             "fr-FR": "Visible/Caché",
             "zh-CN": "切换悬浮窗 启用/隐藏"
         },
         "IncompatibleAddon": {
             "en": "Detected incompatible addon {0}. Please update as soon as possible!!",
+            "de-DE": "Inkompatibles Addon {0} erkannt. Bitte so schnell wie möglich aktualisieren!!",
             "fr-FR": "Addon {0} incompatible. Mettez à jour dès que possible !",
             "zh-CN": "检测到不兼容的插件{0}。请尽快更新！！"
         },
         "InitOverlayLocalFileIsMissing": {
             "en": "InitializeOverlay: Local file {0} does not exist!",
+            "de-DE": "InitializeOverlay: Lokale Datei {0} existiert nicht!",
             "fr-FR": "InitializeOverlay: Le fichier local {0} n'existe pas !",
             "zh-CN": "初始化插件：本地文件{0}不存在！"
         },
         "InitOverlayUrlError": {
             "en": "InitializeOverlay: URI parse error! Please reconfigure the URL. (Config.Url = {0}): {1}",
+            "de-DE": "InitializeOverlay: URI-Analysefehler! Bitte konfigurieren Sie die URL neu. (Config.Url = {0}): {1}",
             "fr-FR": "InitializeOverlay: erreur d'analyse URI ! Reconfigurez l'URL. (Config.Url = {0}): {1}",
             "zh-CN": "初始化插件：路径解析错误！请重新设置美化模板路径(Config.Url = {0}): {1}"
         },
         "JsHandlerCallException": {
             "en": "JS Handler call failed: {0}",
+            "de-DE": "JS-Handler-Aufruf fehlgeschlagen: {0}",
             "fr-FR": "Appel JS Handler échoué : {0}"
         },
         "ListSortFailed": {
             "en": "Failed to sort list by {0}: {1}",
+            "de-DE": "Liste konnte nicht nach {0} sortiert werden: {1}",
             "fr-FR": "Impossible de trier la liste par {0}: {1}",
             "zh-CN": "以{0}: {1}排序列表失败"
         },
         "MapESMiniParse": {
             "en": "MiniParseEventSource",
+            "de-DE": "MiniParseEventSource",
             "zh-CN": "数据统计事件源设置"
         },
         "MapOverlayLabel": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
             "en": "LabelOverlay",
+            "de-DE": "LabelOverlay",
             "zh-CN": "标签美化悬浮窗"
         },
         "MapOverlayMiniParse": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
             "en": "MiniParseOverlay",
+            "de-DE": "MiniParseOverlay",
             "zh-CN": "数据统计美化悬浮窗"
         },
         "MapOverlayShortLabel": {
             "#comment": "This name appears in the combo box for new overlays.",
             "en": "Label",
+            "de-DE": "Label",
             "zh-CN": "标签"
         },
         "MapOverlayShortMiniParse": {
             "#comment": "This name appears in the combo box for new overlays.",
             "en": "MiniParse",
+            "de-DE": "MiniParse",
             "zh-CN": "数据统计"
         },
         "MapOverlayShortSpellTimer": {
             "#comment": "This name appears in the combo box for new overlays.",
             "en": "SpellTimer",
+            "de-DE": "SpellTimer",
             "zh-CN": "技能冷却"
         },
         "MapOverlaySpellTimer": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
             "en": "SpellTimerOverlay",
+            "de-DE": "SpellTimerOverlay",
             "zh-CN": "技能冷却美化悬浮窗"
         },
         "MissingEventDispatchError": {
             "en": "Tried to dispatch unregistered event type \"{0}\"!",
+            "de-DE": "Versucht, nicht registrierten Ereignistyp \"{0}\" zu versenden!",
             "fr-FR": "Envoi d'un type d'événement non enregistré \"{0}\"!"
         },
         "MissingEventSubError": {
             "en": "Got a subscription for missing event \"{0}\"!",
+            "de-DE": "Abonnement für fehlendes Ereignis \"{0}\"!",
             "fr-FR": "Souscription pour un évènement manquant \"{0}\"!"
         },
         "MissingHandlerError": {
             "en": "Tried to call missing handler \"{0}\"!",
+            "de-DE": "Versucht, fehlenden Handler \"{0}\" aufzurufen!",
             "fr-FR": "Appel à un handler manquant \"{0}\"!"
         },
         "NetworkParserInitException": {
             "en": "Failed to setup network parser: {0}",
+            "de-DE": "Netzwerkparser konnte nicht eingerichtet werden: {0}",
             "fr-FR": "Echec de la configuration réseau du parser : {0}",
             "zh-CN": "无法设置网络解析器：{0}"
         },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
+            "de-DE": "Ungültiger Handler-Aufruf empfangen: {0}",
             "fr-FR": "Appel d'un handler invalide reçu : {0}"
         },
         "OverlayApiMissingEventsField": {
             "en": "Missing events field in subscribe call: {0}!",
+            "de-DE": "Fehlendes Ereignissefeld im Abonnementaufruf: {0}!",
             "fr-FR": "Champs d'évènements manquants dans l'appel de souscription : {0}!"
         },
         "OverlayApiMissingEventsFieldUnsub": {
             "en": "Missing events field in unsubscribe call: {0}!",
+            "de-DE": "Fehlendes Ereignissefeld beim Abmelden: {0}!",
             "fr-FR": "Champs d'évènements manquants dans l'appel de déinscription : {0}!"
         },
         "OverlayApiSubscribed": {
             "en": "{0}: Subscribed to {1}",
+            "de-DE": "{0}: Hat {1} abonniert",
             "fr-FR": "{0}: Souscription à {1}",
             "zh-CN": "{0}：已订阅{1}"
         },
         "OverlayBaseRegisterHotkeyError": {
             "en": "Failed to register hotkey: {0}!",
+            "de-DE": "Hotkey konnte nicht registriert werden: {0}!",
             "fr-FR": "Impossible d'enregistrer le raccourci : {0}!",
             "zh-CN": "注册热键：{0}失败！"
         },
         "PromptSelectOverlayType": {
             "en": "Please select overlay type.",
+            "de-DE": "Bitte Overlay-Typ auswählen.",
             "fr-FR": "Sélectionnez un type d'overlay.",
             "zh-CN": "请选择悬浮窗类型。"
         },
         "RegisterHotkeyError": {
             "en": "Failed to register hotkey {0}, {1} in EnableHotKeys().",
+            "de-DE": "Fehler beim registrieren des Hotkeys {0}, {1} in EnableHotKeys().",
             "fr-FR": "Impossible d'enregistrer le raccourci {0},{1} dans EnableHotKeys().!",
             "zh-CN": "在EnableHotKeys()注册热键{0}, {1}失败。"
         },
         "TabsESLabel": {
             "en": "Event Source",
+            "de-DE": "Ereignisquelle",
             "zh-CN": "事件源"
         },
         "UnregisterHotkeyError": {
             "en": "Failed to unregister hotkey {0} in DisableHotKeys().",
+            "de-DE": "Hotkey {0} konnte in DisableHotKeys() nicht abgemeldet werden.",
             "fr-FR": "Impossible de supprimer le raccourci {0},{1} dans DisableHotKeys() !",
             "zh-CN": "在DisableHotKeys()反注册热键{0}失败。"
         },
         "WSHandlerException": {
-            "en": "WS: Handler call failed: {0}"            
+            "en": "WS: Handler call failed: {0}",
+            "de-DE": "WS: Handler-Aufruf fehlgeschlagen: {0}"
         },
         "WSIndexPage": {
             "#comment": "Front page of the WebSocket server. A list of the currently active overlays is displayed underneath with links for WebSocket mode.",
             "en": "<h1>It Works!</h1>\n        <p>\n            If any of these links are displayed with a &quot;Local:&quot; prefix and not clickable then that's because\n            those overlays display local files and web browsers don't allow web sites to link to local files.\n        </p>\n        <p>\n            You'll have to copy &amp; paste that link into your address bar.\n        </p>",
+            "de-DE": "<h1>Es Funktioniert!</h1>\n        <p>\n            Wenn einer dieser Links mit dem Präfix &quot;Lokal:&quot; angezeigt wird und nicht angeklickt werden kann, liegt dies daran,\n            dass in diesem Overlays lokale Dateien angezeigt werden und Webbrowser es Websiten nicht erlauben, Links zu lokalen Dateien zu erstellen.\n        </p>\n        <p>\n            Kopiere den Link und füge ihn in der Adressleiste ein.\n        </p>",
             "fr-FR": "<h1>Ca fonctionne !</h1>\n        <p>\n             Si l'un de ces liens est affich&eacute; avec un pr&eacute;fixe &quot;Local:&quot; et qu'il ne peut pas &ecirc;tre cliqu&eacute;,\n            c'est que ces overlays affichent des fichiers locaux et que les navigateurs Web n'autorisent pas les sites Web &agrave; cr&eacute;er des liens vers des fichiers locaux.\n        </p>\n        <p>\n            Vous devrez copier et coller ce lien dans votre barre d'adresse\n        </p>",
             "zh-CN": "<h1>It Works!</h1>\n        <p>\n            如果这些链接中有任何一个以&quot;Local:&quot;为前缀显示且不可点击，那是因为\n            这些模板显示本地文件，并且网页浏览器不允许网站链接到本地文件。\n        </p>\n        <p>\n            您必须复制&amp;并粘贴到您的地址栏中。\n        </p>"
         },
         "WSInvalidDataRecv": {
             "en": "Invalid data received: {0}; {1}",
+            "de-DE": "Ungültige Daten empfangen: {0}; {1}",
             "fr-FR": "Données non valides reçues : {0}; {1}",
             "zh-CN": "收到无效数据：{0}; {1}"
         },
         "WSLoadingCert": {
             "en": "WS: Loading SSL certificate {0}...",
+            "de-DE": "WS: SSL-Zertifikat {0} wird geladen ...",
             "fr-FR": "WS : Chargement du certificat SSL  {0}...",
             "zh-CN": "WS：正在加载SSL证书{0}..."
         },
         "WSMessageSendFailed": {
             "en": "Failed to send message: {0}",
+            "de-DE": "Nachricht konnte nicht gesendet werden: {0}",
             "fr-FR": "Impossible d'enoyer le message : {0}",
             "zh-CN": "发送信息失败：{0}"
         },
         "WSNewSubFail": {
             "en": "Failed to process new subscription: {0}",
+            "de-DE": "Neues Abonnement konnte nicht verarbeitet werden: {0}",
             "fr-FR": "Impossible de procéder à une nouvelle souscription : {0}",
             "zh-CN": "处理新订阅失败：{0}"
         },
         "WSShutdownError": {
             "en": "WS: Failed to shutdown. {0}",
+            "de-DE": "WS: Herunterfahren fehlgeschlagen. {0}",
             "fr-FR": "WS : L'arrêt a échoué. {0}",
             "zh-CN": "WS:关闭失败：{0}"
         },
         "WSStartFailed": {
             "en": "WS: Failed to start: {0}",
+            "de-DE": "WS: Start fehlgeschlagen: {0}",
             "fr-FR": "WS : Impossible de démarrer : {0}",
             "zh-CN": "WS:启动失败：{0}"
         },
         "WSUnsubFail": {
             "en": "Failed to process unsubscription: {0}",
+            "de-DE": "Abmeldung fehlgeschlagen: {0}",
             "fr-FR": "Impossible de procéder à la déinscription : {0}",
             "zh-CN": "处理退订失败：{0}"
         }
@@ -810,16 +945,19 @@
     "OverlayPlugin.Updater/ProgressDisplay": {
         "$this.Text": {
             "en": "OverlayPlugin Updater",
+            "de-DE": "OverlayPlugin Updater",
             "fr-FR": "Mise à jour OverlayPlugin",
             "zh-CN": "OverlayPlugin更新程序"
         },
         "cancelBtn.Text": {
             "en": "Cancel",
+            "de-DE": "Abbrechen",
             "fr-FR": "Annuler",
             "zh-CN": "取消"
         },
         "label.Text": {
             "en": "Please wait...",
+            "de-DE": "Bitte warten ...",
             "fr-FR": "Veuillez patienter ...",
             "zh-CN": "请稍后..."
         }
@@ -827,245 +965,293 @@
     "OverlayPlugin.Updater/Resources": {
         "CreatingTempDirFailed": {
             "en": "Failed to create or empty the temporary directory \"{0}\": {1}",
+            "de-DE": "Fehler beim Erstellen oder Leeren des temporären Verzeichnisses \"{0}\": {1}",
             "fr-FR": "Impossible de créer ou supprimer le répertoire temporaire \"{0}\": {1}",
             "zh-CN": "创建或清空缓存目录\"{0}\": {1}失败"
         },
         "DownloadFailedContentLengthMissing": {
             "en": "Download failed! The download has no file size (Content-Length header is missing).",
+            "de-DE": "Download fehlgeschlagen! Der Download hat keine Dateigröße (Content-Length-Header fehlt).",
             "fr-FR": "Le téléchargement a échoué ! Le téléchargement est de taille nulle (l'en-tête Content-Length est manquant).",
             "zh-CN": "下载失败！下载没有文件大小（缺少内容长度头）。"
         },
         "ErrorTitle": {
             "en": "OverlayPlugin Error",
+            "de-DE": "OverlayPlugin-Fehler",
             "fr-FR": "Erreur OverlayPlugin",
             "zh-CN": "OverlayPlugin错误"
         },
         "Exception": {
             "en": "Failed: {0}",
+            "de-DE": "Fehlgeschlagen: {0}",
             "fr-FR": "Echec : {0}",
             "zh-CN": "失败：{0}"
         },
         "LaunchingInstallerFailed": {
             "en": "Failed to launch installer: {0}",
+            "de-DE": "Installationsprogramm konnte nicht gestartet werden: {0}",
             "fr-FR": "Impossible de lancer l'installeur : {0}",
             "zh-CN": "打开安装程序失败：{0}"
         },
         "LogAbortedByUser": {
             "en": "Aborted by user.",
+            "de-DE": "Vom Benutzer abgebrochen.",
             "fr-FR": "Annulé par l'utilisateur.",
             "zh-CN": "用户已终止。"
         },
         "LogBackingUpOldFiles": {
             "en": "Backing up old files...",
+            "de-DE": "Alte Dateien sichern ...",
             "fr-FR": "Sauvegarde des anciens fichiers ...",
             "zh-CN": "正在备份旧文件..."
         },
         "LogCleaningUp": {
             "en": "Cleaning up...",
+            "de-DE": "Aufräumen ...",
             "fr-FR": "Nettoyage ...",
             "zh-CN": "正在执行清理..."
         },
         "LogDeletingTempFiles": {
             "en": "Deleting temporary files...",
+            "de-DE": "Temporäre Dateien löschen ...",
             "fr-FR": "Suppression des fichiers temporaires ...",
             "zh-CN": "正在删除临时文件..."
         },
         "LogDone": {
             "en": "Done.",
+            "de-DE": "Fertig.",
             "fr-FR": "Effectué.",
             "zh-CN": "完成。"
         },
         "LogDownloadFailed": {
             "en": "Download failed: {0}",
+            "de-DE": "Download fehlgeschlagen: {0}",
             "fr-FR": "Téléchargement échoué : {0}",
             "zh-CN": "下载失败：{0}"
         },
         "LogDownloadInterrupted": {
             "en": "The download was interrupted: {0}",
+            "de-DE": "Der Download wurde unterbrochen: {0}",
             "fr-FR": "Le téléchargement a été interrompu : {0}",
             "zh-CN": "下载被中断：{0}"
         },
         "LogDownloading": {
             "en": "Downloading \"{0}\" into {1}...",
+            "de-DE": "Herunterladen von \"{0}\" nach {1} ...",
             "fr-FR": "Téléchargement de \"{0}\" dans {1} ...",
             "zh-CN": "正在下载\"{0}\"至{1}..."
         },
         "LogExtractingFiles": {
             "en": "Extracting files...",
+            "de-DE": "Dateien extrahieren ...",
             "fr-FR": "Extraction des fichiers ...",
             "zh-CN": "正在解压文件..."
         },
         "LogExtractionAbortedByUser": {
             "en": "Extraction aborted by user.",
+            "de-DE": "Extraktion vom Benutzer abgebrochen.",
             "fr-FR": "Extraction annulée par l'utilisateur.",
             "zh-CN": "解压缩被用户终止。"
         },
         "LogFailedReplaceDirectory": {
             "en": "Failed to replace old directory: {0}",
+            "de-DE": "Altes Verzeichnis konnte nicht ersetzt werden: {0}",
             "fr-FR": "Impossible de remplacer l'ancier répertoire : {0}",
             "zh-CN": "无法替换旧目录：{0}"
         },
         "LogFailedToDelete": {
             "en": "Failed to delete {0}: {1}",
+            "de-DE": "Fehler beim Löschen von {0}: {1}",
             "fr-FR": "Impossible d'effacer {0}: {1}",
             "zh-CN": "无法删除{0}：{1}"
         },
         "LogInstallerFailed": {
             "en": "Error: The installer did not finish correctly.",
+            "de-DE": "Fehler: Das Installationsprogramm wurde nicht korrekt beendet.",
             "fr-FR": "Erreur : L'installation ne s'est pas correctement terminée",
             "zh-CN": "错误：安装程序没有正确完成。"
         },
         "LogInstallerWaiting": {
             "en": "Waiting for installer to exit...",
+            "de-DE": "Warten auf das Beenden des Installationsprogramms ...",
             "fr-FR": "En attente de l'installeur pour quitter ...",
             "zh-CN": "正在等待安装程序退出..."
         },
         "LogLaunchingInstaller": {
             "en": "Launching installer...",
+            "de-DE": "Installer starten ...",
             "fr-FR": "Démarrage de l'installeur",
             "zh-CN": "正在运行安装程序..."
         },
         "LogMovingDirectory": {
             "en": "Moving directory...",
+            "de-DE": "Verzeichnis verschieben ...",
             "fr-FR": "Déplacement des répertoires",
             "zh-CN": "正在移动目录..."
         },
         "LogOpeningArchive": {
             "en": "Opening archive...",
+            "de-DE": "Archiv öffnen ...",
             "fr-FR": "Ouverture de l'archive ...",
             "zh-CN": "正在打开压缩包..."
         },
         "LogOverwritingOldFiles": {
             "en": "Overwriting old files...",
+            "de-DE": "Alte Dateien überschreiben ...",
             "fr-FR": "Ecrasement des anciens fichiers ...",
             "zh-CN": "正在覆写旧文件..."
         },
         "LogOverwritingOldFilesFailed": {
             "en": "Failed to overwrite old files: {0}\nWARNING: The plugin might be in an unusable state!!\nRun the update check again or reinstall the plugin, otherwise it might not survive the next ACT restart.",
+            "de-DE": "Fehler beim Überschreiben alter Dateien: {0}\nWARNUNG: Das Plugin befindet sich möglicherweise in einem unbrauchbaren Zustand!!\nFühren Sie die Aktualisierungsprüfung erneut aus oder installieren Sie das Plugin erneut, da es den nächsten ACT-Neustart möglicherweise nicht übersteht.",
             "fr-FR": "Impossible d'écraser les anciens fichiers : {0} !\nATTENTION : Le plugin est peut-être dans un état instable !!\nRelancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas survivre au redémarrage d'ACT.",
             "zh-CN": "无法覆写旧文件：{0}\n警告：插件可能处于无法使用的状态！！\n再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。"
         },
         "LogRemovingOldBackup": {
             "en": "Removing old backup directory...",
+            "de-DE": "Altes Sicherungsverzeichnis entfernen ...",
             "fr-FR": "Suppression du répertoire de sauvegarde ...",
             "zh-CN": "正在删除旧备份目录..."
         },
         "LogRestoringBackup": {
             "en": "Restoring backup...",
+            "de-DE": "Sicherung wiederherstellen ...",
             "fr-FR": "Restauration de la sauvegarde ...",
             "zh-CN": "正在恢复备份..."
         },
         "LogResumingDownload": {
             "en": "Resuming download...",
+            "de-DE": "Download fortsetzen ...",
             "fr-FR": "Reprise du téléchargement",
             "zh-CN": "正在恢复下载..."
         },
         "LogRetry": {
             "en": "Trying again...",
+            "de-DE": "Erneuter Versuch ...",
             "fr-FR": "Nouvel essai ...",
             "zh-CN": "正在重试..."
         },
         "LogRetryAfter1s": {
             "en": "Retrying in 1 second.",
+            "de-DE": "In einer Sekunde wiederholen.",
             "fr-FR": "Nouvel essai dans 1 seconde.",
             "zh-CN": "1秒后重试。"
         },
         "MsvcrtFailed": {
             "en": "The MSVCRT installation failed.",
+            "de-DE": "Die MSVCRT-Installation ist fehlgeschlagen.",
             "fr-FR": "L'installation de MSVCRT a échouée.",
             "zh-CN": "MSVCRT安装失败。"
         },
         "MsvcrtMissing": {
             "en": "You're missing the MS Visual C++ Redistributable for Visual Studio 2019.\nYou'll need that for OverlayPlugin. Install it now?",
+            "de-DE": "MS Visual C ++ Redistributable für Visual Studio 2019 fehlt. \nEs wird zwingend benötigt für das OverlayPlugin. Jetzt installieren?",
             "fr-FR": "MS Visual C++ Redistributable pour Visual Studio 2019 est manquant.\nCe composant est nécessaire pour OverlayPlugin. L'installer maintenant ?",
             "zh-CN": "你没有安装MS Visual C++ Redistributable for Visual Studio 2019。\nOverlayPlugin运行需要它。现在安装？"
         },
         "OutOfRetries": {
             "en": "Out of retries.",
+            "de-DE": "Keine Wiederholungsversuche mehr.",
             "fr-FR": "Nombre maximum d'essais dépassés",
             "zh-CN": "超出尝试次数。"
         },
         "OverlayPluginTitle": {
             "en": "OverlayPlugin",
+            "de-DE": "OverlayPlugin",
             "fr-FR": "OverlayPlugin",
             "zh-CN": "数据统计美化"
         },
         "StatusCancelled": {
             "en": "Cancelled!",
+            "de-DE": "Abgebrochen!",
             "fr-FR": "Annulé !",
             "zh-CN": "已取消！"
         },
         "StatusCancelling": {
             "en": "Cancelling...",
+            "de-DE": "Abbrechen ...",
             "fr-FR": "Annulation ...",
             "zh-CN": "正在取消..."
         },
         "StatusDone": {
             "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
             "en": "[{0}/{1}]: Done.",
+            "de-DE": "[{0}/{1}]: Fertig.",
             "fr-FR": "[{0}/{1}] : Effectué.",
             "zh-CN": "[{0}/{1}]:已完成。"
         },
         "StatusDownloadStarted": {
             "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
             "en": "[{0}/{1}]: Starting download...",
+            "de-DE": "[{0}/{1}]: Download wird gestartet ...",
             "fr-FR": "[{0}/{1}] : Démarrage du téléchargement ...",
             "zh-CN": "[{0}/{1}]:正在开始下载..."
         },
         "StatusError": {
             "en": "Error",
+            "de-DE": "Fehler",
             "fr-FR": "Erreur",
             "zh-CN": "错误"
         },
         "StatusLaunchingInstaller": {
             "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
             "en": "[{0}/{1}]: Launching installer...",
+            "de-DE": "[{0}/{1}]: Installationsprogramm wird gestartet ...",
             "fr-FR": "[{0}/{1}] : Démarrage de l'installeur ...",
             "zh-CN": "[{0}/{1}]:正在运行安装程序...。"
         },
         "StatusPreparingExtraction": {
             "#comment": "The [{0}/{1}] part indicates the current step. i.e. [1/2] would indicate that this is the first of two steps for the current task.",
             "en": "[{0}/{1}]: Preparing extraction...",
+            "de-DE": "[{0}/{1}]: Extraktion vorbereiten ...",
             "fr-FR": "[{0}/{1}] : Préparation de l'extraction ...",
             "zh-CN": "[{0}/{1}]:正在准备解压缩..."
         },
         "UpdateAlreadyLatest": {
             "en": "You are already on the latest version.",
+            "de-DE": "Sie sind bereits auf der neuesten Version.",
             "fr-FR": "Vous êtes déjà sur la dernière version.",
             "zh-CN": "您正在使用最新版本。"
         },
         "UpdateCefDlFailed": {
             "en": "Failed to download CEF! You will not be able to use OverlayPlugin. Retry?",
+            "de-DE": "CEF konnte nicht heruntergeladen werden! Sie können OverlayPlugin nicht verwenden. Wiederholen?",
             "fr-FR": "Impossible de télécharger CEF ! Vous ne pourrez pas utiliser OverlayPlugin. Réessayer ?",
             "zh-CN": "下载CEF失败！您将不能使用OverlayPlugin。重试？"
         },
         "UpdateCheckException": {
             "en": "Failed to check for updates:\n{0}",
+            "de-DE": "Fehler beim Suchen nach Updates:\n{0}",
             "fr-FR": "Impossible de vérifier les mises à jour : \n{0}",
             "zh-CN": "检查更新失败：\n{0}"
         },
         "UpdateCheckTitle": {
             "en": "OverlayPlugin Update Check",
+            "de-DE": "OverlayPlugin Update Überprüfung",
             "fr-FR": "Vérification des mises à jour",
             "zh-CN": "OverlayPlugin检查更新"
         },
         "UpdateFailedError": {
             "en": "Failed to update the plugin. It might not load the next time you start ACT. Retry?",
+            "de-DE": "Das Plugin konnte nicht aktualisiert werden. Beim nächsten Start von ACT wird es möglicherweise nicht geladen. Wiederholen?",
             "fr-FR": "Impossible de mettre à jour le plugin. Il est possible qu'il ne démarre pas au prochain lancement d'ACT. Réessayer ?",
             "zh-CN": "插件更新失败。下次运行ACT时将不会加载本插件。重试？"
         },
         "UpdateParseVersionError": {
             "en": "Failed to parse version:\n{0}",
+            "de-DE": "Version konnte nicht analysiert werden: \n {0}",
             "fr-FR": "Impossible de détecter la version :\n{0}",
             "zh-CN": "解析版本失败:\n{0}"
         },
         "UpdateSuccess": {
             "en": "The update was successful. Please restart ACT to load the new plugin version.",
+            "de-DE": "Das Update war erfolgreich. Bitte starten Sie ACT neu, um die neue Plugin-Version zu laden.",
             "fr-FR": "Mise à jour réalisée avec succès. Redémarrez ACT pour charger la nouvelle version.",
             "zh-CN": "更新成功。请重新运行ACT来加载新版插件。"
         },
         "UpdateTitle": {
             "en": "OverlayPlugin Update",
+            "de-DE": "OverlayPlugin Update",
             "fr-FR": "Mise à jour d'OverlayPlugin",
             "zh-CN": "OverlayPlugin更新"
         }
@@ -1073,21 +1259,25 @@
     "OverlayPlugin.Updater/UpdateQuestionForm": {
         "$this.Text": {
             "en": "OverlayPlugin Update",
+            "de-DE": "OverlayPlugin Update",
             "fr-FR": "Mise à jour d'OverlayPlugin",
             "zh-CN": "OverlayPlugin更新"
         },
         "btnConfirm.Text": {
             "en": "Install Update",
+            "de-DE": "Update installieren",
             "fr-FR": "Installer la mise à jour",
             "zh-CN": "安装更新"
         },
         "btnDeny.Text": {
             "en": "Cancel",
+            "de-DE": "Abbrechen",
             "fr-FR": "Annuler",
             "zh-CN": "取消"
         },
         "label1.Text": {
             "en": "There's a new update for OverlayPlugin available. Install it now?",
+            "de-DE": "Es ist ein neues Update für OverlayPlugin verfügbar. Jetzt installieren?",
             "fr-FR": "Une nouvelle version est disponible. Voulez-vous l'installer maintenant ?",
             "zh-CN": "发现一个可用的OverlayPlugin更新。现在安装？"
         }
@@ -1095,51 +1285,60 @@
     "OverlayPlugin/Resources": {
         "AssemblyMismatch": {
             "en": "ACT tried to load {0} {1} which doesn't match your OverlayPlugin version ({2}). Aborting plugin load.\n\nPlease make sure the old OverlayPlugin is disabled and restart ACT. If that doesn't fix the issue, remove the above mentioned file and any OverlayPlugin*.dll, CEF or HtmlRenderer.dll files in the same directory.\n",
+            "de-DE": "ACT hat versucht, {0} {1} zu laden, das nicht mit Ihrer OverlayPlugin-Version ({2}) übereinstimmt. Abbrechen des Plugin-Ladevorgangs.\n\nBitte stellen Sie sicher, dass das alte OverlayPlugin deaktiviert ist, und starten Sie ACT neu. Behebt dies das Problem nicht, entfernen Sie die oben genannte Datei und alle OverlayPlugin * .dll-, CEF- oder HtmlRenderer.dll-Dateien im selben Verzeichnis.\n ",
             "fr-FR": "ACT a essayé de charger {0} {1} qui ne correspond pas à votre version d'OverlayPlugin ({2}). Chargement du plugin annulé.\nVérifier que l'ancien OverlayPlugin est désactivé et relancez ACT. Si le problème persiste, supprimer les fichiers spécifiés au dessus et les fichiers OverlayPlugin*.dll, CEF et HtmlRenderer.dll dans le même répertoire.\n",
             "zh-CN": "ACT尝试加载与您的OverlayPlugin版本({2})不匹配的{0} {1}。正在中止插件加载。\n\n请确保已禁用旧的OverlayPlugin，然后重新启动ACT。如果仍不能解决问题，请删除上述文件以及同一目录中的所有OverlayPlugin*.dll，CEF或HtmlRenderer.dll文件。\n"
         },
         "AssemblyResolverError": {
             "#comment": "Log message",
             "en": "AssemblyResolver: Error: {0}",
+            "de-DE": "AssemblyResolver: Fehler: {0}",
             "fr-FR": "AssemblyResolver : Erreur : {0}",
             "zh-CN": "AssemblyResolver：错误：{0}"
         },
         "AssemblyResolverLoaded": {
             "#comment": "Log message",
             "en": "AssemblyResolver: Loaded: {0}",
+            "de-DE": "AssemblyResolver: Geladen: {0}",
             "fr-FR": "AssemblyResolver : Chargé : {0}",
             "zh-CN": "AssemblyResolver：已加载：{0}"
         },
         "CefInstallerFailed": {
             "en": "CefInstaller couldn't be loaded.",
+            "de-DE": "CefInstaller konnte nicht geladen werden.",
             "fr-FR": "Impossible de charger CefInstaller.",
             "zh-CN": "Cef安装程序无法加载。"
         },
         "CoreOrHtmlRendererInsane": {
             "#comment": "Displayed if the version for OverlayPlugin.Core or HtmlRenderer doesn't match the OverlayPlugin version.",
             "en": "Core or HtmlRenderer aren't sane.",
+            "de-DE": "Core oder HtmlRenderer Versionen stimmen nicht überein.",
             "fr-FR": "Core et HtmlRenderer sont différents.",
             "zh-CN": "核心或HtmlRenderer不匹配。"
         },
         "FailedToLoadCommon": {
             "#comment": "Plugin status (in ACT's plugin list)",
             "en": "Failed to load Common!",
+            "de-DE": "Common konnte nicht geladen werden!",
             "fr-FR": "Impossible de charger Common !",
             "zh-CN": "加载公共库失败！"
         },
         "InitCef": {
             "en": "Initializing CEF...",
+            "de-DE": "CEF initialisieren ...",
             "fr-FR": "Initialisation de CEF ...",
             "zh-CN": "正在安装CEF..."
         },
         "InitRuntime": {
             "#comment": "Plugin status (in ACT's plugin list)",
             "en": "Initializing Runtime...",
+            "de-DE": "Laufzeit initialisieren ...",
             "fr-FR": "Initialisation Runtime",
             "zh-CN": "正在安装运行库..."
         },
         "WaitingForAct": {
             "en": "Waiting for ACT to finish startup...",
+            "de-DE": "Warten, bis ACT den Start beendet hat ...",
             "fr-FR": "En attente d'ACT pour terminer le démarrage ...",
             "zh-CN": "正在等待ACT启动完毕..."
         }
