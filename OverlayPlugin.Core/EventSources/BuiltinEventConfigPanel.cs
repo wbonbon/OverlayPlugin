@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
-    partial class BuiltinEventConfigPanel : UserControl
+    partial class BuiltinEventConfigPanel : UserControl, IDisposable
     {
         private BuiltinEventConfig config;
 
@@ -25,6 +25,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             InitializeComponent();
 
+            Registry.EventSourcesStarted += LoadConfig;
+        }
+
+        private void LoadConfig(object sender, EventArgs args)
+        {
             this.config = Registry.Resolve<BuiltinEventConfig>();
 
             SetupControlProperties();

@@ -16,6 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
+                Registry.EventSourcesStarted -= LoadConfig;
             }
             base.Dispose(disposing);
         }
