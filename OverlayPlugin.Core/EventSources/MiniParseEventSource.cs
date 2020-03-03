@@ -31,6 +31,52 @@ namespace RainbowMage.OverlayPlugin.EventSources
             { 23, "LookingForParty" },
         };
 
+        private readonly List<string> DefaultCombatantFields = new List<string>
+        {
+            "CurrentWorldID",
+            "WorldID",
+            "WorldName",
+            "BNpcID",
+            "BNpcNameID",
+            "PartyType",
+            "ID",
+            "OwnerID",
+            "type",
+            "Job",
+            "Level",
+            "Name",
+            "CurrentHP",
+            "MaxHP",
+            "CurrentMP",
+            "MaxMP",
+            "PosX",
+            "PosY",
+            "PosZ",
+            "Heading"
+        };
+
+        private enum CombatantType : byte
+        {
+            None = 0x00,
+            Player = 0x01,
+            BattleNpc = 0x02,
+            EventNpc = 0x03,
+            Treasure = 0x04,
+            Aetheryte = 0x05,
+            GatheringPoint = 0x06,
+            EventObj = 0x07,
+            MountType = 0x08,
+            Companion = 0x09, // this probably actually means minion
+            Retainer = 0x0A,
+            Area = 0x0B,
+            Housing = 0x0C,
+            Cutscene = 0x0D,
+            CardStand = 0x0E,
+        };
+
+        private Dictionary<string, System.Reflection.PropertyInfo> CachedCombatantPropertyInfos
+            = new Dictionary<string, System.Reflection.PropertyInfo>();
+
         private const string CombatDataEvent = "CombatData";
         private const string LogLineEvent = "LogLine";
         private const string ImportedLogLinesEvent = "ImportedLogLines";
@@ -63,13 +109,51 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 OnlineStatusChangedEvent,
                 PartyChangedEvent,
             });
-
+            
             RegisterEventHandler("getLanguage", (msg) => {
                 var lang = FFXIVRepository.GetLanguage();
                 return JObject.FromObject(new
                 {
                     language = lang.ToString("g"),
                     languageId = lang.ToString("d"),
+                });
+            });
+
+            RegisterEventHandler("getCombatants", (msg) => {
+                List<uint> ids = new List<uint>();
+
+                if (msg["ids"] != null)
+                {
+                    foreach (var id in ((JArray)msg["ids"]))
+                    {
+                        ids.Add(id.ToObject<uint>());
+                    }
+                }
+
+                List<string> names = new List<string>();
+
+                if (msg["names"] != null)
+                {
+                    foreach (var name in ((JArray)msg["names"]))
+                    {
+                        names.Add(name.ToString());
+                    }
+                }
+
+                List<string> props = new List<string>();
+
+                if (msg["props"] != null)
+                {
+                    foreach (var prop in ((JArray)msg["props"]))
+                    {
+                        props.Add(prop.ToString());
+                    }
+                }
+
+                var combatants = GetCombatants(ids, names, props);
+                return JObject.FromObject(new
+                {
+                    combatants
                 });
             });
 
@@ -96,6 +180,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return ret;
             });
 
+            foreach (var propName in DefaultCombatantFields)
+            {
+                CachedCombatantPropertyInfos.Add(propName, 
+                    typeof(FFXIV_ACT_Plugin.Common.Models.Combatant).GetProperty(propName));
+            }
+
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
             NetworkParser.OnOnlineStatusChanged += (o, e) =>
             {
@@ -109,6 +199,61 @@ namespace RainbowMage.OverlayPlugin.EventSources
             };
 
             FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
+        }
+
+        private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)
+        {
+            List<Dictionary<string, object>> filteredCombatants = new List<Dictionary<string, object>>();
+
+            var combatants = FFXIVRepository.GetCombatants();
+
+            foreach (var combatant in combatants) {
+                if (combatant.ID == 0) {
+                    continue;
+                }
+                
+                bool include = false;
+
+                var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant);
+                
+                if (ids.Count == 0 && names.Count == 0) {
+                    include = true;
+                } else {
+                    foreach (var id in ids) {
+                        if (combatant.ID == id) {
+                            include = true;
+                            break;
+                        }
+                    }
+
+                    if (!include) {
+                        foreach (var name in names) {
+                            if (combatantName.Equals(name)) {
+                                include = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (include) {
+                    Dictionary<string, object> filteredCombatant = new Dictionary<string, object>();
+                    if (props.Count > 0) {
+                        foreach (var prop in props) {
+                            if (CachedCombatantPropertyInfos.ContainsKey(prop)) {
+                                filteredCombatant.Add(prop, CachedCombatantPropertyInfos[prop].GetValue(combatant));
+                            }
+                        }
+                    } else {
+                        foreach(var prop in CachedCombatantPropertyInfos.Keys) {
+                            filteredCombatant.Add(prop, CachedCombatantPropertyInfos[prop].GetValue(combatant));
+                        }
+                    }
+                    filteredCombatants.Add(filteredCombatant);
+                }
+            }
+
+            return filteredCombatants;
         }
 
         private void LogLineHandler(bool isImport, LogLineEventArgs args)
