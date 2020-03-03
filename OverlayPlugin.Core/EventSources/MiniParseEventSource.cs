@@ -90,7 +90,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 OnlineStatusChangedEvent,
                 PartyChangedEvent,
             });
-            
+
             RegisterEventHandler("getLanguage", (msg) => {
                 var lang = FFXIVRepository.GetLanguage();
                 return JObject.FromObject(new
@@ -188,8 +188,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             var combatants = FFXIVRepository.GetCombatants();
 
-            foreach (var combatant in combatants) {
-                if (combatant.ID == 0) {
+            foreach (var combatant in combatants)
+            {
+                if (combatant.ID == 0)
+                {
                     continue;
                 }
                 
@@ -197,19 +199,27 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant);
                 
-                if (ids.Count == 0 && names.Count == 0) {
+                if (ids.Count == 0 && names.Count == 0)
+                {
                     include = true;
-                } else {
-                    foreach (var id in ids) {
-                        if (combatant.ID == id) {
+                }
+                else
+                {
+                    foreach (var id in ids)
+                    {
+                        if (combatant.ID == id)
+                        {
                             include = true;
                             break;
                         }
                     }
 
-                    if (!include) {
-                        foreach (var name in names) {
-                            if (combatantName.Equals(name)) {
+                    if (!include)
+                    {
+                        foreach (var name in names)
+                        {
+                            if (combatantName.Equals(name))
+                            {
                                 include = true;
                                 break;
                             }
@@ -217,16 +227,23 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     }
                 }
 
-                if (include) {
+                if (include)
+                {
                     Dictionary<string, object> filteredCombatant = new Dictionary<string, object>();
-                    if (props.Count > 0) {
-                        foreach (var prop in props) {
-                            if (CachedCombatantPropertyInfos.ContainsKey(prop)) {
+                    if (props.Count > 0)
+                    {
+                        foreach (var prop in props)
+                        {
+                            if (CachedCombatantPropertyInfos.ContainsKey(prop))
+                            {
                                 filteredCombatant.Add(prop, CachedCombatantPropertyInfos[prop].GetValue(combatant));
                             }
                         }
-                    } else {
-                        foreach(var prop in CachedCombatantPropertyInfos.Keys) {
+                    }
+                    else
+                    {
+                        foreach (var prop in CachedCombatantPropertyInfos.Keys)
+                        {
                             filteredCombatant.Add(prop, CachedCombatantPropertyInfos[prop].GetValue(combatant));
                         }
                     }
