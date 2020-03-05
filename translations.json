@@ -689,7 +689,7 @@
             "de-DE": "Verstumme Overlay wenn versteckt",
             "fr-FR": "Aucun son si caché",
             "ja-JP": "オーバーレイが隠れているときに\nミュートにする",
-            "ko-KR": "오버레이가 숨겨진 상태일 때 음소거 하기",
+            "ko-KR": "숨겨진 상태일 때 음소거하기",
             "zh-CN": "隐藏时使悬浮窗静音"
         },
         "label15.Text": {
@@ -721,7 +721,7 @@
             "de-DE": "Erzwinge weißen Hintergrund",
             "fr-FR": "Forcer le fond en blanc",
             "ja-JP": "オーバーレイの背景を白にする",
-            "ko-KR": "오버레이 배경을 흰색으로 변경하기",
+            "ko-KR": "오버레이 배경을 흰색으로 변경",
             "zh-CN": "在悬浮窗下强制启用白色背景"
         },
         "label5.Text": {
