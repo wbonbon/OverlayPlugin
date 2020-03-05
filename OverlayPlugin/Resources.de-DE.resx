@@ -117,46 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CoreOrHtmlRendererInsane" xml:space="preserve">
+    <value>Core oder HtmlRenderer Versionen stimmen nicht überein.</value>
+  </data>
+  <data name="AssemblyMissing" xml:space="preserve">
+    <value>Fehler beim Laden von {0}: {1}
+Stellen Sie sicher, dass Sie das gesamte Plugin-Archiv extrahiert und nichts gelöscht haben (zB den libs-Ordner).</value>
+  </data>
+  <data name="CefInstallerFailed" xml:space="preserve">
+    <value>CefInstaller konnte nicht geladen werden.</value>
+  </data>
+  <data name="WaitingForAct" xml:space="preserve">
+    <value>Warten, bis ACT den Start beendet hat ...</value>
+  </data>
+  <data name="DependencyOutdated" xml:space="preserve">
+    <value>Schwerwiegend: Die geladene {0} -Version ist älter als erwartet ({1} &lt;{2})! Dies kann zu seltsamen Fehlern in OverlayPlugin und seinen Addons führen.</value>
+  </data>
+  <data name="AssemblyResolverError" xml:space="preserve">
+    <value>AssemblyResolver: Fehler: {0}</value>
+  </data>
+  <data name="DependencyMissing" xml:space="preserve">
+    <value>Fehler beim Laden der Abhängigkeit {0}: {1}
+Stellen Sie sicher, dass Sie das gesamte Plugin-Archiv extrahiert und keine Dateien gelöscht haben.</value>
+  </data>
+  <data name="InitRuntime" xml:space="preserve">
+    <value>Laufzeit initialisieren ...</value>
+  </data>
+  <data name="InitCef" xml:space="preserve">
+    <value>CEF initialisieren ...</value>
+  </data>
+  <data name="AssemblyResolverLoaded" xml:space="preserve">
+    <value>AssemblyResolver: Geladen: {0}</value>
+  </data>
+  <data name="FailedToLoadCommon" xml:space="preserve">
+    <value>Common konnte nicht geladen werden!</value>
+  </data>
+  <data name="AssemblyMismatch" xml:space="preserve">
+    <value>ACT hat versucht, {0} {1} zu laden, das nicht mit Ihrer OverlayPlugin-Version ({2}) übereinstimmt. Abbrechen des Plugin-Ladevorgangs.
 
-  <data name="sslBox.Text" xml:space="preserve">
-    <value>Activer SSL</value>
-  </data>
-  <data name="logDisplay.Text" xml:space="preserve">
-    <value>SSL ne peut être activé que si vous avez un certificat SSL. Vous pouvez soit cliquer sur le bouton ci-dessus pour en générer automatiquement un, soit placer un fichier PKCS#12 avec le mot de passe dans %AppData%\Advanced Combat Tracker\Config\OverlayPluginSSL.p12 et relancer ACT.
-
-Après, vous devriez pouvoir activer SSL.</value>
-  </data>
-  <data name="statusLabel.Text" xml:space="preserve">
-    <value>Inconnu</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Adresse IP :</value>
-  </data>
-  <data name="startBtn.Text" xml:space="preserve">
-    <value>Démarrer</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>Etat</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>Port :</value>
-  </data>
-  <data name="genSslBtn.Text" xml:space="preserve">
-    <value>Générer un certificat SSL</value>
-  </data>
-  <data name="stopBtn.Text" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="lblUrlConfidentWarning.Text" xml:space="preserve">
-    <value>Cette URL peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Overlay :</value>
-  </data>
-  <data name="ctxMenuLinkCopy.Text" xml:space="preserve">
-    <value>Copier</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>URL :</value>
+Bitte stellen Sie sicher, dass das alte OverlayPlugin deaktiviert ist, und starten Sie ACT neu. Behebt dies das Problem nicht, entfernen Sie die oben genannte Datei und alle OverlayPlugin * .dll-, CEF- oder HtmlRenderer.dll-Dateien im selben Verzeichnis.
+ </value>
   </data>
 </root>

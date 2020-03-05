@@ -117,166 +117,105 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
-  <data name="UpdateCheckException" xml:space="preserve">
-    <value>检查更新失败：
-{0}</value>
+  <data name="hotkeyColAction.HeaderText" xml:space="preserve">
+    <value>Aktion</value>
   </data>
-  <data name="ErrorTitle" xml:space="preserve">
-    <value>{0}错误</value>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Overlay anzeigen</value>
   </data>
-  <data name="LogRetry" xml:space="preserve">
-    <value>正在重试...</value>
+  <data name="checkLogConsoleMessages.Text" xml:space="preserve">
+    <value>Zeige Konsolennachrichten von diesem Overlay im Overlaylog</value>
   </data>
-  <data name="UpdateFailedError" xml:space="preserve">
-    <value>插件更新失败。下次运行ACT时将不会加载本插件。重试？</value>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Erzwinge weißen Hintergrund</value>
   </data>
-  <data name="LogDownloadFailed" xml:space="preserve">
-    <value>下载失败：{0}</value>
+  <data name="checkActwsCompatbility.Text" xml:space="preserve">
+    <value>Dies ist ein Overlay, welches ACTWebSocket benötigt</value>
   </data>
-  <data name="MsvcrtFailed" xml:space="preserve">
-    <value>MSVCRT安装失败。</value>
+  <data name="label12.Text" xml:space="preserve">
+    <value>Benutze diese Option, wenn du die Größe des Overlays nicht verändern kannst.</value>
   </data>
-  <data name="StatusError" xml:space="preserve">
-    <value>错误</value>
+  <data name="buttonResetOverlayPosition.Text" xml:space="preserve">
+    <value>Overlay Position zurücksetzen</value>
   </data>
-  <data name="LogResumingDownload" xml:space="preserve">
-    <value>正在恢复下载...</value>
+  <data name="label1.Text" xml:space="preserve">
+    <value>URL</value>
   </data>
-  <data name="OverlayPluginTitle" xml:space="preserve">
-    <value>OverlayPlugin</value>
+  <data name="label13.Text" xml:space="preserve">
+    <value>Verstumme Overlay wenn versteckt</value>
   </data>
-  <data name="LaunchingInstallerFailed" xml:space="preserve">
-    <value>打开安装程序失败：{0}</value>
+  <data name="tabHotkeys.Text" xml:space="preserve">
+    <value>Hotkeys</value>
   </data>
-  <data name="LogOpeningArchive" xml:space="preserve">
-    <value>正在打开压缩包...</value>
+  <data name="buttonMiniParseSelectFile.Text" xml:space="preserve">
+    <value>...</value>
   </data>
-  <data name="StatusPreparingExtraction" xml:space="preserve">
-    <value>[{0}/{1}]:正在准备解压缩...</value>
+  <data name="hotkeyColEnabled.HeaderText" xml:space="preserve">
+    <value>Aktiviert</value>
   </data>
-  <data name="DownloadFailedContentLengthMissing" xml:space="preserve">
-    <value>下载失败！没有下载文件大小（Content-Length标头缺失）。</value>
+  <data name="lblNoFocus.Text" xml:space="preserve">
+    <value>Kein Fokus</value>
   </data>
-  <data name="UpdateParseVersionError" xml:space="preserve">
-    <value>解析版本失败:
-{0}</value>
+  <data name="tabGeneral.Text" xml:space="preserve">
+    <value>Allgemein</value>
   </data>
-  <data name="LogInstallerFailed" xml:space="preserve">
-    <value>错误：安装程序没有正确完成。</value>
+  <data name="buttonMiniParseOpenDevTools.Text" xml:space="preserve">
+    <value>Öffne Entwicklerwerkzeuge</value>
   </data>
-  <data name="LogAbortedByUser" xml:space="preserve">
-    <value>用户已终止。</value>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Max. Bildrate</value>
   </data>
-  <data name="StatusDownloadStarted" xml:space="preserve">
-    <value>[{0}/{1}]:正在开始下载...</value>
+  <data name="hotkeyColHotkey.HeaderText" xml:space="preserve">
+    <value>Hotkey</value>
   </data>
-  <data name="LogRetryAfter1s" xml:space="preserve">
-    <value>1秒后重试。</value>
+  <data name="btnRemoveHotkey.Text" xml:space="preserve">
+    <value>Entferne selektierten Hotkey</value>
   </data>
-  <data name="StatusDone" xml:space="preserve">
-    <value>[{0}/{1}]:已完成。</value>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Overlay aktivieren</value>
   </data>
-  <data name="LogExtractionAbortedByUser" xml:space="preserve">
-    <value>解压缩被用户终止。</value>
+  <data name="label11.Text" xml:space="preserve">
+    <value>Diese Option muss nur aktiviert werden, wenn der Overlay-Skin normalerweise nicht kompatibel mit dem OverlayPlugin ist</value>
   </data>
-  <data name="UpdateCheckTitle" xml:space="preserve">
-    <value>{0}检查更新</value>
+  <data name="buttonMiniParseReloadBrowser.Text" xml:space="preserve">
+    <value>Overlay neu laden</value>
   </data>
-  <data name="UpdateCefDlFailed" xml:space="preserve">
-    <value>下载CEF失败！检查OverlayPlugin.dll选项卡以获取详细信息。</value>
+  <data name="tabAdvanced.Text" xml:space="preserve">
+    <value>Erweitert</value>
   </data>
-  <data name="Exception" xml:space="preserve">
-    <value>失败：{0}</value>
+  <data name="checkNoFocus.Text" xml:space="preserve">
+    <value>Fokus dieses Overlays nicht akzeptieren</value>
   </data>
-  <data name="LogLaunchingInstaller" xml:space="preserve">
-    <value>正在运行安装程序...</value>
+  <data name="label10.Text" xml:space="preserve">
+    <value>Wenn ein Overlay gesperrt ist, wird seine Position festgelegt und Sie können es erst verschieben, wenn Sie es erneut entsperren.</value>
   </data>
-  <data name="LogInstallerWaiting" xml:space="preserve">
-    <value>正在等待安装程序退出...</value>
+  <data name="btnResetZoom.Text" xml:space="preserve">
+    <value>Zurücksetzen</value>
   </data>
-  <data name="OutOfRetries" xml:space="preserve">
-    <value>超出尝试次数。</value>
+  <data name="btnAddHotkey.Text" xml:space="preserve">
+    <value>Neuen Hotkey hinzufügen</value>
   </data>
-  <data name="StatusLaunchingInstaller" xml:space="preserve">
-    <value>[{0}/{1}]:正在运行安装程序...。</value>
+  <data name="label5.Text" xml:space="preserve">
+    <value>ACTWS Kompatibilität</value>
   </data>
-  <data name="LogDownloading" xml:space="preserve">
-    <value>正在下载"{0}"至{1}...</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Durchklicken aktiviere</value>
   </data>
-  <data name="StatusCancelling" xml:space="preserve">
-    <value>正在取消...</value>
+  <data name="tabACTWS.Text" xml:space="preserve">
+    <value>ACTWS</value>
   </data>
-  <data name="MsvcrtMissing" xml:space="preserve">
-    <value>你没有安装MS Visual C++ Redistributable for Visual Studio 2019。
-OverlayPlugin的运行需要它。现在安装？</value>
+  <data name="btnApplyHotkeyChanges.Text" xml:space="preserve">
+    <value>Änderungen übernehmen</value>
   </data>
-  <data name="CreatingTempDirFailed" xml:space="preserve">
-    <value>创建或清空缓存目录"{0}": {1}失败</value>
+  <data name="label15.Text" xml:space="preserve">
+    <value>Zoom</value>
   </data>
-  <data name="UpdateTitle" xml:space="preserve">
-    <value>{0}更新</value>
+  <data name="label8.Text" xml:space="preserve">
+    <value>Das Deaktivieren eines Overlays reduziert die CPU-Auslastung, stoppt aber auch alles, was es tut (zB Sounds).
+Das Ausblenden eines Overlays macht es nur unsichtbar. Es wird weiterhin im Hintergrund ausgeführt und kann weiterhin Sounds abspielen, Statistiken sammeln usw.
+</value>
   </data>
-  <data name="StatusCancelled" xml:space="preserve">
-    <value>已取消！</value>
-  </data>
-  <data name="LogExtractingFiles" xml:space="preserve">
-    <value>正在解压文件...</value>
-  </data>
-  <data name="UpdateAlreadyLatest" xml:space="preserve">
-    <value>您正在使用最新版本。</value>
-  </data>
-  <data name="LogDownloadInterrupted" xml:space="preserve">
-    <value>下载被中断：{0}</value>
-  </data>
-  <data name="UpdateSuccess" xml:space="preserve">
-    <value>更新成功。请重新运行ACT来加载新版插件。</value>
-  </data>
-  <data name="LogBackingUpOldFiles" xml:space="preserve">
-    <value>正在备份旧文件...</value>
-  </data>
-  <data name="LogRemovingOldBackup" xml:space="preserve">
-    <value>正在删除旧备份目录...</value>
-  </data>
-  <data name="LogOverwritingOldFiles" xml:space="preserve">
-    <value>正在覆写旧文件...</value>
-  </data>
-  <data name="LogRestoringBackup" xml:space="preserve">
-    <value>正在恢复备份...</value>
-  </data>
-  <data name="LogDone" xml:space="preserve">
-    <value>完成。</value>
-  </data>
-  <data name="LogFailedReplaceDirectory" xml:space="preserve">
-    <value>无法替换旧目录：{0}</value>
-  </data>
-  <data name="LogMovingDirectory" xml:space="preserve">
-    <value>正在移动目录...</value>
-  </data>
-  <data name="LogDeletingTempFiles" xml:space="preserve">
-    <value>正在删除临时文件...</value>
-  </data>
-  <data name="LogFailedToDelete" xml:space="preserve">
-    <value>无法删除{0}：{1}</value>
-  </data>
-  <data name="LogCleaningUp" xml:space="preserve">
-    <value>正在执行清理...</value>
-  </data>
-  <data name="LogOverwritingOldFilesFailed" xml:space="preserve">
-    <value>无法覆写旧文件：{0}
-警告：插件可能处于无法使用的状态！！
-再次运行更新检查或重新安装插件，否则它可能无法在下次ACT重新启动时正常工作。</value>
-  </data>  <data name="SharpCompressOutdatedError" xml:space="preserve">
-    <value>当前加载的SharpCompress版本过旧！
-请确保先加载OverlayPlugin，再加载其他也使用SharpCompress的插件（例如ACTWebSocket）。</value>
-  </data>
-  <data name="ActUpdateException" xml:space="preserve">
-    <value>{0}的ACT检查更新失败，正在回退至GitHub API: {1}</value>
-  </data>
-  <data name="ActUpdateCheckFailed" xml:space="preserve">
-    <value>通过ACT检查{0}的更新失败，正在使用GitHub API重试。</value>
-  </data>
-  <data name="UpdateSliderDetails" xml:space="preserve">
-    <value>{0}已成功更新。</value>
+  <data name="label9.Text" xml:space="preserve">
+    <value>Overlay sperren</value>
   </data>
 </root>
