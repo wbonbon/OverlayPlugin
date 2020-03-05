@@ -819,7 +819,8 @@
             "zh-CN": "名称不得重复。"
         },
         "EventConfigTab": {
-            "en": "Event Settings"
+            "en": "Event Settings",
+            "zh-CN": "基本设置"
         },
         "EventHandlerException": {
             "en": "Failed to dispatch event {0} to {1}! {2}",
@@ -852,7 +853,8 @@
             "zh-CN": "切换悬浮窗 鼠标穿透"
         },
         "HotkeyActionToggleEnabled": {
-            "en": "Toggle enabled"
+            "en": "Toggle enabled",
+            "zh-CN": "切换悬浮窗 启用/关闭"
         },
         "HotkeyActionToggleLock": {
             "en": "Toggle lock",
@@ -959,7 +961,8 @@
             "zh-CN": "无法设置网络解析器：{0}"
         },
         "NetworkParserNoFfxiv": {
-            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV."
+            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV.",
+            "zh-CN": "找不到Machina或FFXIV插件。仅当您将ACT与FFXIV一起使用时才是问题。"
         },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
@@ -1521,7 +1524,8 @@
         },
         "UpdateSliderDetails": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)\nThis text is displayed in ACT's restart prompt. ACT already asks the user to restart so we don't have to.",
-            "en": "{0} was updated successfully."
+            "en": "{0} was updated successfully.",
+            "zh-CN": "{0}已成功更新。"
         },
         "UpdateSuccess": {
             "en": "The update was successful. Please restart ACT to load the new plugin version.",
