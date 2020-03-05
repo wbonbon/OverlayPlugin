@@ -410,6 +410,9 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void LoadConfig()
         {
+            if (Config != null)
+                return;
+
             var found = true;
             try
             {
@@ -471,6 +474,7 @@ namespace RainbowMage.OverlayPlugin
                         es.SaveConfig(Config);
                 }
 
+                Registry.Resolve<BuiltinEventConfig>().SaveConfig(Config);
                 Config.SaveJson(GetConfigPath());
             }
             catch (Exception e)
