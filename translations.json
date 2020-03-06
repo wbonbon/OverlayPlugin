@@ -959,7 +959,8 @@
             "zh-CN": "无法设置网络解析器：{0}"
         },
         "NetworkParserNoFfxiv": {
-            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV."
+            "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV.",
+            "fr-FR": "Impossible de trouver le plugin FFXIV ou Machina. C'est seulement un problème si vous utilisez ACT avec FFXIV."
         },
         "OverlayApiInvalidHandlerCall": {
             "en": "Received invalid handler call: {0}",
@@ -1420,6 +1421,7 @@
         },
         "SharpCompressOutdatedError": {
             "en": "The currently loaded version of SharpCompress is outdated!\nMake sure you load OverlayPlugin before any other plugins that also use SharpCompress (like ACTWebSocket).",
+            "fr-FR": "La version de SharpCompress actuellement chargée est dépassée !\nSoyez sûr de charger OverlayPlugin avant d'autres plugins qui pourraient également l'utiliser (comme ACTWebSocket)",
             "ja-JP": "現在の SharpCompress のバージョンが古いです!\nSharpCompress を使用する他のプラグインの前に、必ずOverlayPluginをロードしてください.",
             "zh-CN": "当前加载的SharpCompress版本过旧！\n请确保先加载OverlayPlugin，再加载其他也使用SharpCompress的插件（例如ACTWebSocket）。"
         },
