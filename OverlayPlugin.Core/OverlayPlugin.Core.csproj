@@ -287,6 +287,9 @@
     <EmbeddedResource Include="Controls\RenameOverlayDialog.de-DE.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RenameOverlayDialog.fr-FR.resx">
+      <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\RenameOverlayDialog.resx">
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </EmbeddedResource>

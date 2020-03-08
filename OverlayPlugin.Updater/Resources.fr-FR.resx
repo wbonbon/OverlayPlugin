@@ -272,4 +272,8 @@ Relancez la mise à jour ou réinstallez le plugin, sinon il pourrait ne pas sur
   <data name="ActUpdateCheckFailed" xml:space="preserve">
     <value>La vérification de {0} via ACT a échoué. Nouvel essai avec l'API GitHub</value>
   </data>
+  <data name="SharpCompressOutdatedError" xml:space="preserve">
+    <value>La version de SharpCompress actuellement chargée est dépassée !
+Soyez sûr de charger OverlayPlugin avant d'autres plugins qui pourraient également l'utiliser (comme ACTWebSocket)</value>
+  </data>
 </root>

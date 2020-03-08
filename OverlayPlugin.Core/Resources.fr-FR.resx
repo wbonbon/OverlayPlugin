@@ -250,4 +250,7 @@
   <data name="WSNotConfidentLink" xml:space="preserve">
     <value>Ce lien peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.</value>
   </data>
+  <data name="NetworkParserNoFfxiv" xml:space="preserve">
+    <value>Impossible de trouver le plugin FFXIV ou Machina. C'est seulement un problème si vous utilisez ACT avec FFXIV.</value>
+  </data>
 </root>
