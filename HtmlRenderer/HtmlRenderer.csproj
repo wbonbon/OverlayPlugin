@@ -79,6 +79,7 @@
     <EmbeddedResource Include="OverlayForm.resx">
       <DependentUpon>OverlayForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.de-DE.resx" />
     <EmbeddedResource Include="Resources.fr-FR.resx" />
     <EmbeddedResource Include="Resources.ja-JP.resx" />
     <EmbeddedResource Include="Resources.ko-KR.resx" />

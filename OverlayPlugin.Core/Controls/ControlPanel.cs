@@ -127,9 +127,12 @@ namespace RainbowMage.OverlayPlugin
                 AddConfigTab(overlay);
             }
 
-            if (tabControl.TabCount == 0)
+            if (this.pluginMain.Overlays.Count == 0)
             {
-                tabControl.TabPages.Add(this.tabPageMain);
+                ((GeneralConfigTab) generalTab.Controls[0]).SetReadmeVisible(true);
+            } else
+            {
+                ((GeneralConfigTab) generalTab.Controls[0]).SetReadmeVisible(false);
             }
         }
 
@@ -154,6 +157,7 @@ namespace RainbowMage.OverlayPlugin
                 tabPage.Controls.Add(control);
 
                 this.tabControl.TabPages.Add(tabPage);
+                ((GeneralConfigTab) generalTab.Controls[0]).SetReadmeVisible(false);
             }
         }
 
@@ -286,6 +290,10 @@ namespace RainbowMage.OverlayPlugin
 
             // タープを更新
             this.tabControl.Update();
+            if (this.pluginMain.Overlays.Count == 0)
+            {
+                ((GeneralConfigTab) generalTab.Controls[0]).SetReadmeVisible(true);
+            }
         }
 
         private void buttonRename_Click(object sender, EventArgs e)
