@@ -18,7 +18,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IntPtr aggroAddress = IntPtr.Zero;
 
         private const string charmapSignature = "48c1ea0381faa7010000????8bc2488d0d";
-        private const string targetSignature = "83E901740832C04883C4205BC3488D0D";
+        private const string targetSignatureH0 = "83E901740832C04883C4205BC3488D0D"; // pre hotfix
+        private const string targetSignatureH1 = "e8f2652f0084c00f8591010000488d0d"; // post hotfix 1
         private const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
 
         // Offsets from the signature to find the correct address.
@@ -124,7 +125,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
             /// TARGET
-            list = memory.SigScan(targetSignature, 0, bRIP);
+            list = memory.SigScan(targetSignatureH1, 0, bRIP);
+            if (list == null || list.Count == 0)
+                list = memory.SigScan(targetSignatureH0, 0, bRIP);
+
             if (list != null && list.Count > 0)
             {
                 targetAddress = list[0] + targetSignatureOffset;
