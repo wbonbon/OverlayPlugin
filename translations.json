@@ -1758,7 +1758,7 @@
             "fr-FR": "Impossible de détecter la version :\n{0}",
             "ja-JP": "バージョンの確認に失敗:\n{0}",
             "ko-KR": "버전을 파싱하지 못했습니다:\n{0}",
-            "zh-CN": "解析版本失败:\n{0}"
+            "zh-CN": "解析版本失败（国服玩家无须在意，直接关闭）:\n{0}"
         },
         "UpdateSliderDetails": {
             "#comment": "The placeholder here is the project being updated (i.e. OverlayPlugin or Cactbot)\nThis text is displayed in ACT's restart prompt. ACT already asks the user to restart so we don't have to.",
