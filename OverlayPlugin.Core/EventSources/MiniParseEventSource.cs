@@ -139,7 +139,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             });
 
             RegisterEventHandler("saveData", (msg) => {
-                var key = msg["key"].ToString();
+                var key = msg["key"]?.ToString();
                 if (key == null)
                     return null;
 
@@ -148,7 +148,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             });
 
             RegisterEventHandler("loadData", (msg) => {
-                var key = msg["key"].ToString();
+                var key = msg["key"]?.ToString();
                 if (key == null)
                     return null;
 
@@ -159,6 +159,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 ret["key"] = key;
                 ret["data"] = Config.OverlayData[key];
                 return ret;
+            });
+
+            RegisterEventHandler("say", (msg) => {
+                var text = msg["text"]?.ToString();
+                if (text == null)
+                    return null;
+
+                ActGlobals.oFormActMain.TTS(text);
+                return null;
             });
 
             foreach (var propName in DefaultCombatantFields)
