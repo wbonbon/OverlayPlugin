@@ -26,10 +26,27 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public EnmityEventSource(ILogger logger) : base(logger)
         {
             // this.memory = new EnmityMemory(logger);
-            memoryCandidates = new List<EnmityMemory>()
+            if(FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
             {
-                new EnmityMemory52(logger), new EnmityMemory50(logger)
-            };
+                memoryCandidates = new List<EnmityMemory>()
+                {
+                    new EnmityMemory50(logger)
+                };
+            }
+            else if (FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
+            {
+                memoryCandidates = new List<EnmityMemory>()
+                {
+                    new EnmityMemory50(logger)
+                };
+            }
+            else
+            {
+                memoryCandidates = new List<EnmityMemory>()
+                {
+                    new EnmityMemory52(logger), new EnmityMemory50(logger)
+                };
+            }
 
             RegisterEventTypes(new List<string> {
                 EnmityTargetDataEvent, EnmityAggroListEvent,
