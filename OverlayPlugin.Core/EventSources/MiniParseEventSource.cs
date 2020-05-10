@@ -68,13 +68,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
         private const string PartyChangedEvent = "PartyChanged";
 
+        private FFXIVRepository repository;
+
         // Event Source
 
         public BuiltinEventConfig Config { get; set; }
 
-        public MiniParseEventSource(ILogger logger) : base(logger)
+        public MiniParseEventSource(TinyIoCContainer container) : base(container)
         {
             this.Name = "MiniParse";
+            this.repository = container.Resolve<FFXIVRepository>();
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> {
@@ -93,7 +96,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             });
 
             RegisterEventHandler("getLanguage", (msg) => {
-                var lang = FFXIVRepository.GetLanguage();
+                var lang = repository.GetLanguage();
                 return JObject.FromObject(new
                 {
                     language = lang.ToString("g"),
@@ -178,7 +181,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
-            NetworkParser.OnOnlineStatusChanged += (o, e) =>
+            container.Resolve<NetworkParser>().OnOnlineStatusChanged += (o, e) =>
             {
                 var obj = new JObject();
                 obj["type"] = OnlineStatusChangedEvent;
@@ -189,14 +192,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 DispatchAndCacheEvent(obj);
             };
 
-            FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent(partyList, partySize));
+            repository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
         }
 
         private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)
         {
             List<Dictionary<string, object>> filteredCombatants = new List<Dictionary<string, object>>();
 
-            var combatants = FFXIVRepository.GetCombatants();
+            var combatants = repository.GetCombatants();
 
             foreach (var combatant in combatants)
             {
@@ -362,7 +365,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (partySize == 0)
                 this.cachedPartyMembers.Clear();
 
-            var combatants = FFXIVRepository.GetCombatants();
+            var combatants = repository.GetCombatants();
             if (combatants == null)
                 return;
 
@@ -438,7 +441,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override void LoadConfig(IPluginConfig config)
         {
-            this.Config = Registry.Resolve<BuiltinEventConfig>();
+            this.Config = container.Resolve<BuiltinEventConfig>();
 
             this.Config.UpdateIntervalChanged += (o, e) =>
             {

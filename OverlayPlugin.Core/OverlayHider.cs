@@ -10,23 +10,25 @@ namespace RainbowMage.OverlayPlugin
 {
     class OverlayHider
     {
-        static bool gameActive = true;
-        static bool inCutscene = false;
-        static IPluginConfig config;
-        static ILogger logger;
-        static PluginMain main;
+        private bool gameActive = true;
+        private bool inCutscene = false;
+        private IPluginConfig config;
+        private ILogger logger;
+        private PluginMain main;
+        private FFXIVRepository repository;
 
-        public static void Init()
+        public OverlayHider(TinyIoCContainer container)
         {
-            config = Registry.Resolve<IPluginConfig>();
-            logger = Registry.Resolve<ILogger>();
-            main = Registry.Resolve<PluginMain>();
+            this.config = container.Resolve<IPluginConfig>();
+            this.logger = container.Resolve<ILogger>();
+            this.main = container.Resolve<PluginMain>();
+            this.repository = container.Resolve<FFXIVRepository>();
 
-            NativeMethods.ActiveWindowChanged += ActiveWindowChangedHandler;
-            NetworkParser.OnOnlineStatusChanged += OnlineStatusChanged;
+            container.Resolve<NativeMethods>().ActiveWindowChanged += ActiveWindowChangedHandler;
+            container.Resolve<NetworkParser>().OnOnlineStatusChanged += OnlineStatusChanged;
         }
 
-        public static void UpdateOverlays()
+        public void UpdateOverlays()
         {
             if (!config.HideOverlaysWhenNotActive)
                 gameActive = true;
@@ -46,7 +48,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        static void ActiveWindowChangedHandler(object sender, IntPtr changedWindow)
+        private void ActiveWindowChangedHandler(object sender, IntPtr changedWindow)
         {
             if (!config.HideOverlaysWhenNotActive || changedWindow == IntPtr.Zero) return;
             try
@@ -85,9 +87,9 @@ namespace RainbowMage.OverlayPlugin
             UpdateOverlays();
         }
 
-        static void OnlineStatusChanged(object sender, OnlineStatusChangedArgs e)
+        private void OnlineStatusChanged(object sender, OnlineStatusChangedArgs e)
         {
-            if (!config.HideOverlayDuringCutscene || e.Target != FFXIVRepository.GetPlayerID()) return;
+            if (!config.HideOverlayDuringCutscene || e.Target != repository.GetPlayerID()) return;
 
             inCutscene = e.Status == 15;
             UpdateOverlays();

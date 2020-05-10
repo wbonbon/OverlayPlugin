@@ -23,6 +23,8 @@ namespace RainbowMage.OverlayPlugin
         TabPage pluginScreenSpace;
         Label pluginStatusText;
 
+        public TinyIoCContainer Container { get; private set; }
+
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
             pluginDirectory = GetPluginDirectory();
@@ -64,15 +66,21 @@ namespace RainbowMage.OverlayPlugin
         {
             pluginStatusText.Text = Resources.InitRuntime;
 
-            Registry.Init();
+            var container = new TinyIoCContainer();
             logger = new Logger();
+            container.Register(logger);
+            container.Register<ILogger>(logger);
+
             asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, Resources.AssemblyResolverError, e.Exception);
             asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, Resources.AssemblyResolverLoaded, e.LoadedAssembly.FullName);
-            pluginMain = new PluginMain(pluginDirectory, logger);
+
+            this.Container = container;
+            pluginMain = new PluginMain(pluginDirectory, logger, container);
+            container.Register(pluginMain);
 
             pluginStatusText.Text = Resources.InitCef;
 
-            SanityChecker.CheckDependencyVersions();
+            SanityChecker.CheckDependencyVersions(logger);
 
             try
             {
@@ -83,10 +91,10 @@ namespace RainbowMage.OverlayPlugin
                 ActGlobals.oFormActMain.WriteDebugLog(ex.ToString());
             }
 
-            await FinishInit();
+            await FinishInit(container);
         }
 
-        public async Task FinishInit()
+        public async Task FinishInit(TinyIoCContainer container)
         {
             if (await CefInstaller.EnsureCef(GetCefPath()))
             {
@@ -105,7 +113,7 @@ namespace RainbowMage.OverlayPlugin
                 }
             } else
             {
-                pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this));
+                pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
             }
         }
 
@@ -114,7 +122,6 @@ namespace RainbowMage.OverlayPlugin
             if (pluginMain != null)
             {
                 pluginMain.DeInitPlugin();
-                Registry.Clear();
             }
 
             // We can't re-init CEF after shutting it down. So let's only do that when ACT closes to avoid unexpected behaviour (crash when re-enabling the plugin).

@@ -13,10 +13,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private ILogger logger;
         private Process process;
         private IntPtr processHandle;
+        private FFXIVRepository repository;
 
-        public FFXIVMemory(ILogger logger)
+        public FFXIVMemory(TinyIoCContainer container)
         {
-            this.logger = logger;
+            logger = container.Resolve<ILogger>();
+            repository = container.Resolve<FFXIVRepository>();
             FindProcess();
         }
 
@@ -34,7 +36,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
             }
 
-            Process proc = FFXIVRepository.GetCurrentFFXIVProcess();
+            Process proc = repository.GetCurrentFFXIVProcess();
             if (proc == null || proc.HasExited)
                 return;
 

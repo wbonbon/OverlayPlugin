@@ -42,11 +42,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const uint emptyID = 0xE0000000;
         private const int numMemoryCombatants = 344;
 
-        public EnmityMemory50(ILogger logger)
+        public EnmityMemory50(TinyIoCContainer container)
         {
-            this.memory = new FFXIVMemory(logger);
+            this.memory = new FFXIVMemory(container);
             this.memory.OnProcessChange += ResetPointers;
-            this.logger = logger;
+            this.logger = container.Resolve<ILogger>();
             GetPointerAddress();
         }
 

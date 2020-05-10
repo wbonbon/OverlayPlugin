@@ -100,6 +100,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             return await Task.Run(() =>
             {
+                // FIXME: This uses curl which requires MSVCRT... see the problem?
                 if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
                 {
                     inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));

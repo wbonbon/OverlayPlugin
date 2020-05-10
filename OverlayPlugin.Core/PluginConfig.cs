@@ -99,9 +99,14 @@ namespace RainbowMage.OverlayPlugin
         [XmlIgnore]
         public Dictionary<string, JObject> EventSourceConfigs { get; set; }
 
-        public PluginConfig()
+        [XmlIgnore]
+        [JsonIgnore]
+        private ILogger logger;
+
+        public PluginConfig(TinyIoCContainer container)
         {
-            this.Overlays = new OverlayConfigList<IOverlayConfig>();
+            this.logger = container.Resolve<ILogger>();
+            this.Overlays = new OverlayConfigList<IOverlayConfig>(logger);
             this.EventSourceConfigs = new Dictionary<string, JObject>();
 
             this.FollowLatestLog = false;
@@ -155,7 +160,7 @@ namespace RainbowMage.OverlayPlugin
             OverlayObjects = oldOverlayObjects;
         }
 
-        public static PluginConfig LoadJson(string path)
+        public static PluginConfig LoadJson(string path, TinyIoCContainer container)
         {
             if (!File.Exists(path))
             {
@@ -163,7 +168,6 @@ namespace RainbowMage.OverlayPlugin
             }
 
             PluginConfig result;
-            var Logger = Registry.Resolve<ILogger>();
 
             using (var stream = new StreamReader(path))
             {
@@ -171,14 +175,15 @@ namespace RainbowMage.OverlayPlugin
                 var reader = new JsonTextReader(stream);
                 serializer.TypeNameHandling = TypeNameHandling.Auto;
 
-                result = serializer.Deserialize<PluginConfig>(reader);
+                result = new PluginConfig(container);
+                serializer.Populate(reader, result);
             }
 
             result.IsFirstLaunch = false;
 
             // Convert Overlays
             var overlayLeftOvers = new List<JObject>();
-            result.Overlays = new OverlayConfigList<IOverlayConfig>();
+            result.Overlays = new OverlayConfigList<IOverlayConfig>(result.logger);
 
             foreach (var item in result.OverlayObjects)
             {
@@ -194,7 +199,7 @@ namespace RainbowMage.OverlayPlugin
                     result.Overlays.Add((IOverlayConfig)JsonConvert.DeserializeObject(item.ToString(Formatting.None), type));
                 } catch (Exception e)
                 {
-                    Logger.Log(LogLevel.Error, $"Failed to load an overlay config: ${e}");
+                    result.logger.Log(LogLevel.Error, $"Failed to load an overlay config: ${e}");
                     overlayLeftOvers.Add(item);
                 }
             }
@@ -233,7 +238,7 @@ namespace RainbowMage.OverlayPlugin
         /// <param name="pluginDirectory"></param>
         public void SetDefaultOverlayConfigs(string pluginDirectory)
         {
-            this.Overlays = new OverlayConfigList<IOverlayConfig>();
+            this.Overlays = new OverlayConfigList<IOverlayConfig>(logger);
 
             this.WSServerIP = "127.0.0.1";
             this.WSServerPort = 10501;

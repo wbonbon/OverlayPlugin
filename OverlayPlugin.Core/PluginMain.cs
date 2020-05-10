@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.Reflection;
 using RainbowMage.HtmlRenderer;
 using System;
 using System.IO;
@@ -15,6 +14,8 @@ namespace RainbowMage.OverlayPlugin
 {
     public class PluginMain
     {
+        private TinyIoCContainer _container;
+        private ILogger _logger;
         TabPage tabPage;
         Label label;
         ControlPanel controlPanel;
@@ -28,15 +29,15 @@ namespace RainbowMage.OverlayPlugin
         internal List<IOverlay> Overlays { get; private set; }
         internal event EventHandler OverlaysChanged;
 
-        public static Logger Logger { get; private set; }
-        internal static string PluginDirectory { get; private set; }
+        internal string PluginDirectory { get; private set; }
 
-        public PluginMain(string pluginDirectory, Logger logger)
+        public PluginMain(string pluginDirectory, Logger logger, TinyIoCContainer container)
         {
+            _container = container;
             PluginDirectory = pluginDirectory;
-            Logger = logger;
+            _logger = logger;
 
-            Registry.Register(this);
+            _container.Register(this);
         }
 
         /// <summary>
@@ -52,12 +53,12 @@ namespace RainbowMage.OverlayPlugin
                 this.label = pluginStatusText;
 
 #if DEBUG
-                Logger.Log(LogLevel.Warning, "##################################");
-                Logger.Log(LogLevel.Warning, "    THIS IS THE DEBUG BUILD");
-                Logger.Log(LogLevel.Warning, "##################################");
+                _logger.Log(LogLevel.Warning, "##################################");
+                _logger.Log(LogLevel.Warning, "    THIS IS THE DEBUG BUILD");
+                _logger.Log(LogLevel.Warning, "##################################");
 #endif
 
-                Logger.Log(LogLevel.Info, "InitPlugin: PluginDirectory = {0}", PluginDirectory);
+                _logger.Log(LogLevel.Info, "InitPlugin: PluginDirectory = {0}", PluginDirectory);
 
 #if DEBUG
                 Stopwatch watch = new Stopwatch();
@@ -67,14 +68,19 @@ namespace RainbowMage.OverlayPlugin
                 // ** Init phase 1
                 // Only init stuff here that works without the FFXIV plugin or addons (event sources, overlays).
                 // Everything else should be initialized in the second phase.
-                NativeMethods.Init();
+                // 1.a Stuff without state
                 FFXIVExportVariables.Init();
-                EventDispatcher.Init();
-                Registry.Register(new KeyboardHook());
+
+                // 1.b Stuff with state
+                _container.Register(new NativeMethods(_container));
+                _container.Register(new EventDispatcher(_container));
+                _container.Register(new Registry(_container));
+                _container.Register(new KeyboardHook(_container));
                 LoadConfig();
+                _container.Register(new WSServer(_container));
 
 #if DEBUG
-                Logger.Log(LogLevel.Debug, "Component init and config load took {0}s.", watch.Elapsed.TotalSeconds);
+                _logger.Log(LogLevel.Debug, "Component init and config load took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Reset();
 #endif
 
@@ -84,11 +90,11 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception e)
                 {
-                    Logger.Log(LogLevel.Error, "InitPlugin: {0}", e);
+                    _logger.Log(LogLevel.Error, "InitPlugin: {0}", e);
                 }
 
 #if DEBUG
-                Logger.Log(LogLevel.Debug, "CEF init took {0}s.", watch.Elapsed.TotalSeconds);
+                _logger.Log(LogLevel.Debug, "CEF init took {0}s.", watch.Elapsed.TotalSeconds);
                 watch.Reset();
 #endif
 
@@ -131,24 +137,24 @@ namespace RainbowMage.OverlayPlugin
 #endif
                 
                 // コンフィグUI系初期化
-                this.controlPanel = new ControlPanel(this, this.Config);
+                this.controlPanel = new ControlPanel(_container);
                 this.controlPanel.Dock = DockStyle.Fill;
                 this.tabPage.Controls.Add(this.controlPanel);
                 this.tabPage.Name = "OverlayPlugin";
 
-                this.wsConfigPanel = new WSConfigPanel(this.Config);
+                this.wsConfigPanel = new WSConfigPanel(_container);
                 this.wsConfigPanel.Dock = DockStyle.Fill;
 
                 this.wsTabPage = new TabPage("OverlayPlugin WSServer");
                 this.wsTabPage.Controls.Add(wsConfigPanel);
                 ((TabControl)this.tabPage.Parent).TabPages.Add(this.wsTabPage);
                 
-                Logger.Log(LogLevel.Info, "InitPlugin: Initialized.");
+                _logger.Log(LogLevel.Info, "InitPlugin: Initialized.");
                 this.label.Text = "Initialized.";
 
                 if (Config.UpdateCheck)
                 {
-                    Updater.Updater.PerformUpdateIfNecessary(PluginDirectory);
+                    Updater.Updater.PerformUpdateIfNecessary(PluginDirectory, _container);
                 }
 
                 initTimer = new Timer();
@@ -170,9 +176,9 @@ namespace RainbowMage.OverlayPlugin
                             // Initialize the parser in the second phase since it needs the FFXIV plugin.
                             // If OverlayPlugin is placed above the FFXIV plugin, it won't be available in the first
                             // phase but it'll be loaded by the time we enter the second phase.
-                            NetworkParser.Init();
-
-                            TriggIntegration.Init();
+                            _container.Register(new FFXIVRepository(_container));
+                            _container.Register(new NetworkParser(_container));
+                            _container.Register(new TriggIntegration(_container));
 
                             // This timer runs on the UI thread (it has to since we create UI controls) but LoadAddons()
                             // can block for some time. We run it on the background thread to avoid blocking the UI.
@@ -187,20 +193,21 @@ namespace RainbowMage.OverlayPlugin
                                 // Now that addons have been loaded, we can finish the overlay setup.
                                 InitializeOverlays();
                                 controlPanel.InitializeOverlayConfigTabs();
-                                OverlayHider.Init();
-                                OverlayZCorrector.Init();
+                                
+                                _container.Register(new OverlayHider(_container));
+                                _container.Register(new OverlayZCorrector(_container));
 
                                 // WSServer has to start after the LoadAddons() call because clients can connect immediately
                                 // after it's initialized and that requires the event sources to be initialized.
                                 if (Config.WSServerRunning)
                                 {
-                                    WSServer.Init();
+                                    _container.Register(new WSServer(_container));
                                 }
                             }));
                         }
                         catch (Exception ex)
                         {
-                            Logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
+                            _logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
                         }
                     }
                 };
@@ -208,7 +215,7 @@ namespace RainbowMage.OverlayPlugin
             }
             catch (Exception e)
             {
-                Logger.Log(LogLevel.Error, "InitPlugin: {0}", e.ToString());
+                _logger.Log(LogLevel.Error, "InitPlugin: {0}", e.ToString());
                 MessageBox.Show(e.ToString());
 
                 throw;
@@ -228,14 +235,14 @@ namespace RainbowMage.OverlayPlugin
                 parameters["config"] = overlayConfig;
                 parameters["name"] = overlayConfig.Name;
 
-                var overlay = (IOverlay) Registry.Container.Resolve(overlayConfig.OverlayType, parameters);
+                var overlay = (IOverlay) _container.Resolve(overlayConfig.OverlayType, parameters);
                 if (overlay != null)
                 {
                     RegisterOverlay(overlay);
                 }
                 else
                 {
-                    Logger.Log(LogLevel.Error, "InitPlugin: Could not find addon for {0}.", overlayConfig.Name);
+                    _logger.Log(LogLevel.Error, "InitPlugin: Could not find addon for {0}.", overlayConfig.Name);
                 }
             }
         }
@@ -246,7 +253,7 @@ namespace RainbowMage.OverlayPlugin
         /// <param name="overlay"></param>
         internal void RegisterOverlay(IOverlay overlay)
         {
-            overlay.OnLog += (o, e) => Logger.Log(e.Level, e.Message);
+            overlay.OnLog += (o, e) => _logger.Log(e.Level, e.Message);
             overlay.Start();
             this.Overlays.Add(overlay);
 
@@ -271,7 +278,7 @@ namespace RainbowMage.OverlayPlugin
         public void DeInitPlugin()
         {
             SaveConfig();
-            OverlayZCorrector.DeInit();
+            _container.Resolve<OverlayZCorrector>().DeInit();
 
             if (controlPanel != null) controlPanel.Dispose();
 
@@ -285,48 +292,32 @@ namespace RainbowMage.OverlayPlugin
                 this.Overlays.Clear();
             }
 
-            try { WSServer.Stop(); }
+            try { _container.Resolve<WSServer>().Stop(); }
             catch { }
 
             if (this.wsTabPage != null && this.wsTabPage.Parent != null)
                 ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
 
-            Logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
+            _logger.Log(LogLevel.Info, "DeInitPlugin: Finalized.");
             if (this.label != null) this.label.Text = "Finalized.";
         }
 
-        /// <summary>
-        /// アドオンを読み込みます。
-        /// </summary>
         private void LoadAddons()
         {
 
             try
             {
-                // <プラグイン本体があるディレクトリ>\plugins\*.dll を検索する
-                var directory = Path.Combine(PluginDirectory, "addons");
-                if (!Directory.Exists(directory))
-                {
-                    try
-                    {
-                        Directory.CreateDirectory(directory);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Log(LogLevel.Error, "LoadAddons: {0}", e);
-                    }
-                }
-
-                Registry.Register(BuiltinEventConfig.LoadConfig(Config));
+                var registry = _container.Resolve<Registry>();
+                _container.Register(BuiltinEventConfig.LoadConfig(Config));
 
                 // Make sure the event sources are ready before we load any overlays.
-                Registry.RegisterEventSource<MiniParseEventSource>();
-                Registry.RegisterEventSource<EnmityEventSource>();
-                Registry.StartEventSources();
+                registry.StartEventSource(new MiniParseEventSource(_container));
+                registry.StartEventSource(new EnmityEventSource(_container));
+                registry.StartEventSources();
 
-                Registry.RegisterOverlay<MiniParseOverlay>();
-                Registry.RegisterOverlay<SpellTimerOverlay>();
-                Registry.RegisterOverlay<LabelOverlay>();
+                registry.RegisterOverlay<MiniParseOverlay>();
+                registry.RegisterOverlay<SpellTimerOverlay>();
+                registry.RegisterOverlay<LabelOverlay>();
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
                 var Addons = new List<IOverlayAddonV2>();
@@ -341,73 +332,29 @@ namespace RainbowMage.OverlayPlugin
                         {
                             try
                             {
-                                // プラグインのインスタンスを生成し、アドオンリストに追加する
                                 var addon = (IOverlayAddonV2)plugin.pluginObj;
                                 addon.Init();
 
-                                Logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", plugin.lblPluginTitle.Text);
+                                _logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", plugin.lblPluginTitle.Text);
                             }
                             catch (Exception e)
                             {
-                                Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
+                                _logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
-                    }
-                }
-
-                foreach (var pluginFile in Directory.GetFiles(directory, "*.dll"))
-                {
-                    try
-                    {
-                        Logger.Log(LogLevel.Info, "LoadAddons: {0}", pluginFile);
-
-                        // アセンブリが見つかったら読み込む
-                        var asm = Assembly.LoadFrom(pluginFile);
-                        var incompatible = asm.GetReferencedAssemblies().Where(a => a.FullName != null && a.FullName.StartsWith("Xilium.CefGlue")).Count() > 0;
-                        if (incompatible)
-                        {
-                            Logger.Log(LogLevel.Error, "LoadAddons: Skipped {0} because it's incompatible with this version of OverlayPlugin.", asm.FullName);
-                            continue;
-                        }
-
-                        // アセンブリから IOverlayAddon を実装した public クラスを列挙し...
-                        var types = asm.GetExportedTypes().Where(t => 
-                                t.GetInterface(typeof(IOverlayAddonV2).FullName) != null && t.IsClass);
-                        foreach (var type in types)
-                        {
-                            try
-                            {
-                                // プラグインのインスタンスを生成し、アドオンリストに追加する
-                                var addon = (IOverlayAddonV2)asm.CreateInstance(type.FullName);
-                                addon.Init();
-
-                                Logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", type.FullName);
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", type.FullName, e);
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", pluginFile, e);
+                        _logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
                     }
                 }
             }
             catch (Exception e)
             {
-                Logger.Log(LogLevel.Error, "LoadAddons: {0}", e);
+                _logger.Log(LogLevel.Error, "LoadAddons: {0}", e);
             }
         }
 
-        /// <summary>
-        /// 設定を読み込みます。
-        /// </summary>
         private void LoadConfig()
         {
             if (Config != null)
@@ -416,7 +363,7 @@ namespace RainbowMage.OverlayPlugin
             var found = true;
             try
             {
-                Config = PluginConfig.LoadJson(GetConfigPath());
+                Config = PluginConfig.LoadJson(GetConfigPath(), _container);
             }
             catch (FileNotFoundException)
             {
@@ -426,7 +373,7 @@ namespace RainbowMage.OverlayPlugin
             catch (Exception e)
             {
                 Config = null;
-                Logger.Log(LogLevel.Error, "LoadConfig: {0}", e);
+                _logger.Log(LogLevel.Error, "LoadConfig: {0}", e);
             }
 
             if (!found)
@@ -438,20 +385,20 @@ namespace RainbowMage.OverlayPlugin
                 catch (Exception e)
                 {
                     // 設定ファイルが存在しない、もしくは破損している場合は作り直す
-                    Logger.Log(LogLevel.Warning, "LoadConfig: {0}", e);
+                    _logger.Log(LogLevel.Warning, "LoadConfig: {0}", e);
                     Config = null;
                 }
             }
 
             if (Config == null)
             {
-                Logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
-                Config = new PluginConfig();
+                _logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
+                Config = new PluginConfig(_container);
                 Config.SetDefaultOverlayConfigs(PluginDirectory);
             }
 
-            Registry.Register(Config);
-            Registry.Register<IPluginConfig>(Config);
+            _container.Register(Config);
+            _container.Register<IPluginConfig>(Config);
         }
 
         /// <summary>
@@ -459,7 +406,8 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         private void SaveConfig()
         {
-            if (Config == null || Overlays == null || Registry.EventSources == null) return;
+            var registry = _container.Resolve<Registry>();
+            if (Config == null || Overlays == null || registry.EventSources == null) return;
 
             try
             {
@@ -468,18 +416,18 @@ namespace RainbowMage.OverlayPlugin
                     overlay.SavePositionAndSize();
                 }
 
-                foreach (var es in Registry.EventSources)
+                foreach (var es in registry.EventSources)
                 {
                     if (es != null)
                         es.SaveConfig(Config);
                 }
 
-                Registry.Resolve<BuiltinEventConfig>().SaveConfig(Config);
+                _container.Resolve<BuiltinEventConfig>().SaveConfig(Config);
                 Config.SaveJson(GetConfigPath());
             }
             catch (Exception e)
             {
-                Logger.Log(LogLevel.Error, "SaveConfig: {0}", e);
+                _logger.Log(LogLevel.Error, "SaveConfig: {0}", e);
                 MessageBox.Show(e.ToString());
             }
         }
@@ -490,7 +438,7 @@ namespace RainbowMage.OverlayPlugin
         /// <returns></returns>
         private static string GetConfigPath(bool xml = false)
         {
-            var path = System.IO.Path.Combine(
+            var path = Path.Combine(
                 ActGlobals.oFormActMain.AppDataFolder.FullName,
                 "Config",
                 "RainbowMage.OverlayPlugin.config." + (xml ? "xml" : "json"));

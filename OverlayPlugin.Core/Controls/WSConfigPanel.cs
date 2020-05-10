@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
@@ -18,23 +14,28 @@ namespace RainbowMage.OverlayPlugin
     {
         const string MKCERT_DOWNLOAD = "https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-windows-amd64.exe";
 
-        PluginConfig Config;
+        IPluginConfig _config;
+        WSServer _server;
+        PluginMain _plugin;
 
-        public WSConfigPanel(PluginConfig cfg)
+        public WSConfigPanel(TinyIoCContainer container)
         {
             InitializeComponent();
 
-            Config = cfg;
-            ipTxt.Text = Config.WSServerIP;
-            portTxt.Text = "" + Config.WSServerPort;
-            sslBox.Checked = Config.WSServerSSL;
-            sslBox.Enabled = WSServer.IsSSLPossible();
+            _config = container.Resolve<IPluginConfig>();
+            _server = container.Resolve<WSServer>();
+            _plugin = container.Resolve<PluginMain>();
 
-            UpdateStatus(null, new WSServer.StateChangedArgs(WSServer.IsRunning(), WSServer.IsFailed()));
-            WSServer.OnStateChanged += UpdateStatus;
+            ipTxt.Text = _config.WSServerIP;
+            portTxt.Text = "" + _config.WSServerPort;
+            sslBox.Checked = _config.WSServerSSL;
+            sslBox.Enabled = _server.IsSSLPossible();
+
+            UpdateStatus(null, new WSServer.StateChangedArgs(_server.IsRunning(), _server.IsFailed()));
+            _server.OnStateChanged += UpdateStatus;
 
             lblUrlConfidentWarning.Visible = false;
-            Registry.Resolve<PluginMain>().OverlaysChanged += (o, e) =>
+            container.Resolve<PluginMain>().OverlaysChanged += (o, e) =>
             {
                 RebuildOverlayOptions();
             };
@@ -67,14 +68,14 @@ namespace RainbowMage.OverlayPlugin
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            Config.WSServerRunning = true;
-            WSServer.Init();
+            _config.WSServerRunning = true;
+            _server.Start();
         }
 
         private void stopBtn_Click(object sender, EventArgs e)
         {
-            Config.WSServerRunning = false;
-            WSServer.Stop();
+            _config.WSServerRunning = false;
+            _server.Stop();
         }
 
         private void genSslBtn_Click(object sender, EventArgs e)
@@ -89,7 +90,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                var mkcertPath = Path.Combine(PluginMain.PluginDirectory, "mkcert.exe");
+                var mkcertPath = Path.Combine(_plugin.PluginDirectory, "mkcert.exe");
 
                 if (!File.Exists(mkcertPath))
                 {
@@ -116,7 +117,7 @@ namespace RainbowMage.OverlayPlugin
                 }
 
                 logDisplay.AppendText("Generating certificate...\r\n");
-                if (!RunLogCmd(mkcertPath, string.Format("-pkcs12 -p12-file \"{0}\" localhost 127.0.0.1 ::1", WSServer.GetCertPath())))
+                if (!RunLogCmd(mkcertPath, string.Format("-pkcs12 -p12-file \"{0}\" localhost 127.0.0.1 ::1", _server.GetCertPath())))
                 {
                     logDisplay.AppendText("\r\nFailed!\r\n");
                     genSslBtn.Enabled = true;
@@ -125,9 +126,9 @@ namespace RainbowMage.OverlayPlugin
 
                 logDisplay.AppendText("\r\nDone.\r\n");
 
-                sslBox.Enabled = WSServer.IsSSLPossible();
+                sslBox.Enabled = _server.IsSSLPossible();
                 sslBox.Checked = sslBox.Enabled;
-                Config.WSServerSSL = sslBox.Enabled;
+                _config.WSServerSSL = sslBox.Enabled;
                 genSslBtn.Enabled = true;
             }
             catch (Exception e)
@@ -167,7 +168,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void sslBox_CheckedChanged(object sender, EventArgs e)
         {
-            Config.WSServerSSL = sslBox.Checked;
+            _config.WSServerSSL = sslBox.Checked;
         }
 
         private void portTxt_Leave(object sender, EventArgs e)
@@ -190,7 +191,7 @@ namespace RainbowMage.OverlayPlugin
 
             if (valid)
             {
-                Config.WSServerPort = port;
+                _config.WSServerPort = port;
             }
             else
             {
@@ -208,7 +209,7 @@ namespace RainbowMage.OverlayPlugin
             IPAddress addr = null;
             if (ipTxt.Text == "*" || IPAddress.TryParse(ipTxt.Text, out addr))
             {
-                Config.WSServerIP = ipTxt.Text;
+                _config.WSServerIP = ipTxt.Text;
             }
             else
             {
@@ -225,7 +226,7 @@ namespace RainbowMage.OverlayPlugin
         {
             cbOverlay.Items.Clear();
 
-            foreach (var overlay in Registry.Resolve<PluginMain>().Overlays)
+            foreach (var overlay in _plugin.Overlays)
             {
                 if (overlay.GetType() == typeof(Overlays.MiniParseOverlay))
                 {
@@ -244,7 +245,7 @@ namespace RainbowMage.OverlayPlugin
             var overlay = (Overlays.MiniParseOverlay) item.GetType().GetProperty("overlay").GetValue(item);
             if (overlay == null) return;
 
-            var (confident, url) = WSServer.GetUrl(overlay);
+            var (confident, url) = _server.GetUrl(overlay);
 
             lblUrlConfidentWarning.Visible = !confident;
             txtOverlayUrl.Text = url;

@@ -40,27 +40,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public BuiltinEventConfig Config { get; set; }
 
-        public EnmityEventSource(ILogger logger) : base(logger)
+        public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
-            if(FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
+            var repository = container.Resolve<FFXIVRepository>();
+
+            if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
             {
                 memoryCandidates = new List<EnmityMemory>()
                 {
-                    new EnmityMemory52(logger)
+                    new EnmityMemory50(container)
                 };
             }
-            else if (FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
+            else if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
             {
                 memoryCandidates = new List<EnmityMemory>()
                 {
-                    new EnmityMemory50(logger)
+                    new EnmityMemory50(container)
                 };
             }
             else
             {
                 memoryCandidates = new List<EnmityMemory>()
                 {
-                    new EnmityMemory53(logger)
+                    new EnmityMemory53(container)
                 };
             }
 
@@ -77,7 +79,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override void LoadConfig(IPluginConfig cfg)
         {
-            this.Config = Registry.Resolve<BuiltinEventConfig>();
+            this.Config = container.Resolve<BuiltinEventConfig>();
 
             this.Config.EnmityIntervalChanged += (o, e) =>
             {

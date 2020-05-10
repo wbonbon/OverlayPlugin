@@ -2,16 +2,11 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -23,6 +18,9 @@ namespace RainbowMage.OverlayPlugin
         public IOverlay SelectedOverlay { get; private set; }
 
         private PluginMain pluginMain;
+        private Registry registry;
+        private ILogger logger;
+        private TinyIoCContainer container;
         private IOverlay preview;
 
         static Dictionary<string, string> overlayNames = new Dictionary<string, string>
@@ -34,16 +32,19 @@ namespace RainbowMage.OverlayPlugin
 
         Dictionary<string, OverlayPreset> presets = null;
 
-        public NewOverlayDialog(PluginMain pluginMain)
+        public NewOverlayDialog(TinyIoCContainer container)
         {
             InitializeComponent();
 
-            this.pluginMain = pluginMain;
+            pluginMain = container.Resolve<PluginMain>();
+            registry = container.Resolve<Registry>();
+            logger = container.Resolve<ILogger>();
+            this.container = container;
 
             // Default validator
             NameValidator = (name) => { return name != null; };
 
-            foreach (var overlayType in Registry.Overlays)
+            foreach (var overlayType in registry.Overlays)
             {
                 var name = overlayType.Name;
                 if (name.EndsWith("Overlay"))
@@ -73,13 +74,13 @@ namespace RainbowMage.OverlayPlugin
             textBox1.Focus();
         }
 
-        public static Dictionary<string, OverlayPreset> PreparePresetCombo(ComboBox cbPreset)
+        public Dictionary<string, OverlayPreset> PreparePresetCombo(ComboBox cbPreset)
         {
             
 #if DEBUG
-            var presetFile = Path.Combine(PluginMain.PluginDirectory, "libs", "resources", "presets.json");
+            var presetFile = Path.Combine(pluginMain.PluginDirectory, "libs", "resources", "presets.json");
 #else
-            var presetFile = Path.Combine(PluginMain.PluginDirectory, "resources", "presets.json");
+            var presetFile = Path.Combine(pluginMain.PluginDirectory, "resources", "presets.json");
 #endif
             var presetData = "{}";
 
@@ -88,7 +89,7 @@ namespace RainbowMage.OverlayPlugin
                 presetData = File.ReadAllText(presetFile);
             } catch(Exception ex)
             {
-                Registry.Resolve<ILogger>().Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadPresets, ex));
+                logger.Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadPresets, ex));
             }
             
             var presets = JsonConvert.DeserializeObject<Dictionary<string, OverlayPreset>>(presetData);
@@ -98,7 +99,7 @@ namespace RainbowMage.OverlayPlugin
                 cbPreset.Items.Add(pair.Value);
             }
 
-            foreach (var item in Registry.OverlayPresets)
+            foreach (var item in registry.OverlayPresets)
             {
                 cbPreset.Items.Add(item);
             }
@@ -156,7 +157,7 @@ namespace RainbowMage.OverlayPlugin
                     parameters["config"] = null;
                     parameters["name"] = name;
 
-                    SelectedOverlay = (IOverlay)Registry.Container.Resolve(overlayType, parameters);
+                    SelectedOverlay = (IOverlay)container.Resolve(overlayType, parameters);
                 } else
                 {
                     // Store the current preview position and size in the config object...
@@ -225,9 +226,9 @@ namespace RainbowMage.OverlayPlugin
                 {
                     case "MiniParse":
 #if DEBUG
-                        var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/libs/resources";
+                        var resourcesPath = "file:///" + pluginMain.PluginDirectory.Replace('\\', '/') + "/libs/resources";
 #else
-                        var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/resources";
+                        var resourcesPath = "file:///" + pluginMain.PluginDirectory.Replace('\\', '/') + "/resources";
 #endif
                         var config = new Overlays.MiniParseOverlayConfig(Resources.OverlayPreviewName)
                         {
@@ -237,7 +238,7 @@ namespace RainbowMage.OverlayPlugin
                         };
 
                         var presetUrl = preset.Url.Replace("%%", resourcesPath);
-                        var overlay = new Overlays.MiniParseOverlay(config, config.Name);
+                        var overlay = new Overlays.MiniParseOverlay(config, config.Name, container);
                         overlay.Preview = true;
                         
                         var first = true;
@@ -257,7 +258,7 @@ namespace RainbowMage.OverlayPlugin
                         break;
 
                     default:
-                        Registry.Resolve<ILogger>().Log(LogLevel.Error, string.Format(Resources.PresetUsesUnsupportedType, preset.Name, preset.Type));
+                        logger.Log(LogLevel.Error, string.Format(Resources.PresetUsesUnsupportedType, preset.Name, preset.Type));
                         break;
                 }
             }
@@ -287,6 +288,7 @@ namespace RainbowMage.OverlayPlugin
             public List<string> Supports { get; set; }
 
             [JsonExtensionData]
+            [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "JsonExtensionData modifies this variable")]
             private IDictionary<string, JToken> _others;
 
             [OnDeserialized]
