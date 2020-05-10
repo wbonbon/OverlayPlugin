@@ -6,9 +6,10 @@ using RainbowMage.HtmlRenderer;
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RainbowMage.OverlayPlugin.Overlays;
 using RainbowMage.OverlayPlugin.EventSources;
-using System.Threading.Tasks;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -136,7 +137,7 @@ namespace RainbowMage.OverlayPlugin
                 watch.Reset();
 #endif
                 
-                // コンフィグUI系初期化
+                // Setup the UI
                 this.controlPanel = new ControlPanel(_container);
                 this.controlPanel.Dock = DockStyle.Fill;
                 this.tabPage.Controls.Add(this.controlPanel);
@@ -152,9 +153,39 @@ namespace RainbowMage.OverlayPlugin
                 _logger.Log(LogLevel.Info, "InitPlugin: Initialized.");
                 this.label.Text = "Initialized.";
 
+                // Fire off the update check (which runs in the background)
                 if (Config.UpdateCheck)
                 {
                     Updater.Updater.PerformUpdateIfNecessary(PluginDirectory, _container);
+                }
+
+                // Load our presets
+                try {
+#if DEBUG
+                    var presetFile = Path.Combine(PluginDirectory, "libs", "resources", "presets.json");
+    #else
+                    var presetFile = Path.Combine(PluginDirectory, "resources", "presets.json");
+    #endif
+                    var presetData = "{}";
+                
+                    try
+                    {
+                        presetData = File.ReadAllText(presetFile);
+                    } catch(Exception ex)
+                    {
+                        _logger.Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadPresets, ex));
+                    }
+            
+                    var presets = JsonConvert.DeserializeObject<Dictionary<string, OverlayPreset>>(presetData);
+                    var registry = _container.Resolve<Registry>();
+                    foreach (var pair in presets)
+                    {
+                        pair.Value.Name = pair.Key;
+                        registry.RegisterOverlayPreset2(pair.Value);
+                    }
+                } catch (Exception ex)
+                {
+                    _logger.Log(LogLevel.Error, string.Format("Failed to load presets: {0}", ex));
                 }
 
                 initTimer = new Timer();

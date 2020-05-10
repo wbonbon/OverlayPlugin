@@ -74,30 +74,9 @@ namespace RainbowMage.OverlayPlugin
             textBox1.Focus();
         }
 
-        public Dictionary<string, OverlayPreset> PreparePresetCombo(ComboBox cbPreset)
+        private Dictionary<string, OverlayPreset> PreparePresetCombo(ComboBox cbPreset)
         {
-            
-#if DEBUG
-            var presetFile = Path.Combine(pluginMain.PluginDirectory, "libs", "resources", "presets.json");
-#else
-            var presetFile = Path.Combine(pluginMain.PluginDirectory, "resources", "presets.json");
-#endif
-            var presetData = "{}";
-
-            try
-            {
-                presetData = File.ReadAllText(presetFile);
-            } catch(Exception ex)
-            {
-                logger.Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadPresets, ex));
-            }
-            
-            var presets = JsonConvert.DeserializeObject<Dictionary<string, OverlayPreset>>(presetData);
-            foreach (var pair in presets)
-            {
-                pair.Value.Name = pair.Key;
-                cbPreset.Items.Add(pair.Value);
-            }
+            cbPreset.Items.Clear();
 
             foreach (var item in registry.OverlayPresets)
             {
@@ -275,58 +254,58 @@ namespace RainbowMage.OverlayPlugin
                 FriendlyName = friendlyName;
             }
         }
+    }
 
-        [JsonObject(NamingStrategyType = typeof(Newtonsoft.Json.Serialization.SnakeCaseNamingStrategy))]
-        public class OverlayPreset : IOverlayPreset
+    [JsonObject(NamingStrategyType = typeof(Newtonsoft.Json.Serialization.SnakeCaseNamingStrategy))]
+    class OverlayPreset : IOverlayPreset
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Url { get; set; }
+        [JsonIgnore]
+        public int[] Size { get; set; }
+        public bool Locked { get; set; }
+        public List<string> Supports { get; set; }
+
+        [JsonExtensionData]
+        [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "JsonExtensionData modifies this variable")]
+        private IDictionary<string, JToken> _others;
+
+        [OnDeserialized]
+        public void ParseOthers(StreamingContext ctx)
         {
-            public string Name { get; set; }
-            public string Type { get; set; }
-            public string Url { get; set; }
-            [JsonIgnore]
-            public int[] Size { get; set; }
-            public bool Locked { get; set; }
-            public List<string> Supports { get; set; }
+            var size = _others["size"];
+            Size = new int[2];
 
-            [JsonExtensionData]
-            [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "JsonExtensionData modifies this variable")]
-            private IDictionary<string, JToken> _others;
-
-            [OnDeserialized]
-            public void ParseOthers(StreamingContext ctx)
+            for(int i = 0; i < 2; i++)
             {
-                var size = _others["size"];
-                Size = new int[2];
+                switch (size[i].Type) {
+                    case JTokenType.Integer:
+                        Size[i] = size[i].ToObject<int>();
+                        break;
+                    case JTokenType.String:
+                        var part = size[i].ToString();
+                        if (part.EndsWith("%"))
+                        {
+                            var percent = float.Parse(part.Substring(0, part.Length - 1)) / 100;
+                            var screenSize = Screen.PrimaryScreen.WorkingArea;
 
-                for(int i = 0; i < 2; i++)
-                {
-                    switch (size[i].Type) {
-                        case JTokenType.Integer:
-                            Size[i] = size[i].ToObject<int>();
-                            break;
-                        case JTokenType.String:
-                            var part = size[i].ToString();
-                            if (part.EndsWith("%"))
-                            {
-                                var percent = float.Parse(part.Substring(0, part.Length - 1)) / 100;
-                                var screenSize = Screen.PrimaryScreen.WorkingArea;
-
-                                Size[i] = (int) Math.Round(percent * (i == 0 ? screenSize.Width : screenSize.Height));
-                            } else
-                            {
-                                Size[i] = int.Parse(part);
-                            }
-                            break;
-                        default:
-                            Size[i] = 300;
-                            break;
-                    }
+                            Size[i] = (int) Math.Round(percent * (i == 0 ? screenSize.Width : screenSize.Height));
+                        } else
+                        {
+                            Size[i] = int.Parse(part);
+                        }
+                        break;
+                    default:
+                        Size[i] = 300;
+                        break;
                 }
             }
+        }
 
-            public override string ToString()
-            {
-                return Name;
-            }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

@@ -39,6 +39,8 @@ namespace RainbowMage.OverlayPlugin
 
         public bool WSServerRunning { get; set; }
 
+        public string TunnelRegion { get; set; }
+
         /// <summary>
         /// 設定ファイルを生成したプラグインのバージョンを取得または設定します。
         /// 設定が新規に作成された場合、またはバージョン0.3未満では null が設定されます。

@@ -118,11 +118,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 try
                 {
-#if DEBUG
                     var pluginPath = container.Resolve<PluginMain>().PluginDirectory;
+#if DEBUG
                     var previewPath = Path.Combine(pluginPath, "libs", "resources", "preview.json");
 #else
-                    var previewPath = Path.Combine(PluginMain.PluginDirectory, "resources", "preview.json");
+                    var previewPath = Path.Combine(pluginPath, "resources", "preview.json");
 #endif
                     var eventData = JObject.Parse(File.ReadAllText(previewPath));
 
