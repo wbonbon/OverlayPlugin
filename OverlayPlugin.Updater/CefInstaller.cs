@@ -100,8 +100,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             return await Task.Run(() =>
             {
-                // FIXME: This uses curl which requires MSVCRT... see the problem?
-                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
+                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath, true))
                 {
                     inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
                     inst.Display.Log(Resources.LogLaunchingInstaller);
@@ -127,7 +126,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         var cancel = inst.Display.GetCancelToken();
 
                         inst.Display.Log(Resources.LogInstallerWaiting);
-                        while (NativeMethods.LoadLibrary("msvcp140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
+                        while (NativeMethods.LoadLibrary("vcruntime140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
                         {
                             Thread.Sleep(500);
                         }
@@ -137,7 +136,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
 
                     inst.Cleanup();
-                    if (NativeMethods.LoadLibrary("msvcp140.dll") != IntPtr.Zero)
+                    if (NativeMethods.LoadLibrary("vcruntime140.dll") != IntPtr.Zero)
                     {
                         inst.Display.Close();
                         return true;
