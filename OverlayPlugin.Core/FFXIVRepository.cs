@@ -115,7 +115,7 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCurrentFFXIVProcess();
         }
 
-        [Obsolete("Subscribe to the ProcessChanged event instead")]
+        [Obsolete("Subscribe to the ProcessChanged event instead (See RegisterProcessChangedHandler())")]
         public Process GetCurrentFFXIVProcess()
         {
             try
@@ -221,6 +221,11 @@ namespace RainbowMage.OverlayPlugin
         }
 
         // ProcessChangedDelegate(Process process)
-        // public void RegisterProcessChangedHandler()
+        public void RegisterProcessChangedHandler(Action<Process> handler)
+        {
+            var sub = GetSubscription();
+            if (sub != null)
+                sub.ProcessChanged += new ProcessChangedDelegate(handler);
+        }
     }
 }

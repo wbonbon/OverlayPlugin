@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -19,7 +18,43 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             logger = container.Resolve<ILogger>();
             repository = container.Resolve<FFXIVRepository>();
-            FindProcess();
+            
+            repository.RegisterProcessChangedHandler(UpdateProcess);
+        }
+
+        private void UpdateProcess(Process proc)
+        {
+            if (processHandle != IntPtr.Zero)
+            {
+                CloseProcessHandle();
+            }
+
+            if (proc == null || proc.HasExited)
+                return;
+
+            if (proc.ProcessName == "ffxiv")
+            {
+                logger.Log(LogLevel.Error, "{0}", "DX9 is not supported.");
+                return;
+            }
+            else if (proc.ProcessName != "ffxiv_dx11")
+            {
+                logger.Log(LogLevel.Error, "{0}", "Unknown ffxiv process.");
+                return;
+            }
+
+            try {
+                process = proc;
+                processHandle = NativeMethods.OpenProcess(ProcessAccessFlags.VirtualMemoryRead, false, proc.Id);
+            } catch (Exception e)
+            {
+                logger.Log(LogLevel.Error, "Failed to open FFXIV process: {0}", e);
+
+                process = null;
+                processHandle = IntPtr.Zero;
+            }
+
+            OnProcessChange?.Invoke(this, null);
         }
 
         private void FindProcess()
@@ -64,6 +99,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public bool IsValid()
         {
+            return process != null && !process.HasExited && processHandle != IntPtr.Zero;
+
             if (process != null && process.HasExited)
             {
                 CloseProcessHandle();
