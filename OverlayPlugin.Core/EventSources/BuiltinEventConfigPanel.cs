@@ -49,6 +49,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             this.checkSortDesc.Checked = config.SortDesc;
             this.cbUpdateDuringImport.Checked = config.UpdateDpsDuringImport;
+
+            this.cbEndEncounterAfterWipe.Checked = config.EndEncounterAfterWipe;
+            this.cbEndEncounterOutOfCombat.Checked = config.EndEncounterOutOfCombat;
         }
 
         private void SetupConfigEventHandlers()
@@ -92,6 +95,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     this.cbUpdateDuringImport.Checked = config.UpdateDpsDuringImport;
                 });
             };
+
+            this.config.EndEncounterAfterWipeChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.cbEndEncounterAfterWipe.Checked = config.EndEncounterAfterWipe;
+                });
+            };
+
+            this.config.EndEncounterOutOfCombatChanged += (o, e) =>
+            {
+                this.InvokeIfRequired(() =>
+                {
+                    this.cbEndEncounterOutOfCombat.Checked = config.EndEncounterOutOfCombat;
+                });
+            };
         }
 
         private void InvokeIfRequired(Action action)
@@ -131,6 +150,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private void cbUpdateDuringImport_CheckedChanged(object sender, EventArgs e)
         {
             this.config.UpdateDpsDuringImport = this.cbUpdateDuringImport.Checked;
+        }
+
+        private void cbEndEncounterAfterWipe_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.EndEncounterAfterWipe = this.cbEndEncounterAfterWipe.Checked;
+        }
+
+        private void cbEndEncounterOutOfCombat_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.EndEncounterOutOfCombat = this.cbEndEncounterOutOfCombat.Checked;
         }
 
         private void TextEnmityInterval_Leave(object sender, EventArgs e)

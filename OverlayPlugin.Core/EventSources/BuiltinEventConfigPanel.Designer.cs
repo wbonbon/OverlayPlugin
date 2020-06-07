@@ -31,6 +31,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuiltinEventConfigPanel));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.cbEndEncounterOutOfCombat = new System.Windows.Forms.CheckBox();
+            this.cbEndEncounterAfterWipe = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.textEnmityInterval = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.comboSortKey = new System.Windows.Forms.ComboBox();
@@ -47,6 +51,10 @@
             // tableLayoutPanel1
             // 
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
+            this.tableLayoutPanel1.Controls.Add(this.cbEndEncounterOutOfCombat, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.cbEndEncounterAfterWipe, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.textEnmityInterval, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.comboSortKey, 1, 1);
@@ -58,6 +66,30 @@
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.cbUpdateDuringImport, 1, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            // 
+            // cbEndEncounterOutOfCombat
+            // 
+            resources.ApplyResources(this.cbEndEncounterOutOfCombat, "cbEndEncounterOutOfCombat");
+            this.cbEndEncounterOutOfCombat.Name = "cbEndEncounterOutOfCombat";
+            this.cbEndEncounterOutOfCombat.UseVisualStyleBackColor = true;
+            this.cbEndEncounterOutOfCombat.CheckedChanged += new System.EventHandler(this.cbEndEncounterOutOfCombat_CheckedChanged);
+            // 
+            // cbEndEncounterAfterWipe
+            // 
+            resources.ApplyResources(this.cbEndEncounterAfterWipe, "cbEndEncounterAfterWipe");
+            this.cbEndEncounterAfterWipe.Name = "cbEndEncounterAfterWipe";
+            this.cbEndEncounterAfterWipe.UseVisualStyleBackColor = true;
+            this.cbEndEncounterAfterWipe.CheckedChanged += new System.EventHandler(this.cbEndEncounterAfterWipe_CheckedChanged);
+            // 
+            // label7
+            // 
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Name = "label7";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
             // 
             // textEnmityInterval
             // 
@@ -143,5 +175,9 @@
         private System.Windows.Forms.CheckBox cbUpdateDuringImport;
         private System.Windows.Forms.TextBox textEnmityInterval;
         private System.Windows.Forms.Label label5;
-    }
+        private System.Windows.Forms.CheckBox cbEndEncounterOutOfCombat;
+        private System.Windows.Forms.CheckBox cbEndEncounterAfterWipe;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+  }
 }
