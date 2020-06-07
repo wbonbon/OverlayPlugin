@@ -20,6 +20,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string EnmityTargetDataEvent = "EnmityTargetData";
         // All of the mobs with aggro on the player.  Equivalent of the sidebar aggro list in game.
         private const string EnmityAggroListEvent = "EnmityAggroList";
+        // State of combat, both act and game.
+        private const string InCombatEvent = "InCombat";
+
+        [Serializable]
+        internal class InCombatDataObject {
+            public string type = InCombatEvent;
+            public bool inACTCombat = false;
+            public bool inGameCombat = false;
+        };
+        InCombatDataObject sentCombatData;
 
         public BuiltinEventConfig Config { get; set; }
 
@@ -51,6 +61,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             RegisterEventTypes(new List<string> {
                 EnmityTargetDataEvent, EnmityAggroListEvent,
             });
+            RegisterCachedEventType(InCombatEvent);
         }
 
         public override Control CreateConfigControl()
@@ -115,6 +126,20 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     // Increase the update interval now that we found our memory
                     timer.Change(this.Config.EnmityIntervalMs, this.Config.EnmityIntervalMs);
                     memoryValid = true;
+                }
+
+                if (HasSubscriber(InCombatEvent))
+                {
+                    bool inACTCombat = Advanced_Combat_Tracker.ActGlobals.oFormActMain.InCombat;
+                    bool inGameCombat = memory.GetInCombat();
+                    if (sentCombatData == null || sentCombatData.inACTCombat != inACTCombat || sentCombatData.inGameCombat != inGameCombat)
+                    {
+                        if (sentCombatData == null)
+                            sentCombatData = new InCombatDataObject();
+                        sentCombatData.inACTCombat = inACTCombat;
+                        sentCombatData.inGameCombat = inGameCombat;
+                        this.DispatchAndCacheEvent(JObject.FromObject(sentCombatData));
+                    }
                 }
 
                 bool targetData = HasSubscriber(EnmityTargetDataEvent);

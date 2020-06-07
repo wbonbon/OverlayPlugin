@@ -102,5 +102,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
         abstract public List<Combatant> GetCombatantList();
         abstract public List<EnmityEntry> GetEnmityEntryList(List<Combatant> combatantList);
         abstract public unsafe List<AggroEntry> GetAggroList(List<Combatant> combatantList);
+        abstract public bool GetInCombat();
     }
 }

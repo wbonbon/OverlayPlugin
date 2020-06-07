@@ -16,15 +16,19 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IntPtr targetAddress = IntPtr.Zero;
         private IntPtr enmityAddress = IntPtr.Zero;
         private IntPtr aggroAddress = IntPtr.Zero;
+        private IntPtr inCombatAddress = IntPtr.Zero;
 
         private const string charmapSignature = "488b420848c1e8033da701000077248bc0488d0d";
         private const string targetSignature = "41bc000000e041bd01000000493bc47555488d0d";
         private const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
+        private const string inCombatSignature = "84c07425450fb6c7488d0d";
 
         // Offsets from the signature to find the correct address.
         private const int charmapSignatureOffset = 0;
         private const int targetSignatureOffset = 192;
         private const int enmitySignatureOffset = -4648;
+        private const int inCombatSignatureBaseOffset = 0;
+        private const int inCombatSignatureOffsetOffset = 5;
 
         // Offset from the enmityAddress to find various enmity data structures.
         private const int aggroEnmityOffset = 0x908;
@@ -52,6 +56,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             targetAddress = IntPtr.Zero;
             enmityAddress = IntPtr.Zero;
             aggroAddress = IntPtr.Zero;
+            inCombatAddress = IntPtr.Zero;
         }
 
         private bool HasValidPointers()
@@ -63,6 +68,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (enmityAddress == IntPtr.Zero)
                 return false;
             if (aggroAddress == IntPtr.Zero)
+                return false;
+            if (inCombatAddress == IntPtr.Zero)
                 return false;
             return true;
         }
@@ -137,9 +144,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 success = false;
             }
 
+            /// IN COMBAT
+            // The in combat address is set from a combination of two values, a base address and an offset.
+            // They are found adjacent to the same signature, but at different offsets.
+            var baseList = memory.SigScan(inCombatSignature, inCombatSignatureBaseOffset, bRIP);
+            // SigScan returns pointers, but the offset is a 32-bit immediate value.  Do not use RIP.
+            var offsetList = memory.SigScan(inCombatSignature, inCombatSignatureOffsetOffset, false);
+            if (baseList != null && baseList.Count > 0 && offsetList != null && offsetList.Count > 0)
+            {
+                var baseAddress = baseList[0];
+                var offset = (int)(((UInt64)offsetList[0]) & 0xFFFFFFFF);
+                inCombatAddress = IntPtr.Add(baseAddress, offset);
+            }
+            else
+            {
+                inCombatAddress = IntPtr.Zero;
+                fail.Add(nameof(inCombatAddress));
+                success = false;
+            }
+
             logger.Log(LogLevel.Debug, "charmapAddress: 0x{0:X}", charmapAddress.ToInt64());
             logger.Log(LogLevel.Debug, "enmityAddress: 0x{0:X}", enmityAddress.ToInt64());
             logger.Log(LogLevel.Debug, "targetAddress: 0x{0:X}", targetAddress.ToInt64());
+            logger.Log(LogLevel.Debug, "inCombatAddress: 0x{0:X}", inCombatAddress.ToInt64());
             Combatant c = GetSelfCombatant();
             if (c != null)
             {
@@ -536,6 +563,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 return effectEntry;
             }
+        }
+
+        public override bool GetInCombat()
+        {
+            if (inCombatAddress == IntPtr.Zero)
+                return false;
+            byte[] bytes = memory.Read8(inCombatAddress, 1);
+            return bytes[0] != 0;
         }
     }
 }
