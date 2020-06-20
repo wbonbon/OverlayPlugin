@@ -58,5 +58,11 @@
     "url": "%%/miniparse.html",
     "size": [700, 300],
     "supports": ["modern"]
+  },
+  "Klondike": {
+    "type": "MiniParse",
+    "url": "https://kalilistic.github.io/klondike/",
+    "size": [200, 290],
+    "supports": ["modern"]
   }
 }
