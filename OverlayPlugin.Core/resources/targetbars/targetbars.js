@@ -1,5 +1,14 @@
 'use strict';
 
+const languages = [
+  'Chinese',
+  'English',
+  'French',
+  'German',
+  'Korean',
+  'Japanese',
+];
+
 // Map of language -> targetType -> settings title.
 const configTitles = {
   English: {
@@ -66,6 +75,32 @@ const textOptionsByTargetType = {
   TargetOfTarget: textOptionsNonTarget,
 };
 
+const FormatType = {
+  Raw: 0,
+  Separators: 1,
+  Simplify3: 2,
+  Simplify4: 3,
+  Simplify5: 4,
+};
+
+// Auto-generate number formatting options.
+// Adjust the formatNumber function to make this behave differently per lang
+// language -> displayed option text -> text key
+const formatOptions = (() => {
+  const defaultValue = 123456789;
+  let formatOptions = {};
+  for (const lang of languages) {
+    let obj = {};
+    for (const typeName in FormatType) {
+      const type = FormatType[typeName];
+      obj[formatNumber(defaultValue, lang, type)] = type;
+    }
+
+    formatOptions[lang] = obj;
+  }
+  return formatOptions;
+})();
+
 const configStructure = [
   {
     id: 'leftText',
@@ -109,6 +144,16 @@ const configStructure = [
     },
     type: 'text',
     default: 250,
+  },
+  {
+    // TODO: maybe there's a desire to format left/mid/right differently?
+    id: 'numberFormat',
+    name: {
+      English: 'Number Format',
+    },
+    type: 'select',
+    options: formatOptions,
+    default: FormatType.Separators,
   },
   {
     id: 'isRounded',
@@ -209,10 +254,71 @@ const configStructure = [
 ];
 
 // Return "str px" if "str" is a number, otherwise "str".
-let defaultAsPx = (str) => {
+function defaultAsPx(str) {
   if (parseFloat(str) == str)
     return str + 'px';
   return str;
+};
+
+// Simplifies a number to number of |digits|.
+// e.g. num=123456789, digits=3 => 123M
+// e.g. num=123456789, digits=4 => 123.4M
+// e.g. num=-0.1234567, digits=3 => -0.123
+// TODO: is it ok to say "23k" if specifying 3 digits vs "23.0k"?
+function formatNumberSimplify(num, lang, digits) {
+  // The leading zero does not count.
+  if (num < 1)
+    digits++;
+
+  // Digits before the decimal.
+  let originalDigits = Math.max(Math.floor(Math.log10(num)), 0) + 1;
+  let separator = Math.floor((originalDigits - 1) / 3) * 3;
+
+  // TODO: translate these too?
+  let suffix = {
+    0: '',
+    3: 'k',
+    6: 'M',
+    9: 'B',
+    12: 'T',
+    15: 'Q',
+  }[separator];
+
+  num /= Math.pow(10, separator);
+
+  let finalDigits = originalDigits - separator;
+  // At least give 3 digits here even if requesting 2.
+  let decimalPlacesNeeded = Math.max(digits - finalDigits, 0);
+
+  let shift = Math.pow(10, decimalPlacesNeeded);
+  num = Math.floor(num * shift) / shift;
+  return num.toString() + suffix;
+};
+
+function formatNumber(num, lang, format) {
+  let floatNum = parseFloat(num);
+  if (isNaN(floatNum))
+    return num;
+  num = floatNum;
+
+  switch (parseInt(format)) {
+  default:
+  case FormatType.Raw:
+    return num.toString();
+
+  case FormatType.Separators:
+    // TODO: maybe other languages want to handle separators differently?
+    return num.toLocaleString('en-US');
+
+  case FormatType.Simplify3:
+    return formatNumberSimplify(num, lang, 3);
+
+  case FormatType.Simplify4:
+    return formatNumberSimplify(num, lang, 4);
+
+  case FormatType.Simplify5:
+    return formatNumberSimplify(num, lang, 5);
+  }
 };
 
 class BarUI {
@@ -311,7 +417,7 @@ class BarUI {
 
     for (const key of rawKeys) {
       if (data[key] !== this.lastData[key])
-        this.setValue(key, data[key]);
+        this.setValue(key, formatNumber(data[key], this.lang, this.options.numberFormat));
     }
 
     if (data.CurrentHP !== this.lastData.CurrentHP ||
@@ -321,7 +427,9 @@ class BarUI {
       this.setValue('PercentHP', percentStr);
       this.updateGradient(percent);
 
-      this.setValue('CurrentAndMaxHP', data.CurrentHP + ' / ' + data.MaxHP);
+      const formattedHP = formatNumber(data.CurrentHP, this.lang, this.options.numberFormat);
+      const formattedMaxHP = formatNumber(data.MaxHP, this.lang, this.options.numberFormat);
+      this.setValue('CurrentAndMaxHP', formattedHP + ' / ' + formattedMaxHP);
     }
 
     // Time to death
