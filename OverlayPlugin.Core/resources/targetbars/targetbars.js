@@ -15,15 +15,55 @@ const helpText = {
 };
 
 // language -> displayed option text -> text key
-const textOptions = {
+const textOptionsAll = {
   English: {
     'None': 'None',
     'Current HP': 'CurrentHP',
     'Max HP': 'MaxHP',
     'Current / Max HP': 'CurrentAndMaxHP',
     'Percent HP': 'PercentHP',
+    'Time To Death': 'TimeToDeath',
     'Distance': 'Distance',
+    'Effective Distance': 'EffectiveDistance',
+    'Absolute Enmity': 'AbsoluteEnmity',
+    'Relative Enmity': 'RelativeEnmity',
   },
+};
+
+
+const overlayDataKey = 'targetbars';
+const targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
+
+// Values that come directly from a target object.
+const rawKeys = ['CurrentHP', 'MaxHP', 'Distance', 'EffectiveDistance'];
+// Values that need to be calculated.
+const otherKeys = ['PercentHP', 'CurrentAndMaxHP', 'TimeToDeath'];
+// Values that only exist for the current Target.
+const targetOnlyKeys = ['AbsoluteEnmity', 'RelativeEnmity'];
+
+const validKeys = ['None', ...rawKeys, ...otherKeys, ...targetOnlyKeys];
+
+// Remove enmity from non-target keys.
+const textOptionsNonTarget = (() => {
+  let options = {};
+  for (const lang in textOptionsAll) {
+    options[lang] = {};
+    let perLang = textOptionsAll[lang];
+    for (const key in perLang) {
+      const value = perLang[key];
+      if (targetOnlyKeys.includes(value))
+        continue;
+      options[lang][key] = value;
+    }
+  }
+  return options;
+})();
+
+const textOptionsByTargetType = {
+  Target: textOptionsAll,
+  Focus: textOptionsNonTarget,
+  Hover: textOptionsNonTarget,
+  TargetOfTarget: textOptionsNonTarget,
 };
 
 const configStructure = [
@@ -33,7 +73,7 @@ const configStructure = [
       English: 'Left Text',
     },
     type: 'select',
-    options: textOptions,
+    optionsByType: textOptionsByTargetType,
     default: 'CurrentAndMaxHP',
   },
   {
@@ -41,7 +81,7 @@ const configStructure = [
     name: {
       English: 'Middle Text',
     },
-    options: textOptions,
+    optionsByType: textOptionsByTargetType,
     type: 'select',
     default: 'Distance',
   },
@@ -50,7 +90,7 @@ const configStructure = [
     name: {
       English: 'Right Text',
     },
-    options: textOptions,
+    optionsByType: textOptionsByTargetType,
     type: 'select',
     default: 'PercentHP',
   },
@@ -168,12 +208,6 @@ const configStructure = [
   },
 ];
 
-const overlayDataKey = 'targetbars';
-const targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
-const rawKeys = ['CurrentHP', 'MaxHP', 'Distance'];
-const comboKeys = ['PercentHP', 'CurrentAndMaxHP'];
-const allKeys = rawKeys.concat(comboKeys);
-
 // Return "str px" if "str" is a number, otherwise "str".
 let defaultAsPx = (str) => {
   if (parseFloat(str) == str)
@@ -182,12 +216,14 @@ let defaultAsPx = (str) => {
 };
 
 class BarUI {
-  constructor(targetType, topLevelOptions, div) {
+  constructor(targetType, topLevelOptions, div, lang) {
     this.target = targetType;
     this.options = topLevelOptions[targetType];
     this.div = div;
+    this.lang = lang;
     this.lastData = {};
     this.isExampleShowcase = false;
+    this.targetHistory = new TargetHistory();
 
     // Map of keys to elements that contain those values.
     // built from this.options.elements.
@@ -198,8 +234,14 @@ class BarUI {
       center: this.options.middleText,
       right: this.options.rightText,
     };
+
     for (const justifyKey in textMap) {
       let text = textMap[justifyKey];
+      if (!validKeys.includes(text)) {
+        console.error(`Invalid key: ${text}`);
+        continue;
+      }
+
       let textDiv = document.createElement('div');
       textDiv.classList.add(text);
       textDiv.style.justifySelf = justifyKey;
@@ -250,6 +292,10 @@ class BarUI {
     if (!e)
       return;
 
+    if (!this.isExampleShowcase && e.isExampleShowcase) {
+      this.targetHistory = new ExampleTargetHistory();
+    }
+
     // Don't let the game updates override the example showcase.
     if (this.isExampleShowcase && !e.isExampleShowcase)
       return;
@@ -276,6 +322,37 @@ class BarUI {
       this.updateGradient(percent);
 
       this.setValue('CurrentAndMaxHP', data.CurrentHP + ' / ' + data.MaxHP);
+    }
+
+    // Time to death
+    this.targetHistory.processTarget(data);
+    let secondsRemaining = this.targetHistory.secondsUntilDeath(data);
+    let ttd = secondsRemaining === null ? '' : toTimeString(secondsRemaining, this.lang);
+    const ttdKey = 'TimeToDeath';
+    data[ttdKey] = ttd;
+    if (data[ttdKey] !== this.lastData[ttdKey])
+      this.setValue(ttdKey, ttd);
+
+    // Target enmity.
+    if (this.target === 'Target') {
+      const relKey = 'RelativeEnmity';
+      const absKey = 'AbsoluteEnmity';
+      let player = updateRelativeEnmity(e);
+      if (player === null) {
+        data[relKey] = '';
+        data[absKey] = '';
+      } else {
+        data[absKey] = player.Enmity + '%';
+
+        // Negative relative enmity has a minus, so add a plus for positive.
+        let rel = player.RelativeEnmity;
+        data[relKey] = (rel > 0 ? '+' : '') + rel + '%';
+      }
+
+      if (data[relKey] !== this.lastData[relKey])
+        this.setValue(relKey, data[relKey]);
+      if (data[absKey] !== this.lastData[absKey])
+        this.setValue(absKey, data[absKey]);
     }
 
     this.lastData = data;
@@ -462,11 +539,12 @@ class SettingsUI {
     input.classList.add('hidden');
     div.appendChild(input);
 
-    let defaultValue = this.getOption(group, opt.id, opt.default);
+    const defaultValue = this.getOption(group, opt.id, opt.default);
     input.onchange = () => this.setOption(group, opt.id, input.value);
 
-    let innerOptions = this.translate(opt.options);
-    for (let key in innerOptions) {
+    const optionsByType = opt.optionsByType ? opt.optionsByType[this.target] : opt.options;
+    const innerOptions = this.translate(optionsByType);
+    for (const key in innerOptions) {
       let elem = document.createElement('option');
       elem.value = innerOptions[key];
       elem.innerHTML = key;
@@ -546,6 +624,18 @@ function updateOverlayState(e) {
 
 function showExample(barUI) {
   barUI.update({
+    Entries: [
+      {
+        isMe: true,
+        isCurrentTarget: true,
+        Enmity: 100,
+        RelativeEnmity: 100,
+        Name: 'Tank',
+        Job: 'PLD',
+        MaxHP: 100,
+        CurrentHP: 3,
+      },
+    ],
     Target: {
       Name: 'TargetMob',
       CurrentHP: 38300,
@@ -623,9 +713,10 @@ window.addEventListener('DOMContentLoaded', async (e) => {
   let buildFunc = (options) => {
     while (containerDiv.lastChild)
       containerDiv.removeChild(containerDiv.lastChild);
-    barUI = new BarUI(targetType, options, containerDiv);
+    barUI = new BarUI(targetType, options, containerDiv, lang);
   };
-  let gSettingsUI = new SettingsUI(targetType, lang, configStructure, options, settingsDiv, buildFunc);
+  let gSettingsUI = new SettingsUI(targetType, lang, configStructure, options,
+      settingsDiv, buildFunc);
 
   window.addOverlayListener('EnmityTargetData', (e) => barUI.update(e));
   document.addEventListener('onExampleShowcase', () => showExample(barUI));

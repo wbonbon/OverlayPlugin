@@ -94,4 +94,10 @@ class TargetHistory {
     let dps = (first.hp - last.hp) / totalSeconds;
     return last.hp / dps;
   }
-};
+}
+
+class ExampleTargetHistory extends TargetHistory {
+  secondsUntilDeath(target) {
+    return 23.7;
+  }
+}
