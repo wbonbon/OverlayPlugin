@@ -253,6 +253,21 @@ const configStructure = [
   },
 ];
 
+const perTargetOverrides = {
+  Target: {
+    barWidth: 415,
+    leftText: 'CurrentAndMaxHP',
+    middleText: 'TimeToDeath',
+    rightText: 'Distance',
+  },
+  Focus: {
+    barWidth: 210,
+    leftText: 'CurrentAndMaxHP',
+    middleText: 'None',
+    rightText: 'PercentHP',
+  },
+};
+
 // Return "str px" if "str" is a number, otherwise "str".
 function defaultAsPx(str) {
   if (parseFloat(str) == str)
@@ -804,9 +819,14 @@ window.addEventListener('DOMContentLoaded', async (e) => {
 
   // Set option defaults from config.
   let options = {};
-  options[targetType] = options[targetType] || {};
+  options[targetType] = {};
   for (const opt of configStructure)
     options[targetType][opt.id] = opt.default;
+
+  // Handle per target default overrides.
+  const overrides = perTargetOverrides[targetType];
+  for (const key in overrides)
+    options[targetType][key] = overrides[key];
 
   // Overwrite options from loaded values.  Options are stored once per target type,
   // so that different targets can be configured differently.
