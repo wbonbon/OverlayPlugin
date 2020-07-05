@@ -1,5 +1,6 @@
 'use strict';
 
+const defaultLang = 'English';
 const languages = [
   'Chinese',
   'English',
@@ -8,6 +9,10 @@ const languages = [
   'Korean',
   'Japanese',
 ];
+
+const languageToLocale = {
+  English: 'en-US',
+};
 
 // Map of language -> targetType -> settings title.
 const configTitles = {
@@ -83,17 +88,48 @@ const FormatType = {
   Simplify5: 4,
 };
 
+const formatOptionsByKey = {
+  CurrentHP: {
+    maximumFractionDigits: 0,
+  },
+  MaxHP: {
+    maximumFractionDigits: 0,
+  },
+  Distance: {
+    minimumFractionDigits: 2,
+  },
+  EffectiveDistance: {
+    maximumFractionDigits: 0,
+  },
+  PercentHP: {
+    minimumFractionDigits: 2,
+  },
+  CurrentAndMaxHP: {
+    maximumFractionDigits: 0,
+  },
+  TimeToDeath: {
+    maximumFractionDigits: 0,
+  },
+  AbsoluteEnmity: {
+    maximumFractionDigits: 0,
+  },
+  RelativeEnmity: {
+    maximumFractionDigits: 0,
+  },
+};
+
 // Auto-generate number formatting options.
 // Adjust the formatNumber function to make this behave differently per lang
 // language -> displayed option text -> text key
 const formatOptions = (() => {
   const defaultValue = 123456789;
+  const defaultKey = 'CurrentHP';
   let formatOptions = {};
   for (const lang of languages) {
     let obj = {};
     for (const typeName in FormatType) {
       const type = FormatType[typeName];
-      obj[formatNumber(defaultValue, lang, type)] = type;
+      obj[formatNumber(defaultValue, lang, type, defaultKey)] = type;
     }
 
     formatOptions[lang] = obj;
@@ -273,14 +309,13 @@ function defaultAsPx(str) {
   if (parseFloat(str) == str)
     return str + 'px';
   return str;
-};
+}
 
 // Simplifies a number to number of |digits|.
 // e.g. num=123456789, digits=3 => 123M
 // e.g. num=123456789, digits=4 => 123.4M
 // e.g. num=-0.1234567, digits=3 => -0.123
-// TODO: is it ok to say "23k" if specifying 3 digits vs "23.0k"?
-function formatNumberSimplify(num, lang, digits) {
+function formatNumberSimplify(num, lang, options, digits) {
   // The leading zero does not count.
   if (num < 1)
     digits++;
@@ -305,36 +340,52 @@ function formatNumberSimplify(num, lang, digits) {
   // At least give 3 digits here even if requesting 2.
   let decimalPlacesNeeded = Math.max(digits - finalDigits, 0);
 
+  // If this is a real decimal place, bound by the per-key formatting options.
+  if (separator === 0) {
+    if (typeof options.minimumFractionDigits !== 'undefined')
+      decimalPlacesNeeded = Math.max(options.minimumFractionDigits, decimalPlacesNeeded);
+    if (typeof options.maximumFractionDigits !== 'undefined')
+      decimalPlacesNeeded = Math.min(options.maximumFractionDigits, decimalPlacesNeeded);
+  }
+
   let shift = Math.pow(10, decimalPlacesNeeded);
   num = Math.floor(num * shift) / shift;
-  return num.toString() + suffix;
-};
 
-function formatNumber(num, lang, format) {
+  const locale = languageToLocale[lang] || languageToLocale[defaultLang];
+  return num.toLocaleString(locale, {
+    minimumFractionDigits: decimalPlacesNeeded,
+    maximumFractionDigits: decimalPlacesNeeded,
+  }) + suffix;
+}
+
+function formatNumber(num, lang, format, key) {
   let floatNum = parseFloat(num);
   if (isNaN(floatNum))
     return num;
   num = floatNum;
 
+  const options = formatOptionsByKey[key];
+  const minDigits = options.minimumFractionDigits > 0 ? options.minimumFractionDigits : 0;
+  const locale = languageToLocale[lang] || languageToLocale[defaultLang];
+
   switch (parseInt(format)) {
   default:
   case FormatType.Raw:
-    return num.toString();
+    return num.toFixed(minDigits);
 
   case FormatType.Separators:
-    // TODO: maybe other languages want to handle separators differently?
-    return num.toLocaleString('en-US');
+    return num.toLocaleString(locale, options);
 
   case FormatType.Simplify3:
-    return formatNumberSimplify(num, lang, 3);
+    return formatNumberSimplify(num, lang, options, 3);
 
   case FormatType.Simplify4:
-    return formatNumberSimplify(num, lang, 4);
+    return formatNumberSimplify(num, lang, options, 4);
 
   case FormatType.Simplify5:
-    return formatNumberSimplify(num, lang, 5);
+    return formatNumberSimplify(num, lang, options, 5);
   }
-};
+}
 
 class BarUI {
   constructor(targetType, topLevelOptions, div, lang) {
@@ -413,9 +464,9 @@ class BarUI {
     if (!e)
       return;
 
-    if (!this.isExampleShowcase && e.isExampleShowcase) {
+    if (!this.isExampleShowcase && e.isExampleShowcase)
       this.targetHistory = new ExampleTargetHistory();
-    }
+
 
     // Don't let the game updates override the example showcase.
     if (this.isExampleShowcase && !e.isExampleShowcase)
@@ -431,20 +482,29 @@ class BarUI {
     }
 
     for (const key of rawKeys) {
-      if (data[key] !== this.lastData[key])
-        this.setValue(key, formatNumber(data[key], this.lang, this.options.numberFormat));
+      if (data[key] === this.lastData[key])
+        continue;
+
+      const formatted = formatNumber(data[key], this.lang, this.options.numberFormat, key);
+      this.setValue(key, formatted);
     }
 
     if (data.CurrentHP !== this.lastData.CurrentHP ||
-      data.MaxHP !== this.lastData.MaxHP) {
+        data.MaxHP !== this.lastData.MaxHP) {
+      const percentKey = 'PercentHP';
+      const percentOptions = formatOptionsByKey[percentKey];
       const percent = 100 * data.CurrentHP / data.MaxHP;
-      const percentStr = percent.toFixed(2) + '%';
+      const percentStr =
+          formatNumber(percent, this.lang, this.options.numberFormat, percentKey) + '%';
       this.setValue('PercentHP', percentStr);
       this.updateGradient(percent);
 
-      const formattedHP = formatNumber(data.CurrentHP, this.lang, this.options.numberFormat);
-      const formattedMaxHP = formatNumber(data.MaxHP, this.lang, this.options.numberFormat);
-      this.setValue('CurrentAndMaxHP', formattedHP + ' / ' + formattedMaxHP);
+      const comboKey = 'CurrentAndMaxHP';
+      const formattedHP =
+          formatNumber(data.CurrentHP, this.lang, this.options.numberFormat, comboKey);
+      const formattedMaxHP =
+          formatNumber(data.MaxHP, this.lang, this.options.numberFormat, comboKey);
+      this.setValue(comboKey, formattedHP + ' / ' + formattedMaxHP);
     }
 
     // Time to death
@@ -578,12 +638,12 @@ class SettingsUI {
   // Helper translate function.  Takes in an object with locale keys
   // and returns a single entry based on available translations.
   translate(textObj) {
-    if (textObj === null || typeof textObj !== 'object' || !textObj['English'])
+    if (textObj === null || typeof textObj !== 'object' || !textObj[defaultLang])
       return textObj;
     let t = textObj[this.lang];
     if (t)
       return t;
-    return textObj['English'];
+    return textObj[defaultLang];
   }
 
   // takes variable args, with the last value being the default value if
@@ -797,7 +857,7 @@ document.addEventListener('onOverlayStateUpdate', updateOverlayState);
 
 window.addEventListener('DOMContentLoaded', async (e) => {
   // Initialize language from OverlayPlugin.
-  let lang = 'English';
+  let lang = defaultLang;
   const langResult = await window.callOverlayHandler({ call: 'getLanguage' });
   if (langResult && langResult.language)
     lang = langResult.language;
