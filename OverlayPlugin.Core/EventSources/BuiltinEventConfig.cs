@@ -12,6 +12,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public event EventHandler SortKeyChanged;
         public event EventHandler SortDescChanged;
         public event EventHandler UpdateDpsDuringImportChanged;
+        public event EventHandler EndEncounterAfterWipeChanged;
+        public event EventHandler EndEncounterOutOfCombatChanged;
 
         private int updateInterval;
         public int UpdateInterval {
@@ -97,6 +99,40 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
+        private bool endEncounterAfterWipe;
+        public bool EndEncounterAfterWipe
+        {
+            get
+            {
+                return this.endEncounterAfterWipe;
+            }
+            set
+            {
+                if (this.endEncounterAfterWipe != value)
+                {
+                    this.endEncounterAfterWipe = value;
+                    EndEncounterAfterWipeChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
+        private bool endEncounterOutOfCombat;
+        public bool EndEncounterOutOfCombat
+        {
+            get
+            {
+                return this.endEncounterOutOfCombat;
+            }
+            set
+            {
+                if (this.endEncounterOutOfCombat != value)
+                {
+                    this.endEncounterOutOfCombat = value;
+                    EndEncounterOutOfCombatChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
         // Data that overlays can save/load via event handlers.
         public Dictionary<string, JToken> OverlayData = new Dictionary<string, JToken>();
 
@@ -107,6 +143,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.sortKey = "encdps";
             this.sortDesc = true;
             this.updateDpsDuringImport = false;
+            this.endEncounterAfterWipe = false;
+            this.endEncounterOutOfCombat = false;
         }
 
         public static BuiltinEventConfig LoadConfig(IPluginConfig Config)
@@ -140,6 +178,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 if (obj.TryGetValue("UpdateDpsDuringImport", out value))
                 {
                     result.updateDpsDuringImport = value.ToObject<bool>();
+                }
+
+                if (obj.TryGetValue("EndEncounterAfterWipe", out value))
+                {
+                    result.endEncounterAfterWipe = value.ToObject<bool>();
+                }
+
+                if (obj.TryGetValue("EndEncounterOutOfCombat", out value))
+                {
+                    result.endEncounterOutOfCombat = value.ToObject<bool>();
                 }
 
                 if (obj.TryGetValue("OverlayData", out value))

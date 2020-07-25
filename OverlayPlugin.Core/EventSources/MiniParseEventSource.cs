@@ -317,6 +317,19 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         charName,
                     }));
                     break;
+
+                case LogMessageType.Network6D:
+                    if (!Config.EndEncounterAfterWipe) break;
+                    if (line.Length < 4) break;
+
+                    if (line[3] == "40000010")
+                    {
+                        ActGlobals.oFormActMain.Invoke((Action)(() =>
+                        {
+                           ActGlobals.oFormActMain.EndCombat(true);
+                        }));
+                    }
+                    break;
             }
 
             DispatchEvent(JObject.FromObject(new
