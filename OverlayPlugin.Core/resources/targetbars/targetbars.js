@@ -60,9 +60,8 @@ const validKeys = ['None', ...rawKeys, ...otherKeys, ...targetOnlyKeys];
 // Remove enmity from non-target keys.
 const textOptionsNonTarget = (() => {
   let options = {};
-  for (const lang in textOptionsAll) {
+  for (const [lang, perLang] of Object.entries(textOptionsAll)) {
     options[lang] = {};
-    let perLang = textOptionsAll[lang];
     for (const key in perLang) {
       const value = perLang[key];
       if (targetOnlyKeys.includes(value))
@@ -407,8 +406,7 @@ class BarUI {
       right: this.options.rightText,
     };
 
-    for (const justifyKey in textMap) {
-      let text = textMap[justifyKey];
+    for (const [justifyKey, text] of Object.entries(textMap)) {
       if (!validKeys.includes(text)) {
         console.error(`Invalid key: ${text}`);
         continue;
@@ -727,11 +725,11 @@ class SettingsUI {
 
     const optionsByType = opt.optionsByType ? opt.optionsByType[this.target] : opt.options;
     const innerOptions = this.translate(optionsByType);
-    for (const key in innerOptions) {
+    for (const [key, value] of Object.entries(innerOptions)) {
       let elem = document.createElement('option');
-      elem.value = innerOptions[key];
+      elem.value = value;
       elem.innerHTML = key;
-      if (innerOptions[key] == defaultValue)
+      if (value === defaultValue)
         elem.selected = true;
       input.appendChild(elem);
     }
