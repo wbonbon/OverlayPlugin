@@ -10,10 +10,10 @@ deps = {
         'hash': ['sha256', 'adf13a38d0938ce90f8e674f8365b227d933b91636ddf72b26c85702f6e3b808'],
     },
     'FFXIV_ACT_Plugin': {
-        'url': 'https://github.com/ravahn/FFXIV_ACT_Plugin/raw/master/Releases/FFXIV_ACT_Plugin_SDK_2.0.4.0.zip',
+        'url': 'https://github.com/ravahn/FFXIV_ACT_Plugin/raw/master/Releases/FFXIV_ACT_Plugin_SDK_2.0.4.9.zip',
         'dest': 'Thirdparty/FFXIV_ACT_Plugin',
         'strip': 0,
-        'hash': ['sha256', '006a8372dbb4e0f9761a1f29a926c81db0f41df0ededf378912961e23e9d24b3'],
+        'hash': ['sha256', 'a11fe8dfc1516fc67a2ac57baa1962969d1247842ff16c27034a86cc16e4cff0'],
     },
     'curl': {
         'url': 'https://curl.haxx.se/download/curl-7.67.0.tar.xz',
