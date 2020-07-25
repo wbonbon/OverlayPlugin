@@ -297,11 +297,13 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     if (line.Length < 3) return;
 
                     var zoneID = Convert.ToUInt32(line[2], 16);
+                    var zoneName = line[3];
 
                     DispatchAndCacheEvent(JObject.FromObject(new
                     {
                         type = ChangeZoneEvent,
                         zoneID,
+                        zoneName,
                     }));
                     break;
 
