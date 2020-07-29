@@ -36,7 +36,7 @@ namespace RainbowMage.OverlayPlugin
 
         public static void Clear()
         {
-            Container.Dispose();
+            if (Container != null) Container.Dispose();
             Container = null;
 
             _overlays = null;
