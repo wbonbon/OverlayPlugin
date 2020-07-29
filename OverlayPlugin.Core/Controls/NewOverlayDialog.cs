@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -58,7 +59,11 @@ namespace RainbowMage.OverlayPlugin
             }
 
             cbType.DisplayMember = "Key";
-            cbType.SelectedIndex = 0;
+            // Workaround for the special case where no overlay type has been registered.
+            // That still indicates a bug but showing an empty combo box is better than crashing.
+            if (cbType.Items.Count > 0)
+                cbType.SelectedIndex = 0;
+
             presets = PreparePresetCombo(cbPreset);
 
             lblType.Visible = false;
@@ -169,6 +174,16 @@ namespace RainbowMage.OverlayPlugin
 
                         // Reconstruct the overlay to reset the preview state.
                         SelectedOverlay = new Overlays.MiniParseOverlay(config, name);
+                        if (config.Url == "")
+                        {
+                            // If the preview didn't load, we try again here to avoid ending up with an empty overlay.
+#if DEBUG
+                            var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/libs/resources";
+#else
+                            var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/resources";
+#endif
+                            SelectedOverlay.Navigate(preset.Url.Replace("%%", resourcesPath));
+                        }
                     }
                     else
                     {
@@ -221,9 +236,22 @@ namespace RainbowMage.OverlayPlugin
                             IsLocked = preset.Locked,
                         };
 
+                        var presetUrl = preset.Url.Replace("%%", resourcesPath);
                         var overlay = new Overlays.MiniParseOverlay(config, config.Name);
                         overlay.Preview = true;
-                        overlay.Navigate(preset.Url.Replace("%%", resourcesPath));
+                        
+                        var first = true;
+                        overlay.Overlay.Renderer.BrowserLoad += (o, ev) =>
+                        {
+                            // Once the placeholder is ready, we load the actual overlay.
+                            if (first)
+                            {
+                                first = false;
+                                overlay.Navigate(presetUrl);
+                            }
+                        };
+                        // Show a placeholder while the actual overlay is loading.
+                        overlay.Navigate(resourcesPath + "/loading.html");
 
                         preview = overlay;
                         break;

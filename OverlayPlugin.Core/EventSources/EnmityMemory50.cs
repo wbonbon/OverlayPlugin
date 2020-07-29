@@ -97,6 +97,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if ((DateTime.Now - lastSigScan) < TimeSpan.FromSeconds(5))
                 return false;
 
+            lastSigScan = DateTime.Now;
+
             bool success = true;
             bool bRIP = true;
 
