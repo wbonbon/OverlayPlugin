@@ -12,6 +12,7 @@ const languages = [
 
 const languageToLocale = {
   English: 'en-US',
+  German: 'de-DE',
 };
 
 // Map of language -> targetType -> settings title.
@@ -22,10 +23,17 @@ const configTitles = {
     Hover: 'Hover Target Settings',
     TargetOfTarget: 'Target of Target Settings',
   },
+  German: {
+    Target: 'Ziel Einstellungen',
+    Focus: 'Fokusziel Einstellungen',
+    Hover: 'Hover-Ziel Einstellungen',
+    TargetOfTarget: 'Ziel des Ziels Einstellungen',
+  },
 };
 
 const helpText = {
   English: '(🔒lock overlay to hide settings)',
+  German: '(🔒Sperre das Overlay um die Einstellungen zu verstecken)',
 };
 
 // language -> displayed option text -> text key
@@ -41,6 +49,18 @@ const textOptionsAll = {
     'Effective Distance': 'EffectiveDistance',
     'Absolute Enmity': 'AbsoluteEnmity',
     'Relative Enmity': 'RelativeEnmity',
+  },
+  German: {
+    'None': 'None',
+    'Aktuelle HP': 'CurrentHP',
+    'Maximale HP': 'MaxHP',
+    'Aktuelle / Maximale HP': 'CurrentAndMaxHP',
+    'Prozentuale HP': 'PercentHP',
+    'Zeit bis zum Tot': 'TimeToDeath',
+    'Entfernung': 'Distance',
+    'Effektive Entfernung': 'EffectiveDistance',
+    'Absolute Feindseligkeit': 'AbsoluteEnmity',
+    'Relative Feindseligkeit': 'RelativeEnmity',
   },
 };
 
@@ -141,6 +161,7 @@ const configStructure = [
     id: 'leftText',
     name: {
       English: 'Left Text',
+      German: 'Linker Text',
     },
     type: 'select',
     optionsByType: textOptionsByTargetType,
@@ -150,6 +171,7 @@ const configStructure = [
     id: 'middleText',
     name: {
       English: 'Middle Text',
+      German: 'Mittlerer Text',
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -159,6 +181,7 @@ const configStructure = [
     id: 'rightText',
     name: {
       English: 'Right Text',
+      German: 'Rechter Text',
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -168,6 +191,7 @@ const configStructure = [
     id: 'barHeight',
     name: {
       English: 'Height of the bar',
+      German: 'Höhe des Balkens',
     },
     type: 'text',
     default: 11,
@@ -176,6 +200,7 @@ const configStructure = [
     id: 'barWidth',
     name: {
       English: 'Width of the bar',
+      German: 'Weite des Balkens',
     },
     type: 'text',
     default: 250,
@@ -185,6 +210,7 @@ const configStructure = [
     id: 'numberFormat',
     name: {
       English: 'Number Format',
+      German: 'Zahlenformat',
     },
     type: 'select',
     options: formatOptions,
@@ -194,6 +220,7 @@ const configStructure = [
     id: 'isRounded',
     name: {
       English: 'Enable rounded corners',
+      German: 'Aktiviere abgerundete Ecken',
     },
     type: 'checkbox',
     default: true,
@@ -202,6 +229,7 @@ const configStructure = [
     id: 'borderSize',
     name: {
       English: 'Size of the border',
+      German: 'Größe des Rahmens',
     },
     type: 'text',
     default: 1,
@@ -210,6 +238,7 @@ const configStructure = [
     id: 'borderColor',
     name: {
       English: 'Color of the border',
+      German: 'Farbe des Rahmens',
     },
     type: 'text',
     default: 'black',
@@ -218,6 +247,7 @@ const configStructure = [
     id: 'fontSize',
     name: {
       English: 'Size of the font',
+      German: 'Größe der Schrift',
     },
     type: 'text',
     default: 10,
@@ -226,6 +256,7 @@ const configStructure = [
     id: 'fontFamily',
     name: {
       English: 'Name of the font',
+      German: 'Name der Schrift',
     },
     type: 'text',
     default: 'Meiryo',
@@ -234,6 +265,7 @@ const configStructure = [
     id: 'fontColor',
     name: {
       English: 'Color of the font',
+      German: 'Farbe der Schrift',
     },
     type: 'text',
     default: 'white',
@@ -242,6 +274,7 @@ const configStructure = [
     id: 'bgColor',
     name: {
       English: 'Background depleted bar color',
+      German: 'Hintergrundfarbe bei leerem Balken',
     },
     type: 'text',
     default: 'rgb(4, 15, 4)',
@@ -250,6 +283,7 @@ const configStructure = [
     id: 'fgColorHigh',
     name: {
       English: 'Bar color when hp is high',
+      German: 'Balkenfarbe bei hohen HP',
     },
     type: 'text',
     default: 'rgb(0, 159, 1)',
@@ -258,6 +292,7 @@ const configStructure = [
     id: 'midColorPercent',
     name: {
       English: 'Percent below where hp is mid',
+      German: 'Prozentwert aunter dem HP als mittig gilt',
     },
     type: 'text',
     default: 60,
@@ -266,6 +301,7 @@ const configStructure = [
     id: 'fgColorMid',
     name: {
       English: 'Bar color when hp is mid',
+      German: 'Balkenfarbe bei mittigen HP',
     },
     type: 'text',
     default: 'rgb(160, 130, 30)',
@@ -273,7 +309,8 @@ const configStructure = [
   {
     id: 'lowColorPercent',
     name: {
-      English: 'Percent below where hp is mid',
+      English: 'Percent below where hp is low',
+      German: 'Prozentwert unter dem HP als gering gilt',
     },
     type: 'text',
     default: 30,
@@ -282,6 +319,7 @@ const configStructure = [
     id: 'fgColorLow',
     name: {
       English: 'Bar color when hp is low',
+      German: 'Balkenfarbe bei geringen HP',
     },
     type: 'text',
     default: 'rgb(240, 40, 30)',
