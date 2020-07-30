@@ -292,7 +292,7 @@ const configStructure = [
     id: 'midColorPercent',
     name: {
       English: 'Percent below where hp is mid',
-      German: 'Prozentwert aunter dem HP als mittig gilt',
+      German: 'Prozentwert unter dem HP als mittig gilt',
     },
     type: 'text',
     default: 60,
@@ -301,7 +301,7 @@ const configStructure = [
     id: 'fgColorMid',
     name: {
       English: 'Bar color when hp is mid',
-      German: 'Balkenfarbe bei mittigen HP',
+      German: 'Balkenfarbe bei mittleren HP',
     },
     type: 'text',
     default: 'rgb(160, 130, 30)',
