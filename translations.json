@@ -1318,6 +1318,14 @@
             "ko-KR": "만약 다운로드 문제가 해결되지 않는다면 수동 설치를 시도합니다.",
             "zh-CN": "如果这对您不起作用，请查看另一个选项卡。"
         },
+        "label6.Text": {
+            "en": "End ACT encounter after wipe",
+            "zh-CN": "团灭自动重置战斗记录"
+        },
+        "label7.Text": {
+            "en": "End ACT encounter out of combat",
+            "zh-CN": "脱战自动重置战斗记录"
+        },
         "lnkManual.Text": {
             "de-DE": "Bitte warten...",
             "en": "Please wait...",
