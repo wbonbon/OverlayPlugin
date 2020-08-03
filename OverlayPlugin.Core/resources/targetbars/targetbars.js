@@ -229,7 +229,7 @@ const configStructure = [
     id: 'borderSize',
     name: {
       English: 'Size of the border',
-      Chinese: '边框厚度',
+      Chinese: '描边宽度',
     },
     type: 'text',
     default: 1,
@@ -238,7 +238,7 @@ const configStructure = [
     id: 'borderColor',
     name: {
       English: 'Color of the border',
-      Chinese: '边框颜色',
+      Chinese: '描边颜色',
     },
     type: 'text',
     default: 'black',
@@ -277,7 +277,7 @@ const configStructure = [
       Chinese: '血条背景色',
     },
     type: 'text',
-    default: 'rgb(4, 15, 4)',
+    default: 'rgba(4, 15, 4, 1)',
   },
   {
     id: 'fgColorHigh',
@@ -286,7 +286,7 @@ const configStructure = [
       Chinese: '血条颜色 - 高血量',
     },
     type: 'text',
-    default: 'rgb(0, 159, 1)',
+    default: 'rgba(0, 159, 1, 1)',
   },
   {
     id: 'midColorPercent',
@@ -304,7 +304,7 @@ const configStructure = [
       Chinese: '血条颜色 - 中血量',
     },
     type: 'text',
-    default: 'rgb(160, 130, 30)',
+    default: 'rgba(160, 130, 30, 1)',
   },
   {
     id: 'lowColorPercent',
@@ -322,7 +322,7 @@ const configStructure = [
       Chinese: '血条颜色 - 低血量',
     },
     type: 'text',
-    default: 'rgb(240, 40, 30)',
+    default: 'rgba(240, 40, 30, 1)',
   },
 ];
 
