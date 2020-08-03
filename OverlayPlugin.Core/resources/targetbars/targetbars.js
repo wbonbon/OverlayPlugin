@@ -12,6 +12,7 @@ const languages = [
 
 const languageToLocale = {
   English: 'en-US',
+  Chinese: 'zh-CN',
 };
 
 // Map of language -> targetType -> settings title.
@@ -22,10 +23,17 @@ const configTitles = {
     Hover: 'Hover Target Settings',
     TargetOfTarget: 'Target of Target Settings',
   },
+  Chinese: {
+    Target: '目标 - 设置',
+    Focus: '焦点目标 - 设置',
+    Hover: '悬停目标 - 设置',
+    TargetOfTarget: '目标的目标 - 设置',
+  },
 };
 
 const helpText = {
   English: '(🔒lock overlay to hide settings)',
+  Chinese: '(🔒锁定悬浮窗以隐藏设置)',
 };
 
 // language -> displayed option text -> text key
@@ -41,6 +49,18 @@ const textOptionsAll = {
     'Effective Distance': 'EffectiveDistance',
     'Absolute Enmity': 'AbsoluteEnmity',
     'Relative Enmity': 'RelativeEnmity',
+  },
+  Chinese: {
+    '不显示': 'None',
+    '当前体力值': 'CurrentHP',
+    '最大体力值': 'MaxHP',
+    '当前体力值/最大体力值': 'CurrentAndMaxHP',
+    '体力值百分比': 'PercentHP',
+    '推测死亡时间': 'TimeToDeath',
+    '目标距离': 'Distance',
+    '有效距离': 'EffectiveDistance',
+    '绝对仇恨': 'AbsoluteEnmity',
+    '相对仇恨': 'RelativeEnmity',
   },
 };
 
@@ -141,6 +161,7 @@ const configStructure = [
     id: 'leftText',
     name: {
       English: 'Left Text',
+      Chinese: '左侧文本',
     },
     type: 'select',
     optionsByType: textOptionsByTargetType,
@@ -150,6 +171,7 @@ const configStructure = [
     id: 'middleText',
     name: {
       English: 'Middle Text',
+      Chinese: '中间文本',
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -159,6 +181,7 @@ const configStructure = [
     id: 'rightText',
     name: {
       English: 'Right Text',
+      Chinese: '右侧文本',
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -168,6 +191,7 @@ const configStructure = [
     id: 'barHeight',
     name: {
       English: 'Height of the bar',
+      Chinese: '血条高度',
     },
     type: 'text',
     default: 11,
@@ -176,6 +200,7 @@ const configStructure = [
     id: 'barWidth',
     name: {
       English: 'Width of the bar',
+      Chinese: '血条宽度',
     },
     type: 'text',
     default: 250,
@@ -185,6 +210,7 @@ const configStructure = [
     id: 'numberFormat',
     name: {
       English: 'Number Format',
+      Chinese: '数字格式',
     },
     type: 'select',
     options: formatOptions,
@@ -194,6 +220,7 @@ const configStructure = [
     id: 'isRounded',
     name: {
       English: 'Enable rounded corners',
+      Chinese: '视觉效果 - 圆角',
     },
     type: 'checkbox',
     default: true,
@@ -202,6 +229,7 @@ const configStructure = [
     id: 'borderSize',
     name: {
       English: 'Size of the border',
+      Chinese: '边框厚度',
     },
     type: 'text',
     default: 1,
@@ -210,6 +238,7 @@ const configStructure = [
     id: 'borderColor',
     name: {
       English: 'Color of the border',
+      Chinese: '边框颜色',
     },
     type: 'text',
     default: 'black',
@@ -218,6 +247,7 @@ const configStructure = [
     id: 'fontSize',
     name: {
       English: 'Size of the font',
+      Chinese: '字体大小',
     },
     type: 'text',
     default: 10,
@@ -226,6 +256,7 @@ const configStructure = [
     id: 'fontFamily',
     name: {
       English: 'Name of the font',
+      Chinese: '字体名称',
     },
     type: 'text',
     default: 'Meiryo',
@@ -234,6 +265,7 @@ const configStructure = [
     id: 'fontColor',
     name: {
       English: 'Color of the font',
+      Chinese: '字体颜色',
     },
     type: 'text',
     default: 'white',
@@ -242,6 +274,7 @@ const configStructure = [
     id: 'bgColor',
     name: {
       English: 'Background depleted bar color',
+      Chinese: '血条背景色',
     },
     type: 'text',
     default: 'rgb(4, 15, 4)',
@@ -250,6 +283,7 @@ const configStructure = [
     id: 'fgColorHigh',
     name: {
       English: 'Bar color when hp is high',
+      Chinese: '血条颜色 - 高血量',
     },
     type: 'text',
     default: 'rgb(0, 159, 1)',
@@ -258,6 +292,7 @@ const configStructure = [
     id: 'midColorPercent',
     name: {
       English: 'Percent below where hp is mid',
+      Chinese: '定义中血量 (剩余体力值百分比)',
     },
     type: 'text',
     default: 60,
@@ -266,6 +301,7 @@ const configStructure = [
     id: 'fgColorMid',
     name: {
       English: 'Bar color when hp is mid',
+      Chinese: '血条颜色 - 中血量',
     },
     type: 'text',
     default: 'rgb(160, 130, 30)',
@@ -273,7 +309,8 @@ const configStructure = [
   {
     id: 'lowColorPercent',
     name: {
-      English: 'Percent below where hp is mid',
+      English: 'Percent below where hp is low',
+      Chinese: '定义低血量 (剩余体力值百分比)',
     },
     type: 'text',
     default: 30,
@@ -282,6 +319,7 @@ const configStructure = [
     id: 'fgColorLow',
     name: {
       English: 'Bar color when hp is low',
+      Chinese: '血条颜色 - 低血量',
     },
     type: 'text',
     default: 'rgb(240, 40, 30)',
