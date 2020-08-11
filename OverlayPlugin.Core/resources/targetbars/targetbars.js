@@ -29,6 +29,7 @@ const configTitles = {
     Focus: '焦点目标 - 设置',
     Hover: '悬停目标 - 设置',
     TargetOfTarget: '目标的目标 - 设置',
+  },
   German: {
     Target: 'Ziel Einstellungen',
     Focus: 'Fokusziel Einstellungen',
@@ -61,7 +62,7 @@ const textOptionsAll = {
     '不显示': 'None',
     '当前体力值': 'CurrentHP',
     '最大体力值': 'MaxHP',
-    '当前体力值 / 最大体力值': 'CurrentAndMaxHP',
+    '当前体力值/最大体力值': 'CurrentAndMaxHP',
     '体力值百分比': 'PercentHP',
     '推测死亡时间': 'TimeToDeath',
     '目标距离': 'Distance',
@@ -201,7 +202,6 @@ const configStructure = [
     id: 'rightText',
     name: {
       English: 'Right Text',
-      English: '右侧文本',
       German: 'Rechter Text',
     },
     optionsByType: textOptionsByTargetType,
@@ -233,7 +233,7 @@ const configStructure = [
     id: 'numberFormat',
     name: {
       English: 'Number Format',
-      Chinese: '数字格式化',
+      Chinese: '数字格式',
       German: 'Zahlenformat',
     },
     type: 'select',
@@ -254,7 +254,7 @@ const configStructure = [
     id: 'borderSize',
     name: {
       English: 'Size of the border',
-      Chinese: '边框大小',
+      Chinese: '描边宽度',
       German: 'Größe des Rahmens',
     },
     type: 'text',
@@ -264,7 +264,7 @@ const configStructure = [
     id: 'borderColor',
     name: {
       English: 'Color of the border',
-      Chinese: '边框颜色',
+      Chinese: '描边颜色',
       German: 'Farbe des Rahmens',
     },
     type: 'text',
@@ -284,7 +284,7 @@ const configStructure = [
     id: 'fontFamily',
     name: {
       English: 'Name of the font',
-      Chinese: '字体名',
+      Chinese: '字体名称',
       German: 'Name der Schrift',
     },
     type: 'text',
@@ -308,17 +308,17 @@ const configStructure = [
       German: 'Hintergrundfarbe bei leerem Balken',
     },
     type: 'text',
-    default: 'rgb(4, 15, 4)',
+    default: 'rgba(4, 15, 4, 1)',
   },
   {
     id: 'fgColorHigh',
     name: {
       English: 'Bar color when hp is high',
-      Chinese: '血条前景色',
+      Chinese: '血条颜色 - 高血量',
       German: 'Balkenfarbe bei hohen HP',
     },
     type: 'text',
-    default: 'rgb(0, 159, 1)',
+    default: 'rgba(0, 159, 1, 1)',
   },
   {
     id: 'midColorPercent',
@@ -334,18 +334,17 @@ const configStructure = [
     id: 'fgColorMid',
     name: {
       English: 'Bar color when hp is mid',
-      Chinese: '血条前景色 (中血量)',
+      Chinese: '血条颜色 - 中血量',
       German: 'Balkenfarbe bei mittleren HP',
     },
     type: 'text',
-    default: 'rgb(160, 130, 30)',
+    default: 'rgba(160, 130, 30, 1)',
   },
   {
     id: 'lowColorPercent',
     name: {
-      English: 'Percent below where hp is mid',
-      Chinese: '低血量定义 (剩余体力值百分比)',
       English: 'Percent below where hp is low',
+      Chinese: '中血量定义 (剩余体力值百分比)',
       German: 'Prozentwert unter dem HP als gering gilt',
     },
     type: 'text',
@@ -355,11 +354,11 @@ const configStructure = [
     id: 'fgColorLow',
     name: {
       English: 'Bar color when hp is low',
-      Chinese: '血条前景色 (低血量)',
+      Chinese: '血条颜色 - 低血量',
       German: 'Balkenfarbe bei geringen HP',
     },
     type: 'text',
-    default: 'rgb(240, 40, 30)',
+    default: 'rgba(240, 40, 30, 1)',
   },
 ];
 
