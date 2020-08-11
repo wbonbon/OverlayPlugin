@@ -5,7 +5,8 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Cactbot {
+namespace RainbowMage.OverlayPlugin.EventSources
+{
   [Serializable]
   public class CactbotEventSourceConfig {
     public event EventHandler WatchFileChangesChanged;

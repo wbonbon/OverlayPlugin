@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
 
-namespace Cactbot {
-  public class FFXIVProcessCn : FFXIVProcess {
-    // Last updated for FFXIV 5.2
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
+{
+  public class FFXIVProcessKo : FFXIVProcess {
     //
-    // Latest CN version can be found at:
-    // http://ff.sdo.com/web8/index.html#/patchnote
-
+    // for FFXIV KO version: 5.1
+    //
+    // Latest KO version can be found at:
+    // https://www.ff14.co.kr/news/notice?category=3
+    //
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct EntityMemory {
       public static int Size => Marshal.SizeOf(typeof(EntityMemory));
@@ -41,7 +43,7 @@ namespace Cactbot {
       [FieldOffset(0xB0)]
       public Single rotation;
 
-      [FieldOffset(0x1898)]
+      [FieldOffset(0x18B8)]
       public CharacterDetails charDetails;
     }
 
@@ -57,6 +59,9 @@ namespace Cactbot {
       [FieldOffset(0x08)]
       public int mp;
 
+      [FieldOffset(0x0C)]
+      public int max_mp;
+
       [FieldOffset(0x12)]
       public short gp;
 
@@ -69,24 +74,24 @@ namespace Cactbot {
       [FieldOffset(0x18)]
       public short max_cp;
 
-      [FieldOffset(0x3E)]
+      [FieldOffset(0x3C)]
       public EntityJob job;
 
-      [FieldOffset(0x40)]
+      [FieldOffset(0x3E)]
       public byte level;
 
-      [FieldOffset(0x61)]
+      [FieldOffset(0x5F)]
       public short shieldPercentage;
     }
-    public FFXIVProcessCn(ILogger logger) : base(logger) { }
+    public FFXIVProcessKo(TinyIoCContainer container) : base(container) { }
 
     // TODO: all of this could be refactored into structures of some sort
     // instead of just being loose variables everywhere.
 
     // A piece of code that reads the pointer to the list of all entities, that we
     // refer to as the charmap. The pointer is the 4 byte ?????????.
-    private static String kCharmapSignature = "574883EC??488B1D????????488BF233D2";
-    private static int kCharmapSignatureOffset = -9;
+    private static String kCharmapSignature = "488B1D????????488BFA33D2488BCF";
+    private static int kCharmapSignatureOffset = -12;
     // The signature finds a pointer in the executable code which uses RIP addressing.
     private static bool kCharmapSignatureRIP = true;
     // The pointer is to a structure as:
@@ -123,26 +128,26 @@ namespace Cactbot {
     internal override void ReadSignatures() {
       List<IntPtr> p = SigScan(kCharmapSignature, kCharmapSignatureOffset, kCharmapSignatureRIP);
       if (p.Count != 1) {
-        logger_.LogError("Charmap signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "Charmap signature found " + p.Count + " matches");
       } else {
         player_ptr_addr_ = IntPtr.Add(p[0], kCharmapStructOffsetPlayer);
       }
 
       p = SigScan(kJobDataSignature, kJobDataSignatureOffset, kJobDataSignatureRIP);
       if (p.Count != 1) {
-        logger_.LogError("Job signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "Job signature found " + p.Count + " matches");
       } else {
         job_data_outer_addr_ = IntPtr.Add(p[0], kJobDataOuterStructOffset);
       }
 
       p = SigScan(kInCombatSignature, kInCombatBaseOffset, kInCombatBaseRIP);
       if (p.Count != 1) {
-        logger_.LogError("In combat signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "In combat signature found " + p.Count + " matches");
       } else {
         var baseAddress = p[0];
         p = SigScan(kInCombatSignature, kInCombatOffsetOffset, kInCombatOffsetRIP);
         if (p.Count != 1) {
-          logger_.LogError("In combat offset signature found " + p.Count + " matches");
+          logger_.Log(LogLevel.Error, "In combat offset signature found " + p.Count + " matches");
         } else {
           // Abuse sigscan here to return 64-bit "pointer" which we will mask into the 32-bit immediate integer we need.
           // TODO: maybe sigscan should be able to return different types?
@@ -153,7 +158,7 @@ namespace Cactbot {
 
       p = SigScan(kBaitSignature, kBaitBaseOffset, kBaitBaseRIP);
       if (p.Count != 1) {
-        logger_.LogError("Bait signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "Bait signature found " + p.Count + " matches");
       } else {
         bait_addr_ = p[0];
       }
@@ -183,9 +188,7 @@ namespace Cactbot {
           entity.hp = mem.charDetails.hp;
           entity.max_hp = mem.charDetails.max_hp;
           entity.mp = mem.charDetails.mp;
-          // This doesn't exist in memory, so just send the right value.
-          // As there are other versions that still have it, don't change the event.
-          entity.max_mp = 10000;
+          entity.max_mp = mem.charDetails.max_mp;
           entity.shield_value = mem.charDetails.shieldPercentage * entity.max_hp / 100;
 
           if (IsGatherer(entity.job)) {

@@ -10,6 +10,7 @@ using Advanced_Combat_Tracker;
 using System.Diagnostics;
 using System.Windows.Forms;
 using FFXIV_ACT_Plugin.Common.Models;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -176,8 +177,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             foreach (var propName in DefaultCombatantFields)
             {
-                CachedCombatantPropertyInfos.Add(propName, 
-                    typeof(FFXIV_ACT_Plugin.Common.Models.Combatant).GetProperty(propName));
+                CachedCombatantPropertyInfos.Add(propName, typeof(Combatant).GetProperty(propName));
             }
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;

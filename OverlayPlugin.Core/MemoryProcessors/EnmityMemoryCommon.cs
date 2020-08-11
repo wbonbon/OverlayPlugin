@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RainbowMage.OverlayPlugin.EventSources
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
     public enum ObjectType : byte
     {

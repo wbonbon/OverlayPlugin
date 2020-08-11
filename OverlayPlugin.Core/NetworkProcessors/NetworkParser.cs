@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Reflection;
 
-namespace RainbowMage.OverlayPlugin
+namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {
     class NetworkParser
     {
@@ -58,7 +58,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private int GetOffset(Type type, string property)
+        public int GetOffset(Type type, string property)
         {
             int offset = 0;
 
@@ -87,7 +87,7 @@ namespace RainbowMage.OverlayPlugin
             return offset;
         }
 
-        private object GetEnumValue(Type type, string name)
+        public object GetEnumValue(Type type, string name)
         {
             foreach (var value in type.GetEnumValues())
             {
@@ -98,7 +98,7 @@ namespace RainbowMage.OverlayPlugin
             throw new Exception($"Enum value {name} not found in {type}!");
         }
 
-        private ushort GetOpcode(string name)
+        public ushort GetOpcode(string name)
         {
             // FFXIV_ACT_Plugin 2.0.4.14 converted Server_MessageType from enum to struct. Deal with each type appropriately.
             if (MessageType.IsEnum)

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using RainbowMage.OverlayPlugin.Overlays;
 using RainbowMage.OverlayPlugin.EventSources;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin
 {

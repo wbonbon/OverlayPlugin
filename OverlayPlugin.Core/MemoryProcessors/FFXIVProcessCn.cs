@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
 
-namespace Cactbot {
-  public class FFXIVProcessIntl : FFXIVProcess {
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
+{
+  public class FFXIVProcessCn : FFXIVProcess {
     // Last updated for FFXIV 5.2
+    //
+    // Latest CN version can be found at:
+    // http://ff.sdo.com/web8/index.html#/patchnote
 
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct EntityMemory {
@@ -75,7 +79,7 @@ namespace Cactbot {
       [FieldOffset(0x61)]
       public short shieldPercentage;
     }
-    public FFXIVProcessIntl(ILogger logger) : base(logger) { }
+    public FFXIVProcessCn(TinyIoCContainer container) : base(container) { }
 
     // TODO: all of this could be refactored into structures of some sort
     // instead of just being loose variables everywhere.
@@ -120,26 +124,26 @@ namespace Cactbot {
     internal override void ReadSignatures() {
       List<IntPtr> p = SigScan(kCharmapSignature, kCharmapSignatureOffset, kCharmapSignatureRIP);
       if (p.Count != 1) {
-        logger_.LogError("Charmap signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "Charmap signature found " + p.Count + " matches");
       } else {
         player_ptr_addr_ = IntPtr.Add(p[0], kCharmapStructOffsetPlayer);
       }
 
       p = SigScan(kJobDataSignature, kJobDataSignatureOffset, kJobDataSignatureRIP);
       if (p.Count != 1) {
-        logger_.LogError("Job signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "Job signature found " + p.Count + " matches");
       } else {
         job_data_outer_addr_ = IntPtr.Add(p[0], kJobDataOuterStructOffset);
       }
 
       p = SigScan(kInCombatSignature, kInCombatBaseOffset, kInCombatBaseRIP);
       if (p.Count != 1) {
-        logger_.LogError("In combat signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "In combat signature found " + p.Count + " matches");
       } else {
         var baseAddress = p[0];
         p = SigScan(kInCombatSignature, kInCombatOffsetOffset, kInCombatOffsetRIP);
         if (p.Count != 1) {
-          logger_.LogError("In combat offset signature found " + p.Count + " matches");
+          logger_.Log(LogLevel.Error, "In combat offset signature found " + p.Count + " matches");
         } else {
           // Abuse sigscan here to return 64-bit "pointer" which we will mask into the 32-bit immediate integer we need.
           // TODO: maybe sigscan should be able to return different types?
@@ -150,7 +154,7 @@ namespace Cactbot {
 
       p = SigScan(kBaitSignature, kBaitBaseOffset, kBaitBaseRIP);
       if (p.Count != 1) {
-        logger_.LogError("Bait signature found " + p.Count + " matches");
+        logger_.Log(LogLevel.Error, "Bait signature found " + p.Count + " matches");
       } else {
         bait_addr_ = p[0];
       }

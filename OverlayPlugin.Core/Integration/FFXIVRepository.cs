@@ -128,6 +128,21 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public bool IsFFXIVPluginPresent()
+        {
+            return GetRepository() != null;
+        }
+
+        public Version GetPluginVersion()
+        {
+            return typeof(IDataRepository).Assembly.GetName().Version;
+        }
+
+        public string GetPluginPath()
+        {
+            return typeof(IDataRepository).Assembly.Location;
+        }
+
         public uint GetPlayerIDImpl()
         {
             var repo = GetRepository();
@@ -188,6 +203,27 @@ namespace RainbowMage.OverlayPlugin
             if (repo == null)
                 return Language.Unknown;
             return repo.GetSelectedLanguageID();
+        }
+
+        public string GetLocaleString()
+        {
+            switch (GetLanguage())
+            {
+                case Language.English:
+                    return "en";
+                case Language.French:
+                    return "fr";
+                case Language.German:
+                    return "de";
+                case Language.Japanese:
+                    return "ja";
+                case Language.Chinese:
+                    return "cn";
+                case Language.Korean:
+                    return "ko";
+                default:
+                    return null;
+            }
         }
 
         // LogLineDelegate(uint EventType, uint Seconds, string logline);

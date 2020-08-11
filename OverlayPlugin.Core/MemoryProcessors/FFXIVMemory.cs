@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace RainbowMage.OverlayPlugin.EventSources
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
     public class FFXIVMemory
     {
