@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace RainbowMage.OverlayPlugin.EventSources
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
     public class EnmityMemory53 : EnmityMemory
     {
@@ -41,11 +41,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const uint emptyID = 0xE0000000;
         private const int numMemoryCombatants = 421;
 
-        public EnmityMemory53(ILogger logger)
+        public EnmityMemory53(TinyIoCContainer container)
         {
-            this.memory = new FFXIVMemory(logger);
+            this.memory = new FFXIVMemory(container);
             this.memory.OnProcessChange += ResetPointers;
-            this.logger = logger;
+            this.logger = container.Resolve<ILogger>();
             GetPointerAddress();
         }
 

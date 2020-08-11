@@ -153,14 +153,14 @@ namespace RainbowMage.OverlayPlugin
                         var config = JsonConvert.DeserializeObject<Overlays.MiniParseOverlayConfig>(JsonConvert.SerializeObject(preview.Config));
 
                         // Reconstruct the overlay to reset the preview state.
-                        SelectedOverlay = new Overlays.MiniParseOverlay(config, name);
+                        SelectedOverlay = new Overlays.MiniParseOverlay(config, name, container);
                         if (config.Url == "")
                         {
                             // If the preview didn't load, we try again here to avoid ending up with an empty overlay.
 #if DEBUG
-                            var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/libs/resources";
+                            var resourcesPath = "file:///" + pluginMain.PluginDirectory.Replace('\\', '/') + "/libs/resources";
 #else
-                            var resourcesPath = "file:///" + PluginMain.PluginDirectory.Replace('\\', '/') + "/resources";
+                            var resourcesPath = "file:///" + pluginMain.PluginDirectory.Replace('\\', '/') + "/resources";
 #endif
                             SelectedOverlay.Navigate(preset.Url.Replace("%%", resourcesPath));
                         }

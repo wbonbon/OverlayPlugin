@@ -192,7 +192,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 DispatchAndCacheEvent(obj);
             };
 
-            repository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent());
+            repository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent(partyList, partySize));
         }
 
         private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)

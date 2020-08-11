@@ -76,7 +76,7 @@
     <Compile Include="EventSources\EnmityEventSource.cs" />
     <Compile Include="MemoryProcessors\EnmityMemory50.cs" />
     <Compile Include="MemoryProcessors\EnmityMemory52.cs" />
-    <Compile Include="EventSources\EnmityMemory53.cs" />
+    <Compile Include="MemoryProcessors\EnmityMemory53.cs" />
     <Compile Include="MemoryProcessors\EnmityMemoryCommon.cs" />
     <Compile Include="NetworkProcessors\FateWatcher.cs" />
     <Compile Include="MemoryProcessors\FFXIVProcess.cs" />

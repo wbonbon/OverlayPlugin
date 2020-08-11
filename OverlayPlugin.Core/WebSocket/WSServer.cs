@@ -31,7 +31,10 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                _server.Stop();
+                if (_server != null)
+                {
+                    _server.Stop();
+                }
             }
             catch (Exception e)
             {

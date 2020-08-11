@@ -261,7 +261,16 @@ namespace RainbowMage.OverlayPlugin
         {
             var sub = GetSubscription();
             if (sub != null)
+            {
                 sub.ProcessChanged += new ProcessChangedDelegate(handler);
+
+                var repo = GetRepository();
+                if (repo != null)
+                {
+                    var process = repo.GetCurrentFFXIVProcess();
+                    if (process != null) handler(process);
+                }
+            }
         }
     }
 }

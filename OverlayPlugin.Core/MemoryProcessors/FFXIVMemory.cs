@@ -19,6 +19,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             logger = container.Resolve<ILogger>();
             repository = container.Resolve<FFXIVRepository>();
             
+            // TODO: Figure out why the FFXIV plugin never seems to raise this event.
             repository.RegisterProcessChangedHandler(UpdateProcess);
         }
 
@@ -99,8 +100,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 
         public bool IsValid()
         {
-            return process != null && !process.HasExited && processHandle != IntPtr.Zero;
-
             if (process != null && process.HasExited)
             {
                 CloseProcessHandle();
