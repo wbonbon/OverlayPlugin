@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
-    public class EnmityMemory52 : EnmityMemory
+    public class EnmityMemory53 : EnmityMemory
     {
         private FFXIVMemory memory;
         private ILogger logger;
@@ -41,7 +41,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const uint emptyID = 0xE0000000;
         private const int numMemoryCombatants = 421;
 
-        public EnmityMemory52(ILogger logger)
+        public EnmityMemory53(ILogger logger)
         {
             this.memory = new FFXIVMemory(logger);
             this.memory.OnProcessChange += ResetPointers;
@@ -179,10 +179,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             if (!success)
             {
-                logger.Log(LogLevel.Error, "Failed to memory scan 5.2: {0}.", String.Join(",", fail));
-            } else
+                logger.Log(LogLevel.Error, "Failed to memory scan 5.3: {0}.", String.Join(",", fail));
+            }
+            else
             {
-                logger.Log(LogLevel.Info, "Found enmity memory for 5.2.");
+                logger.Log(LogLevel.Info, "Found enmity memory for 5.3.");
             }
 
             return success;
@@ -317,7 +318,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             [FieldOffset(0x189C)]
             public int MaxHP;
 
-            [FieldOffset(0x18D6)]
+            [FieldOffset(0x18DA)]
             public byte Job;
 
             [FieldOffset(0x1958)]
@@ -382,7 +383,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
-        [StructLayout(LayoutKind.Explicit, Size=8)]
+        [StructLayout(LayoutKind.Explicit, Size = 8)]
         struct EnmityListEntry
         {
             public static int Size => Marshal.SizeOf(typeof(EnmityListEntry));

@@ -74,6 +74,7 @@
     <Compile Include="EventSources\EnmityEventSource.cs" />
     <Compile Include="EventSources\EnmityMemory50.cs" />
     <Compile Include="EventSources\EnmityMemory52.cs" />
+    <Compile Include="EventSources\EnmityMemory53.cs" />
     <Compile Include="EventSources\EnmityMemoryCommon.cs" />
     <Compile Include="FFXIVMemory.cs" />
     <Compile Include="FFXIVExportVariables.cs" />

@@ -42,7 +42,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public EnmityEventSource(ILogger logger) : base(logger)
         {
-            // this.memory = new EnmityMemory(logger);
             if(FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
             {
                 memoryCandidates = new List<EnmityMemory>()
@@ -61,7 +60,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 memoryCandidates = new List<EnmityMemory>()
                 {
-                    new EnmityMemory52(logger), new EnmityMemory50(logger)
+                    new EnmityMemory53(logger)
                 };
             }
 
