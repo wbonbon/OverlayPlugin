@@ -223,7 +223,7 @@ const configStructure = [
     id: 'barWidth',
     name: {
       English: 'Width of the bar',
-      Chinese: '血条宽度',
+      Chinese: '血条长度',
       German: 'Weite des Balkens',
     },
     type: 'text',
@@ -345,7 +345,7 @@ const configStructure = [
     id: 'lowColorPercent',
     name: {
       English: 'Percent below where hp is low',
-      Chinese: '中血量定义 (剩余体力值百分比)',
+      Chinese: '低血量定义 (剩余体力值百分比)',
       German: 'Prozentwert unter dem HP als gering gilt',
     },
     type: 'text',
