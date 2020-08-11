@@ -69,6 +69,7 @@ const textOptionsAll = {
     '有效距离': 'EffectiveDistance',
     '绝对仇恨': 'AbsoluteEnmity',
     '相对仇恨': 'RelativeEnmity',
+  },
   German: {
     'None': 'None',
     'Aktuelle HP': 'CurrentHP',
