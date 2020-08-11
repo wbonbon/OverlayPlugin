@@ -202,6 +202,7 @@ const configStructure = [
     id: 'rightText',
     name: {
       English: 'Right Text',
+      Chinese: '右侧文本',
       German: 'Rechter Text',
     },
     optionsByType: textOptionsByTargetType,
