@@ -13,6 +13,7 @@ const languages = [
 const languageToLocale = {
   English: 'en-US',
   Chinese: 'zh-CN',
+  German: 'de-DE',
 };
 
 // Map of language -> targetType -> settings title.
@@ -28,12 +29,18 @@ const configTitles = {
     Focus: '焦点目标 - 设置',
     Hover: '悬停目标 - 设置',
     TargetOfTarget: '目标的目标 - 设置',
+  German: {
+    Target: 'Ziel Einstellungen',
+    Focus: 'Fokusziel Einstellungen',
+    Hover: 'Hover-Ziel Einstellungen',
+    TargetOfTarget: 'Ziel des Ziels Einstellungen',
   },
 };
 
 const helpText = {
   English: '(🔒lock overlay to hide settings)',
   Chinese: '(🔒锁定悬浮窗以隐藏设置)',
+  German: '(🔒Sperre das Overlay um die Einstellungen zu verstecken)',
 };
 
 // language -> displayed option text -> text key
@@ -61,6 +68,17 @@ const textOptionsAll = {
     '有效距离': 'EffectiveDistance',
     '绝对仇恨': 'AbsoluteEnmity',
     '相对仇恨': 'RelativeEnmity',
+  German: {
+    'None': 'None',
+    'Aktuelle HP': 'CurrentHP',
+    'Maximale HP': 'MaxHP',
+    'Aktuelle / Maximale HP': 'CurrentAndMaxHP',
+    'Prozentuale HP': 'PercentHP',
+    'Zeit bis zum Tot': 'TimeToDeath',
+    'Entfernung': 'Distance',
+    'Effektive Entfernung': 'EffectiveDistance',
+    'Absolute Feindseligkeit': 'AbsoluteEnmity',
+    'Relative Feindseligkeit': 'RelativeEnmity',
   },
 };
 
@@ -162,6 +180,7 @@ const configStructure = [
     name: {
       English: 'Left Text',
       Chinese: '左侧文本',
+      German: 'Linker Text',
     },
     type: 'select',
     optionsByType: textOptionsByTargetType,
@@ -172,6 +191,7 @@ const configStructure = [
     name: {
       English: 'Middle Text',
       Chinese: '中间文本',
+      German: 'Mittlerer Text',
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -182,6 +202,7 @@ const configStructure = [
     name: {
       English: 'Right Text',
       English: '右侧文本',
+      German: 'Rechter Text',
     },
     optionsByType: textOptionsByTargetType,
     type: 'select',
@@ -192,6 +213,7 @@ const configStructure = [
     name: {
       English: 'Height of the bar',
       Chinese: '血条高度',
+      German: 'Höhe des Balkens',
     },
     type: 'text',
     default: 11,
@@ -201,6 +223,7 @@ const configStructure = [
     name: {
       English: 'Width of the bar',
       Chinese: '血条宽度',
+      German: 'Weite des Balkens',
     },
     type: 'text',
     default: 250,
@@ -211,6 +234,7 @@ const configStructure = [
     name: {
       English: 'Number Format',
       Chinese: '数字格式化',
+      German: 'Zahlenformat',
     },
     type: 'select',
     options: formatOptions,
@@ -221,6 +245,7 @@ const configStructure = [
     name: {
       English: 'Enable rounded corners',
       Chinese: '视觉效果 - 圆角',
+      German: 'Aktiviere abgerundete Ecken',
     },
     type: 'checkbox',
     default: true,
@@ -230,6 +255,7 @@ const configStructure = [
     name: {
       English: 'Size of the border',
       Chinese: '边框大小',
+      German: 'Größe des Rahmens',
     },
     type: 'text',
     default: 1,
@@ -239,6 +265,7 @@ const configStructure = [
     name: {
       English: 'Color of the border',
       Chinese: '边框颜色',
+      German: 'Farbe des Rahmens',
     },
     type: 'text',
     default: 'black',
@@ -248,6 +275,7 @@ const configStructure = [
     name: {
       English: 'Size of the font',
       Chinese: '字体大小',
+      German: 'Größe der Schrift',
     },
     type: 'text',
     default: 10,
@@ -257,6 +285,7 @@ const configStructure = [
     name: {
       English: 'Name of the font',
       Chinese: '字体名',
+      German: 'Name der Schrift',
     },
     type: 'text',
     default: 'Meiryo',
@@ -266,6 +295,7 @@ const configStructure = [
     name: {
       English: 'Color of the font',
       Chinese: '字体颜色',
+      German: 'Farbe der Schrift',
     },
     type: 'text',
     default: 'white',
@@ -275,6 +305,7 @@ const configStructure = [
     name: {
       English: 'Background depleted bar color',
       Chinese: '血条背景色',
+      German: 'Hintergrundfarbe bei leerem Balken',
     },
     type: 'text',
     default: 'rgb(4, 15, 4)',
@@ -284,6 +315,7 @@ const configStructure = [
     name: {
       English: 'Bar color when hp is high',
       Chinese: '血条前景色',
+      German: 'Balkenfarbe bei hohen HP',
     },
     type: 'text',
     default: 'rgb(0, 159, 1)',
@@ -293,6 +325,7 @@ const configStructure = [
     name: {
       English: 'Percent below where hp is mid',
       Chinese: '中血量定义 (剩余体力值百分比)',
+      German: 'Prozentwert unter dem HP als mittig gilt',
     },
     type: 'text',
     default: 60,
@@ -302,6 +335,7 @@ const configStructure = [
     name: {
       English: 'Bar color when hp is mid',
       Chinese: '血条前景色 (中血量)',
+      German: 'Balkenfarbe bei mittleren HP',
     },
     type: 'text',
     default: 'rgb(160, 130, 30)',
@@ -311,6 +345,8 @@ const configStructure = [
     name: {
       English: 'Percent below where hp is mid',
       Chinese: '低血量定义 (剩余体力值百分比)',
+      English: 'Percent below where hp is low',
+      German: 'Prozentwert unter dem HP als gering gilt',
     },
     type: 'text',
     default: 30,
@@ -320,6 +356,7 @@ const configStructure = [
     name: {
       English: 'Bar color when hp is low',
       Chinese: '血条前景色 (低血量)',
+      German: 'Balkenfarbe bei geringen HP',
     },
     type: 'text',
     default: 'rgb(240, 40, 30)',
