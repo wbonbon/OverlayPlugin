@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using RainbowMage.OverlayPlugin.Overlays;
 using RainbowMage.OverlayPlugin.EventSources;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
+using RainbowMage.OverlayPlugin.Integration;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -26,6 +27,7 @@ namespace RainbowMage.OverlayPlugin
         WSConfigPanel wsConfigPanel;
 
         Timer initTimer;
+        Timer configSaveTimer;
 
         internal PluginConfig Config { get; private set; }
         internal List<IOverlay> Overlays { get; private set; }
@@ -38,6 +40,10 @@ namespace RainbowMage.OverlayPlugin
             _container = container;
             PluginDirectory = pluginDirectory;
             _logger = logger;
+
+            configSaveTimer = new Timer();
+            configSaveTimer.Interval = 300000; // 5 minutes
+            configSaveTimer.Tick += (o, e) => SaveConfig();
 
             _container.Register(this);
         }
@@ -212,6 +218,10 @@ namespace RainbowMage.OverlayPlugin
                             _container.Register(new NetworkParser(_container));
                             _container.Register(new TriggIntegration(_container));
 
+#if DEBUG
+                            _container.Register(new UnstableNewLogLines(_container));
+#endif
+
                             // This timer runs on the UI thread (it has to since we create UI controls) but LoadAddons()
                             // can block for some time. We run it on the background thread to avoid blocking the UI.
                             // We can't run LoadAddons() in the first init phase since it checks other ACT plugins for
@@ -222,18 +232,26 @@ namespace RainbowMage.OverlayPlugin
 
                             ActGlobals.oFormActMain.Invoke((Action)(() =>
                             {
-                                // Now that addons have been loaded, we can finish the overlay setup.
-                                InitializeOverlays();
-                                controlPanel.InitializeOverlayConfigTabs();
-                                
-                                _container.Register(new OverlayHider(_container));
-                                _container.Register(new OverlayZCorrector(_container));
-
-                                // WSServer has to start after the LoadAddons() call because clients can connect immediately
-                                // after it's initialized and that requires the event sources to be initialized.
-                                if (Config.WSServerRunning)
+                                try
                                 {
-                                    _container.Register(new WSServer(_container));
+                                    // Now that addons have been loaded, we can finish the overlay setup.
+                                    InitializeOverlays();
+                                    controlPanel.InitializeOverlayConfigTabs();
+                                
+                                    _container.Register(new OverlayHider(_container));
+                                    _container.Register(new OverlayZCorrector(_container));
+
+                                    // WSServer has to start after the LoadAddons() call because clients can connect immediately
+                                    // after it's initialized and that requires the event sources to be initialized.
+                                    if (Config.WSServerRunning)
+                                    {
+                                        _container.Register(new WSServer(_container));
+                                    }
+
+                                    configSaveTimer.Start();
+                                } catch (Exception ex)
+                                {
+                                    _logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
                                 }
                             }));
                         }
@@ -309,7 +327,7 @@ namespace RainbowMage.OverlayPlugin
         /// </summary>
         public void DeInitPlugin()
         {
-            SaveConfig();
+            SaveConfig(true);
             _container.Resolve<OverlayZCorrector>().DeInit();
 
             if (controlPanel != null) controlPanel.Dispose();
@@ -336,7 +354,6 @@ namespace RainbowMage.OverlayPlugin
 
         private void LoadAddons()
         {
-
             try
             {
                 var registry = _container.Resolve<Registry>();
@@ -345,6 +362,7 @@ namespace RainbowMage.OverlayPlugin
                 // Make sure the event sources are ready before we load any overlays.
                 registry.StartEventSource(new MiniParseEventSource(_container));
                 registry.StartEventSource(new EnmityEventSource(_container));
+                registry.StartEventSource(new CactbotEventSource(_container));
                 registry.StartEventSources();
 
                 registry.RegisterOverlay<MiniParseOverlay>();
@@ -384,6 +402,7 @@ namespace RainbowMage.OverlayPlugin
             catch (Exception e)
             {
                 _logger.Log(LogLevel.Error, "LoadAddons: {0}", e);
+                Trace.WriteLine("LoadAddons: " + e.ToString());
             }
         }
 
@@ -392,41 +411,15 @@ namespace RainbowMage.OverlayPlugin
             if (Config != null)
                 return;
 
-            var found = true;
             try
             {
-                Config = PluginConfig.LoadJson(GetConfigPath(), _container);
-            }
-            catch (FileNotFoundException)
-            {
-                Config = null;
-                found = false;
+                Config = new PluginConfig(GetConfigPath(), _container);
             }
             catch (Exception e)
             {
                 Config = null;
                 _logger.Log(LogLevel.Error, "LoadConfig: {0}", e);
-            }
-
-            if (!found)
-            {
-                try
-                {
-                    Config = PluginConfig.LoadXml(PluginDirectory, GetConfigPath(true));
-                }
-                catch (Exception e)
-                {
-                    // 設定ファイルが存在しない、もしくは破損している場合は作り直す
-                    _logger.Log(LogLevel.Warning, "LoadConfig: {0}", e);
-                    Config = null;
-                }
-            }
-
-            if (Config == null)
-            {
-                _logger.Log(LogLevel.Info, "LoadConfig: Creating new configuration.");
-                Config = new PluginConfig(_container);
-                Config.SetDefaultOverlayConfigs(PluginDirectory);
+                return;
             }
 
             _container.Register(Config);
@@ -436,7 +429,7 @@ namespace RainbowMage.OverlayPlugin
         /// <summary>
         /// 設定を保存します。
         /// </summary>
-        private void SaveConfig()
+        private void SaveConfig(bool force = false)
         {
             var registry = _container.Resolve<Registry>();
             if (Config == null || Overlays == null || registry.EventSources == null) return;
@@ -455,7 +448,7 @@ namespace RainbowMage.OverlayPlugin
                 }
 
                 _container.Resolve<BuiltinEventConfig>().SaveConfig(Config);
-                Config.SaveJson(GetConfigPath());
+                Config.SaveJson(force);
             }
             catch (Exception e)
             {
