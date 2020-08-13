@@ -218,10 +218,6 @@ namespace RainbowMage.OverlayPlugin
                             _container.Register(new NetworkParser(_container));
                             _container.Register(new TriggIntegration(_container));
 
-#if DEBUG
-                            _container.Register(new UnstableNewLogLines(_container));
-#endif
-
                             // This timer runs on the UI thread (it has to since we create UI controls) but LoadAddons()
                             // can block for some time. We run it on the background thread to avoid blocking the UI.
                             // We can't run LoadAddons() in the first init phase since it checks other ACT plugins for
@@ -229,6 +225,11 @@ namespace RainbowMage.OverlayPlugin
                             // However, in the second phase all plugins have been loaded which means we can look for addons
                             // in that list.
                             await Task.Run(LoadAddons);
+
+#if DEBUG
+                            _container.Register(new UnstableNewLogLines(_container));
+#endif
+
 
                             ActGlobals.oFormActMain.Invoke((Action)(() =>
                             {
@@ -362,8 +363,6 @@ namespace RainbowMage.OverlayPlugin
                 // Make sure the event sources are ready before we load any overlays.
                 registry.StartEventSource(new MiniParseEventSource(_container));
                 registry.StartEventSource(new EnmityEventSource(_container));
-                registry.StartEventSource(new CactbotEventSource(_container));
-                registry.StartEventSources();
 
                 registry.RegisterOverlay<MiniParseOverlay>();
                 registry.RegisterOverlay<SpellTimerOverlay>();
@@ -371,6 +370,7 @@ namespace RainbowMage.OverlayPlugin
 
                 var version = typeof(PluginMain).Assembly.GetName().Version;
                 var Addons = new List<IOverlayAddonV2>();
+                var foundCactbot = false;
 
                 foreach (var plugin in ActGlobals.oFormActMain.ActPlugins)
                 {
@@ -385,7 +385,12 @@ namespace RainbowMage.OverlayPlugin
                                 var addon = (IOverlayAddonV2)plugin.pluginObj;
                                 addon.Init();
 
-                                _logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized", plugin.lblPluginTitle.Text);
+                                if (addon.ToString() == "Cactbot.PluginLoader")
+                                {
+                                    foundCactbot = true;
+                                }
+
+                                _logger.Log(LogLevel.Info, "LoadAddons: {0}: Initialized {1}", plugin.lblPluginTitle.Text, addon.ToString());
                             }
                             catch (Exception e)
                             {
@@ -398,6 +403,14 @@ namespace RainbowMage.OverlayPlugin
                         _logger.Log(LogLevel.Error, "LoadAddons: {0}: {1}", plugin.lblPluginTitle.Text, e);
                     }
                 }
+
+                if (!foundCactbot)
+                {
+                    _logger.Log(LogLevel.Info, "LoadAddons: Enabling builtin Cactbot event source.");
+                    registry.StartEventSource(new CactbotEventSource(_container));
+                }
+
+                registry.StartEventSources();
             }
             catch (Exception e)
             {
