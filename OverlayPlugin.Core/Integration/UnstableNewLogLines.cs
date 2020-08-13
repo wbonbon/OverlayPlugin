@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Advanced_Combat_Tracker;
+using RainbowMage.OverlayPlugin.EventSources;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin.Integration
@@ -9,11 +10,39 @@ namespace RainbowMage.OverlayPlugin.Integration
     {
         private bool inCutscene = false;
         private FFXIVRepository repo = null;
+        private NetworkParser parser = null;
 
         public UnstableNewLogLines(TinyIoCContainer container)
         {
             repo = container.Resolve<FFXIVRepository>();
-            container.Resolve<NetworkParser>().OnOnlineStatusChanged += OnOnlineStatusChange;
+            parser = container.Resolve<NetworkParser>();
+            var config = container.Resolve<BuiltinEventConfig>();
+
+            config.CutsceneDetectionLogChanged += (o, e) =>
+            {
+                if (config.CutsceneDetectionLog)
+                {
+                    Enable();
+                } else
+                {
+                    Disable();
+                }
+            };
+
+            if (config.CutsceneDetectionLog)
+            {
+                Enable();
+            }
+        }
+
+        public void Enable()
+        {
+            parser.OnOnlineStatusChanged += OnOnlineStatusChange;
+        }
+
+        public void Disable()
+        {
+            parser.OnOnlineStatusChanged -= OnOnlineStatusChange;
         }
 
         private void OnOnlineStatusChange(object sender, OnlineStatusChangedArgs ev)

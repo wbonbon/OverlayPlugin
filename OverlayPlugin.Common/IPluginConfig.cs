@@ -21,5 +21,7 @@ namespace RainbowMage.OverlayPlugin
         DateTime LastUpdateCheck { get; set; }
         bool IsFirstLaunch { get; set; }
         Dictionary<string, JObject> EventSourceConfigs { get; set; }
+
+        void MarkDirty();
     }
 }
