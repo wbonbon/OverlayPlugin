@@ -177,5 +177,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 this.textEnmityInterval.Text = "" + this.config.EnmityIntervalMs;
             }
         }
+
+        private void cbCutsceneDetectionLog_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.CutsceneDetectionLog = this.cbCutsceneDetectionLog.Checked;
+        }
     }
 }

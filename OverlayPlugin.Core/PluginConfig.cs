@@ -334,13 +334,8 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
-            var oldOverlayObjects = OverlayObjects;
-
             // Convert Overlays
-            if (OverlayObjects == null)
-            {
-                OverlayObjects = new List<JObject>();
-            }
+            OverlayObjects = new List<JObject>();
 
             foreach (var item in this.Overlays)
             {
@@ -357,7 +352,6 @@ namespace RainbowMage.OverlayPlugin
                 serializer.Serialize(stream, this);
             }
 
-            OverlayObjects = oldOverlayObjects;
             isDirty = false;
         }
 

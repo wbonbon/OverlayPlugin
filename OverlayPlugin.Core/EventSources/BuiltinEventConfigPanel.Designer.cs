@@ -171,6 +171,7 @@
             resources.ApplyResources(this.cbCutsceneDetectionLog, "cbCutsceneDetectionLog");
             this.cbCutsceneDetectionLog.Name = "cbCutsceneDetectionLog";
             this.cbCutsceneDetectionLog.UseVisualStyleBackColor = true;
+            this.cbCutsceneDetectionLog.CheckedChanged += new System.EventHandler(this.cbCutsceneDetectionLog_CheckedChanged);
             // 
             // BuiltinEventConfigPanel
             // 
