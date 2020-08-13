@@ -60,12 +60,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public void Wipe()
         {
             ActGlobals.oFormActMain.EndCombat(false);
-            DispatchToJS(PartyWipeEvent, null);
-        }
-
-        public void DoFateEvent(object e)
-        {
-            DispatchToJS(FateEvent, e);
+            DispatchToJS(new JSEvents.PartyWipeEvent());
         }
 
         public CactbotEventSource(TinyIoCContainer container)
@@ -94,7 +89,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // Broadcast onConfigChanged when a cactbotNotifyConfigChanged message occurs.
             RegisterEventHandler("cactbotReloadOverlays", (msg) =>
             {
-                DispatchToJS(ForceReloadEvent, null);
+                DispatchToJS(new JSEvents.ForceReloadEvent());
                 return null;
             });
             RegisterEventHandler("cactbotLoadUser", FetchUserFiles);
@@ -171,7 +166,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     return;
                 initDone = true;
                 control.Init(url);
-                MinimalApi.AttachTo(control.Renderer);
+                MinimalApi.AttachTo(control.Renderer, container);
             };
             return control;
         }
@@ -269,7 +264,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 LogInfo("Version: intl");
             }
 
-            container.Resolve<FateWatcher>().OnFateChanged += (o, e) => DispatchToJS(FateEvent, e);
+            fate_watcher_ = new FateWatcher(container);
+            fate_watcher_.OnFateChanged += (o, e) => DispatchToJS(new JSEvents.FateEvent(e.eventType, e.fateID, e.progress));
 
             // Incoming events.
             ActGlobals.oFormActMain.OnLogLineRead += OnLogLineRead;
@@ -326,10 +322,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         // Sends an event called |event_name| to javascript, with an event.detail that contains
         // the fields and values of the |detail| structure.
-        public void DispatchToJS(string name, object detail)
+        public void DispatchToJS(JSEvent detail)
         {
             JObject ev = new JObject();
-            ev["type"] = name;
+            ev["type"] = detail.EventName();
             ev["detail"] = JObject.FromObject(detail);
             DispatchEvent(ev);
         }
@@ -345,14 +341,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (game_exists != notify_state_.game_exists)
             {
                 notify_state_.game_exists = game_exists;
-                DispatchToJS(GameExistsEvent, game_exists);
+                DispatchToJS(new JSEvents.GameExistsEvent(game_exists));
             }
 
             bool game_active = game_active = ffxiv_.IsActive();
             if (game_active != notify_state_.game_active)
             {
                 notify_state_.game_active = game_active;
-                DispatchToJS(GameActiveChangedEvent, game_active);
+                DispatchToJS(new JSEvents.GameActiveChangedEvent(game_active));
             }
 
             // Silently stop sending other messages if the ffxiv process isn't around.
@@ -362,26 +358,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
             // onInCombatChangedEvent: Fires when entering or leaving combat.
-            bool in_act_combat = Advanced_Combat_Tracker.ActGlobals.oFormActMain.InCombat;
+            bool in_act_combat = ActGlobals.oFormActMain.InCombat;
             bool in_game_combat = ffxiv_.GetInGameCombat();
             if (!notify_state_.in_act_combat.HasValue || in_act_combat != notify_state_.in_act_combat ||
                 !notify_state_.in_game_combat.HasValue || in_game_combat != notify_state_.in_game_combat)
             {
                 notify_state_.in_act_combat = in_act_combat;
                 notify_state_.in_game_combat = in_game_combat;
-                DispatchToJS(InCombatChangedEvent, new
-                {
-                    in_act_combat,
-                    in_game_combat
-                });
+                DispatchToJS(new JSEvents.InCombatChangedEvent(in_act_combat, in_game_combat));
             }
 
             // onZoneChangedEvent: Fires when the player changes their current zone.
-            string zone_name = Advanced_Combat_Tracker.ActGlobals.oFormActMain.CurrentZone;
+            string zone_name = ActGlobals.oFormActMain.CurrentZone;
             if (notify_state_.zone_name == null || !zone_name.Equals(notify_state_.zone_name))
             {
                 notify_state_.zone_name = zone_name;
-                DispatchToJS(ZoneChangedEvent, zone_name);
+                DispatchToJS(new JSEvents.ZoneChangedEvent(zone_name));
             }
 
             DateTime now = DateTime.Now;
@@ -397,7 +389,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     notify_state_.dead = dead;
                     if (dead)
-                        DispatchToJS(PlayerDiedEvent, null);
+                        DispatchToJS(new JSEvents.PlayerDiedEvent());
                 }
             }
 
@@ -421,17 +413,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     if (send || !JObject.DeepEquals(job, notify_state_.job_data))
                     {
                         notify_state_.job_data = job;
-                        DispatchToJS(PlayerChangedEvent, new
-                        {
-                            player,
-                            jobDetail = job
-                        });
+                        var ev = new JSEvents.PlayerChangedEvent(player);
+                        ev.jobDetail = job;
+                        DispatchToJS(ev);
                     }
                 }
                 else if (send)
                 {
                     // No job-specific data.
-                    DispatchToJS(PlayerChangedEvent, new { player });
+                    DispatchToJS(new JSEvents.PlayerChangedEvent(player));
                 }
             }
 
@@ -444,7 +434,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
             log_lines_ = last_log_lines_;
             import_logs = import_log_lines_;
             import_log_lines_ = last_import_log_lines_;
+
             log_lines_semaphore_.Release();
+
+            if (logs.Count > 0)
+            {
+                DispatchToJS(new JSEvents.LogEvent(logs));
+                logs.Clear();
+            }
 
             last_log_lines_ = logs;
             last_import_log_lines_ = import_logs;
@@ -542,6 +539,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     {
                         var file_path = new Uri(new Uri(url), "data/" + data_filename);
                         file_data[data_filename] = web.DownloadString(file_path);
+                        LogInfo("Read file " + data_filename);
                     }
                     catch (Exception e)
                     {
@@ -549,7 +547,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     }
                 }
 
-                //OnDataFilesRead(new JSEvents.DataFilesRead(file_data));
                 return file_data;
             }
 

@@ -67,13 +67,13 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
       [FieldOffset(0x18)]
       public short max_cp;
 
-      [FieldOffset(0x3E)]
+      [FieldOffset(0x42)]
       public EntityJob job;
 
-      [FieldOffset(0x40)]
+      [FieldOffset(0x44)]
       public byte level;
 
-      [FieldOffset(0x61)]
+      [FieldOffset(0x65)]
       public short shieldPercentage;
     }
     public FFXIVProcessIntl(TinyIoCContainer container) : base(container) { }
@@ -83,8 +83,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 
     // A piece of code that reads the pointer to the list of all entities, that we
     // refer to as the charmap. The pointer is the 4 byte ?????????.
-    private static String kCharmapSignature = "574883EC??488B1D????????488BF233D2";
-    private static int kCharmapSignatureOffset = -9;
+    private static String kCharmapSignature = "48c1ea0381faa7010000????8bc2488d0d";
+    private static int kCharmapSignatureOffset = 0;
     // The signature finds a pointer in the executable code which uses RIP addressing.
     private static bool kCharmapSignatureRIP = true;
     // The pointer is to a structure as:
@@ -119,11 +119,28 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
     private static bool kJobDataSignatureRIP = true;
 
     internal override void ReadSignatures() {
-      List<IntPtr> p = SigScan(kCharmapSignature, kCharmapSignatureOffset, kCharmapSignatureRIP);
-      if (p.Count != 1) {
+      List<IntPtr> p;
+      
+      // TODO: for now, support multiple matches on charmap signature.
+      // This sig returns two matches that are identical for many, many characters.
+      // They both point to the same spot, so verify these have the same value.
+      p = SigScan(kCharmapSignature, kCharmapSignatureOffset, kCharmapSignatureRIP);
+      if (p.Count == 0) {
         logger_.Log(LogLevel.Error, "Charmap signature found " + p.Count + " matches");
       } else {
-        player_ptr_addr_ = IntPtr.Add(p[0], kCharmapStructOffsetPlayer);
+        IntPtr player_ptr_value = IntPtr.Zero;
+        foreach (IntPtr ptr in p)
+        {
+          IntPtr addr = IntPtr.Add(ptr, kCharmapStructOffsetPlayer);
+          IntPtr value = ReadIntPtr(addr);
+          if (player_ptr_addr_ == IntPtr.Zero || player_ptr_value == value)
+          {
+            player_ptr_value = value;
+            player_ptr_addr_ = addr;
+          } else {
+            logger_.Log(LogLevel.Error, "Charmap signature found, but conflicting match");
+          }
+        }
       }
 
       p = SigScan(kJobDataSignature, kJobDataSignatureOffset, kJobDataSignatureRIP);
