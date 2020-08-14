@@ -403,7 +403,7 @@
         },
         "lblCutsceneDetectionLog.Text": {
             "en": "Write cutscene detection log lines",
-            "zh-CN": "记录过场检测日志行"
+            "zh-CN": "输出过场检测日志行"
         }
     },
     "OverlayPlugin.Core/Overlays/LabelOverlayConfigPanel": {
