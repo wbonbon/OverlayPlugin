@@ -351,7 +351,7 @@
     "OverlayPlugin.Core/EventSources/BuiltinEventConfigPanel": {
         "experimentalWarning.Text": {
             "en": "WARNING: Experimental options below - If you touch these, you confirm that you can troubleshoot any issues you encounter yourself and won't ask for help.",
-            "zh-CN": "警告：以下选项是试验性功能————一旦启用，视为您确认可以自己解决遇到的任何问题，而不会寻求帮助。"
+            "zh-CN": "警告：以下选项是试验性功能———一旦启用，视为您确认可以自己解决遇到的任何问题，而不会寻求帮助。"
         },
         "label1.Text": {
             "de-DE": "Sortieren nach",
