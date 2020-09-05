@@ -1603,6 +1603,13 @@
             "ko-KR": "아카이브를 여는 중...",
             "zh-CN": "正在打开压缩包..."
         },
+        "LogOverwriteFailed": {
+            "en": "No retries left, update failed."
+        },
+        "LogOverwriteRetry": {
+            "#comment": "{0} is the filename and {1} is the error message",
+            "en": "Failed to overwrite {0}, retrying...\n{1}"
+        },
         "LogOverwritingOldFiles": {
             "de-DE": "Alte Dateien überschreiben ...",
             "en": "Overwriting old files...",
