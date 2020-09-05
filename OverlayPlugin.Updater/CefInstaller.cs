@@ -69,7 +69,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 if (installed == CEF_VERSION)
                 {
                     // Verify all important files exist
-                    var itsFine = false;
+                    var itsFine = true;
                     foreach (var name in importantFiles)
                     {
                         if (!File.Exists(Path.Combine(cefPath, name)))

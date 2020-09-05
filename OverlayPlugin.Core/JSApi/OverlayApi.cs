@@ -14,19 +14,15 @@ namespace RainbowMage.OverlayPlugin
         public static event EventHandler<SendMessageEventArgs> SendMessage;
         public static event EventHandler<SendMessageEventArgs> OverlayMessage;
 
-        private readonly TinyIoCContainer container;
         private readonly EventDispatcher dispatcher;
         private readonly IApiBase receiver;
         private readonly ILogger logger;
-        private readonly MiniParseEventSource eventSource;
 
         public OverlayApi(TinyIoCContainer container, IApiBase receiver)
         {
-            this.container = container;
             this.dispatcher = container.Resolve<EventDispatcher>();
             this.receiver = receiver;
             this.logger = container.Resolve<ILogger>();
-            this.eventSource = container.Resolve<MiniParseEventSource>();
         }
 
         public void broadcastMessage(string msg)
