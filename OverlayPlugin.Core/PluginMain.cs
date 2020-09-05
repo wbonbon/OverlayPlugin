@@ -404,11 +404,15 @@ namespace RainbowMage.OverlayPlugin
                     }
                 }
 
+                // Only enable embedded Cactbot in debug / dev builds until I'm sure it's stable enough
+                // for most users.
+                #if DEBUG
                 if (!foundCactbot)
                 {
                     _logger.Log(LogLevel.Info, "LoadAddons: Enabling builtin Cactbot event source.");
                     registry.StartEventSource(new CactbotEventSource(_container));
                 }
+                #endif
 
                 registry.StartEventSources();
             }

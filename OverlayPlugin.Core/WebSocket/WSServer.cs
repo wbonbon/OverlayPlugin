@@ -42,7 +42,7 @@ namespace RainbowMage.OverlayPlugin
             }
             _failed = false;
 
-            OnStateChanged(null, new StateChangedArgs(false, false));
+            OnStateChanged?.Invoke(null, new StateChangedArgs(false, false));
         }
 
         public bool IsRunning()

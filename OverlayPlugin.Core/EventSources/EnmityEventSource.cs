@@ -44,34 +44,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
             var repository = container.Resolve<FFXIVRepository>();
-            var gameVersion = repository.GetGameVersion();
 
-            if (gameVersion == null)
+            if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese || repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
             {
-                Log(LogLevel.Warning, "Failed to detect FFXIV game version! Falling back on game region heuristic.");
-
-                if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese || repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
-                {
-                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
-                }
-                else
-                {
-                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
-                }
-            } else
+                memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
+            }
+            else
             {
-                Log(LogLevel.Info, $"FFXIV version: {gameVersion}");
-
-                if (gameVersion.StartsWith("5.2"))
-                {
-                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
-                } else if (gameVersion.StartsWith("5.3"))
-                {
-                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
-                } else
-                {
-                    Log(LogLevel.Warning, "Unknown game version detected. Enmity data won't be available until OverlayPlugin is updated.");
-                }
+                memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
             }
 
             RegisterEventTypes(new List<string> {
