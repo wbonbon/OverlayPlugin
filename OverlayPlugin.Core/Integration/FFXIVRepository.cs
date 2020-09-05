@@ -143,6 +143,23 @@ namespace RainbowMage.OverlayPlugin
             return typeof(IDataRepository).Assembly.Location;
         }
 
+        private string GetGameVersionImpl()
+        {
+            return GetRepository()?.GetGameVersion();
+        }
+
+        public string GetGameVersion()
+        {
+            try
+            {
+                return GetGameVersionImpl();
+            } catch (FileNotFoundException)
+            {
+                // The FFXIV plugin isn't loaded
+                return null;
+            }
+        }
+
         public uint GetPlayerIDImpl()
         {
             var repo = GetRepository();

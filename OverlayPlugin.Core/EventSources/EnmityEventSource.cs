@@ -44,27 +44,34 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
             var repository = container.Resolve<FFXIVRepository>();
+            var gameVersion = repository.GetGameVersion();
 
-            if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
+            if (gameVersion == null)
             {
-                memoryCandidates = new List<EnmityMemory>()
+                Log(LogLevel.Warning, "Failed to detect FFXIV game version! Falling back on game region heuristic.");
+
+                if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese || repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
                 {
-                    new EnmityMemory52(container)
-                };
-            }
-            else if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
+                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
+                }
+                else
+                {
+                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
+                }
+            } else
             {
-                memoryCandidates = new List<EnmityMemory>()
+                Log(LogLevel.Info, $"FFXIV version: {gameVersion}");
+
+                if (gameVersion.StartsWith("5.2"))
                 {
-                    new EnmityMemory50(container)
-                };
-            }
-            else
-            {
-                memoryCandidates = new List<EnmityMemory>()
+                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
+                } else if (gameVersion.StartsWith("5.3"))
                 {
-                    new EnmityMemory53(container)
-                };
+                    memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
+                } else
+                {
+                    Log(LogLevel.Warning, "Unknown game version detected. Enmity data won't be available until OverlayPlugin is updated.");
+                }
             }
 
             RegisterEventTypes(new List<string> {
