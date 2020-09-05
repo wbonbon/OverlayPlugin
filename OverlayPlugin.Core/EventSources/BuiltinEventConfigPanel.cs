@@ -12,6 +12,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 {
     partial class BuiltinEventConfigPanel : UserControl, IDisposable
     {
+        private readonly TinyIoCContainer container;
+        private readonly Registry registry;
         private BuiltinEventConfig config;
 
         static readonly List<KeyValuePair<string, string>> sortKeyDict = new List<KeyValuePair<string, string>>()
@@ -21,16 +23,18 @@ namespace RainbowMage.OverlayPlugin.EventSources
             new KeyValuePair<string, string>("HPS", "enchps"),
         };
 
-        public BuiltinEventConfigPanel()
+        public BuiltinEventConfigPanel(TinyIoCContainer container)
         {
             InitializeComponent();
 
-            Registry.EventSourcesStarted += LoadConfig;
+            this.container = container;
+            registry = container.Resolve<Registry>();
+            registry.EventSourcesStarted += LoadConfig;
         }
 
         private void LoadConfig(object sender, EventArgs args)
         {
-            this.config = Registry.Resolve<BuiltinEventConfig>();
+            config = container.Resolve<BuiltinEventConfig>();
 
             SetupControlProperties();
             SetupConfigEventHandlers();
@@ -172,6 +176,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 this.textEnmityInterval.Text = "" + this.config.EnmityIntervalMs;
             }
+        }
+
+        private void cbCutsceneDetectionLog_CheckedChanged(object sender, EventArgs e)
+        {
+            this.config.CutsceneDetectionLog = this.cbCutsceneDetectionLog.Checked;
         }
     }
 }

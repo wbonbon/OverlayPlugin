@@ -15,6 +15,9 @@ namespace RainbowMage.OverlayPlugin.Updater
 {
     public class Installer
     {
+        const uint FILE_OVERWRITE_RETRIES = 10;
+        const int FILE_OVERWRITE_WAIT = 300;
+
         ProgressDisplay _display;
         public string TempDir {  get; private set; }
         string _destDir = null;
@@ -74,7 +77,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             });
         }
 
-        public bool Download(string url, string dest)
+        public bool Download(string url, string dest, bool useHttpClient = false)
         {
             try
             {
@@ -109,7 +112,13 @@ namespace RainbowMage.OverlayPlugin.Updater
                 {
                     try
                     {
-                        CurlWrapper.Get(url, new Dictionary<string, string>(), dest, DlProgressCallback, true);
+                        if (useHttpClient)
+                        {
+                            HttpClientWrapper.Get(url, new Dictionary<string, string>(), dest, DlProgressCallback, true);
+                        } else { 
+                            CurlWrapper.Get(url, new Dictionary<string, string>(), dest, DlProgressCallback, true);
+                        }
+
                         success = true;
                         break;
                     }
@@ -122,7 +131,16 @@ namespace RainbowMage.OverlayPlugin.Updater
                             // If this is a curl exception, it's most likely network related. Wait a second
                             // before trying again. We don't want to spam the other side with download requests.
                             if (ex.GetType() == typeof(CurlException))
+                            {
+                                if (!((CurlException) ex).Retry)
+                                {
+                                    // Retrying won't fix this kind of error. Abort.
+                                    success = false;
+                                    break;
+                                }
+
                                 Thread.Sleep(1000);
+                            }
 
                             _display.Log(Resources.LogResumingDownload);
                             success = false;
@@ -384,8 +402,26 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                         foreach (var item in info.EnumerateFiles())
                         {
-                            File.Delete(Path.Combine(sub_destDir, item.Name));
-                            File.Move(item.FullName, Path.Combine(sub_destDir, item.Name));
+                            bool done = false;
+                            for (int i = 0; i < FILE_OVERWRITE_RETRIES; i++)
+                            {
+                                try
+                                {
+                                    File.Delete(Path.Combine(sub_destDir, item.Name));
+                                    File.Move(item.FullName, Path.Combine(sub_destDir, item.Name));
+                                    done = true;
+                                    break;
+                                } catch (Exception e)
+                                {
+                                    _display.Log(string.Format(Resources.LogOverwriteRetry, item.Name, e));
+                                    Thread.Sleep(FILE_OVERWRITE_WAIT);
+                                }
+                            }
+
+                            if (!done)
+                            {
+                                throw new Exception(Resources.LogOverwriteFailed);
+                            }
                         }
                     }
                 }

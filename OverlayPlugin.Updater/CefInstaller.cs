@@ -61,13 +61,25 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
 
             var manifest = Path.Combine(cefPath, "version.txt");
+            var importantFiles = new List<string>() { "CefSharp.dll", "CefSharp.Core.dll", "CefSharp.OffScreen.dll", "CefSharp.BrowserSubprocess.exe", "CefSharp.BrowserSubprocess.Core.dll", "libcef.dll", "libEGL.dll", "libGLESv2.dll" };
 
             if (File.Exists(manifest))
             {
                 var installed = File.ReadAllText(manifest).Trim();
                 if (installed == CEF_VERSION)
                 {
-                    return true;
+                    // Verify all important files exist
+                    var itsFine = true;
+                    foreach (var name in importantFiles)
+                    {
+                        if (!File.Exists(Path.Combine(cefPath, name)))
+                        {
+                            itsFine = false;
+                            break;
+                        }
+                    }
+
+                    if (itsFine) return true;
                 }
             }
 
@@ -100,7 +112,7 @@ namespace RainbowMage.OverlayPlugin.Updater
 
             return await Task.Run(() =>
             {
-                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath))
+                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath, true))
                 {
                     inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
                     inst.Display.Log(Resources.LogLaunchingInstaller);
@@ -126,7 +138,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         var cancel = inst.Display.GetCancelToken();
 
                         inst.Display.Log(Resources.LogInstallerWaiting);
-                        while (NativeMethods.LoadLibrary("msvcp140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
+                        while (NativeMethods.LoadLibrary("vcruntime140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
                         {
                             Thread.Sleep(500);
                         }
@@ -136,7 +148,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
 
                     inst.Cleanup();
-                    if (NativeMethods.LoadLibrary("msvcp140.dll") != IntPtr.Zero)
+                    if (NativeMethods.LoadLibrary("vcruntime140.dll") != IntPtr.Zero)
                     {
                         inst.Display.Close();
                         return true;

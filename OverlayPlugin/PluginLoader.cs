@@ -22,6 +22,9 @@ namespace RainbowMage.OverlayPlugin
         string pluginDirectory;
         TabPage pluginScreenSpace;
         Label pluginStatusText;
+        bool initFailed = false;
+
+        public TinyIoCContainer Container { get; private set; }
 
         public void InitPlugin(TabPage pluginScreenSpace, Label pluginStatusText)
         {
@@ -33,7 +36,11 @@ namespace RainbowMage.OverlayPlugin
                 {
                     Path.Combine(pluginDirectory, "libs"),
                     Path.Combine(pluginDirectory, "addons"),
+#if DEBUG
+                    Path.Combine(pluginDirectory, "libs", Environment.Is64BitProcess ? "x64" : "x86"),
+#else
                     GetCefPath()
+#endif
                 });
             }
 
@@ -64,15 +71,21 @@ namespace RainbowMage.OverlayPlugin
         {
             pluginStatusText.Text = Resources.InitRuntime;
 
-            Registry.Init();
+            var container = new TinyIoCContainer();
             logger = new Logger();
+            container.Register(logger);
+            container.Register<ILogger>(logger);
+
             asmResolver.ExceptionOccured += (o, e) => logger.Log(LogLevel.Error, Resources.AssemblyResolverError, e.Exception);
             asmResolver.AssemblyLoaded += (o, e) => logger.Log(LogLevel.Debug, Resources.AssemblyResolverLoaded, e.LoadedAssembly.FullName);
-            pluginMain = new PluginMain(pluginDirectory, logger);
+
+            this.Container = container;
+            pluginMain = new PluginMain(pluginDirectory, logger, container);
+            container.Register(pluginMain);
 
             pluginStatusText.Text = Resources.InitCef;
 
-            SanityChecker.CheckDependencyVersions();
+            SanityChecker.CheckDependencyVersions(logger);
 
             try
             {
@@ -83,10 +96,10 @@ namespace RainbowMage.OverlayPlugin
                 ActGlobals.oFormActMain.WriteDebugLog(ex.ToString());
             }
 
-            await FinishInit();
+            await FinishInit(container);
         }
 
-        public async Task FinishInit()
+        public async Task FinishInit(TinyIoCContainer container)
         {
             if (await CefInstaller.EnsureCef(GetCefPath()))
             {
@@ -97,7 +110,20 @@ namespace RainbowMage.OverlayPlugin
                     // Since this is an async method, we could have switched threds. Make sure InitPlugin() runs on the ACT main thread.
                     ActGlobals.oFormActMain.Invoke((Action)(() =>
                     {
-                        pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                        try { 
+                            pluginMain.InitPlugin(pluginScreenSpace, pluginStatusText);
+                            initFailed = false;
+                        } catch (Exception ex)
+                        {
+                            // TODO: Add a log box to CefMissingTab and while CEF missing is the most likely
+                            // cause for an exception here, it is not necessarily the case.
+                            // logger.Log(LogLevel.Error, "Failed to init plugin: " + ex.ToString());
+                            
+                            initFailed = true;
+
+                            MessageBox.Show("Failed to init OverlayPlugin: " + ex.ToString(), "OverlayPlugin Error");
+                            pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
+                        }
                     }));
                 } else
                 {
@@ -105,16 +131,15 @@ namespace RainbowMage.OverlayPlugin
                 }
             } else
             {
-                pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this));
+                pluginScreenSpace.Controls.Add(new CefMissingTab(GetCefPath(), this, container));
             }
         }
 
         public void DeInitPlugin()
         {
-            if (pluginMain != null)
+            if (pluginMain != null && !initFailed)
             {
                 pluginMain.DeInitPlugin();
-                Registry.Clear();
             }
 
             // We can't re-init CEF after shutting it down. So let's only do that when ACT closes to avoid unexpected behaviour (crash when re-enabling the plugin).

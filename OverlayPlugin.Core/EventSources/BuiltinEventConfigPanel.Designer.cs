@@ -16,7 +16,7 @@
             if (disposing && (components != null))
             {
                 components.Dispose();
-                Registry.EventSourcesStarted -= LoadConfig;
+                registry.EventSourcesStarted -= LoadConfig;
             }
             base.Dispose(disposing);
         }
@@ -45,6 +45,9 @@
             this.checkSortDesc = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cbUpdateDuringImport = new System.Windows.Forms.CheckBox();
+            this.experimentalWarning = new System.Windows.Forms.Label();
+            this.lblCutsceneDetectionLog = new System.Windows.Forms.Label();
+            this.cbCutsceneDetectionLog = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +68,9 @@
             this.tableLayoutPanel1.Controls.Add(this.checkSortDesc, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.cbUpdateDuringImport, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.experimentalWarning, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblCutsceneDetectionLog, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.cbCutsceneDetectionLog, 1, 9);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             // 
             // cbEndEncounterOutOfCombat
@@ -149,6 +155,24 @@
             this.cbUpdateDuringImport.UseVisualStyleBackColor = true;
             this.cbUpdateDuringImport.CheckedChanged += new System.EventHandler(this.cbUpdateDuringImport_CheckedChanged);
             // 
+            // experimentalWarning
+            // 
+            resources.ApplyResources(this.experimentalWarning, "experimentalWarning");
+            this.tableLayoutPanel1.SetColumnSpan(this.experimentalWarning, 2);
+            this.experimentalWarning.Name = "experimentalWarning";
+            // 
+            // lblCutsceneDetectionLog
+            // 
+            resources.ApplyResources(this.lblCutsceneDetectionLog, "lblCutsceneDetectionLog");
+            this.lblCutsceneDetectionLog.Name = "lblCutsceneDetectionLog";
+            // 
+            // cbCutsceneDetectionLog
+            // 
+            resources.ApplyResources(this.cbCutsceneDetectionLog, "cbCutsceneDetectionLog");
+            this.cbCutsceneDetectionLog.Name = "cbCutsceneDetectionLog";
+            this.cbCutsceneDetectionLog.UseVisualStyleBackColor = true;
+            this.cbCutsceneDetectionLog.CheckedChanged += new System.EventHandler(this.cbCutsceneDetectionLog_CheckedChanged);
+            // 
             // BuiltinEventConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -179,5 +203,8 @@
         private System.Windows.Forms.CheckBox cbEndEncounterAfterWipe;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-  }
+        private System.Windows.Forms.Label experimentalWarning;
+        private System.Windows.Forms.Label lblCutsceneDetectionLog;
+        private System.Windows.Forms.CheckBox cbCutsceneDetectionLog;
+    }
 }

@@ -14,6 +14,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public event EventHandler UpdateDpsDuringImportChanged;
         public event EventHandler EndEncounterAfterWipeChanged;
         public event EventHandler EndEncounterOutOfCombatChanged;
+        public event EventHandler CutsceneDetectionLogChanged;
 
         private int updateInterval;
         public int UpdateInterval {
@@ -133,6 +134,23 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
+        private bool cutsceneDetectionLog;
+        public bool CutsceneDetectionLog
+        {
+            get
+            {
+                return cutsceneDetectionLog;
+            }
+            set
+            {
+                if (this.cutsceneDetectionLog != value)
+                {
+                    this.cutsceneDetectionLog = value;
+                    CutsceneDetectionLogChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
         // Data that overlays can save/load via event handlers.
         public Dictionary<string, JToken> OverlayData = new Dictionary<string, JToken>();
 
@@ -145,6 +163,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.updateDpsDuringImport = false;
             this.endEncounterAfterWipe = false;
             this.endEncounterOutOfCombat = false;
+            this.cutsceneDetectionLog = false;
         }
 
         public static BuiltinEventConfig LoadConfig(IPluginConfig Config)
@@ -194,6 +213,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     result.OverlayData = value.ToObject<Dictionary<string, JToken>>();
                 }
+
+                if (obj.TryGetValue("CutsceneDetctionLog", out value))
+                {
+                    result.cutsceneDetectionLog = value.ToObject<bool>();
+                }
             }
 
             return result;
@@ -201,7 +225,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public void SaveConfig(IPluginConfig Config)
         {
-            Config.EventSourceConfigs["MiniParse"] = JObject.FromObject(this);
+            var newObj = JObject.FromObject(this);
+            if (!JObject.DeepEquals(Config.EventSourceConfigs["MiniParse"], newObj))
+            {
+                Config.EventSourceConfigs["MiniParse"] = newObj;
+                Config.MarkDirty();
+            }
         }
     }
 

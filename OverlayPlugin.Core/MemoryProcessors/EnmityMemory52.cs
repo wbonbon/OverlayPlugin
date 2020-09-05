@@ -4,13 +4,14 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace RainbowMage.OverlayPlugin.EventSources
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
-    public class EnmityMemory50 : EnmityMemory
+    public class EnmityMemory52 : EnmityMemory
     {
         private FFXIVMemory memory;
         private ILogger logger;
         private DateTime lastSigScan = DateTime.MinValue;
+        private uint loggedScanErrors = 0;
 
         private IntPtr charmapAddress = IntPtr.Zero;
         private IntPtr targetAddress = IntPtr.Zero;
@@ -18,35 +19,34 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IntPtr aggroAddress = IntPtr.Zero;
         private IntPtr inCombatAddress = IntPtr.Zero;
 
-        private const string charmapSignature = "488b420848c1e8033da701000077248bc0488d0d";
-        private const string targetSignature = "41bc000000e041bd01000000493bc47555488d0d";
+        private const string charmapSignature = "48c1ea0381faa7010000????8bc2488d0d";
+        private const string targetSignatureH0 = "83E901740832C04883C4205BC3488D0D"; // pre hotfix
+        private const string targetSignatureH1 = "e8f2652f0084c00f8591010000488d0d"; // post hotfix 1
         private const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
         private const string inCombatSignature = "84c07425450fb6c7488d0d";
 
         // Offsets from the signature to find the correct address.
         private const int charmapSignatureOffset = 0;
-        private const int targetSignatureOffset = 192;
-        private const int enmitySignatureOffset = -4648;
+        private const int targetSignatureOffset = 0;
+        private const int enmitySignatureOffset = -2608;
+        private const int aggroEnmityOffset = -2336;
         private const int inCombatSignatureBaseOffset = 0;
         private const int inCombatSignatureOffsetOffset = 5;
 
-        // Offset from the enmityAddress to find various enmity data structures.
-        private const int aggroEnmityOffset = 0x908;
-
         // Offsets from the targetAddress to find the correct target type.
-        private const int targetTargetOffset = -0x18;
-        private const int focusTargetOffset = 0x38;
-        private const int hoverTargetOffset = 0x20;
+        private const int targetTargetOffset = 176;
+        private const int focusTargetOffset = 248;
+        private const int hoverTargetOffset = 208;
 
         // Constants.
         private const uint emptyID = 0xE0000000;
-        private const int numMemoryCombatants = 344;
+        private const int numMemoryCombatants = 421;
 
-        public EnmityMemory50(ILogger logger)
+        public EnmityMemory52(TinyIoCContainer container)
         {
-            this.memory = new FFXIVMemory(logger);
+            this.memory = new FFXIVMemory(container);
             this.memory.OnProcessChange += ResetPointers;
-            this.logger = logger;
+            this.logger = container.Resolve<ILogger>();
             GetPointerAddress();
         }
 
@@ -98,7 +98,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return false;
 
             lastSigScan = DateTime.Now;
-
             bool success = true;
             bool bRIP = true;
 
@@ -106,7 +105,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             /// CHARMAP
             List<IntPtr> list = memory.SigScan(charmapSignature, 0, bRIP);
-            if (list != null && list.Count == 1)
+            if (list != null && list.Count > 0)
             {
                 charmapAddress = list[0] + charmapSignatureOffset;
             }
@@ -119,10 +118,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             // ENMITY
             list = memory.SigScan(enmitySignature, 0, bRIP);
-            if (list != null && list.Count == 1)
+            if (list != null && list.Count > 0)
             {
-                enmityAddress = list[0] + enmitySignatureOffset;
-                aggroAddress = IntPtr.Add(enmityAddress, aggroEnmityOffset);
+                enmityAddress = IntPtr.Add(list[0], enmitySignatureOffset);
+                aggroAddress = IntPtr.Add(list[0], aggroEnmityOffset);
             }
             else
             {
@@ -134,8 +133,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
             /// TARGET
-            list = memory.SigScan(targetSignature, 0, bRIP);
-            if (list != null && list.Count == 1)
+            list = memory.SigScan(targetSignatureH1, 0, bRIP);
+            if (list == null || list.Count == 0)
+                list = memory.SigScan(targetSignatureH0, 0, bRIP);
+
+            if (list != null && list.Count > 0)
             {
                 targetAddress = list[0] + targetSignatureOffset;
             }
@@ -167,6 +169,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             logger.Log(LogLevel.Debug, "charmapAddress: 0x{0:X}", charmapAddress.ToInt64());
             logger.Log(LogLevel.Debug, "enmityAddress: 0x{0:X}", enmityAddress.ToInt64());
+            logger.Log(LogLevel.Debug, "aggroAddress: 0x{0:X}", aggroAddress.ToInt64());
             logger.Log(LogLevel.Debug, "targetAddress: 0x{0:X}", targetAddress.ToInt64());
             logger.Log(LogLevel.Debug, "inCombatAddress: 0x{0:X}", inCombatAddress.ToInt64());
             Combatant c = GetSelfCombatant();
@@ -177,10 +180,20 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             if (!success)
             {
-                logger.Log(LogLevel.Error, "Failed to memory scan for 5.0: {0}.", String.Join(",", fail));
+                if (loggedScanErrors < 10)
+                {
+                    logger.Log(LogLevel.Error, "Failed to find enmity memory for 5.2: {0}.", String.Join(",", fail));
+                    loggedScanErrors++;
+
+                    if (loggedScanErrors == 10)
+                    {
+                        logger.Log(LogLevel.Error, "Further enmity errors won't be logged.");
+                    }
+                }
             } else
             {
-                logger.Log(LogLevel.Info, "Found enmity memory for 5.0.");
+                logger.Log(LogLevel.Info, "Found enmity memory for 5.2.");
+                loggedScanErrors = 0;
             }
 
             return success;
@@ -303,19 +316,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
             [FieldOffset(0xA8)]
             public Single PosZ;
 
-            [FieldOffset(0x1820)]
+            [FieldOffset(0xB0)]
+            public Single Rotation;
+
+            [FieldOffset(0x17F8)]
             public uint TargetID;
 
-            [FieldOffset(0x18B8)]
+            [FieldOffset(0x1898)]
             public int CurrentHP;
 
-            [FieldOffset(0x18BC)]
+            [FieldOffset(0x189C)]
             public int MaxHP;
 
-            [FieldOffset(0x18F4)]
+            [FieldOffset(0x18D6)]
             public byte Job;
 
-            [FieldOffset(0x1978)]
+            [FieldOffset(0x1958)]
             public fixed byte Effects[effectBytes];
         }
 
@@ -361,6 +377,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     PosX = mem.PosX,
                     PosY = mem.PosY,
                     PosZ = mem.PosZ,
+                    Rotation = mem.Rotation,
                     TargetID = mem.TargetID,
                     CurrentHP = mem.CurrentHP,
                     MaxHP = mem.MaxHP,
@@ -376,28 +393,27 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
-        [StructLayout(LayoutKind.Explicit, Size=72)]
+        [StructLayout(LayoutKind.Explicit, Size=8)]
         struct EnmityListEntry
         {
             public static int Size => Marshal.SizeOf(typeof(EnmityListEntry));
 
-            [FieldOffset(0x38)]
+            [FieldOffset(0x00)]
             public uint ID;
 
-            [FieldOffset(0x3C)]
+            [FieldOffset(0x04)]
             public uint Enmity;
         }
 
         // A byte[] -> EnmityListEntry[] converter.
         // Owns the memory and returns out EnmityListEntry objects from it.
-        // Both the enmity list and the aggro list use this same structure.
         private class EnmityList
         {
             public int numEntries = 0;
             private byte[] buffer;
 
-            public const short maxEntries = 31;
-            public const int numEntryOffset = 0x8F8;
+            public const short maxEntries = 31; // or 32?
+            public const int numEntryOffset = 256;
             // The number of entries is a short at the end of the array of entries.  Hence, +2.
             public const int totalBytesSize = numEntryOffset + 2;
 
@@ -459,6 +475,53 @@ namespace RainbowMage.OverlayPlugin.EventSources
             return result;
         }
 
+        [StructLayout(LayoutKind.Explicit, Size = 72)]
+        struct AggroListEntry
+        {
+            public static int Size => Marshal.SizeOf(typeof(AggroListEntry));
+
+            [FieldOffset(0x38)]
+            public uint ID;
+
+            [FieldOffset(0x3C)]
+            public uint Enmity;
+        }
+
+        // A byte[] -> AggroListEntry[] converter.
+        // Owns the memory and returns out AggroListEntry objects from it.
+        private class AggroList
+        {
+            public int numEntries = 0;
+            private byte[] buffer;
+
+            public const short maxEntries = 31;
+            public const int numEntryOffset = 0x8F8;
+            // The number of entries is a short at the end of the array of entries.  Hence, +2.
+            public const int totalBytesSize = numEntryOffset + 2;
+
+            public unsafe AggroListEntry GetEntry(int i)
+            {
+                fixed (byte* p = buffer)
+                {
+                    return *(AggroListEntry*)&p[i * AggroListEntry.Size];
+                }
+            }
+
+            public unsafe AggroList(byte[] buffer)
+            {
+                Debug.Assert(maxEntries * AggroListEntry.Size <= totalBytesSize);
+                Debug.Assert(buffer.Length >= totalBytesSize);
+
+                this.buffer = buffer;
+                fixed (byte* p = buffer) numEntries = Math.Min((short)p[numEntryOffset], maxEntries);
+            }
+        }
+
+        private AggroList ReadAggroList(IntPtr address)
+        {
+            return new AggroList(memory.GetByteArray(address, AggroList.totalBytesSize));
+        }
+
         // Converts an EnmityList into a List<AggroEntry>.
         public override unsafe List<AggroEntry> GetAggroList(List<Combatant> combatantList)
         {
@@ -473,10 +536,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             var result = new List<AggroEntry>();
 
-            EnmityList list = ReadEnmityList(aggroAddress);
+            AggroList list = ReadAggroList(aggroAddress);
             for (int i = 0; i < list.numEntries; i++)
             {
-                EnmityListEntry e = list.GetEntry(i);
+                AggroListEntry e = list.GetEntry(i);
                 if (e.ID <= 0)
                     continue;
                 Combatant c = combatantList.Find(x => x.ID == e.ID);

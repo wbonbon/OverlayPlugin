@@ -50,6 +50,7 @@
     <Compile Include="DragHandler.cs" />
     <Compile Include="IRenderTarget.cs" />
     <Compile Include="WinFormsRenderer.cs" />
+    <Compile Include="WinFormsOffScreenRenderer.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="OverlayControl.cs">
       <SubType>Component</SubType>
@@ -103,7 +104,7 @@
       <Version>75.1.141</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
+      <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

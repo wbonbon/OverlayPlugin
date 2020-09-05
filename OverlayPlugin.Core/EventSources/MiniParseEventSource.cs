@@ -10,6 +10,7 @@ using Advanced_Combat_Tracker;
 using System.Diagnostics;
 using System.Windows.Forms;
 using FFXIV_ACT_Plugin.Common.Models;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -20,7 +21,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private bool prevEncounterActive { get; set; }
 
         private List<string> importedLogs = new List<string>();
-        private Dictionary<uint, PartyMember> cachedPartyMembers = new Dictionary<uint, PartyMember>();
+        private ReadOnlyCollection<uint> cachedPartyList = null;
+        private List<uint> missingPartyMembers = new List<uint>();
         private static Dictionary<uint, string> StatusMap = new Dictionary<uint, string>
         {
             { 0, "Online" },
@@ -67,14 +69,18 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string FileChangedEvent = "FileChanged";
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
         private const string PartyChangedEvent = "PartyChanged";
+        private const string BroadcastMessageEvent = "BroadcastMessage";
+
+        private FFXIVRepository repository;
 
         // Event Source
 
         public BuiltinEventConfig Config { get; set; }
 
-        public MiniParseEventSource(ILogger logger) : base(logger)
+        public MiniParseEventSource(TinyIoCContainer container) : base(container)
         {
             this.Name = "MiniParse";
+            this.repository = container.Resolve<FFXIVRepository>();
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> {
@@ -82,6 +88,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 FileChangedEvent,
                 LogLineEvent,
                 ImportedLogLinesEvent,
+                BroadcastMessageEvent,
             });
 
             // These events need to deliver cached values to new subscribers.
@@ -92,8 +99,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 PartyChangedEvent,
             });
 
-            RegisterEventHandler("getLanguage", (msg) => {
-                var lang = FFXIVRepository.GetLanguage();
+            RegisterEventHandler("getLanguage", (msg) =>
+            {
+                var lang = repository.GetLanguage();
                 return JObject.FromObject(new
                 {
                     language = lang.ToString("g"),
@@ -101,7 +109,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 });
             });
 
-            RegisterEventHandler("getCombatants", (msg) => {
+            RegisterEventHandler("getCombatants", (msg) =>
+            {
                 List<uint> ids = new List<uint>();
 
                 if (msg["ids"] != null)
@@ -139,7 +148,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 });
             });
 
-            RegisterEventHandler("saveData", (msg) => {
+            RegisterEventHandler("saveData", (msg) =>
+            {
                 var key = msg["key"]?.ToString();
                 if (key == null)
                     return null;
@@ -148,7 +158,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return null;
             });
 
-            RegisterEventHandler("loadData", (msg) => {
+            RegisterEventHandler("loadData", (msg) =>
+            {
                 var key = msg["key"]?.ToString();
                 if (key == null)
                     return null;
@@ -162,7 +173,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return ret;
             });
 
-            RegisterEventHandler("say", (msg) => {
+            RegisterEventHandler("say", (msg) =>
+            {
                 var text = msg["text"]?.ToString();
                 if (text == null)
                     return null;
@@ -171,14 +183,37 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return null;
             });
 
+            RegisterEventHandler("broadcast", (msg) =>
+            {
+                if (!msg.ContainsKey("msg") || !msg.ContainsKey("source"))
+                {
+                    Log(LogLevel.Error, "Called broadcast handler without specifying a source or message (\"source\" or \"msg\" property are missing).");
+                    return null;
+                }
+
+                if (msg["source"].Type != JTokenType.String)
+                {
+                    Log(LogLevel.Error, "The source passed to the broadcast handler must be a string!");
+                    return null;
+                }
+
+                DispatchEvent(JObject.FromObject(new
+                {
+                    type = BroadcastMessageEvent,
+                    source = msg["source"],
+                    msg = msg["msg"],
+                }));
+
+                return null;
+            });
+
             foreach (var propName in DefaultCombatantFields)
             {
-                CachedCombatantPropertyInfos.Add(propName, 
-                    typeof(FFXIV_ACT_Plugin.Common.Models.Combatant).GetProperty(propName));
+                CachedCombatantPropertyInfos.Add(propName, typeof(Combatant).GetProperty(propName));
             }
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
-            NetworkParser.OnOnlineStatusChanged += (o, e) =>
+            container.Resolve<NetworkParser>().OnOnlineStatusChanged += (o, e) =>
             {
                 var obj = new JObject();
                 obj["type"] = OnlineStatusChangedEvent;
@@ -189,14 +224,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 DispatchAndCacheEvent(obj);
             };
 
-            FFXIVRepository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent(partyList, partySize));
+            repository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent(partyList, partySize));
         }
 
         private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)
         {
             List<Dictionary<string, object>> filteredCombatants = new List<Dictionary<string, object>>();
 
-            var combatants = FFXIVRepository.GetCombatants();
+            var combatants = repository.GetCombatants();
 
             foreach (var combatant in combatants)
             {
@@ -204,11 +239,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 {
                     continue;
                 }
-                
+
                 bool include = false;
 
                 var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant);
-                
+
                 if (ids.Count == 0 && names.Count == 0)
                 {
                     include = true;
@@ -275,72 +310,82 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return;
             }
 
-            LogMessageType lineType;
-            var line = args.originalLogLine.Split('|');
-
-            if (!int.TryParse(line[0], out int lineTypeInt))
-            {
-                return;
-            }
-
             try
             {
-                lineType = (LogMessageType)lineTypeInt;
-            } catch
-            {
-                return;
-            }
+                LogMessageType lineType;
+                var line = args.originalLogLine.Split('|');
 
-            switch (lineType)
-            {
-                case LogMessageType.ChangeZone:
-                    if (line.Length < 3) return;
+                if (!int.TryParse(line[0], out int lineTypeInt))
+                {
+                    return;
+                }
 
-                    var zoneID = Convert.ToUInt32(line[2], 16);
-                    var zoneName = line[3];
+                try
+                {
+                    lineType = (LogMessageType)lineTypeInt;
+                }
+                catch
+                {
+                    return;
+                }
 
-                    DispatchAndCacheEvent(JObject.FromObject(new
-                    {
-                        type = ChangeZoneEvent,
-                        zoneID,
-                        zoneName,
-                    }));
-                    break;
+                uint playerID;
 
-                case LogMessageType.ChangePrimaryPlayer:
-                    if (line.Length < 4) return;
+                switch (lineType)
+                {
+                    case LogMessageType.ChangeZone:
+                        if (line.Length < 3) return;
 
-                    var charID = Convert.ToUInt32(line[2], 16);
-                    var charName = line[3];
+                        var zoneID = Convert.ToUInt32(line[2], 16);
+                        var zoneName = line[3];
 
-                    DispatchAndCacheEvent(JObject.FromObject(new
-                    {
-                        type = ChangePrimaryPlayerEvent,
-                        charID,
-                        charName,
-                    }));
-                    break;
-
-                case LogMessageType.Network6D:
-                    if (!Config.EndEncounterAfterWipe) break;
-                    if (line.Length < 4) break;
-
-                    if (line[3] == "40000010")
-                    {
-                        ActGlobals.oFormActMain.Invoke((Action)(() =>
+                        DispatchAndCacheEvent(JObject.FromObject(new
                         {
-                           ActGlobals.oFormActMain.EndCombat(true);
+                            type = ChangeZoneEvent,
+                            zoneID,
+                            zoneName,
                         }));
-                    }
-                    break;
-            }
+                        break;
 
-            DispatchEvent(JObject.FromObject(new
+                    case LogMessageType.ChangePrimaryPlayer:
+                        if (line.Length < 4) return;
+
+                        var charID = Convert.ToUInt32(line[2], 16);
+                        var charName = line[3];
+
+                        DispatchAndCacheEvent(JObject.FromObject(new
+                        {
+                            type = ChangePrimaryPlayerEvent,
+                            charID,
+                            charName,
+                        }));
+                        break;
+
+                    case LogMessageType.Network6D:
+                        if (!Config.EndEncounterAfterWipe) break;
+                        if (line.Length < 4) break;
+
+                        if (line[3] == "40000010")
+                        {
+                            ActGlobals.oFormActMain.Invoke((Action)(() =>
+                            {
+                                ActGlobals.oFormActMain.EndCombat(true);
+                            }));
+                        }
+                        break;
+                }
+
+                DispatchEvent(JObject.FromObject(new
+                {
+                    type = LogLineEvent,
+                    line,
+                    rawLine = args.originalLogLine,
+                }));
+            }
+            catch (Exception e)
             {
-                type = LogLineEvent,
-                line,
-                rawLine = args.originalLogLine,
-            }));
+                Log(LogLevel.Error, "Failed to process log line: " + e.ToString());
+            }
         }
 
         struct PartyMember
@@ -351,18 +396,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
             public uint worldId;
             // Raw job id.
             public int job;
+            public int level;
             // In immediate party (true), vs in alliance (false).
             public bool inParty;
+            public bool isPartyKnown;
         }
 
         private void DispatchPartyChangeEvent(ReadOnlyCollection<uint> partyList, int partySize)
         {
-            // To prevent the cached party member list from growing
-            // indefinitely, reset whenever you are no longer in a party.
-            if (partySize == 0)
-                this.cachedPartyMembers.Clear();
-
-            var combatants = FFXIVRepository.GetCombatants();
+            cachedPartyList = partyList;
+            var combatants = repository.GetCombatants();
             if (combatants == null)
                 return;
 
@@ -375,9 +418,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // Additionally, there is a race where |combatants| is not updated
             // by the time this function is called.  However, this only seems
             // to happen in the case of disconnects and never when zoning in.
-            // As a workaround, cache the last state of each party member, so
-            // that we can always send info for everybody in your immediate
-            // party.
+            // As a workaround, we use data retrieved from the NetworkAdd/RemoveCombatant
+            // lines and keep track of all combatants which are missing from
+            // the memory combatant list (the network lines are missing the
+            // party status). Once per second (in Update()) we check if all
+            // missing members have appeared and once they do, we dispatch
+            // a PartyChangedEvent. This should result in immediate events
+            // whenever the party changes and a second delayed event for each
+            // change that updates the inParty field.
             //
             // Alternatives:
             // * poll GetCombatants until all party members exist (infinitely?)
@@ -385,44 +433,50 @@ namespace RainbowMage.OverlayPlugin.EventSources
             // * make this function only return the values from the delegate
             // * make callers handle this via calling GetCombatants explicitly
 
-            // Update cached member info.
-            var query = combatants.Where(c => c.PartyType != PartyTypeEnum.None);
-            foreach (var c in query)
+            // Build a lookup table of currently known combatants
+            var lookupTable = new Dictionary<uint, Combatant>();
+            foreach (var c in combatants)
             {
-                var member = new PartyMember()
+                if (c.PartyType != PartyTypeEnum.None)
                 {
-                    id = $"{c.ID:X}",
-                    name = c.Name,
-                    worldId = c.WorldID,
-                    job = c.Job,
-                    inParty = c.PartyType == PartyTypeEnum.Party,
-                };
-
-                this.cachedPartyMembers[c.ID] = member;
+                    lookupTable[c.ID] = c;
+                }
             }
 
             // Accumulate party members from cached info.  If they don't exist,
             // still send *something*, since it's better than nothing.
             List<PartyMember> result = new List<PartyMember>(24);
-            foreach (var id in partyList)
+            lock (missingPartyMembers) lock (partyList)
             {
-                PartyMember member;
-                if (this.cachedPartyMembers.TryGetValue(id, out member))
+                missingPartyMembers.Clear();
+
+                foreach (var id in partyList)
                 {
-                    result.Add(member);
-                }
-                else
-                {
-                    result.Add(new PartyMember()
+                    Combatant c;
+                    if (lookupTable.TryGetValue(id, out c))
                     {
-                        id = $"{id:X}",
-                        name = "",
-                        worldId = 0,
-                        job = 0,
-                        inParty = true,
-                    });
+                        result.Add(new PartyMember
+                        {
+                            id = $"{id:X}",
+                            name = c.Name,
+                            worldId = c.WorldID,
+                            job = c.Job,
+                            inParty = c.PartyType == PartyTypeEnum.Party
+                        });
+                    }
+                    else
+                    {
+                        missingPartyMembers.Add(id);
+                    }
+                }
+
+                if (missingPartyMembers.Count > 0) {
+                    Log(LogLevel.Debug, "Party changed event delayed until members are available");
+                    return;
                 }
             }
+
+            Log(LogLevel.Debug, "party list: {0}", JObject.FromObject(new { party = result }).ToString());
 
             DispatchAndCacheEvent(JObject.FromObject(new
             {
@@ -438,7 +492,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override void LoadConfig(IPluginConfig config)
         {
-            this.Config = Registry.Resolve<BuiltinEventConfig>();
+            this.Config = container.Resolve<BuiltinEventConfig>();
 
             this.Config.UpdateIntervalChanged += (o, e) =>
             {
@@ -448,7 +502,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override void SaveConfig(IPluginConfig config)
         {
-            
+
         }
 
         public override void Start()
@@ -481,7 +535,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 DispatchEvent(this.CreateCombatData());
             }
-            
+
             if (importing && HasSubscriber(ImportedLogLinesEvent))
             {
                 List<string> logs = null;
@@ -502,6 +556,31 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         type = ImportedLogLinesEvent,
                         logLines = logs
                     }));
+                }
+            }
+
+            lock(missingPartyMembers)
+            {
+                // If we are looking for missing party members, check if they are present by now.
+                if (missingPartyMembers.Count > 0)
+                {
+                    var combatants = repository.GetCombatants();
+                    if (combatants != null)
+                    {
+                        foreach (var c in combatants)
+                        {
+                            if (missingPartyMembers.Contains(c.ID))
+                            {
+                                missingPartyMembers.Remove(c.ID);
+                            }
+                        }
+                    }
+
+                    // Send an update event once all party members have been found.
+                    if (missingPartyMembers.Count == 0)
+                    {
+                        DispatchPartyChangeEvent(cachedPartyList, 0);
+                    }
                 }
             }
         }
@@ -555,16 +634,18 @@ namespace RainbowMage.OverlayPlugin.EventSources
                             var bValue = float.Parse(b.Value[key]);
 
                             return factor * aValue.CompareTo(bValue);
-                        } catch(FormatException)
+                        }
+                        catch (FormatException)
                         {
                             return 0;
-                        } catch(KeyNotFoundException)
+                        }
+                        catch (KeyNotFoundException)
                         {
                             return 0;
                         }
                     });
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Log(LogLevel.Error, Resources.ListSortFailed, key, e);
                 }

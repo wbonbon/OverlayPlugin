@@ -1,16 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace RainbowMage.OverlayPlugin.EventSources
+namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
-    public class EnmityMemory52 : EnmityMemory
+    public class EnmityMemory53 : EnmityMemory
     {
         private FFXIVMemory memory;
         private ILogger logger;
         private DateTime lastSigScan = DateTime.MinValue;
+        private uint loggedScanErrors = 0;
 
         private IntPtr charmapAddress = IntPtr.Zero;
         private IntPtr targetAddress = IntPtr.Zero;
@@ -41,11 +42,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const uint emptyID = 0xE0000000;
         private const int numMemoryCombatants = 421;
 
-        public EnmityMemory52(ILogger logger)
+        public EnmityMemory53(TinyIoCContainer container)
         {
-            this.memory = new FFXIVMemory(logger);
+            this.memory = new FFXIVMemory(container);
             this.memory.OnProcessChange += ResetPointers;
-            this.logger = logger;
+            this.logger = container.Resolve<ILogger>();
             GetPointerAddress();
         }
 
@@ -171,6 +172,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             logger.Log(LogLevel.Debug, "aggroAddress: 0x{0:X}", aggroAddress.ToInt64());
             logger.Log(LogLevel.Debug, "targetAddress: 0x{0:X}", targetAddress.ToInt64());
             logger.Log(LogLevel.Debug, "inCombatAddress: 0x{0:X}", inCombatAddress.ToInt64());
+
             Combatant c = GetSelfCombatant();
             if (c != null)
             {
@@ -179,10 +181,21 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             if (!success)
             {
-                logger.Log(LogLevel.Error, "Failed to memory scan 5.2: {0}.", String.Join(",", fail));
-            } else
+                if (loggedScanErrors < 10)
+                {
+                    logger.Log(LogLevel.Error, "Failed to find enmity memory for 5.3: {0}.", String.Join(",", fail));
+                    loggedScanErrors++;
+
+                    if (loggedScanErrors == 10)
+                    {
+                        logger.Log(LogLevel.Error, "Further enmity errors won't be logged.");
+                    }
+                }
+            }
+            else
             {
-                logger.Log(LogLevel.Info, "Found enmity memory for 5.2.");
+                logger.Log(LogLevel.Info, "Found enmity memory for 5.3.");
+                loggedScanErrors = 0;
             }
 
             return success;
@@ -317,7 +330,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             [FieldOffset(0x189C)]
             public int MaxHP;
 
-            [FieldOffset(0x18D6)]
+            [FieldOffset(0x18DA)]
             public byte Job;
 
             [FieldOffset(0x1958)]
@@ -382,7 +395,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
-        [StructLayout(LayoutKind.Explicit, Size=8)]
+        [StructLayout(LayoutKind.Explicit, Size = 8)]
         struct EnmityListEntry
         {
             public static int Size => Marshal.SizeOf(typeof(EnmityListEntry));

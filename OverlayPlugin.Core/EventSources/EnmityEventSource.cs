@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RainbowMage.OverlayPlugin.MemoryProcessors;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -40,28 +41,17 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public BuiltinEventConfig Config { get; set; }
 
-        public EnmityEventSource(ILogger logger) : base(logger)
+        public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
-            if(FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
+            var repository = container.Resolve<FFXIVRepository>();
+
+            if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese || repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
             {
-                memoryCandidates = new List<EnmityMemory>()
-                {
-                    new EnmityMemory52(logger)
-                };
-            }
-            else if (FFXIVRepository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
-            {
-                memoryCandidates = new List<EnmityMemory>()
-                {
-                    new EnmityMemory50(logger)
-                };
+                memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
             }
             else
             {
-                memoryCandidates = new List<EnmityMemory>()
-                {
-                    new EnmityMemory53(logger)
-                };
+                memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
             }
 
             RegisterEventTypes(new List<string> {
@@ -77,7 +67,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override void LoadConfig(IPluginConfig cfg)
         {
-            this.Config = Registry.Resolve<BuiltinEventConfig>();
+            this.Config = container.Resolve<BuiltinEventConfig>();
 
             this.Config.EnmityIntervalChanged += (o, e) =>
             {
