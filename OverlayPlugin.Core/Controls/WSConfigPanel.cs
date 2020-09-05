@@ -418,6 +418,7 @@ namespace RainbowMage.OverlayPlugin
                     }
 
                     simpLogBox.AppendText("Launching WSServer...\r\n");
+                    _config.WSServerRunning = true;
                     _server.Start();
 
                     simpLogBox.AppendText("Launching ngrok...\r\n");
@@ -524,7 +525,7 @@ tunnels:
                     {
                         simpLogBox.AppendText("Done!\r\n");
                         simpLogBox.AppendText("\r\n#############################################\r\nUse the URL Generator below to generate URLs for you.\r\n\r\n");
-                        simpLogBox.AppendText("\r\nIf you know what you're using an overlay that isn't listed, here are some URLs for you:\r\n");
+                        simpLogBox.AppendText("\r\nIf you know what you're using an overlay that isn't listed, here are some query strings for you:\r\n");
                         simpLogBox.AppendText("\r\n    ?HOST_PORT=" + _ngrokPrefix + "\r\n    ?OVERLAY_WS=" + _ngrokPrefix + "/ws\r\n");
                         simpLogBox.AppendText("#############################################\r\n");
 
@@ -547,6 +548,9 @@ tunnels:
             var percent = ((float)resumed + dlnow) / ((float)resumed + dltotal);
             var dlMib = ((resumed + dlnow) / 1024 / 1024);
             var totalMib = ((resumed + dltotal) / 1024 / 1024);
+
+            // Avoid NaN%
+            if (dlMib == 0) percent = 0;
 
             var lines = simpLogBox.Lines;
             lines[lines.Length - 1] = Math.Round(percent * 100, 2) + "% (" + dlMib + " MiB / " + totalMib + " MiB)";
