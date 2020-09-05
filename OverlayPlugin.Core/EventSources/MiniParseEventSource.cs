@@ -68,6 +68,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private const string FileChangedEvent = "FileChanged";
         private const string OnlineStatusChangedEvent = "OnlineStatusChanged";
         private const string PartyChangedEvent = "PartyChanged";
+        private const string BroadcastMessageEvent = "BroadcastMessage";
 
         private FFXIVRepository repository;
 
@@ -86,6 +87,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 FileChangedEvent,
                 LogLineEvent,
                 ImportedLogLinesEvent,
+                BroadcastMessageEvent,
             });
 
             // These events need to deliver cached values to new subscribers.
@@ -172,6 +174,29 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     return null;
 
                 ActGlobals.oFormActMain.TTS(text);
+                return null;
+            });
+
+            RegisterEventHandler("broadcast", (msg) =>
+            {
+                if (!msg.ContainsKey("msg") || !msg.ContainsKey("source"))
+                {
+                    Log(LogLevel.Error, "Called broadcast handler without specifying a source or message (\"source\" or \"msg\" property are missing).");
+                    return null;
+                }
+
+                if (msg["source"].Type != JTokenType.String)
+                {
+                    Log(LogLevel.Error, "The source passed to the broadcast handler must be a string!");
+                    return null;
+                }
+
+                DispatchEvent(JObject.FromObject(new {
+                    type = BroadcastMessageEvent,
+                    source = msg["source"],
+                    msg = msg["msg"],
+                }));
+
                 return null;
             });
 
