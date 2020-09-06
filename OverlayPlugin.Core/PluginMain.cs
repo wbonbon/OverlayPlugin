@@ -244,10 +244,7 @@ namespace RainbowMage.OverlayPlugin
 
                                     // WSServer has to start after the LoadAddons() call because clients can connect immediately
                                     // after it's initialized and that requires the event sources to be initialized.
-                                    if (Config.WSServerRunning)
-                                    {
-                                        _container.Register(new WSServer(_container));
-                                    }
+                                    if (Config.WSServerRunning) _container.Resolve<WSServer>().Start();
 
                                     configSaveTimer.Start();
                                 } catch (Exception ex)
