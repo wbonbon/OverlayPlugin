@@ -299,7 +299,7 @@ namespace RainbowMage.OverlayPlugin.Updater
             if (newVersion)
             {
                 // Make sure we open the UpdateQuestionForm on a UI thread.
-                ActGlobals.oFormActMain.Invoke((Action)(async () =>
+                await (Task)ActGlobals.oFormActMain.Invoke((Func<Task>)(() =>
                 {
                     var dialog = new UpdateQuestionForm(options, releaseNotes);
                     var result = dialog.ShowDialog();
@@ -307,8 +307,10 @@ namespace RainbowMage.OverlayPlugin.Updater
 
                     if (result == DialogResult.Yes)
                     {
-                        await InstallUpdate(downloadUrl, options);
+                        return InstallUpdate(downloadUrl, options);
                     }
+
+                    return Task.CompletedTask;
                 }));
             } else if (manualCheck && remoteVersion != null)
             {
