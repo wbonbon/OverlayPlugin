@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigCreationConverter.cs" />
     <Compile Include="Controls\GeneralConfigTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
