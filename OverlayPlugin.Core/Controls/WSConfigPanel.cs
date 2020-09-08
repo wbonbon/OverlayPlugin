@@ -73,6 +73,12 @@ namespace RainbowMage.OverlayPlugin
             };
         }
 
+        public void Stop()
+        {
+            if (_ngrok != null && !_ngrok.HasExited)
+                _ngrok.Kill();
+        }
+
         private void UpdateStatus(object sender, WSServer.StateChangedArgs e)
         {
             startBtn.Enabled = true;
@@ -324,6 +330,8 @@ namespace RainbowMage.OverlayPlugin
 
         private void cbOverlay_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (cbOverlay.SelectedIndex == -1) return;
+
             var item = cbOverlay.Items[cbOverlay.SelectedIndex];
             var preset = (IOverlayPreset) item.GetType().GetProperty("preset").GetValue(item);
             if (preset == null) return;
@@ -459,7 +467,7 @@ tunnels:
                     p.StartInfo.FileName = ngrokPath;
                     p.StartInfo.Arguments = "start -config=\"" + ngrokConfigPath + "\" wsserver";
                     p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.CreateNoWindow = false;
+                    p.StartInfo.CreateNoWindow = true;
                     p.StartInfo.RedirectStandardError = true;
                     p.StartInfo.RedirectStandardOutput = true;
 
@@ -523,6 +531,9 @@ tunnels:
                         if (tun["name"] != null && tun["name"].ToString() == "wsserver" && tun["public_url"] != null)
                         {
                             _ngrokPrefix = tun["public_url"].ToString().Replace("https://", "wss://");
+                            
+                            // Update the generated URL box
+                            cbOverlay_SelectedIndexChanged(null, null);
                             done = true;
                             break;
                         }
@@ -532,11 +543,16 @@ tunnels:
                     {
                         simpLogBox.AppendText("Done!\r\n");
                         simpLogBox.AppendText("\r\n#############################################\r\nUse the URL Generator below to generate URLs for you.\r\n\r\n");
-                        simpLogBox.AppendText("\r\nIf you know what you're using an overlay that isn't listed, here are some query strings for you:\r\n");
+                        simpLogBox.AppendText("\r\nIf you know what you're doring or you're using an overlay that isn't listed, here are some query strings for you:\r\n");
                         simpLogBox.AppendText("\r\n    ?HOST_PORT=" + _ngrokPrefix + "\r\n    ?OVERLAY_WS=" + _ngrokPrefix + "/ws\r\n");
                         simpLogBox.AppendText("#############################################\r\n");
 
                         UpdateTunnelStatus(TunnelStatus.Active);
+
+                        p.Exited += (_, ev) =>
+                        {
+                            UpdateTunnelStatus(TunnelStatus.Error);
+                        };
                     } else
                     {
                         simpLogBox.AppendText("Failed!\r\n");

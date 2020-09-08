@@ -343,6 +343,11 @@ namespace RainbowMage.OverlayPlugin
             try { _container.Resolve<WSServer>().Stop(); }
             catch { }
 
+            if (this.wsConfigPanel != null)
+            {
+                this.wsConfigPanel.Stop();
+            }
+
             if (this.wsTabPage != null && this.wsTabPage.Parent != null)
                 ((TabControl)this.wsTabPage.Parent).TabPages.Remove(this.wsTabPage);
 
