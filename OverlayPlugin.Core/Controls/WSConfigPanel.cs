@@ -46,6 +46,7 @@ namespace RainbowMage.OverlayPlugin
             _plugin = container.Resolve<PluginMain>();
             _registry = container.Resolve<Registry>();
 
+
             ipTxt.Text = _config.WSServerIP;
             portTxt.Text = "" + _config.WSServerPort;
             sslBox.Checked = _config.WSServerSSL;
@@ -351,7 +352,13 @@ namespace RainbowMage.OverlayPlugin
                 hostUrl += ":" + _config.WSServerPort;
             }
 
-            var url = preset.Url;
+#if DEBUG
+            var resourcesPath = "file:///" + _plugin.PluginDirectory.Replace('\\', '/') + "/libs/resources";
+#else
+            var resourcesPath = "file:///" + _plugin.PluginDirectory.Replace('\\', '/') + "/resources";
+#endif
+
+            var url = preset.Url.Replace("\\", "/").Replace("%%", resourcesPath);
             if (preset.Supports.Contains("modern"))
             {
                 url += "?OVERLAY_WS=" + hostUrl + "/ws";

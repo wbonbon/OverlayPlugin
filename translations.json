@@ -234,6 +234,9 @@
             "ko-KR": "SSL 인증서 발급",
             "zh-CN": "生成SSL证书"
         },
+        "introPage.Text": {
+            "en": "Intro"
+        },
         "label1.Text": {
             "de-DE": "IP Addresse:",
             "en": "IP Address:",
@@ -277,6 +280,9 @@
             "fr-FR": "Cette URL peut ne pas fonctionner si l'overlay ne supporte pas ACTWebSocket.",
             "ko-KR": "오버레이가 ACTWebSocket을 지원하지 않는다면, 이 주소는 작동하지 않을 수도 있습니다.",
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
+        },
+        "lblWsserverIntro.Text": {
+            "en": "Here's a short explanation for both tabs:\n\nStream/Local Overlay: If you start WSServer through this tab, you can use the generated URLs on this PC (i.e. in OBS, XL's overlay plugin, etc.). If you know a bit about networks and SSL you can even make this work with other devices in your LAN but in general I'd recommend using the Shared Overlay tab for that since it's much easier to use.\n\nShared Overlay: If you start WSServer through this tab, you can use the generated URLs on any device that is connected to the internet (your phone, tablet, a friend's PC, etc.). You can share these links with other people.\n\nFinally, if WSServer is started through the Stream/Local Overlay tab, it will automatically restart on ACT launch. If it's started through the Shared Overlay tab, it won't start automatically since you'd get a new URL each time anyway. Note: If this bothers you, ask ngld in the ACT Discord (or on OverlayPlugin's GitHub repo) to fix this. There are ways around this but I'm not sure how many people want this feature.\n"
         },
         "logDisplay.Text": {
             "de-DE": "SSL kann nur aktiviert werden, wenn ein SSL-Zertifikat vorhanden ist. Klicke auf die Schaltfläche oben, um es automatisch zu generieren, oder platzieren eine PKCS#12 Datei mit dem Kennwort in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 und starte ACT neu.\n\nDanach sollte SSL aktiviert werden können.",
