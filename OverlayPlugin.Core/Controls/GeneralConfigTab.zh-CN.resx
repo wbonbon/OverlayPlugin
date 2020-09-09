@@ -135,4 +135,13 @@
   <data name="lblGithub.Text" xml:space="preserve">
     <value>GitHub项目：</value>
   </data>
+  <data name="lblNewUserWelcome.Text" xml:space="preserve">
+    <value>如果您正在此处寻找链接字段，那么说明您仍然习惯于旧版本的OverlayPlugin或遵循于过时的指南。您首先需要使用左下角的“新建”按钮创建一个悬浮窗，然后才能看到OverlayPlugin的任何悬浮窗。
+请尝试使用预设而不是手动设置的链接，这将可以防止一系列的问题。
+
+</value>
+  </data>
+  <data name="lblReadMe.Text" xml:space="preserve">
+    <value>温馨提示：</value>
+  </data>
 </root>
