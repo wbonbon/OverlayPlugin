@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
+using System.IO;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -45,6 +46,22 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             var repository = container.Resolve<FFXIVRepository>();
 
+            try
+            {
+                PickMemoryCandidates(repository);
+            } catch (FileNotFoundException)
+            {
+                // The FFXIV plugin isn't present.
+            }
+
+            RegisterEventTypes(new List<string> {
+                EnmityTargetDataEvent, EnmityAggroListEvent,
+            });
+            RegisterCachedEventType(InCombatEvent);
+        }
+
+        private void PickMemoryCandidates(FFXIVRepository repository)
+        {
             if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese || repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
             {
                 memoryCandidates = new List<EnmityMemory>() { new EnmityMemory52(container) };
@@ -53,11 +70,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 memoryCandidates = new List<EnmityMemory>() { new EnmityMemory53(container) };
             }
-
-            RegisterEventTypes(new List<string> {
-                EnmityTargetDataEvent, EnmityAggroListEvent,
-            });
-            RegisterCachedEventType(InCombatEvent);
         }
 
         public override Control CreateConfigControl()
@@ -78,6 +90,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public override void Start()
         {
+            // If we don't have anything to scan for, don't start.
+            if (memoryCandidates == null) return;
+
             memoryValid = false;
             timer.Change(0, MEMORY_SCAN_INTERVAL);
         }

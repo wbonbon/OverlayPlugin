@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using FFXIV_ACT_Plugin.Common.Models;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
+using System.IO;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -23,6 +24,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private List<string> importedLogs = new List<string>();
         private ReadOnlyCollection<uint> cachedPartyList = null;
         private List<uint> missingPartyMembers = new List<uint>();
+        private bool ffxivPluginPresent = false;
         private static Dictionary<uint, string> StatusMap = new Dictionary<uint, string>
         {
             { 0, "Online" },
@@ -207,9 +209,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return null;
             });
 
-            foreach (var propName in DefaultCombatantFields)
+            try
             {
-                CachedCombatantPropertyInfos.Add(propName, typeof(Combatant).GetProperty(propName));
+                InitFFXIVIntegration();
+            } catch (FileNotFoundException)
+            {
+                // The FFXIV plugin hasn't been loaded.
             }
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
@@ -223,8 +228,17 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 DispatchAndCacheEvent(obj);
             };
+        }
+
+        private void InitFFXIVIntegration()
+        {
+            foreach (var propName in DefaultCombatantFields)
+            {
+                CachedCombatantPropertyInfos.Add(propName, typeof(Combatant).GetProperty(propName));
+            }
 
             repository.RegisterPartyChangeDelegate((partyList, partySize) => DispatchPartyChangeEvent(partyList, partySize));
+            ffxivPluginPresent = true;
         }
 
         private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)
@@ -329,8 +343,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     return;
                 }
 
-                uint playerID;
-
                 switch (lineType)
                 {
                     case LogMessageType.ChangeZone:
@@ -399,7 +411,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
             public int level;
             // In immediate party (true), vs in alliance (false).
             public bool inParty;
-            public bool isPartyKnown;
         }
 
         private void DispatchPartyChangeEvent(ReadOnlyCollection<uint> partyList, int partySize)
@@ -559,6 +570,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
             }
 
+            if (ffxivPluginPresent)
+            {
+                UpdateMissingPartyMembers();
+            }
+        }
+
+        private void UpdateMissingPartyMembers()
+        {
             lock(missingPartyMembers)
             {
                 // If we are looking for missing party members, check if they are present by now.

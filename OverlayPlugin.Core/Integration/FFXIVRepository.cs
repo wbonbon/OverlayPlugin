@@ -128,9 +128,20 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public bool IsFFXIVPluginPresent()
+        private bool IsFFXIVPluginPresentImpl()
         {
             return GetRepository() != null;
+        }
+
+        public bool IsFFXIVPluginPresent()
+        {
+            try
+            {
+                return IsFFXIVPluginPresentImpl();
+            } catch (FileNotFoundException)
+            {
+                return false;
+            }
         }
 
         public Version GetPluginVersion()
