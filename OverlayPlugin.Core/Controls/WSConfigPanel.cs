@@ -543,7 +543,7 @@ tunnels:
                     {
                         simpLogBox.AppendText("Done!\r\n");
                         simpLogBox.AppendText("\r\n#############################################\r\nUse the URL Generator below to generate URLs for you.\r\n\r\n");
-                        simpLogBox.AppendText("\r\nIf you know what you're doring or you're using an overlay that isn't listed, here are some query strings for you:\r\n");
+                        simpLogBox.AppendText("\r\nIf you know what you're doing or you're using an overlay that isn't listed, here are some query strings for you:\r\n");
                         simpLogBox.AppendText("\r\n    ?HOST_PORT=" + _ngrokPrefix + "\r\n    ?OVERLAY_WS=" + _ngrokPrefix + "/ws\r\n");
                         simpLogBox.AppendText("#############################################\r\n");
 
