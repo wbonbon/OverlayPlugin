@@ -235,7 +235,8 @@
             "zh-CN": "生成SSL证书"
         },
         "introPage.Text": {
-            "en": "Intro"
+            "en": "Intro",
+            "zh-CN": "简介"
         },
         "label1.Text": {
             "de-DE": "IP Addresse:",
@@ -282,7 +283,8 @@
             "zh-CN": "如果此悬浮窗不支持ACTWebSocket，则此链接可能不会生效。"
         },
         "lblWsserverIntro.Text": {
-            "en": "Here's a short explanation for both tabs:\n\nStream/Local Overlay: If you start WSServer through this tab, you can use the generated URLs on this PC (i.e. in OBS, XL's overlay plugin, etc.). If you know a bit about networks and SSL you can even make this work with other devices in your LAN but in general I'd recommend using the Shared Overlay tab for that since it's much easier to use.\n\nShared Overlay: If you start WSServer through this tab, you can use the generated URLs on any device that is connected to the internet (your phone, tablet, a friend's PC, etc.). You can share these links with other people.\n\nFinally, if WSServer is started through the Stream/Local Overlay tab, it will automatically restart on ACT launch. If it's started through the Shared Overlay tab, it won't start automatically since you'd get a new URL each time anyway. Note: If this bothers you, ask ngld in the ACT Discord (or on OverlayPlugin's GitHub repo) to fix this. There are ways around this but I'm not sure how many people want this feature.\n"
+            "en": "Here's a short explanation for both tabs:\n\nStream/Local Overlay: If you start WSServer through this tab, you can use the generated URLs on this PC (i.e. in OBS, XL's overlay plugin, etc.). If you know a bit about networks and SSL you can even make this work with other devices in your LAN but in general I'd recommend using the Shared Overlay tab for that since it's much easier to use.\n\nShared Overlay: If you start WSServer through this tab, you can use the generated URLs on any device that is connected to the internet (your phone, tablet, a friend's PC, etc.). You can share these links with other people.\n\nFinally, if WSServer is started through the Stream/Local Overlay tab, it will automatically restart on ACT launch. If it's started through the Shared Overlay tab, it won't start automatically since you'd get a new URL each time anyway. Note: If this bothers you, ask ngld in the ACT Discord (or on OverlayPlugin's GitHub repo) to fix this. There are ways around this but I'm not sure how many people want this feature.\n",
+            "zh-CN": "此处是对后两个标签页的简介：\n\n直播/本地悬浮窗：如果您通过此选项卡启动WS服务器，您就可以在这台电脑上使用生成的链接 （例如在OBS中，XL的overlay plugin中，等等）。如果您对网络和SSL略知一二，您甚至可以在您的局域网中的其他设备上使用它。但是一般来说，我建议使用共享悬浮窗选项卡，因为它更易于使用。\n\n共享悬浮窗：如果您通过此选项卡启动WS服务器，则可以在连接到互联网的任何设备上使用生成的链接（例如您的手机、平板电脑、朋友的电脑，等等）。您可以与其他人共享这些链接。\n\n最后，如果您通过“直播/本地悬浮窗”选项卡启动了WS服务器, 它将在ACT启动时自动重新启动。如果是通过“共享悬浮窗”选项卡启动的, 它不会自动启动，因为您每次都将获得一个新的链接。备注：如果这让您感到困扰，请在ACT Discord（或在OverlayPlugin的GitHub仓库）中要求ngld修复此问题。有很多方法可以解决这个问题，但是我不确定有多少人需要这个功能。\n"
         },
         "logDisplay.Text": {
             "de-DE": "SSL kann nur aktiviert werden, wenn ein SSL-Zertifikat vorhanden ist. Klicke auf die Schaltfläche oben, um es automatisch zu generieren, oder platzieren eine PKCS#12 Datei mit dem Kennwort in %AppData%\\Advanced Combat Tracker\\Config\\OverlayPluginSSL.p12 und starte ACT neu.\n\nDanach sollte SSL aktiviert werden können.",
