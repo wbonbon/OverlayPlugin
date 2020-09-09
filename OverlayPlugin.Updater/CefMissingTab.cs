@@ -23,6 +23,11 @@ namespace RainbowMage.OverlayPlugin.Updater
             _cefPath = cefPath;
             _pluginLoader = pluginLoader;
             lnkManual.Text = CefInstaller.GetUrl();
+
+            container.Resolve<ILogger>().RegisterListener((entry) =>
+            {
+                logBox.AppendText($"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine);
+            });
         }
 
         private async void btnOpenManual_Click(object sender, EventArgs e)

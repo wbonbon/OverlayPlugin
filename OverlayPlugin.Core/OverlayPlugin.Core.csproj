@@ -66,6 +66,12 @@
     <Compile Include="Controls\GeneralConfigTab.Designer.cs">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LogPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LogPanel.Designer.cs">
+      <DependentUpon>LogPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RenameOverlayDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,6 +308,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GeneralConfigTab.zh-CN.resx">
       <DependentUpon>GeneralConfigTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LogPanel.resx">
+      <DependentUpon>LogPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\NewOverlayDialog.de-DE.resx">
       <DependentUpon>NewOverlayDialog.cs</DependentUpon>
