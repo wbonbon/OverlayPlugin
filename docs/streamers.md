@@ -6,7 +6,7 @@ layout: article
 
 ## Quick start
 
-1. In ACT, go to Plugins > Overlay WSServer > Local/Stream overlay.
+1. In ACT, go to Plugins > OverlayPlugin WSServer > Stream/Local overlay.
 2. Leave all settings on their defaults (keep SSL disabled!) and click `Start`.
 3. Look for an overlay that supports WebSocket connections. I've listed a few below.
 4. Add a browser source in OBS. Enter `<overlay URL>?HOST_PORT=ws://127.0.0.1:10501/` as the URL. For Kagerou the URL would be: https://idyllshi.re/kagerou/overlay/?HOST_PORT=ws://127.0.0.1:10501/
