@@ -53,6 +53,12 @@
     "size": [800, 300],
     "supports": ["actws"]
   },
+  "Kagami": {
+    "type": "MiniParse",
+    "url": "https://ramram1048.github.io/kagami/",
+    "size": [800, 400],
+    "supports": ["modern"]
+  },
   "Basic RainbowMage": {
     "type": "MiniParse",
     "url": "%%/miniparse.html",
