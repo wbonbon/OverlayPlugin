@@ -21,6 +21,7 @@ namespace RainbowMage.OverlayPlugin
         Registry _registry;
         TabPage _generalTab, _eventTab;
         bool logResized = false;
+        bool logConnected = false;
 
         static Dictionary<string, string> esNames = new Dictionary<string, string>
         {
@@ -63,6 +64,7 @@ namespace RainbowMage.OverlayPlugin
             };
             _eventTab.Controls.Add(new EventSources.BuiltinEventConfigPanel(container));
 
+            logBox.Text = Resources.LogNotConnectedError;
             _logger.RegisterListener(AddLogEntry);
             _registry.EventSourceRegistered += (o, e) => Invoke((Action)(() => AddEventSourceTab(o, e)));
 
@@ -70,11 +72,21 @@ namespace RainbowMage.OverlayPlugin
             {
                 if (!logResized && Height > 500 && tabControl.TabCount > 0)
                 {
-                    logResized = true;
-                    // Overlay tabs have been initialised, everything is fine; make the log small again.
-                    splitContainer1.SplitterDistance = (int) Math.Round(Height * 0.75);
+                    ResizeLog();
                 }
             };
+        }
+
+        public void ResizeLog()
+        {
+            if (!logResized)
+            {
+                // Only make this the final resize if we have enough height to make this layout usable.
+                logResized = Height > 500;
+
+                // Overlay tabs have been initialised, everything is fine; make the log small again.
+                splitContainer1.SplitterDistance = (int) Math.Round(Height * 0.75);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -92,6 +104,13 @@ namespace RainbowMage.OverlayPlugin
         private void AddLogEntry(LogEntry entry)
         {
             var msg = $"[{entry.Time}] {entry.Level}: {entry.Message}" + Environment.NewLine;
+
+            if (!logConnected)
+            {
+                // Remove the error message about the log not being connected since it is now.
+                logConnected = true;
+                logBox.Text = "";
+            }
 
             if (checkBoxFollowLog.Checked)
             {

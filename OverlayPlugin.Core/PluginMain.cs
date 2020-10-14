@@ -94,6 +94,7 @@ namespace RainbowMage.OverlayPlugin
                     _logger.Log(LogLevel.Error, "");
                     _logger.Log(LogLevel.Error, "  ACT Discord: https://discord.gg/ahFKcmx");
                     _logger.Log(LogLevel.Error, "  GitHub repo: https://github.com/ngld/OverlayPlugin");
+
                     FailWithLog();
                     return;
                 }
@@ -247,11 +248,8 @@ namespace RainbowMage.OverlayPlugin
                             this.label.Text = "Init Phase 2: Addons";
                             await Task.Run(LoadAddons);
 
-#if DEBUG
                             this.label.Text = "Init Phase 2: Unstable new stuff";
                             _container.Register(new UnstableNewLogLines(_container));
-#endif
-
 
                             this.label.Text = "Init Phase 2: UI";
                             ActGlobals.oFormActMain.Invoke((Action)(() =>
@@ -280,6 +278,8 @@ namespace RainbowMage.OverlayPlugin
                                     configSaveTimer.Start();
 
                                     this.label.Text = "Initialised";
+                                    // Make the log small; startup was successful and there shouldn't be any error message to show.
+                                    controlPanel.ResizeLog();
                                 } catch (Exception ex)
                                 {
                                     _logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
