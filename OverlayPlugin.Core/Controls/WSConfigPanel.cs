@@ -372,7 +372,7 @@ namespace RainbowMage.OverlayPlugin
                 url += "?OVERLAY_WS=" + hostUrl + "/ws";
             } else if (preset.Supports.Contains("actws"))
             {
-                url += "?HOST_PORT=" + hostUrl;
+                url += "?HOST_PORT=" + hostUrl + "/";
             } else
             {
                 url = "";
