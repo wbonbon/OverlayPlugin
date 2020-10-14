@@ -250,6 +250,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void tbZoom_ValueChanged(object sender, EventArgs e)
         {
+            if (this.config.Zoom == 1 && Math.Abs(this.config.Zoom - this.tbZoom.Value) < 10)
+            {
+                // Don't change the zoom level if we don't want any zoom (see #152 for details).
+                return;
+            }
+
             this.config.Zoom = this.tbZoom.Value;
         }
 
