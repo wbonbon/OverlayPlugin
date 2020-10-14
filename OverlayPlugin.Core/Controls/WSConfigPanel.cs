@@ -378,7 +378,6 @@ namespace RainbowMage.OverlayPlugin
                 url = "";
             }
 
-            //lblUrlConfidentWarning.Visible = !confident;
             txtOverlayUrl.Text = url;
         }
 

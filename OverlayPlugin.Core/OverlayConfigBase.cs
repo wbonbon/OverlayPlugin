@@ -21,6 +21,8 @@ namespace RainbowMage.OverlayPlugin
 
         public string Name { get; set; }
 
+        public Guid Uuid { get; set; }
+
         private bool isVisible;
         public bool IsVisible
         {
@@ -204,6 +206,7 @@ namespace RainbowMage.OverlayPlugin
         protected OverlayConfigBase(string name)
         {
             this.Name = name;
+            this.Uuid = Guid.NewGuid();
             this.IsVisible = true;
             this.IsClickThru = false;
             this.Position = new Point(20, 20);
@@ -230,6 +233,11 @@ namespace RainbowMage.OverlayPlugin
                 globalHotkeyEnabled = false;
                 globalHotkeyModifiers = Keys.None;
                 globalHotkey = Keys.None;
+            }
+
+            if (Uuid == Guid.Empty)
+            {
+                Uuid = Guid.NewGuid();
             }
         }
 

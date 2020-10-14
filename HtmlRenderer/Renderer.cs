@@ -41,11 +41,13 @@ namespace RainbowMage.HtmlRenderer
         private int lastClickPosX;
         private int lastClickPosY;
         private string overlayName;
+        private string overlayUuid;
         public Region DraggableRegion;
 
-        public Renderer(string overlayName, string url, IRenderTarget target, object api)
+        public Renderer(string overlayName, string overlayUuid, string url, IRenderTarget target, object api)
         {
             this.overlayName = overlayName;
+            this.overlayUuid = overlayUuid;
             this._target = target;
             this.lastUrl = url;
             this._api = api;
@@ -102,6 +104,7 @@ namespace RainbowMage.HtmlRenderer
                 var initScript = @"(async () => {
                     await CefSharp.BindObjectAsync('OverlayPluginApi');
                     OverlayPluginApi.overlayName = " + JsonConvert.SerializeObject(this.overlayName) + @";
+                    OverlayPluginApi.overlayUuid = " + JsonConvert.SerializeObject(this.overlayUuid) + @";
                     OverlayPluginApi.ready = true;
                 })();";
                 e.Frame.ExecuteJavaScriptAsync(initScript, "init");
