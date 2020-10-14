@@ -273,7 +273,6 @@ namespace RainbowMage.OverlayPlugin
             {
                 try
                 {
-                    throw new FileNotFoundException();
                     LoadJson(configPath);
                     useBackup = false;
                 } catch (Exception ex)
@@ -293,7 +292,6 @@ namespace RainbowMage.OverlayPlugin
 
                     try
                     {
-                        throw new FileNotFoundException();
                         LoadJson(configPath + BACKUP_SUFFIX);
                     } catch (Exception ex)
                     {
