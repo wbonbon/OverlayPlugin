@@ -28,11 +28,6 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             public int remove;
             public int update;
         };
-        private OPCodes v5_1 = new OPCodes(
-          0x74,
-          0x79,
-          0x9B
-        );
         private OPCodes v5_2 = new OPCodes(
           0x935,
           0x936,
@@ -74,7 +69,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
                 region_ = "intl";
 
             opcodes = new Dictionary<string, OPCodes>();
-            opcodes.Add("ko", v5_1);
+            opcodes.Add("ko", v5_2);
             opcodes.Add("cn", v5_2);
             opcodes.Add("intl", v5_2);
 
