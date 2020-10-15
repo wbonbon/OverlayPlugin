@@ -185,6 +185,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
           entity.hp = mem.charDetails.hp;
           entity.max_hp = mem.charDetails.max_hp;
           entity.mp = mem.charDetails.mp;
+
+          // This doesn't exist in memory, so just send the right value.
+          // As there are other versions that still have it, don't change the event.
           entity.max_mp = 10000;
           entity.shield_value = mem.charDetails.shieldPercentage * entity.max_hp / 100;
 
