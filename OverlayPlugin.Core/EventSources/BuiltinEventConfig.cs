@@ -14,7 +14,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public event EventHandler UpdateDpsDuringImportChanged;
         public event EventHandler EndEncounterAfterWipeChanged;
         public event EventHandler EndEncounterOutOfCombatChanged;
-        public event EventHandler CutsceneDetectionLogChanged;
+        public event EventHandler LogLinesChanged;
 
         private int updateInterval;
         public int UpdateInterval {
@@ -134,19 +134,19 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
         }
 
-        private bool cutsceneDetectionLog;
-        public bool CutsceneDetectionLog
+        private bool logLines;
+        public bool LogLines
         {
             get
             {
-                return cutsceneDetectionLog;
+                return logLines;
             }
             set
             {
-                if (this.cutsceneDetectionLog != value)
+                if (this.logLines != value)
                 {
-                    this.cutsceneDetectionLog = value;
-                    CutsceneDetectionLogChanged?.Invoke(this, new EventArgs());
+                    this.logLines = value;
+                    LogLinesChanged?.Invoke(this, new EventArgs());
                 }
             }
         }
@@ -163,7 +163,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             this.updateDpsDuringImport = false;
             this.endEncounterAfterWipe = false;
             this.endEncounterOutOfCombat = false;
-            this.cutsceneDetectionLog = false;
+            this.logLines = false;
         }
 
         public static BuiltinEventConfig LoadConfig(IPluginConfig Config)
@@ -214,9 +214,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     result.OverlayData = value.ToObject<Dictionary<string, JToken>>();
                 }
 
-                if (obj.TryGetValue("CutsceneDetctionLog", out value))
+                if (obj.TryGetValue("LogLines", out value))
                 {
-                    result.cutsceneDetectionLog = value.ToObject<bool>();
+                    result.logLines = value.ToObject<bool>();
                 }
             }
 

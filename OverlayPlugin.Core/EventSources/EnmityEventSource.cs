@@ -42,6 +42,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         public BuiltinEventConfig Config { get; set; }
 
+        public event EventHandler<CombatStatusChangedArgs> CombatStatusChanged;
+
         public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
             var repository = container.Resolve<FFXIVRepository>();
@@ -165,6 +167,10 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     endEncounterToken.Cancel();
                     endEncounterToken = null;
                 }
+                if (lastInGameCombat != inGameCombat)
+                {
+                    CombatStatusChanged?.Invoke(this, new CombatStatusChangedArgs(inGameCombat));
+                }
                 lastInGameCombat = inGameCombat;
 
                 if (HasSubscriber(InCombatEvent))
@@ -280,6 +286,16 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 this.logger.Log(LogLevel.Error, "CreateAggroList: {0}", ex);
             }
             return JObject.FromObject(enmity);
+        }
+    }
+
+    public class CombatStatusChangedArgs : EventArgs
+    {
+        public bool InCombat { get; private set; }
+
+        public CombatStatusChangedArgs(bool status)
+        {
+            InCombat = status;
         }
     }
 }
