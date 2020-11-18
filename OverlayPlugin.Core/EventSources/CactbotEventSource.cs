@@ -487,7 +487,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
 
             // TODO: Reimplement
-            return new Dictionary<string, string>();
+            // return new Dictionary<string, string>();
 
             var web = new System.Net.WebClient();
             web.Encoding = System.Text.Encoding.UTF8;

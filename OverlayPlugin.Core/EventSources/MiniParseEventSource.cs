@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using FFXIV_ACT_Plugin.Common.Models;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -241,6 +242,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             ffxivPluginPresent = true;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private List<Dictionary<string, object>> GetCombatants(List<uint> ids, List<string> names, List<string> props)
         {
             List<Dictionary<string, object>> filteredCombatants = new List<Dictionary<string, object>>();

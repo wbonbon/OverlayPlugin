@@ -107,6 +107,7 @@ namespace RainbowMage.OverlayPlugin
             return subscription;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private Process GetCurrentFFXIVProcessImpl()
         {
             var repo = GetRepository();
@@ -116,6 +117,7 @@ namespace RainbowMage.OverlayPlugin
         }
 
         [Obsolete("Subscribe to the ProcessChanged event instead (See RegisterProcessChangedHandler())")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public Process GetCurrentFFXIVProcess()
         {
             try
@@ -133,6 +135,7 @@ namespace RainbowMage.OverlayPlugin
             return GetRepository() != null;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public bool IsFFXIVPluginPresent()
         {
             try
@@ -154,11 +157,13 @@ namespace RainbowMage.OverlayPlugin
             return typeof(IDataRepository).Assembly.Location;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private string GetGameVersionImpl()
         {
             return GetRepository()?.GetGameVersion();
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public string GetGameVersion()
         {
             try
@@ -171,6 +176,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public uint GetPlayerIDImpl()
         {
             var repo = GetRepository();
@@ -179,6 +185,7 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCurrentPlayerID();
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public uint GetPlayerID()
         {
             try
@@ -204,6 +211,7 @@ namespace RainbowMage.OverlayPlugin
             return playerInfo.Name;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public string GetPlayerName()
         {
             try
@@ -225,6 +233,7 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCombatantList();
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public Language GetLanguage()
         {
             var repo = GetRepository();

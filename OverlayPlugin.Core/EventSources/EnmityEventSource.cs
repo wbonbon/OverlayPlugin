@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -62,6 +63,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             RegisterCachedEventType(InCombatEvent);
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private void PickMemoryCandidates(FFXIVRepository repository)
         {
             if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese)
