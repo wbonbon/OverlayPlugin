@@ -318,7 +318,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0xB0)]
             public Single Rotation;
 
-            [FieldOffset(0x18B0)]
+            [FieldOffset(0x18B8)]
             public uint TargetID;
 
             [FieldOffset(0x1C4)]
