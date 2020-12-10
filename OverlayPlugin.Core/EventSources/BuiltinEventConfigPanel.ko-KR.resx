@@ -137,4 +137,16 @@
   <data name="label5.Text" xml:space="preserve">
     <value>전투 중 정보 업데이트 간격 (ms)</value>
   </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>전멸 후 전투 기록 종료</value>
+  </data>
+  <data name="experimentalWarning.Text" xml:space="preserve">
+    <value>주의: 아래 옵션들은 실험적인 기능입니다. - 아래 옵션을 사용할 때, 마주치는 모든 문제를 직접 해결할 수 있고 도움을 요청하지 않을 것을 확인하고 사용하세요.</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>전투에서 벗어나면 전투 기록 종료</value>
+  </data>
+  <data name="lblCutsceneDetectionLog.Text" xml:space="preserve">
+    <value>컷신 감지 로그 남기기</value>
+  </data>
 </root>
