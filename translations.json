@@ -1649,12 +1649,14 @@
         },
         "LogOverwriteFailed": {
             "en": "No retries left, update failed.",
-            "ko-KR": "재시도 횟수 초과, 업데이트 실패."
+            "ko-KR": "재시도 횟수 초과, 업데이트 실패.",
+            "zh-CN": "超过重试次数，更新失败。"
         },
         "LogOverwriteRetry": {
             "#comment": "{0} is the filename and {1} is the error message",
             "en": "Failed to overwrite {0}, retrying...\n{1}",
-            "ko-KR": "{0}을(를) 덮어씌우는데 실패했습니다, 재시도 중...\n{1}"
+            "ko-KR": "{0}을(를) 덮어씌우는데 실패했습니다, 재시도 중...\n{1}",
+            "zh-CN": "覆写{0}文件失败，正在重试...\n{1}"
         },
         "LogOverwritingOldFiles": {
             "de-DE": "Alte Dateien überschreiben ...",
