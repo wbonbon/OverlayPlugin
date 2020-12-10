@@ -236,6 +236,7 @@
         },
         "introPage.Text": {
             "en": "Intro",
+            "ko": "소개",
             "zh-CN": "简介"
         },
         "label1.Text": {
@@ -266,6 +267,7 @@
             "de-DE": "Overlay:",
             "en": "Overlay:",
             "fr-FR": "Overlay :",
+            "ko-KR": "오버레이 :",
             "zh-CN": "悬浮窗："
         },
         "label5.Text": {
@@ -296,18 +298,22 @@
         },
         "regionLabel.Text": {
             "en": "Region:",
+            "ko-KR": "지역:",
             "zh-CN": "地区："
         },
         "settingsPage.Text": {
             "en": "Stream/Local Overlay",
+            "ko-KR": "Stream/Local 오버레이",
             "zh-CN": "直播/本地悬浮窗"
         },
         "simpStartBtn.Text": {
             "en": "Start",
+            "ko-KR": "시작",
             "zh-CN": "启用"
         },
         "simpStatusLabel.Text": {
             "en": "Status:",
+            "ko-KR": "상태:",
             "zh-CN": "状态："
         },
         "simpStatusLbl.Text": {
@@ -316,6 +322,7 @@
         },
         "simpStopBtn.Text": {
             "en": "Stop",
+            "ko-KR": "중지",
             "zh-CN": "停止"
         },
         "sslBox.Text": {
@@ -351,16 +358,19 @@
         },
         "tunnelPage.Text": {
             "en": "Shared Overlay",
+            "ko-KR": "공유 오버레이",
             "zh-CN": "共享悬浮窗"
         },
         "urlGeneratorBox.Text": {
             "en": "URL Generator",
+            "ko-KR": "URL 생성기",
             "zh-CN": "链接生成器"
         }
     },
     "OverlayPlugin.Core/EventSources/BuiltinEventConfigPanel": {
         "experimentalWarning.Text": {
             "en": "WARNING: Experimental options below - If you touch these, you confirm that you can troubleshoot any issues you encounter yourself and won't ask for help.",
+            "ko-KR": "주의: 아래 옵션들은 실험적인 기능입니다. - 아래 옵션을 사용할 때, 마주치는 모든 문제를 직접 해결할 수 있고 도움을 요청하지 않을 것을 확인하고 사용하세요.",
             "zh-CN": "警告：以下选项是试验性功能———一旦启用，视为您确认可以自己解决遇到的任何问题，而不会寻求帮助。"
         },
         "label1.Text": {
@@ -405,14 +415,17 @@
         },
         "label6.Text": {
             "en": "End ACT encounter after wipe",
+            "ko-KR": "전멸 후 전투 기록 종료",
             "zh-CN": "团灭自动重置战斗记录"
         },
         "label7.Text": {
             "en": "End ACT encounter out of combat",
+            "ko-KR": "전투에서 벗어나면 전투 기록 종료",
             "zh-CN": "脱战自动重置战斗记录"
         },
         "lblCutsceneDetectionLog.Text": {
             "en": "Write cutscene detection log lines",
+            "ko-KR": "컷신 감지 로그 남기기",
             "zh-CN": "输出过场检测日志行"
         }
     },
@@ -973,6 +986,7 @@
             "de-DE": "Benutzerdefiniert",
             "en": "Custom",
             "fr-FR": "Personnalisé",
+            "ko-KR": "커스텀",
             "zh-CN": "自订"
         },
         "DuplicateHandlerError": {
@@ -1005,6 +1019,7 @@
         "EventConfigTab": {
             "de-DE": "Event Einstellungen",
             "en": "Event Settings",
+            "ko-KR": "이벤트 설정",
             "zh-CN": "基本设置"
         },
         "EventHandlerException": {
@@ -1045,6 +1060,7 @@
         "HotkeyActionToggleEnabled": {
             "de-DE": "Umschalten aktiviert",
             "en": "Toggle enabled",
+            "ko-KR": "토글 활성화",
             "zh-CN": "切换悬浮窗 启用/关闭"
         },
         "HotkeyActionToggleLock": {
@@ -1106,12 +1122,14 @@
             "#comment": "This name appears on the overlay list underneath the overlay name.",
             "de-DE": "LabelOverlay",
             "en": "LabelOverlay",
+            "ko-KR": "Label 오버레이",
             "zh-CN": "标签悬浮窗"
         },
         "MapOverlayMiniParse": {
             "#comment": "This name appears on the overlay list underneath the overlay name.",
             "de-DE": "MiniParseOverlay",
             "en": "MiniParseOverlay",
+            "ko-KR": "MiniParse 오버레이",
             "zh-CN": "数据统计悬浮窗"
         },
         "MapOverlayShortLabel": {
@@ -1139,6 +1157,7 @@
             "#comment": "This name appears on the overlay list underneath the overlay name.",
             "de-DE": "SpellTimerOverlay",
             "en": "SpellTimerOverlay",
+            "ko-KR": "SpellTimer 오버레이",
             "zh-CN": "技能冷却悬浮窗"
         },
         "MissingEventDispatchError": {
@@ -1173,6 +1192,7 @@
             "de-DE": "Machina oder das FFXIV-Plugin konnten nicht gefunden werden. Dies ist nur dann ein Problem, wenn Sie ACT mit FFXIV verwenden.",
             "en": "Could not find Machina or the FFXIV plugin. This is only an issue if you're using ACT with FFXIV.",
             "fr-FR": "Impossible de trouver le plugin FFXIV ou Machina. C'est seulement un problème si vous utilisez ACT avec FFXIV.",
+            "ko-KR": "Machina 혹은 FFXIV 플러그인을 발견하지 못했습니다. 이 문제는 파이널 판타지 14와 함께 ACT를 사용하는 분들께만 문제가 되는 부분입니다.",
             "zh-CN": "找不到Machina或FFXIV插件。仅当您将ACT与FFXIV一起使用时才是问题。"
         },
         "OverlayApiInvalidHandlerCall": {
@@ -1236,6 +1256,7 @@
             "de-DE": "Bitte wähle eineVoreinstellung aus.",
             "en": "Please select a preset.",
             "fr-FR": "Sélectionnez un preset.",
+            "ko-KR": "프리셋을 선택해주세요.",
             "zh-CN": "请选择一个预设悬浮窗。"
         },
         "RegisterHotkeyError": {
@@ -1260,6 +1281,7 @@
         "WSHandlerException": {
             "de-DE": "WS: Handler-Aufruf fehlgeschlagen: {0}",
             "en": "WS: Handler call failed: {0}",
+            "ko-KR": "WS: Handler 호출 실패: {0}",
             "zh-CN": "WS：处理程序调用失败：{0}"
         },
         "WSIndexPage": {
@@ -1378,10 +1400,12 @@
         },
         "label6.Text": {
             "en": "End ACT encounter after wipe",
+            "ko-KR": "전멸 후 전투 기록 종료",
             "zh-CN": "团灭自动重置战斗记录"
         },
         "label7.Text": {
             "en": "End ACT encounter out of combat",
+            "ko-KR": "전투에서 벗어나면 전투 기록 종료",
             "zh-CN": "脱战自动重置战斗记录"
         },
         "lnkManual.Text": {
@@ -1624,11 +1648,13 @@
             "zh-CN": "正在打开压缩包..."
         },
         "LogOverwriteFailed": {
-            "en": "No retries left, update failed."
+            "en": "No retries left, update failed.",
+            "ko-KR": "재시도 횟수 초과, 업데이트 실패."
         },
         "LogOverwriteRetry": {
             "#comment": "{0} is the filename and {1} is the error message",
-            "en": "Failed to overwrite {0}, retrying...\n{1}"
+            "en": "Failed to overwrite {0}, retrying...\n{1}",
+            "ko-KR": "{0}을(를) 덮어씌우는데 실패했습니다, 재시도 중...\n{1}"
         },
         "LogOverwritingOldFiles": {
             "de-DE": "Alte Dateien überschreiben ...",
