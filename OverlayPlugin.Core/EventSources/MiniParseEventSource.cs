@@ -279,7 +279,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     {
                         foreach (var name in names)
                         {
-                            if (String.equals(combatantName, name, StringComparison.InvariantCultureIgnoreCase))
+                            if (String.Equals(combatantName, name, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 include = true;
                                 break;
