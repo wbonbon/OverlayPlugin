@@ -258,7 +258,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 bool include = false;
 
-                var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant);
+                var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant).ToString();
 
                 if (ids.Count == 0 && names.Count == 0)
                 {
