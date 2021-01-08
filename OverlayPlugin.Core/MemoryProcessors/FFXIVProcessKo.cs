@@ -281,7 +281,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             case EntityJob.SCH:
                 return JObject.FromObject(*(ScholarJobMemory*)&p[0]);
             case EntityJob.PGL:
-                return JObject.FromObject(*(PugilistJobMemory*)&p[0]);
+                return JObject.FromObject(*(PuglistJobMemory*)&p[0]);
             case EntityJob.MNK:
                 return JObject.FromObject(*(MonkJobMemory*)&p[0]);
             case EntityJob.MCH:
@@ -318,15 +318,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
     public struct DarkKnightJobMemory {
       [FieldOffset(0x00)]
       public byte blood;
-
       [FieldOffset(0x02)]
       public ushort darksideMilliseconds;
-
-      [FieldOffset(0x04)]
-      public byte darkArts;
-
-      [FieldOffset(0x06)]
-      public ushort livingShadowMilliseconds;
     };
 
     [Serializable]
@@ -392,9 +385,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 
       [FieldOffset(0x00)]
       public byte feathers;
-
-      [FieldOffset(0x01)]
-      public byte esprit;
 
       [NonSerialized]
       [FieldOffset(0x02)]
@@ -574,7 +564,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
     };
 
     [StructLayout(LayoutKind.Explicit)]
-    public struct PugilistJobMemory {
+    public struct PuglistJobMemory {
       [FieldOffset(0x00)]
       public ushort lightningMilliseconds;
 
@@ -592,18 +582,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 
       [FieldOffset(0x03)]
       public byte chakraStacks;
-
-      [NonSerialized]
-      [FieldOffset(0x04)]
-      private byte _lightningTimerState;
-
-      public bool lightningTimerFrozen
-      {
-        get
-        {
-          return (_lightningTimerState > 0);
-        }
-      }
     };
 
     [StructLayout(LayoutKind.Explicit)]
@@ -619,29 +597,6 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 
       [FieldOffset(0x05)]
       public byte battery;
-
-      [FieldOffset(0x06)]
-      public byte lastBatteryAmount;
-
-      [NonSerialized]
-      [FieldOffset(0x07)]
-      private byte chargeTimerState;
-
-      public bool overheated
-      {
-        get
-        {
-          return (chargeTimerState & 0x1) == 1;
-        }
-      }
-
-      public bool queenActive
-      {
-        get
-        {
-          return (chargeTimerState & 0x2) == 1;
-        }
-      }
     };
 
     [StructLayout(LayoutKind.Explicit)]
@@ -696,11 +651,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 
     [StructLayout(LayoutKind.Explicit)]
     public struct SamuraiJobMemory {
-      [FieldOffset(0x03)]
-      public byte kenki;
-
       [FieldOffset(0x04)]
-      public byte meditationStacks;
+      public byte kenki;
 
       [NonSerialized]
       [FieldOffset(0x05)]
