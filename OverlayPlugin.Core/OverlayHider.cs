@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Windows.Forms;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin
@@ -17,6 +18,8 @@ namespace RainbowMage.OverlayPlugin
         private ILogger logger;
         private PluginMain main;
         private FFXIVRepository repository;
+        private int ffxivPid = -1;
+        private Timer focusTimer;
 
         public OverlayHider(TinyIoCContainer container)
         {
@@ -27,6 +30,23 @@ namespace RainbowMage.OverlayPlugin
 
             container.Resolve<NativeMethods>().ActiveWindowChanged += ActiveWindowChangedHandler;
             container.Resolve<NetworkParser>().OnOnlineStatusChanged += OnlineStatusChanged;
+            repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
+
+            focusTimer = new Timer();
+            focusTimer.Tick += (o, e) => ActiveWindowChangedHandler(this, IntPtr.Zero);
+            focusTimer.Interval = 10000;  // 10 seconds
+            focusTimer.Start();
+        }
+
+        private void UpdateFFXIVProcess(Process p)
+        {
+            if (p != null)
+            {
+                ffxivPid = p.Id;
+            } else
+            {
+                ffxivPid = -1;
+            }
         }
 
         public void UpdateOverlays()
@@ -51,7 +71,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void ActiveWindowChangedHandler(object sender, IntPtr changedWindow)
         {
-            if (!config.HideOverlaysWhenNotActive || changedWindow == IntPtr.Zero) return;
+            if (!config.HideOverlaysWhenNotActive) return;
             try
             {
                 try
@@ -61,10 +81,16 @@ namespace RainbowMage.OverlayPlugin
                     if (pid == 0)
                         return;
 
-                    var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
-                    var fileName = Path.GetFileName(exePath.ToString());
-                    gameActive = (fileName == "ffxiv.exe" || fileName == "ffxiv_dx11.exe" ||
-                                    exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName);
+                    if (ffxivPid != -1)
+                    {
+                        gameActive = pid == ffxivPid || pid == Process.GetCurrentProcess().Id;
+                    } else
+                    {
+                        var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+                        var fileName = Path.GetFileName(exePath.ToString());
+                        gameActive = (fileName == "ffxiv.exe" || fileName == "ffxiv_dx11.exe" ||
+                                        exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName);
+                    }
                 }
                 catch (System.ComponentModel.Win32Exception ex)
                 {
