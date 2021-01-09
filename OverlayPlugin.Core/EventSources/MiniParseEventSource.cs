@@ -258,7 +258,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 bool include = false;
 
-                var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant);
+                var combatantName = CachedCombatantPropertyInfos["Name"].GetValue(combatant).ToString();
 
                 if (ids.Count == 0 && names.Count == 0)
                 {
@@ -279,7 +279,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                     {
                         foreach (var name in names)
                         {
-                            if (combatantName.Equals(name))
+                            if (String.Equals(combatantName, name, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 include = true;
                                 break;
