@@ -1,7 +1,7 @@
 ---
 layout: article
 sidebar:
-    nav: devs
+    nav: devs_cn
 ---
 
 # 事件类型
