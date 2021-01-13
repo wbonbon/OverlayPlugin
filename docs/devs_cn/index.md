@@ -1,7 +1,7 @@
 ---
 layout: article
 sidebar:
-    nav: devs
+    nav: devs_cn
 ---
 
 # 开发者信息
