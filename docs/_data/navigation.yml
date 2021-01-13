@@ -10,6 +10,9 @@ header:
 
   - title: Developer Info
     url:   /devs
+    
+  - title: Developer Info (CN)
+    url:   /devs_cn
 
 devs:
   - title: Content
