@@ -22,3 +22,12 @@ devs:
 
       - title: Event Types
         url:   /devs/event_types
+        
+devs_cn:
+  - title: 内容导航
+    children:
+      - title: 开始
+        url:   /devs_cn
+
+      - title: 事件类型
+        url:   /devs_cn/event_types
