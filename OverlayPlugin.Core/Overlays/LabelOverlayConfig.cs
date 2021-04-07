@@ -54,12 +54,18 @@ namespace RainbowMage.OverlayPlugin.Overlays
         public event EventHandler<TextChangedEventArgs> TextChanged;
         public event EventHandler<StateChangedEventArgs<bool>> HTMLModeChanged;
 
-        public LabelOverlayConfig(string name)
+        public LabelOverlayConfig(TinyIoCContainer container, string name)
             : base(name)
         {
+            var pluginPath = container.Resolve<PluginMain>().PluginDirectory;
+
             this.Text = "";
             this.HtmlModeEnabled = false;
-            this.Url = "file:///" + Path.Combine(PluginMain.PluginDirectory, "resources", "label.html").Replace("\\", "/");
+#if DEBUG
+            this.Url = "file:///" + Path.Combine(pluginPath, "libs", "resources", "label.html").Replace("\\", "/");
+#else
+            this.Url = "file:///" + Path.Combine(pluginPath, "resources", "label.html").Replace("\\", "/");
+#endif
         }
 
         // XmlSerializer用

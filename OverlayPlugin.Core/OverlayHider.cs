@@ -5,28 +5,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Windows.Forms;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
 
 namespace RainbowMage.OverlayPlugin
 {
     class OverlayHider
     {
-        static bool gameActive = true;
-        static bool inCutscene = false;
-        static IPluginConfig config;
-        static ILogger logger;
-        static PluginMain main;
+        private bool gameActive = true;
+        private bool inCutscene = false;
+        private IPluginConfig config;
+        private ILogger logger;
+        private PluginMain main;
+        private FFXIVRepository repository;
+        private int ffxivPid = -1;
+        private Timer focusTimer;
 
-        public static void Init()
+        public OverlayHider(TinyIoCContainer container)
         {
-            config = Registry.Resolve<IPluginConfig>();
-            logger = Registry.Resolve<ILogger>();
-            main = Registry.Resolve<PluginMain>();
+            this.config = container.Resolve<IPluginConfig>();
+            this.logger = container.Resolve<ILogger>();
+            this.main = container.Resolve<PluginMain>();
+            this.repository = container.Resolve<FFXIVRepository>();
 
-            NativeMethods.ActiveWindowChanged += ActiveWindowChangedHandler;
-            NetworkParser.OnOnlineStatusChanged += OnlineStatusChanged;
+            container.Resolve<NativeMethods>().ActiveWindowChanged += ActiveWindowChangedHandler;
+            container.Resolve<NetworkParser>().OnOnlineStatusChanged += OnlineStatusChanged;
+            repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
+
+            focusTimer = new Timer();
+            focusTimer.Tick += (o, e) => ActiveWindowChangedHandler(this, IntPtr.Zero);
+            focusTimer.Interval = 10000;  // 10 seconds
+            focusTimer.Start();
         }
 
-        public static void UpdateOverlays()
+        private void UpdateFFXIVProcess(Process p)
+        {
+            if (p != null)
+            {
+                ffxivPid = p.Id;
+            } else
+            {
+                ffxivPid = -1;
+            }
+        }
+
+        public void UpdateOverlays()
         {
             if (!config.HideOverlaysWhenNotActive)
                 gameActive = true;
@@ -46,9 +69,9 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        static void ActiveWindowChangedHandler(object sender, IntPtr changedWindow)
+        private void ActiveWindowChangedHandler(object sender, IntPtr changedWindow)
         {
-            if (!config.HideOverlaysWhenNotActive || changedWindow == IntPtr.Zero) return;
+            if (!config.HideOverlaysWhenNotActive) return;
             try
             {
                 try
@@ -58,10 +81,16 @@ namespace RainbowMage.OverlayPlugin
                     if (pid == 0)
                         return;
 
-                    var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
-                    var fileName = Path.GetFileName(exePath.ToString());
-                    gameActive = (fileName == "ffxiv.exe" || fileName == "ffxiv_dx11.exe" ||
-                                    exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName);
+                    if (ffxivPid != -1)
+                    {
+                        gameActive = pid == ffxivPid || pid == Process.GetCurrentProcess().Id;
+                    } else
+                    {
+                        var exePath = Process.GetProcessById((int)pid).MainModule.FileName;
+                        var fileName = Path.GetFileName(exePath.ToString());
+                        gameActive = (fileName == "ffxiv.exe" || fileName == "ffxiv_dx11.exe" ||
+                                        exePath.ToString() == Process.GetCurrentProcess().MainModule.FileName);
+                    }
                 }
                 catch (System.ComponentModel.Win32Exception ex)
                 {
@@ -85,9 +114,9 @@ namespace RainbowMage.OverlayPlugin
             UpdateOverlays();
         }
 
-        static void OnlineStatusChanged(object sender, OnlineStatusChangedArgs e)
+        private void OnlineStatusChanged(object sender, OnlineStatusChangedArgs e)
         {
-            if (!config.HideOverlayDuringCutscene || e.Target != FFXIVRepository.GetPlayerID()) return;
+            if (!config.HideOverlayDuringCutscene || e.Target != repository.GetPlayerID()) return;
 
             inCutscene = e.Status == 15;
             UpdateOverlays();

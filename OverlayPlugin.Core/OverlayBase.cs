@@ -18,6 +18,9 @@ namespace RainbowMage.OverlayPlugin
     {
         private bool disableLog = false;
         private List<Action> hotKeyCallbacks = new List<Action>();
+        protected readonly TinyIoCContainer container;
+        protected readonly ILogger logger;
+        private readonly EventDispatcher dispatcher;
 
         protected System.Timers.Timer timer;
         /// <summary>
@@ -58,15 +61,31 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        protected OverlayBase(TConfig config, string name)
+        protected OverlayBase(TConfig config, string name, TinyIoCContainer container)
         {
-            this.PluginConfig = Registry.Resolve<IPluginConfig>();
+            this.container = container;
+            this.logger = container.Resolve<ILogger>();
+            this.dispatcher = container.Resolve<EventDispatcher>();
+            this.PluginConfig = container.Resolve<IPluginConfig>();
             this.Config = config;
             this.Name = name;
 
             if (this.Config == null)
             {
-                this.Config = (TConfig) typeof(TConfig).GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { name });
+                var construct = typeof(TConfig).GetConstructor(new Type[] { typeof(TinyIoCContainer),  typeof(string) });
+                if (construct == null)
+                {
+                    construct = typeof(TConfig).GetConstructor(new Type[] { typeof(string) });
+                    if (construct == null)
+                    {
+                        throw new Exception("No usable constructor for config type found (" + typeof(TConfig).ToString() + ")!");
+                    }
+
+                    this.Config = (TConfig) construct.Invoke(new object[] { name });
+                } else
+                {
+                    this.Config = (TConfig) construct.Invoke(new object[] { container, name });
+                }
             }
 
             InitializeOverlay();
@@ -102,7 +121,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                this.Overlay = new OverlayForm(this.Name, Config.Url, this.Config.MaxFrameRate, new OverlayApi(this));
+                this.Overlay = new OverlayForm(this.Name, Config.Uuid.ToString(), Config.Url, this.Config.MaxFrameRate, new OverlayApi(container, this));
 
                 // 画面外にウィンドウがある場合は、初期表示位置をシステムに設定させる
                 if (!Util.IsOnScreen(this.Overlay))
@@ -180,7 +199,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void UpdateHotKey()
         {
-            var hook = Registry.Resolve<KeyboardHook>();
+            var hook = container.Resolve<KeyboardHook>();
 
             // Clear the old hotkeys
             foreach (var cb in hotKeyCallbacks)
@@ -291,7 +310,7 @@ namespace RainbowMage.OverlayPlugin
         {
             try
             {
-                EventDispatcher.UnsubscribeAll(this);
+                dispatcher.UnsubscribeAll(this);
 
                 if (this.timer != null)
                 {
@@ -303,7 +322,7 @@ namespace RainbowMage.OverlayPlugin
                     this.Overlay.Dispose();
                 }
 
-                var hook = Registry.Resolve<KeyboardHook>();
+                var hook = container.Resolve<KeyboardHook>();
                 foreach (var cb in hotKeyCallbacks)
                 {
                     hook.UnregisterHotKey(cb);
@@ -333,7 +352,7 @@ namespace RainbowMage.OverlayPlugin
 
         protected void Log(LogLevel level, string message)
         {
-            if (PluginMain.Logger != null && !disableLog)
+            if (logger != null && !disableLog)
             {
                 if (message.Contains("Xilium.CefGlue"))
                 {
@@ -342,7 +361,7 @@ namespace RainbowMage.OverlayPlugin
                     disableLog = true;
                 }
 
-                PluginMain.Logger.Log(level, "{0}: {1}", this.Name, message);
+                logger.Log(level, "{0}: {1}", this.Name, message);
             }
         }
 
@@ -399,17 +418,17 @@ namespace RainbowMage.OverlayPlugin
 
         public void Subscribe(string eventType)
         {
-            EventDispatcher.Subscribe(eventType, this);
+            dispatcher.Subscribe(eventType, this);
         }
 
         public void Unsubscribe(string eventType)
         {
-            EventDispatcher.Unsubscribe(eventType, this);
+            dispatcher.Unsubscribe(eventType, this);
         }
 
         public void UnsubscribeAll()
         {
-            EventDispatcher.UnsubscribeAll(this);
+            dispatcher.UnsubscribeAll(this);
         }
 
         public virtual void InitModernAPI()

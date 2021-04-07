@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using RainbowMage.HtmlRenderer;
 using System.IO;
 using System.Reflection;
+using RainbowMage.OverlayPlugin.EventSources;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -17,25 +14,32 @@ namespace RainbowMage.OverlayPlugin
         public static event EventHandler<SendMessageEventArgs> SendMessage;
         public static event EventHandler<SendMessageEventArgs> OverlayMessage;
 
-        IApiBase receiver;
+        private readonly EventDispatcher dispatcher;
+        private readonly IApiBase receiver;
+        private readonly ILogger logger;
 
-        public OverlayApi(IApiBase receiver)
+        public OverlayApi(TinyIoCContainer container, IApiBase receiver)
         {
+            this.dispatcher = container.Resolve<EventDispatcher>();
             this.receiver = receiver;
+            this.logger = container.Resolve<ILogger>();
         }
 
         public void broadcastMessage(string msg)
         {
+            logger.Log(LogLevel.Error, $"{receiver.Name}: OverlayPluginApi.broadcastMessage() is deprecated and will be removed in future OverlayPlugin versions!");
             BroadcastMessage(this, new BroadcastMessageEventArgs(msg));
         }
 
         public void sendMessage(string target, string msg)
         {
+            logger.Log(LogLevel.Error, $"{receiver.Name}: OverlayPluginApi.sendMessage() is deprecated and will be removed in future OverlayPlugin versions!");
             SendMessage(this, new SendMessageEventArgs(target, msg));
         }
 
         public void overlayMessage(string target, string msg)
         {
+            logger.Log(LogLevel.Error, $"{receiver.Name}: OverlayPluginApi.overlayMessage() is deprecated and will be removed in future OverlayPlugin versions!");
             if (target == receiver.Name)
             {
                 receiver.OverlayMessage(msg);
@@ -59,7 +63,7 @@ namespace RainbowMage.OverlayPlugin
             var actDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             var screenshotDir = Path.Combine(actDir, "Screenshot");
             var i = 0;
-            var filename = "";
+            string filename;
 
             Directory.CreateDirectory(screenshotDir);
 
@@ -85,7 +89,7 @@ namespace RainbowMage.OverlayPlugin
             receiver.InitModernAPI();
 
             Task.Run(() => {
-                var result = EventDispatcher.ProcessHandlerMessage(receiver, data);
+                var result = dispatcher.ProcessHandlerMessage(receiver, data);
                 if (callback != null)
                 {
                     Renderer.ExecuteCallback(callback, result?.ToString(Newtonsoft.Json.Formatting.None));

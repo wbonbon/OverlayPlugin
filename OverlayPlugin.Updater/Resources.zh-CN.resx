@@ -159,7 +159,7 @@
     <value>下载失败！没有下载文件大小（Content-Length标头缺失）。</value>
   </data>
   <data name="UpdateParseVersionError" xml:space="preserve">
-    <value>解析版本失败:
+    <value>解析版本失败（国服玩家无须在意，直接关闭）:
 {0}</value>
   </data>
   <data name="LogInstallerFailed" xml:space="preserve">
@@ -278,5 +278,12 @@ OverlayPlugin的运行需要它。现在安装？</value>
   </data>
   <data name="UpdateSliderDetails" xml:space="preserve">
     <value>{0}已成功更新。</value>
+  </data>
+  <data name="LogOverwriteRetry" xml:space="preserve">
+    <value>覆写{0}文件失败，正在重试...
+{1}</value>
+  </data>
+  <data name="LogOverwriteFailed" xml:space="preserve">
+    <value>超过重试次数，更新失败。</value>
   </data>
 </root>

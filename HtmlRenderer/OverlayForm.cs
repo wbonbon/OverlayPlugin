@@ -30,7 +30,7 @@ namespace RainbowMage.HtmlRenderer
         private const int CP_NOCLOSE_BUTTON = 0x200;
         private const int WS_EX_NOACTIVATE = 0x08000000;
 
-        public WinFormsRenderer Renderer { get; private set; }
+        public WinFormsOffScreenRenderer Renderer { get; private set; }
 
         private string url;
         public string Url
@@ -86,11 +86,11 @@ namespace RainbowMage.HtmlRenderer
             }
         }
 
-        public OverlayForm(string overlayName, string url, int maxFrameRate = 30, object api = null)
+        public OverlayForm(string overlayName, string overlayUuid, string url, int maxFrameRate = 30, object api = null)
         {
             InitializeComponent();
 
-            this.Renderer = new WinFormsRenderer(overlayName, url, this, api);
+            this.Renderer = new WinFormsOffScreenRenderer(overlayName, overlayUuid, url, this, api);
             this.maxFrameRate = maxFrameRate;
             this.url = url;
 

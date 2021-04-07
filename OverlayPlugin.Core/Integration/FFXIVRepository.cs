@@ -56,10 +56,16 @@ namespace RainbowMage.OverlayPlugin
 
     class FFXIVRepository
     {
-        private static IDataRepository repository;
-        private static IDataSubscription subscription;
+        private readonly ILogger logger;
+        private IDataRepository repository;
+        private IDataSubscription subscription;
 
-        private static IDataRepository GetRepository()
+        public FFXIVRepository(TinyIoCContainer container)
+        {
+            logger = container.Resolve<ILogger>();
+        }
+
+        private IDataRepository GetRepository()
         {
             if (repository != null)
                 return repository;
@@ -73,14 +79,14 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception ex)
                 {
-                    Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.FFXIVDataRepositoryException, ex);
+                    logger.Log(LogLevel.Error, Resources.FFXIVDataRepositoryException, ex);
                 }
             }
 
             return repository;
         }
 
-        private static IDataSubscription GetSubscription()
+        private IDataSubscription GetSubscription()
         {
             if (subscription != null)
                 return subscription;
@@ -94,14 +100,15 @@ namespace RainbowMage.OverlayPlugin
                 }
                 catch (Exception ex)
                 {
-                    Registry.Resolve<ILogger>().Log(LogLevel.Error, Resources.FFXIVDataSubscriptionException, ex);
+                    logger.Log(LogLevel.Error, Resources.FFXIVDataSubscriptionException, ex);
                 }
             }
 
             return subscription;
         }
 
-        private static Process GetCurrentFFXIVProcessImpl()
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private Process GetCurrentFFXIVProcessImpl()
         {
             var repo = GetRepository();
             if (repo == null) return null;
@@ -109,7 +116,9 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCurrentFFXIVProcess();
         }
 
-        public static Process GetCurrentFFXIVProcess()
+        [Obsolete("Subscribe to the ProcessChanged event instead (See RegisterProcessChangedHandler())")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public Process GetCurrentFFXIVProcess()
         {
             try
             {
@@ -121,7 +130,54 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static uint GetPlayerIDImpl()
+        private bool IsFFXIVPluginPresentImpl()
+        {
+            return GetRepository() != null;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool IsFFXIVPluginPresent()
+        {
+            try
+            {
+                return IsFFXIVPluginPresentImpl();
+            } catch (FileNotFoundException)
+            {
+                return false;
+            }
+        }
+
+        public Version GetPluginVersion()
+        {
+            return typeof(IDataRepository).Assembly.GetName().Version;
+        }
+
+        public string GetPluginPath()
+        {
+            return typeof(IDataRepository).Assembly.Location;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private string GetGameVersionImpl()
+        {
+            return GetRepository()?.GetGameVersion();
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public string GetGameVersion()
+        {
+            try
+            {
+                return GetGameVersionImpl();
+            } catch (FileNotFoundException)
+            {
+                // The FFXIV plugin isn't loaded
+                return null;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public uint GetPlayerIDImpl()
         {
             var repo = GetRepository();
             if (repo == null) return 0;
@@ -129,7 +185,8 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCurrentPlayerID();
         }
 
-        public static uint GetPlayerID()
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public uint GetPlayerID()
         {
             try
             {
@@ -141,7 +198,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static string GetPlayerNameImpl()
+        public string GetPlayerNameImpl()
         {
             var repo = GetRepository();
             if (repo == null) return null;
@@ -154,7 +211,8 @@ namespace RainbowMage.OverlayPlugin
             return playerInfo.Name;
         }
 
-        public static string GetPlayerName()
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public string GetPlayerName()
         {
             try
             {
@@ -167,7 +225,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        public static ReadOnlyCollection<FFXIV_ACT_Plugin.Common.Models.Combatant> GetCombatants()
+        public ReadOnlyCollection<FFXIV_ACT_Plugin.Common.Models.Combatant> GetCombatants()
         {
             var repo = GetRepository();
             if (repo == null) return null;
@@ -175,7 +233,8 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetCombatantList();
         }
 
-        public static Language GetLanguage()
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public Language GetLanguage()
         {
             var repo = GetRepository();
             if (repo == null)
@@ -183,8 +242,29 @@ namespace RainbowMage.OverlayPlugin
             return repo.GetSelectedLanguageID();
         }
 
+        public string GetLocaleString()
+        {
+            switch (GetLanguage())
+            {
+                case Language.English:
+                    return "en";
+                case Language.French:
+                    return "fr";
+                case Language.German:
+                    return "de";
+                case Language.Japanese:
+                    return "ja";
+                case Language.Chinese:
+                    return "cn";
+                case Language.Korean:
+                    return "ko";
+                default:
+                    return null;
+            }
+        }
+
         // LogLineDelegate(uint EventType, uint Seconds, string logline);
-        public static void RegisterLogLineHandler(Action<uint, uint, string> handler)
+        public void RegisterLogLineHandler(Action<uint, uint, string> handler)
         {
             var sub = GetSubscription();
             if (sub != null)
@@ -192,7 +272,7 @@ namespace RainbowMage.OverlayPlugin
         }
 
         // NetworkReceivedDelegate(string connection, long epoch, byte[] message)
-        public static void RegisterNetworkParser(Action<string, long, byte[]> handler)
+        public void RegisterNetworkParser(Action<string, long, byte[]> handler)
         {
             var sub = GetSubscription();
             if (sub != null)
@@ -206,11 +286,28 @@ namespace RainbowMage.OverlayPlugin
         // zone count in the partySize but do not appear in the partyList.
         // In cross world parties, nobody will appear in the partyList.
         // Alliance data members show up in partyList but not in partySize.
-        public static void RegisterPartyChangeDelegate(Action<ReadOnlyCollection<uint>, int> handler)
+        public void RegisterPartyChangeDelegate(Action<ReadOnlyCollection<uint>, int> handler)
         {
             var sub = GetSubscription();
             if (sub != null)
                 sub.PartyListChanged += new PartyListChangedDelegate(handler);
+        }
+
+        // ProcessChangedDelegate(Process process)
+        public void RegisterProcessChangedHandler(Action<Process> handler)
+        {
+            var sub = GetSubscription();
+            if (sub != null)
+            {
+                sub.ProcessChanged += new ProcessChangedDelegate(handler);
+                /*
+                var repo = GetRepository();
+                if (repo != null)
+                {
+                    var process = repo.GetCurrentFFXIVProcess();
+                    if (process != null) handler(process);
+                }*/
+            }
         }
     }
 }

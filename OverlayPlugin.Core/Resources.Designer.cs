@@ -241,6 +241,15 @@ namespace RainbowMage.OverlayPlugin {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ERROR: Log not connected..
+        /// </summary>
+        internal static string LogNotConnectedError {
+            get {
+                return ResourceManager.GetString("LogNotConnectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MiniParseEventSource.
         /// </summary>
         internal static string MapESMiniParse {
