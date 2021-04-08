@@ -11,7 +11,7 @@
     "size": [600, 500],
     "supports": ["actws"]
   },
-  "Ember": {
+  "Ember Overlay": {
     "type": "MiniParse",
     "url": "https://goldenchrysus.github.io/ffxiv/ember-overlay/",
     "size": [600, 400],
