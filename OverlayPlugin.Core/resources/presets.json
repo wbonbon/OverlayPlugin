@@ -15,13 +15,13 @@
     "type": "MiniParse",
     "url": "https://goldenchrysus.github.io/ffxiv/ember-overlay/",
     "size": [600, 400],
-    "supports": ["legacy", "actws"]
+    "supports": ["modern", "legacy", "actws"]
   },
   "Ember Spell Timers": {
     "type": "MiniParse",
     "url": "https://goldenchrysus.github.io/ffxiv/ember-overlay/?mode=spells",
     "size": [300, 400],
-    "supports": ["legacy", "actws"]
+    "supports": ["modern", "legacy", "actws"]
   },
   "Horizoverlay": {
     "type": "MiniParse",
