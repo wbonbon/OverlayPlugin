@@ -369,7 +369,7 @@ namespace RainbowMage.OverlayPlugin
 #endif
 
             var url = preset.Url.Replace("\\", "/").Replace("%%", resourcesPath);
-            Uri uri = new UriBuilder(url);
+            UriBuilder uri = new UriBuilder(url);
             NameValueCollection query_params = HttpUtility.ParseQueryString(uri.Query);
 
             if (preset.Supports.Contains("modern"))
@@ -384,7 +384,11 @@ namespace RainbowMage.OverlayPlugin
             }
 
             uri.Query = HttpUtility.UrlDecode(query_params.ToString());
-            uri.Port = -1;
+
+            if (uri.Port == 443 || uri.Port == 80)
+            {
+                uri.Port = -1;
+            }
 
             txtOverlayUrl.Text = (url != "") ? uri.ToString() : url;
         }
