@@ -384,6 +384,7 @@ namespace RainbowMage.OverlayPlugin
             }
 
             uri.Query = HttpUtility.UrlDecode(query_params.ToString());
+            uri.Port = -1;
 
             txtOverlayUrl.Text = (url != "") ? uri.ToString() : url;
         }
