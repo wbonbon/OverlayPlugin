@@ -369,12 +369,8 @@ namespace RainbowMage.OverlayPlugin
 #endif
 
             var url = preset.Url.Replace("\\", "/").Replace("%%", resourcesPath);
-            Uri uri = new Uri(url);
+            Uri uri = new UriBuilder(url);
             NameValueCollection query_params = HttpUtility.ParseQueryString(uri.Query);
-
-            if (query_params.Count > 0) {
-                url = url.Replace(uri.Query, "{{query}}");
-            }
 
             if (preset.Supports.Contains("modern"))
             {
@@ -387,12 +383,9 @@ namespace RainbowMage.OverlayPlugin
                 url = "";
             }
 
-            if (url != "")
-            {
-                url = url.Replace("{{query}}", "?" + HttpUtility.UrlDecode(query_params.ToString()));
-            }
+            uri.Query = HttpUtility.UrlDecode(query_params.ToString());
 
-            txtOverlayUrl.Text = url;
+            txtOverlayUrl.Text = (url != "") ? uri.ToString() : url;
         }
 
         private void txtOverlayUrl_Click(object sender, EventArgs e)
