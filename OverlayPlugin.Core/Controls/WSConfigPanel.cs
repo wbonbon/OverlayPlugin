@@ -385,7 +385,7 @@ namespace RainbowMage.OverlayPlugin
 
             uri.Query = HttpUtility.UrlDecode(query_params.ToString());
 
-            if (uri.Port == 443 || uri.Port == 80)
+            if ((uri.Port == 443 && uri.Scheme == "https") || (uri.Port == 80 && uri.Scheme == "http"))
             {
                 uri.Port = -1;
             }
