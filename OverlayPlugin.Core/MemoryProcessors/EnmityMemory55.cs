@@ -330,7 +330,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0x1E2)]
             public byte Job;
 
-            [FieldOffset(0x19D8)]
+            [FieldOffset(0x19F8)]
             public fixed byte Effects[effectBytes];
         }
 
