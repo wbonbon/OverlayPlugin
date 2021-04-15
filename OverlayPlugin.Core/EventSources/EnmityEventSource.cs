@@ -76,7 +76,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
             else
             {
-                memoryCandidates = new List<EnmityMemory>() { new EnmityMemory54(container) };
+                memoryCandidates = new List<EnmityMemory>() { new EnmityMemory55(container) };
             }
         }
 
