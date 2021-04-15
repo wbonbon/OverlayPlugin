@@ -1,5 +1,7 @@
 ---
 layout: article
+sidebar:
+    nav: streamers
 ---
 
 # How to setup overlays in OBS
