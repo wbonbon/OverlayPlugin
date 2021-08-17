@@ -35,6 +35,12 @@
     "size": ["90%", 500],
     "supports": ["legacy", "actws"]
   },
+  "Skyline": {
+    "type": "MiniParse",
+    "url": "https://skyline.dsrkafuu.su",
+    "size": ["90%", 500],
+    "supports": ["modern","legacy", "actws"]
+  },
   "Enmity (Relative Values)": {
     "type": "MiniParse",
     "url": "%%/enmity/enmity_relative.html",
