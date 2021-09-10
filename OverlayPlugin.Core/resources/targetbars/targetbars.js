@@ -48,6 +48,7 @@ const helpText = {
 const textOptionsAll = {
   English: {
     'None': 'None',
+    'Name': 'Name',
     'Current HP': 'CurrentHP',
     'Max HP': 'MaxHP',
     'Current / Max HP': 'CurrentAndMaxHP',
@@ -60,6 +61,7 @@ const textOptionsAll = {
   },
   Chinese: {
     '不显示': 'None',
+    '名称': 'Name',
     '当前体力值': 'CurrentHP',
     '最大体力值': 'MaxHP',
     '当前体力值/最大体力值': 'CurrentAndMaxHP',
@@ -72,6 +74,7 @@ const textOptionsAll = {
   },
   German: {
     'None': 'None',
+    'Name': 'Name',
     'Aktuelle HP': 'CurrentHP',
     'Maximale HP': 'MaxHP',
     'Aktuelle / Maximale HP': 'CurrentAndMaxHP',
@@ -89,13 +92,14 @@ const overlayDataKey = 'targetbars';
 const targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
 
 // Values that come directly from a target object.
-const rawKeys = ['CurrentHP', 'MaxHP', 'Distance', 'EffectiveDistance'];
+const rawStringKeys = ['Name'];
+const rawNumberKeys = ['CurrentHP', 'MaxHP', 'Distance', 'EffectiveDistance'];
 // Values that need to be calculated.
 const otherKeys = ['PercentHP', 'CurrentAndMaxHP', 'TimeToDeath'];
 // Values that only exist for the current Target.
 const targetOnlyKeys = ['AbsoluteEnmity', 'RelativeEnmity'];
 
-const validKeys = ['None', ...rawKeys, ...otherKeys, ...targetOnlyKeys];
+const validKeys = ['None', ...rawStringKeys, ...rawNumberKeys, ...otherKeys, ...targetOnlyKeys];
 
 // Remove enmity from non-target keys.
 const textOptionsNonTarget = (() => {
@@ -128,6 +132,7 @@ const FormatType = {
 };
 
 const formatOptionsByKey = {
+  Name: {},
   CurrentHP: {
     maximumFractionDigits: 0,
   },
@@ -555,7 +560,14 @@ class BarUI {
       return;
     }
 
-    for (const key of rawKeys) {
+    for (const key of rawStringKeys) {
+      if (data[key] === this.lastData[key])
+        continue;
+      this.setValue(key, data[key]);
+    }
+
+
+    for (const key of rawNumberKeys) {
       if (data[key] === this.lastData[key])
         continue;
 
