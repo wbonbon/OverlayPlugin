@@ -106,5 +106,11 @@
     "url": "https://iamlokken.github.io/DeepDungeonOverlay/overlay/",
     "size": [300, 650],
     "supports": ["modern"]
+  },
+   "Deep Dungeon Target Info": {
+    "type": "MiniParse",
+    "url": "https://iamlokken.github.io/DeepDungeonOverlay/overlay/targetinfo/",
+    "size": [500, 70],
+    "supports": ["modern"]
   }
 }
