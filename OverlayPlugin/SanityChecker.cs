@@ -79,7 +79,7 @@ namespace RainbowMage.OverlayPlugin
                 {
                     MessageBox.Show(
                         string.Format(Resources.DependencyMissing, pair.Key, ex),
-                        "OvlerayPlugin Error",
+                        "OverlayPlugin Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
