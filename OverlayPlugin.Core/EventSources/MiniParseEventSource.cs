@@ -1,12 +1,8 @@
-﻿#define TRACE
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using System.Diagnostics;
@@ -15,6 +11,8 @@ using FFXIV_ACT_Plugin.Common.Models;
 using RainbowMage.OverlayPlugin.NetworkProcessors;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
@@ -210,6 +208,42 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }));
 
                 return null;
+            });
+
+            RegisterEventHandler("openWebsiteWithWS", (msg) =>
+            {
+                var result = new JObject();
+
+                if (!msg.ContainsKey("url"))
+                {
+                    Log(LogLevel.Error, "Called openWebsiteWithWS handler without specifying a URL (\"url\" property is missing).");
+                    result["$error"] = "Called openWebsiteWithWS handler without specifying a URL (\"url\" property is missing).";
+                    return result;
+                }
+
+                var wsServer = container.Resolve<WSServer>();
+                
+                if (!wsServer.IsRunning())
+                {
+                    result["$error"] = "WSServer is not running";
+                    return result;
+                }
+
+                try {
+                    var url = wsServer.GetModernUrl(msg["url"].ToString());
+                    var proc = new Process();
+                    proc.StartInfo.Verb = "open";
+                    proc.StartInfo.FileName = url;
+                    proc.Start();
+                } catch (Exception ex)
+                {
+                    Log(LogLevel.Error, $"Failed to to open website: {ex}");
+                    result["$error"] = $"Failed to to open website: {ex}";
+                    return result;
+                }
+
+                result["success"] = true;
+                return result;
             });
 
             try
@@ -417,6 +451,12 @@ namespace RainbowMage.OverlayPlugin.EventSources
             public bool inParty;
         }
 
+        private int GetPartyType(Combatant combatant)
+        {
+            // The PartyTypeEnum was renamed in 2.6.0.0 to work around that, we use reflection and cast the result to int.
+            return (int) combatant.GetType().GetMethod("get_PartyType").Invoke(combatant, new object[] {});
+        }
+
         private void DispatchPartyChangeEvent(ReadOnlyCollection<uint> partyList, int partySize)
         {
             cachedPartyList = partyList;
@@ -452,7 +492,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             var lookupTable = new Dictionary<uint, Combatant>();
             foreach (var c in combatants)
             {
-                if (c.PartyType != PartyTypeEnum.None)
+                if (GetPartyType(c) != 0 /* None */)
                 {
                     lookupTable[c.ID] = c;
                 }
@@ -476,7 +516,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                             name = c.Name,
                             worldId = c.WorldID,
                             job = c.Job,
-                            inParty = c.PartyType == PartyTypeEnum.Party
+                            inParty = GetPartyType(c) == 1 /* Party */,
                         });
                     }
                     else
@@ -624,8 +664,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
             Dictionary<string, string> encounter = null;
             List<KeyValuePair<CombatantData, Dictionary<string, string>>> combatant = null;
 
-            combatant = GetCombatantList(allies);
-            encounter = GetEncounterDictionary(allies);
+            var encounterTask = Task.Run(() =>
+            {
+                encounter = GetEncounterDictionary(allies);
+            });
+            var combatantTask = Task.Run(() =>
+            {
+                combatant = GetCombatantList(allies);
+            });
+            Task.WaitAll(encounterTask, combatantTask);
 
             if (encounter == null || combatant == null) return new JObject();
 
@@ -680,7 +727,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
             obj["isActive"] = ActGlobals.oFormActMain.ActiveZone.ActiveEncounter.Active ? "true" : "false";
 
-#if DEBUG
+#if TRACE
             stopwatch.Stop();
             Log(LogLevel.Trace, "CreateUpdateScript: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
@@ -689,14 +736,14 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private List<KeyValuePair<CombatantData, Dictionary<string, string>>> GetCombatantList(List<CombatantData> allies)
         {
-#if DEBUG
+#if TRACE
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 #endif
 
             var combatantList = new List<KeyValuePair<CombatantData, Dictionary<string, string>>>();
             Parallel.ForEach(allies, (ally) =>
-            // foreach (var ally in allies)
+            //foreach (var ally in allies)
             {
                 var valueDict = new Dictionary<string, string>();
                 foreach (var exportValuePair in CombatantData.ExportVariables)
@@ -742,7 +789,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
             );
 
-#if DEBUG
+#if TRACE
             stopwatch.Stop();
             Log(LogLevel.Trace, "GetCombatantList: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif
@@ -752,7 +799,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
         private Dictionary<string, string> GetEncounterDictionary(List<CombatantData> allies)
         {
-#if DEBUG
+#if TRACE
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 #endif
@@ -792,7 +839,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 }
             }
 
-#if DEBUG
+#if TRACE
             stopwatch.Stop();
             Log(LogLevel.Trace, "GetEncounterDictionary: {0} msec", stopwatch.Elapsed.TotalMilliseconds);
 #endif

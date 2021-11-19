@@ -198,6 +198,28 @@ namespace RainbowMage.OverlayPlugin
             return (argName != "HOST_PORT" || overlay.Config.ActwsCompatibility, url);
         }
 
+        public string GetModernUrl(string url)
+        {
+            if (url.Contains("?"))
+            {
+                url += "&";
+            } else
+            {
+                url += "?";
+            }
+
+            url += "OVERLAY_WS=ws";
+            if (_cfg.WSServerSSL) url += "s";
+            url += "://";
+            if (_cfg.WSServerIP == "*" || _cfg.WSServerIP == "0.0.0.0")
+                url += "127.0.0.1";
+            else
+                url += _cfg.WSServerIP;
+
+            url += ":" + _cfg.WSServerPort + "/ws";
+            return url;
+        }
+
         public string GetCertPath()
         {
             var path = Path.Combine(
