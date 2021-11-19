@@ -83,6 +83,13 @@
     "size": [200, 290],
     "supports": ["modern"]
   },
+  "NextUI": {
+    "type": "MiniParse",
+    "url": "https://kaminaris.github.io/Next-UI/",
+    "size": ["100%", "100%"],
+    "position": [0, 0],
+    "supports": ["modern"]
+  },
   "Target Bar": {
     "type": "MiniParse",
     "url": "%%/targetbars/target.html",
