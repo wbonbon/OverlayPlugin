@@ -13,6 +13,14 @@ namespace RainbowMage.OverlayPlugin
         private PluginMain _plugin;
         public delegate void CustomCallbackDelegate(object o, string param);
 
+        private ActPluginData GetPluginData() {
+            return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin => {
+                if (!plugin.cbEnabled.Checked || plugin.pluginObj == null)
+                  return false;
+                return plugin.lblPluginTitle.Text == "Triggernometry.dll";
+            });
+        }
+
         public TriggIntegration(TinyIoCContainer container)
         {
             var logger = container.Resolve<ILogger>();
@@ -20,7 +28,7 @@ namespace RainbowMage.OverlayPlugin
 
             try
             {
-                var trigg = ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(x => x.lblPluginTitle.Text == "Triggernometry.dll");
+                var trigg = GetPluginData();
                 if (trigg == null || trigg.pluginObj == null)
                     return;
 
