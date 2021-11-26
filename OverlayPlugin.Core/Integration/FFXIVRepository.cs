@@ -65,13 +65,21 @@ namespace RainbowMage.OverlayPlugin
             logger = container.Resolve<ILogger>();
         }
 
+        private ActPluginData GetPluginData() {
+            return ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(plugin => {
+                if (!plugin.cbEnabled.Checked || plugin.pluginObj == null)
+                  return false;
+                return plugin.lblPluginTitle.Text.StartsWith("FFXIV_ACT_Plugin");
+            });
+        }
+
         private IDataRepository GetRepository()
         {
             if (repository != null)
                 return repository;
 
-            var FFXIV = ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(x => x.lblPluginTitle.Text.StartsWith("FFXIV_ACT_Plugin"));
-            if (FFXIV != null && FFXIV.pluginObj != null)
+            var FFXIV = GetPluginData();
+            if (FFXIV != null)
             {
                 try
                 {
@@ -91,8 +99,8 @@ namespace RainbowMage.OverlayPlugin
             if (subscription != null)
                 return subscription;
 
-            var FFXIV = ActGlobals.oFormActMain.ActPlugins.FirstOrDefault(x => x.lblPluginTitle.Text.StartsWith("FFXIV_ACT_Plugin"));
-            if (FFXIV != null && FFXIV.pluginObj != null)
+            var FFXIV = GetPluginData();
+            if (FFXIV != null)
             {
                 try
                 {
