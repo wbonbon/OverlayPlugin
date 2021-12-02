@@ -42,7 +42,11 @@
         }
 
         if (msg.rseq !== undefined && responsePromises[msg.rseq]) {
-          responsePromises[msg.rseq](msg);
+          if (msg.$error) {
+            responsePromises[msg.rseq][1](msg.$error);
+          } else {
+            responsePromises[msg.rseq][0](msg);
+          }
           delete responsePromises[msg.rseq];
         } else {
           processEvent(msg);
