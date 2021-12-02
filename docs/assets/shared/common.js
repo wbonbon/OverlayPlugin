@@ -42,11 +42,7 @@
         }
 
         if (msg.rseq !== undefined && responsePromises[msg.rseq]) {
-          if (msg.$error) {
-            responsePromises[msg.rseq][1](msg.$error);
-          } else {
-            responsePromises[msg.rseq][0](msg);
-          }
+          responsePromises[msg.rseq](msg);
           delete responsePromises[msg.rseq];
         } else {
           processEvent(msg);
@@ -128,7 +124,7 @@ Please register your listeners before calling startOverlayEvents().`);
 
     if (ws) {
       msg.rseq = rseqCounter++;
-      p = new Promise((resolve, reject) => {
+      p = new Promise((resolve) => {
         responsePromises[msg.rseq] = resolve;
       });
 
