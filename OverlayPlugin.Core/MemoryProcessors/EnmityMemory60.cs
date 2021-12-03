@@ -330,7 +330,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0xB0)]
             public Single Rotation;
 
-            [FieldOffset(0x18D8)]
+            [FieldOffset(0x1940)]
             public uint TargetID;
 
             [FieldOffset(0x1C4)]
@@ -339,10 +339,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0x1C8)]
             public int MaxHP;
 
-            [FieldOffset(0x1E2)]
+            [FieldOffset(0x1E0)]
             public byte Job;
 
-            [FieldOffset(0x19F8)]
+            [FieldOffset(0x1A38)]
             public fixed byte Effects[effectBytes];
         }
 
