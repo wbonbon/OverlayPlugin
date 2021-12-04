@@ -19,7 +19,7 @@ namespace RainbowMage.OverlayPlugin
 {
     public partial class WSConfigPanel : UserControl
     {
-        const string MKCERT_DOWNLOAD = "https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-windows-amd64.exe";
+        const string MKCERT_DOWNLOAD = "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-windows-amd64.exe";
         const string NGROK_DOWNLOAD_IDX = "https://ngrok.com/download";
 
         IPluginConfig _config;
@@ -468,7 +468,6 @@ tunnels:
         proto: http
         addr: 127.0.0.1:" + _config.WSServerPort + @"
         inspect: false
-        host_header: rewrite
         bind_tls: true
     ";
                     var ngrokConfigPath = Path.Combine(ActGlobals.oFormActMain.AppDataFolder.FullName, "ngrok.yml");
