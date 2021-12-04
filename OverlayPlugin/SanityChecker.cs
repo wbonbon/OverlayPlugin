@@ -62,7 +62,6 @@ namespace RainbowMage.OverlayPlugin
             var expectedVersions = new Dictionary<string, string>
             {
                 { "Newtonsoft.Json", "12.0.0" },
-                { "websocket-sharp", "1.0.2" },
             };
 
             
