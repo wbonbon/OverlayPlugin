@@ -15,13 +15,13 @@
     "type": "MiniParse",
     "url": "https://goldenchrysus.github.io/ffxiv/ember-overlay/",
     "size": [600, 400],
-    "supports": ["modern", "legacy", "actws"]
+    "supports": ["modern"]
   },
   "Ember Spell Timers": {
     "type": "MiniParse",
     "url": "https://goldenchrysus.github.io/ffxiv/ember-overlay/?mode=spells",
     "size": [300, 400],
-    "supports": ["modern", "legacy", "actws"]
+    "supports": ["modern"]
   },
   "Horizoverlay": {
     "type": "MiniParse",
@@ -39,7 +39,7 @@
     "type": "MiniParse",
     "url": "https://skyline.dsrkafuu.su",
     "size": ["90%", 500],
-    "supports": ["modern","legacy", "actws"]
+    "supports": ["legacy", "actws"]
   },
   "Enmity (Relative Values)": {
     "type": "MiniParse",
