@@ -30,6 +30,12 @@ namespace RainbowMage.OverlayPlugin.Overlays
             if (Overlay == null) return;
             repository = container.Resolve<FFXIVRepository>();
 
+            if (Config.Zoom == 1)
+            {
+                // Set zoom to 0% if it's set to exactly 1% since that was mistakenly the default for too long.
+                Config.Zoom = 0;
+            }
+
             Config.ActwsCompatibilityChanged += (o, e) =>
             {
                 if (lastLoadedUrl != null && lastLoadedUrl != "about:blank") Navigate(lastLoadedUrl);

@@ -250,7 +250,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void tbZoom_ValueChanged(object sender, EventArgs e)
         {
-            if (this.config.Zoom == 1 && Math.Abs(this.config.Zoom - this.tbZoom.Value) < 10)
+            if (this.config.Zoom == 0 && Math.Abs(this.config.Zoom - this.tbZoom.Value) < 10)
             {
                 // Don't change the zoom level if we don't want any zoom (see #152 for details).
                 return;
@@ -261,7 +261,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
 
         private void btnResetZoom_Click(object sender, EventArgs e)
         {
-            this.config.Zoom = 1;
+            this.config.Zoom = 0;
         }
 
         private void btnAddHotkey_Click(object sender, EventArgs e)

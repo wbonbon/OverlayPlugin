@@ -269,17 +269,21 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 enmity.Focus = memory.GetFocusCombatant();
                 enmity.Hover = memory.GetHoverCombatant();
-                if (enmity.Focus != null)
+
+                if (mychar != null)
                 {
-                    enmity.Focus.Distance = mychar.DistanceString(enmity.Focus);
-                }
-                if (enmity.Hover != null)
-                {
-                    enmity.Hover.Distance = mychar.DistanceString(enmity.Hover);
-                }
-                if (enmity.TargetOfTarget != null)
-                {
-                    enmity.TargetOfTarget.Distance = mychar.DistanceString(enmity.TargetOfTarget);
+                    if (enmity.Focus != null)
+                    {
+                        enmity.Focus.Distance = mychar.DistanceString(enmity.Focus);
+                    }
+                    if (enmity.Hover != null)
+                    {
+                        enmity.Hover.Distance = mychar.DistanceString(enmity.Hover);
+                    }
+                    if (enmity.TargetOfTarget != null)
+                    {
+                        enmity.TargetOfTarget.Distance = mychar.DistanceString(enmity.TargetOfTarget);
+                    }
                 }
             }
             catch (Exception ex)
