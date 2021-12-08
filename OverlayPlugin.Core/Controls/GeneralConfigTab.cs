@@ -52,6 +52,7 @@ namespace RainbowMage.OverlayPlugin
 
         private void btnUpdateCheck_MouseClick(object sender, MouseEventArgs e)
         {
+            // Shitty double-click detection. I'd love to have a proper double click event on buttons in WinForms. =/
             double timePassed = 1000;
             var now = DateTime.Now;
 
