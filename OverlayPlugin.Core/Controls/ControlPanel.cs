@@ -110,6 +110,9 @@ namespace RainbowMage.OverlayPlugin
                 // Remove the error message about the log not being connected since it is now.
                 logConnected = true;
                 logBox.Text = "";
+            } else if (logBox.TextLength > 200 * 1024) {
+                logBox.Text = "============ LOG TRUNCATED ==============\nThe log was truncated to reduce memory usage.\n=========================================\n" + msg;
+                return;
             }
 
             if (checkBoxFollowLog.Checked)
