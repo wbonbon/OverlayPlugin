@@ -455,7 +455,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [{0}/{1}]: Starting download....
+        ///   Looks up a localized string similar to [{0}/{1}]: Downloading....
         /// </summary>
         public static string StatusDownloadStarted {
             get {
