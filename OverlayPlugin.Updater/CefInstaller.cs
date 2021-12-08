@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
+using System.Reflection;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {
@@ -30,7 +31,15 @@ namespace RainbowMage.OverlayPlugin.Updater
                 if (lib != IntPtr.Zero)
                 {
                     NativeMethods.FreeLibrary(lib);
-                    break;
+
+                    if (!Environment.Is64BitProcess) break;
+
+                    lib = NativeMethods.LoadLibrary("vcruntime140_1.dll");
+                    if (lib != IntPtr.Zero)
+                    {
+                        NativeMethods.FreeLibrary(lib);
+                        break;
+                    }
                 }
 
                 var response = MessageBox.Show(
@@ -110,9 +119,11 @@ namespace RainbowMage.OverlayPlugin.Updater
             var inst = new Installer(Path.Combine(Path.GetTempPath(), "OverlayPlugin.tmp"), "msvcrt");
             var exePath = Path.Combine(inst.TempDir, "vc_redist.x64.exe");
 
+            var libname = Environment.Is64BitProcess ? "vcruntime140_1.dll" : "vcruntime140.dll";
+
             return await Task.Run(() =>
             {
-                if (inst.Download("https://aka.ms/vs/16/release/VC_redist.x64.exe", exePath, true))
+                if (inst.Download("https://aka.ms/vs/17/release/vc_redist.x64.exe", exePath, true))
                 {
                     inst.Display.UpdateStatus(0, string.Format(Resources.StatusLaunchingInstaller, 2, 2));
                     inst.Display.Log(Resources.LogLaunchingInstaller);
@@ -138,7 +149,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                         var cancel = inst.Display.GetCancelToken();
 
                         inst.Display.Log(Resources.LogInstallerWaiting);
-                        while (NativeMethods.LoadLibrary("vcruntime140.dll") == IntPtr.Zero && !cancel.IsCancellationRequested)
+                        while (NativeMethods.LoadLibrary(libname) == IntPtr.Zero && !cancel.IsCancellationRequested)
                         {
                             Thread.Sleep(500);
                         }
@@ -148,7 +159,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                     }
 
                     inst.Cleanup();
-                    if (NativeMethods.LoadLibrary("vcruntime140.dll") != IntPtr.Zero)
+                    if (NativeMethods.LoadLibrary(libname) != IntPtr.Zero)
                     {
                         inst.Display.Close();
                         return true;
