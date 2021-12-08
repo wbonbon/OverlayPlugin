@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RainbowMage.HtmlRenderer;
 using Advanced_Combat_Tracker;
+using System.Threading;
 
 namespace RainbowMage.OverlayPlugin
 {
@@ -18,6 +19,8 @@ namespace RainbowMage.OverlayPlugin
         readonly string pluginDirectory;
         readonly PluginConfig config;
         readonly ILogger logger;
+
+        private DateTime lastClick;
 
         public GeneralConfigTab(TinyIoCContainer container)
         {
@@ -47,9 +50,25 @@ namespace RainbowMage.OverlayPlugin
             lblNewUserWelcome.Visible = visible;
         }
 
-        private void BtnUpdateCheck_Click(object sender, EventArgs e)
+        private void btnUpdateCheck_MouseClick(object sender, MouseEventArgs e)
         {
-            Updater.Updater.PerformUpdateIfNecessary(pluginDirectory, container, true);
+            double timePassed = 1000;
+            var now = DateTime.Now;
+
+            if (lastClick != null)
+            {
+                timePassed = now.Subtract(lastClick).TotalMilliseconds;
+            }
+
+            lastClick = now;
+
+            Task.Run(() =>
+            {
+                Thread.Sleep(500);
+
+                if (lastClick != now) return;
+                Updater.Updater.PerformUpdateIfNecessary(pluginDirectory, container, true, timePassed < 500);
+            });
         }
 
         private void CbErrorReports_CheckedChanged(object sender, EventArgs e)

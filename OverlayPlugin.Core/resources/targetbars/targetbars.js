@@ -97,7 +97,7 @@ const textOptionsAll = {
 };
 
 
-const overlayDataKey = 'overlay#' + (OverlayPluginApi.overlayUuid || 'web') + '#targetbars';
+let overlayDataKey;
 const targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
 
 // Values that come directly from a target object.
@@ -1000,6 +1000,9 @@ window.addEventListener('DOMContentLoaded', async (e) => {
   const langResult = await window.callOverlayHandler({ call: 'getLanguage' });
   if (langResult && langResult.language)
     lang = langResult.language;
+
+  // Retrieve the overlay UUID
+  overlayDataKey = 'overlay#' + (window.OverlayPluginApi ? OverlayPluginApi.overlayUuid : 'web') + '#targetbars';
 
   // Determine the type of target bar by a specially named container.
   let containerDiv;

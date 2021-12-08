@@ -57,7 +57,7 @@
             resources.ApplyResources(this.btnUpdateCheck, "btnUpdateCheck");
             this.btnUpdateCheck.Name = "btnUpdateCheck";
             this.btnUpdateCheck.UseVisualStyleBackColor = true;
-            this.btnUpdateCheck.Click += new System.EventHandler(this.BtnUpdateCheck_Click);
+            this.btnUpdateCheck.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnUpdateCheck_MouseClick);
             // 
             // cbHideOverlaysWhenNotActive
             // 

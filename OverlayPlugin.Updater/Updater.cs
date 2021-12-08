@@ -322,14 +322,9 @@ namespace RainbowMage.OverlayPlugin.Updater
             }
         }
 
-        public static async void PerformUpdateIfNecessary(string pluginDirectory, TinyIoCContainer container, bool manualCheck = false)
+        public static async void PerformUpdateIfNecessary(string pluginDirectory, TinyIoCContainer container, bool manualCheck = false, bool checkPreRelease = false)
         {
             var config = container.Resolve<IPluginConfig>();
-            var pluginId = 77;
-            if (NativeMethods.GetKeyState(NativeMethods.VK_SHIFT) == 1)
-            {
-                pluginId = 86;
-            }
 
             var options = new UpdaterOptions
             {
@@ -340,7 +335,7 @@ namespace RainbowMage.OverlayPlugin.Updater
                 checkInterval = TimeSpan.FromMinutes(5),
                 repo = "ngld/OverlayPlugin",
                 downloadUrl = "https://github.com/{REPO}/releases/download/v{VERSION}/OverlayPlugin-{VERSION}.7z",
-                actPluginId = pluginId,
+                actPluginId = checkPreRelease ? 86 : 77,
             };
 
             await RunAutoUpdater(options, manualCheck);
