@@ -75,10 +75,20 @@ namespace RainbowMage.OverlayPlugin.Overlays
             {
                 Overlay.Renderer.SetMuted(Config.MuteWhenHidden ? !Config.IsVisible : false);
             };
+            Config.HideOutOfCombatChanged += (o, e) =>
+            {
+                container.Resolve<OverlayHider>().UpdateOverlays();
+            };
 
             if (Config.MuteWhenHidden && !Config.IsVisible)
             {
                 Overlay.Renderer.SetMuted(true);
+            }
+
+            if (Config.HideOutOfCombat)
+            {
+                // Assume that we're not in combat when ACT starts.
+                Overlay.Visible = false;
             }
 
             Overlay.Renderer.BrowserStartLoading += PrepareWebsite;

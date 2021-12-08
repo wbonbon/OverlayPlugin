@@ -151,6 +151,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
 
                 // Handle optional "end encounter of combat" logic.
                 bool inGameCombat = memory.GetInCombat();
+                if (inGameCombat != lastInGameCombat)
+                {
+                    logger.Log(LogLevel.Debug, inGameCombat ? "Entered combat" : "Left combat");
+                }
+
                 // If we've transitioned to being out of combat, start a delayed task to end the ACT encounter.
                 if (Config.EndEncounterOutOfCombat && lastInGameCombat && !inGameCombat)
                 {

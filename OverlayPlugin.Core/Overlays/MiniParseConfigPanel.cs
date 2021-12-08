@@ -52,6 +52,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.cbWhiteBg.Checked = config.ForceWhiteBackground;
             this.cbEnableOverlay.Checked = !config.Disabled;
             this.cbMuteHidden.Checked = config.MuteWhenHidden;
+            this.cbHideOutOfCombat.Checked = config.HideOutOfCombat;
 
             hotkeyColAction.DisplayMember = "Key";
             hotkeyColAction.ValueMember = "Value";
@@ -399,6 +400,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
         private void cbMuteHidden_CheckedChanged(object sender, EventArgs e)
         {
             config.MuteWhenHidden = cbMuteHidden.Checked;
+        }
+
+        private void cbHideOutOfCombat_CheckedChanged(object sender, EventArgs e)
+        {
+            config.HideOutOfCombat = cbHideOutOfCombat.Checked;
         }
     }
 }

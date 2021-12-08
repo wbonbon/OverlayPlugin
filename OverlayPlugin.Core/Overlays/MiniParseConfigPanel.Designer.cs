@@ -77,6 +77,8 @@
             this.buttonMiniParseOpenDevTools = new System.Windows.Forms.Button();
             this.buttonMiniParseReloadBrowser = new System.Windows.Forms.Button();
             this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
+            this.cbHideOutOfCombat = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -103,6 +105,8 @@
             // tabGeneral
             // 
             resources.ApplyResources(this.tabGeneral, "tabGeneral");
+            this.tabGeneral.Controls.Add(this.label14);
+            this.tabGeneral.Controls.Add(this.cbHideOutOfCombat);
             this.tabGeneral.Controls.Add(this.applyPresetCombo);
             this.tabGeneral.Controls.Add(this.cbMuteHidden);
             this.tabGeneral.Controls.Add(this.label13);
@@ -452,6 +456,18 @@
             this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
             this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
             // 
+            // cbHideOutOfCombat
+            // 
+            resources.ApplyResources(this.cbHideOutOfCombat, "cbHideOutOfCombat");
+            this.cbHideOutOfCombat.Name = "cbHideOutOfCombat";
+            this.cbHideOutOfCombat.UseVisualStyleBackColor = true;
+            this.cbHideOutOfCombat.CheckedChanged += new System.EventHandler(this.cbHideOutOfCombat_CheckedChanged);
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
+            // 
             // MiniParseConfigPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -529,5 +545,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn hotkeyColHotkey;
         private System.Windows.Forms.DataGridViewComboBoxColumn hotkeyColAction;
         private System.Windows.Forms.ComboBox applyPresetCombo;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.CheckBox cbHideOutOfCombat;
     }
 }

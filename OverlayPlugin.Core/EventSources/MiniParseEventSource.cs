@@ -664,15 +664,9 @@ namespace RainbowMage.OverlayPlugin.EventSources
             Dictionary<string, string> encounter = null;
             List<KeyValuePair<CombatantData, Dictionary<string, string>>> combatant = null;
 
-            var encounterTask = Task.Run(() =>
-            {
-                encounter = GetEncounterDictionary(allies);
-            });
-            var combatantTask = Task.Run(() =>
-            {
-                combatant = GetCombatantList(allies);
-            });
-            Task.WaitAll(encounterTask, combatantTask);
+            
+            encounter = GetEncounterDictionary(allies);
+            combatant = GetCombatantList(allies);
 
             if (encounter == null || combatant == null) return new JObject();
 

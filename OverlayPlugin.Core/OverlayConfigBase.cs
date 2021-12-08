@@ -18,6 +18,7 @@ namespace RainbowMage.OverlayPlugin
         public event EventHandler GlobalHotkeyChanged;
         public event EventHandler<LockStateChangedEventArgs> LockChanged;
         public event EventHandler LogConsoleMessagesChanged;
+        public event EventHandler HideOutOfCombatChanged;
 
         public string Name { get; set; }
 
@@ -199,6 +200,23 @@ namespace RainbowMage.OverlayPlugin
                 {
                     this.logConsoleMessages = value;
                     LogConsoleMessagesChanged?.Invoke(this, new EventArgs());
+                }
+            }
+        }
+
+        private bool hideOutOfCombat = false;
+        public bool HideOutOfCombat
+        {
+            get
+            {
+                return this.hideOutOfCombat;
+            }
+            set
+            {
+                if (this.hideOutOfCombat != value)
+                {
+                    this.hideOutOfCombat = value;
+                    HideOutOfCombatChanged?.Invoke(this, new EventArgs());
                 }
             }
         }

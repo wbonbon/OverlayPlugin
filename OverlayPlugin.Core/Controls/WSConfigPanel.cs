@@ -69,10 +69,6 @@ namespace RainbowMage.OverlayPlugin
             UpdateTunnelStatus(TunnelStatus.Inactive);
 
             lblUrlConfidentWarning.Visible = false;
-            container.Resolve<PluginMain>().OverlaysChanged += (o, e) =>
-            {
-                RebuildOverlayOptions();
-            };
         }
 
         public void Stop()
@@ -316,7 +312,7 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
-        private void RebuildOverlayOptions()
+        public void RebuildOverlayOptions()
         {
             cbOverlay.Items.Clear();
 
