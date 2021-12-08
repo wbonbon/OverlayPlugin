@@ -209,6 +209,8 @@ namespace RainbowMage.OverlayPlugin
                         pair.Value.Name = pair.Key;
                         registry.RegisterOverlayPreset2(pair.Value);
                     }
+
+                    wsConfigPanel.RebuildOverlayOptions();
                 } catch (Exception ex)
                 {
                     _logger.Log(LogLevel.Error, string.Format("Failed to load presets: {0}", ex));
@@ -247,6 +249,7 @@ namespace RainbowMage.OverlayPlugin
                             // in that list.
                             this.label.Text = "Init Phase 2: Addons";
                             await Task.Run(LoadAddons);
+                            wsConfigPanel.RebuildOverlayOptions();
 
                             this.label.Text = "Init Phase 2: Unstable new stuff";
                             _container.Register(new UnstableNewLogLines(_container));
@@ -456,7 +459,7 @@ namespace RainbowMage.OverlayPlugin
 
                 // Only enable embedded Cactbot in debug / dev builds until I'm sure it's stable enough
                 // for most users.
-                #if DEBUG
+                #if false
                 if (!foundCactbot)
                 {
                     _logger.Log(LogLevel.Info, "LoadAddons: Enabling builtin Cactbot event source.");
