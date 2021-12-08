@@ -62,6 +62,7 @@ try {
     cp @("OverlayPlugin.dll", "OverlayPlugin.dll.config", "README.md", "LICENSE.txt") OverlayPlugin
     cp -Recurse libs\resources OverlayPlugin
     cp -Recurse libs\*.dll OverlayPlugin\libs
+    del OverlayPlugin\libs\CefSharp.*
 
     # Translations
     cp -Recurse @("de-DE", "fr-FR", "ja-JP", "ko-KR", "zh-CN") OverlayPlugin
