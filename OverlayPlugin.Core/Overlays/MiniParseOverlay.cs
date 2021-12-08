@@ -231,6 +231,11 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 Subscribe("ChangeZone");
                 Subscribe("ChangePrimaryPlayer");
             } else {
+                if (Preview)
+                {
+                    ExecuteScript("if (window.OverlayPluginApi) window.OverlayPluginApi.preview = true;");
+                }
+
                 // Reset page-specific state
                 Overlay.SetAcceptFocus(false);
 

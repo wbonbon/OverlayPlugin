@@ -39,9 +39,18 @@ const configTitles = {
 };
 
 const helpText = {
-  English: '(🔒lock overlay to hide settings)',
-  Chinese: '(🔒锁定悬浮窗以隐藏设置)',
-  German: '(🔒Sperre das Overlay um die Einstellungen zu verstecken)',
+  English: `(🔒lock overlay to hide settings)<br>
+<a href="https://mdn.github.io/css-examples/tools/color-picker/" target="_blank">
+  Color picker
+</a>`,
+  Chinese: `(🔒锁定悬浮窗以隐藏设置)
+<a href="https://mdn.github.io/css-examples/tools/color-picker/" target="_blank">
+  色彩选择工具
+</a>`,
+  German: `(🔒Sperre das Overlay um die Einstellungen zu verstecken)
+<a href="https://mdn.github.io/css-examples/tools/color-picker/" target="_blank">
+  Farbauswahl
+</a>`,
 };
 
 // language -> displayed option text -> text key
@@ -88,7 +97,7 @@ const textOptionsAll = {
 };
 
 
-const overlayDataKey = 'targetbars';
+const overlayDataKey = 'overlay#' + (OverlayPluginApi.overlayUuid || 'web') + '#targetbars';
 const targets = ['Target', 'Focus', 'Hover', 'TargetOfTarget'];
 
 // Values that come directly from a target object.
@@ -307,6 +316,46 @@ const configStructure = [
     type: 'text',
     default: 'white',
   },
+  /*{
+    id: 'fontShadowColor',
+    name: {
+      English: 'Color of the font shadow',
+      Chinese: '字体阴影的颜色',
+      German: 'Farbe des Schriftschattens',
+    },
+    type: 'text',
+    default: 'black',
+  },
+  {
+    id: 'fontShadowSize',
+    name: {
+      English: 'Size of the font shadow',
+      Chinese: '字体阴影的大小',
+      German: 'Größe des Schriftschattens',
+    },
+    type: 'text',
+    default: 0,
+  },
+  {
+    id: 'fontOutlineColor',
+    name: {
+      English: 'Color of the font outline',
+      Chinese: '字体轮廓的颜色',
+      German: 'Farbe der Schriftumrandung',
+    },
+    type: 'text',
+    default: 'black',
+  },
+  {
+    id: 'fontOutlineSize',
+    name: {
+      English: 'Size of the font outline',
+      Chinese: '字体轮廓的大小',
+      German: 'Dicke der Schriftumrandung',
+    },
+    type: 'text',
+    default: 0,
+  },*/
   {
     id: 'bgColor',
     name: {
@@ -519,6 +568,10 @@ class BarUI {
     this.div.style.fontSize = defaultAsPx(this.options.fontSize);
     this.div.style.fontFamily = this.options.fontFamily;
     this.div.style.color = this.options.fontColor;
+    /*this.div.style.webkitTextStroke = defaultAsPx(this.options.fontOutlineSize) + ' ' + this.options.fontOutlineColor;
+    if (this.options.fontShadowSize !== '0') {
+      this.div.style.textShadow = '1px 1px ' + defaultAsPx(this.options.fontShadowSize) + ' ' + this.options.fontShadowColor;
+    }*/
 
     // Alignment hack:
     // align-self:center doesn't work when children are taller than parents.
@@ -977,8 +1030,21 @@ window.addEventListener('DOMContentLoaded', async (e) => {
   // Overwrite options from loaded values.  Options are stored once per target type,
   // so that different targets can be configured differently.
   const loadResult = await window.callOverlayHandler({ call: 'loadData', key: overlayDataKey });
-  if (loadResult && loadResult.data)
+  if (loadResult && loadResult.data) {
     options = Object.assign(options, loadResult.data);
+  } else if (!window.OverlayPluginApi || !window.OverlayPluginApi.preview) {
+    // Load settings from the old key but only if we're not creating a new overlay.
+    const oldSettings = await window.callOverlayHandler({ call: 'loadData', key: 'targetbars' });
+    if (oldSettings && oldSettings.data) {
+      options = Object.assign(options, oldSettings.data);
+      await callOverlayHandler({
+        call: 'saveData',
+        key: overlayDataKey,
+        data: options,
+      });
+    }
+  }
+
 
   // Creating settings will build the initial bars UI.
   // Changes to settings rebuild the bars.
