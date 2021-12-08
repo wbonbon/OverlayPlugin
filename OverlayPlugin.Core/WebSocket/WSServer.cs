@@ -103,8 +103,10 @@ namespace RainbowMage.OverlayPlugin
                         ourLevel = LogLevel.Info;
                         break;
                     case Fleck.LogLevel.Debug:
-                        ourLevel = LogLevel.Debug;
-                        break;
+                        //ourLevel = LogLevel.Debug;
+
+                        // prevent log spam
+                        return;
                 }
 
                 _logger.Log(ourLevel, $"WSServer: {message} {ex}");
@@ -244,7 +246,6 @@ namespace RainbowMage.OverlayPlugin
             private ILogger _logger;
             private EventDispatcher _dispatcher;
             private IWebSocketConnection _conn;
-            private WSServer _server;
 
             public SocketHandler(TinyIoCContainer container, IWebSocketConnection conn, WSServer server)
             {
@@ -255,7 +256,15 @@ namespace RainbowMage.OverlayPlugin
                 conn.OnMessage = OnMessage;
                 conn.OnClose = () =>
                 {
-                    server._connections.Remove(this);
+                    try
+                    {
+                        _dispatcher.UnsubscribeAll(this);
+                        server._connections.Remove(this);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Log(LogLevel.Error, $"Failed to unsubscribe WebSocket connection: {ex}");
+                    }
                 };
             }
 
