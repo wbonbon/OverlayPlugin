@@ -212,6 +212,34 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 if (obj.TryGetValue("OverlayData", out value))
                 {
                     result.OverlayData = value.ToObject<Dictionary<string, JToken>>();
+
+                    // Remove data for overlays that no longer exist.
+                    var obsoleteKeys = new List<string>();
+                    var overlayUUIDs = new List<string>();
+
+                    foreach (var overlay in Config.Overlays)
+                    {
+                        if (overlay is Overlays.MiniParseOverlayConfig)
+                        {
+                            overlayUUIDs.Add(((Overlays.MiniParseOverlayConfig)overlay).Uuid.ToString());
+                        }
+                    }
+
+                    foreach (var key in result.OverlayData.Keys)
+                    {
+                        if (!key.StartsWith("overlay#")) continue;
+
+                        var uuid = key.Substring(8, 36);
+                        if (!overlayUUIDs.Contains(uuid))
+                        {
+                            obsoleteKeys.Add(key);
+                        }
+                    }
+
+                    foreach (var key in obsoleteKeys)
+                    {
+                        result.OverlayData.Remove(key);
+                    }
                 }
 
                 if (obj.TryGetValue("LogLines", out value))
