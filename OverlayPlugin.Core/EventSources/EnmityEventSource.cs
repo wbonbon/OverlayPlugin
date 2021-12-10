@@ -242,6 +242,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
             public string type = EnmityAggroListEvent;
             public List<AggroEntry> AggroList;
+            public List<EnmityHudEntry> EnmityHudList;
         }
 
         [Serializable]
@@ -304,6 +305,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             try
             {
                 enmity.AggroList = memory.GetAggroList(combatants);
+                enmity.EnmityHudList = memory.GetEnmityHudEntries();
             }
             catch (Exception ex)
             {
