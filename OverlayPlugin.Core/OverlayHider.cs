@@ -32,7 +32,15 @@ namespace RainbowMage.OverlayPlugin
             container.Resolve<NativeMethods>().ActiveWindowChanged += ActiveWindowChangedHandler;
             container.Resolve<NetworkParser>().OnOnlineStatusChanged += OnlineStatusChanged;
             container.Resolve<EventSources.EnmityEventSource>().CombatStatusChanged += CombatStatusChanged;
-            repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
+
+            try
+            {
+                repository.RegisterProcessChangedHandler(UpdateFFXIVProcess);
+            } catch (Exception ex)
+            {
+                logger.Log(LogLevel.Error, "Failed to register process watcher for FFXIV; this is only an issue if you're playing FFXIV. As a consequence, OverlayPlugin won't be able to hide overlays if you're not in-game.");
+                logger.Log(LogLevel.Error, "Details: " + ex.ToString());
+            }
 
             focusTimer = new Timer();
             focusTimer.Tick += (o, e) => ActiveWindowChangedHandler(this, IntPtr.Zero);
