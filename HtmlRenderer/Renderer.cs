@@ -138,7 +138,10 @@ namespace RainbowMage.HtmlRenderer
 
         public void Browser_ConsoleMessage(object sender, ConsoleMessageEventArgs e)
         {
-            BrowserConsoleLog?.Invoke(sender, new BrowserConsoleLogEventArgs(e.Message, e.Source, e.Line));
+            // Ignore FLoC exception errors. CEF doesn't include FLoC code which means that it doesn't understand
+            // the FLoC exception rule. However, since it can't use FLoC to begin with, that's not an issue either way.
+            if (!e.Message.StartsWith("Error with Permissions-Policy header:"))
+                BrowserConsoleLog?.Invoke(sender, new BrowserConsoleLogEventArgs(e.Message, e.Source, e.Line));
         }
 
         private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
@@ -449,6 +452,14 @@ namespace RainbowMage.HtmlRenderer
 #endif
                     BrowserSubprocessPath = Path.Combine(cefPath, "CefSharp.BrowserSubprocess.exe"),
                 };
+
+                try
+                {
+                    File.WriteAllText(cefSettings.LogFile, "");
+                } catch(Exception)
+                {
+                    // Ignore; if we can't open the log, CEF can't do it either which means that we don't have to worry about log size.
+                }
 
                 // Necessary to avoid input lag with a framerate limit below 60.
                 cefSettings.CefCommandLineArgs["enable-begin-frame-scheduling"] = "1";
