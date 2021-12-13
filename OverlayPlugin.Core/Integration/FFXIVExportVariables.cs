@@ -72,7 +72,7 @@ namespace RainbowMage.OverlayPlugin
                             var swings = attack.Items;
                             for (var i = 0; i < swings.Count; i++)
                             {
-                                if (swings[i].DamageType == "DamageShield")
+                                if (swings[i].Special == "DamageShield")
                                 {
                                     sum += swings[i].Damage;
                                 }
