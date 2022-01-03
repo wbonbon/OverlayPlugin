@@ -323,7 +323,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
             catch (Exception ex)
             {
-                this.logger.Log(LogLevel.Error, "CreateAggroList: {0}", ex);
+                this.logger.Log(LogLevel.Error, "CreateTargetableEnemyList: {0}", ex);
             }
             return JObject.FromObject(enemies);
         }
