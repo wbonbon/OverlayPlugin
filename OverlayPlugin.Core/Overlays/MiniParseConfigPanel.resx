@@ -125,13 +125,37 @@
   <data name="tabGeneral.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnClearCache.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 505</value>
+  </data>
+  <data name="btnClearCache.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 37</value>
+  </data>
+  <data name="btnClearCache.TabIndex" type="System.Int32, mscorlib">
+    <value>44</value>
+  </data>
+  <data name="btnClearCache.Text" xml:space="preserve">
+    <value>Clear Cache</value>
+  </data>
+  <data name="&gt;&gt;btnClearCache.Name" xml:space="preserve">
+    <value>btnClearCache</value>
+  </data>
+  <data name="&gt;&gt;btnClearCache.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnClearCache.Parent" xml:space="preserve">
+    <value>tabGeneral</value>
+  </data>
+  <data name="&gt;&gt;btnClearCache.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="label14.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="label14.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 343</value>
   </data>
@@ -154,7 +178,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="cbHideOutOfCombat.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -178,7 +202,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbHideOutOfCombat.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="applyPresetCombo.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -202,7 +226,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;applyPresetCombo.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="cbMuteHidden.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -226,7 +250,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbMuteHidden.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="label13.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -253,7 +277,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label13.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="label10.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -280,7 +304,7 @@
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="label8.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -309,7 +333,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label8.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="cbEnableOverlay.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -333,7 +357,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbEnableOverlay.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -360,7 +384,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="tableLayoutPanel2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -450,7 +474,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;tableLayoutPanel2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tableLayoutPanel2.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="textMiniParseUrl" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="buttonMiniParseSelectFile" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,Absolute,37" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -486,7 +510,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -519,7 +543,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="checkLock.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -546,7 +570,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;checkLock.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="checkMiniParseVisible.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -573,7 +597,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;checkMiniParseVisible.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -606,7 +630,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label9.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -639,7 +663,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="checkMiniParseClickthru.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -666,7 +690,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;checkMiniParseClickthru.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -699,7 +723,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="cbWhiteBg.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -726,7 +750,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;cbWhiteBg.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -756,7 +780,7 @@ Hiding an overlay only turns it invisible. It still runs in the background and c
     <value>tabGeneral</value>
   </data>
   <data name="&gt;&gt;label12.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="tabGeneral.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>

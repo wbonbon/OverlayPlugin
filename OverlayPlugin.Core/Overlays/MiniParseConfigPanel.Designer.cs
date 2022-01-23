@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MiniParseConfigPanel));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabGeneral = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbHideOutOfCombat = new System.Windows.Forms.CheckBox();
             this.applyPresetCombo = new System.Windows.Forms.ComboBox();
             this.cbMuteHidden = new System.Windows.Forms.CheckBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -77,8 +79,7 @@
             this.buttonMiniParseOpenDevTools = new System.Windows.Forms.Button();
             this.buttonMiniParseReloadBrowser = new System.Windows.Forms.Button();
             this.buttonResetOverlayPosition = new System.Windows.Forms.Button();
-            this.cbHideOutOfCombat = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.btnClearCache = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -105,6 +106,7 @@
             // tabGeneral
             // 
             resources.ApplyResources(this.tabGeneral, "tabGeneral");
+            this.tabGeneral.Controls.Add(this.btnClearCache);
             this.tabGeneral.Controls.Add(this.label14);
             this.tabGeneral.Controls.Add(this.cbHideOutOfCombat);
             this.tabGeneral.Controls.Add(this.applyPresetCombo);
@@ -127,6 +129,18 @@
             this.tabGeneral.Controls.Add(this.label12);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
+            // 
+            // cbHideOutOfCombat
+            // 
+            resources.ApplyResources(this.cbHideOutOfCombat, "cbHideOutOfCombat");
+            this.cbHideOutOfCombat.Name = "cbHideOutOfCombat";
+            this.cbHideOutOfCombat.UseVisualStyleBackColor = true;
+            this.cbHideOutOfCombat.CheckedChanged += new System.EventHandler(this.cbHideOutOfCombat_CheckedChanged);
             // 
             // applyPresetCombo
             // 
@@ -456,17 +470,12 @@
             this.buttonResetOverlayPosition.UseVisualStyleBackColor = true;
             this.buttonResetOverlayPosition.Click += new System.EventHandler(this.buttonResetOverlayPosition_Click);
             // 
-            // cbHideOutOfCombat
+            // btnClearCache
             // 
-            resources.ApplyResources(this.cbHideOutOfCombat, "cbHideOutOfCombat");
-            this.cbHideOutOfCombat.Name = "cbHideOutOfCombat";
-            this.cbHideOutOfCombat.UseVisualStyleBackColor = true;
-            this.cbHideOutOfCombat.CheckedChanged += new System.EventHandler(this.cbHideOutOfCombat_CheckedChanged);
-            // 
-            // label14
-            // 
-            resources.ApplyResources(this.label14, "label14");
-            this.label14.Name = "label14";
+            resources.ApplyResources(this.btnClearCache, "btnClearCache");
+            this.btnClearCache.Name = "btnClearCache";
+            this.btnClearCache.UseVisualStyleBackColor = true;
+            this.btnClearCache.Click += new System.EventHandler(this.btnClearCache_Click);
             // 
             // MiniParseConfigPanel
             // 
@@ -547,5 +556,6 @@
         private System.Windows.Forms.ComboBox applyPresetCombo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox cbHideOutOfCombat;
+        private System.Windows.Forms.Button btnClearCache;
     }
 }
