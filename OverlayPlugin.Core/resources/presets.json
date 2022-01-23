@@ -37,7 +37,7 @@
   },
   "Skyline": {
     "type": "MiniParse",
-    "url": "https://skyline.dsrkafuu.su",
+    "url": "https://skyline.dsrkafuu.net",
     "size": ["90%", 500],
     "supports": ["legacy", "actws"]
   },
