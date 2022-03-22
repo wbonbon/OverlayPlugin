@@ -152,7 +152,7 @@ const formatOptionsByKey = {
     minimumFractionDigits: 2,
   },
   EffectiveDistance: {
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
   },
   PercentHP: {
     minimumFractionDigits: 2,
