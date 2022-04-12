@@ -144,4 +144,7 @@
   <data name="experimentalWarning.Text" xml:space="preserve">
     <value>警告：以下选项是试验性功能———一旦启用，视为您确认可以自己解决遇到的任何问题，而不会寻求帮助。</value>
   </data>
+  <data name="lblLogLines.Text" xml:space="preserve">
+    <value>输出额外日志行</value>
+  </data>
 </root>
