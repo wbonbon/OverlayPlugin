@@ -357,7 +357,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0XC0)]
             public Single Radius;
 
-            [FieldOffset(0x1940)]
+            [FieldOffset(0x1A50)]
             public uint TargetID;
 
             [FieldOffset(0x1C4)]
@@ -369,7 +369,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             [FieldOffset(0x1E0)]
             public byte Job;
 
-            [FieldOffset(0x1A38)]
+            [FieldOffset(0x1B28)]
             public fixed byte Effects[effectBytes];
         }
 
