@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
-    public class EnmityMemory60 : EnmityMemory
+    public class EnmityMemory61 : EnmityMemory
     {
         private FFXIVMemory memory;
         private ILogger logger;
@@ -22,10 +22,10 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private IntPtr enmityHudAddress = IntPtr.Zero;
         private IntPtr enmityHudDynamicAddress = IntPtr.Zero;
 
-        private const string charmapSignature = "48c1ea0381faa7010000????8bc2488d0d";
+        private const string charmapSignature = "48c1ea0381faa9010000????8bc2488d0d";
         private const string targetSignature = "83E901740832C04883C4205BC3488D0D";
         private const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
-        private const string inCombatSignature = "84c07425450fb6c7488d0d";
+        private const string inCombatSignature = "4889742420574883ec200fb60233f68905";
         private const string enmityHudSignature = "48895C246048897C2470488B3D";
 
         // Offsets from the signature to find the correct address.
@@ -33,8 +33,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private const int targetSignatureOffset = 0;
         private const int enmitySignatureOffset = -2608;
         private const int aggroEnmityOffset = -2336;
-        private const int inCombatSignatureBaseOffset = 0;
-        private const int inCombatSignatureOffsetOffset = 5;
+        private const int inCombatSignatureOffset = 0;
         private const int enmityHudSignatureOffset = 0;
         private readonly int[] enmityHudPointerPath = new int[] { 0x30, 0x58, 0x98, 0x20 };
 
@@ -43,7 +42,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private const int focusTargetOffset = 248;
         private const int hoverTargetOffset = 208;
 
-        // Offsets from the enmityHudAddress tof find various enmity HUD data structures.
+        // Offsets from the enmityHudAddress to find various enmity HUD data structures.
         private const int enmityHudCountOffset = 4;
         private const int enmityHudEntryOffset = 16;
 
@@ -51,7 +50,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private const uint emptyID = 0xE0000000;
         private const int numMemoryCombatants = 421;
 
-        public EnmityMemory60(TinyIoCContainer container)
+        public EnmityMemory61(TinyIoCContainer container)
         {
             this.memory = new FFXIVMemory(container);
             this.memory.OnProcessChange += ResetPointers;
@@ -156,16 +155,11 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             }
 
             /// IN COMBAT
-            // The in combat address is set from a combination of two values, a base address and an offset.
-            // They are found adjacent to the same signature, but at different offsets.
-            var baseList = memory.SigScan(inCombatSignature, inCombatSignatureBaseOffset, bRIP);
-            // SigScan returns pointers, but the offset is a 32-bit immediate value.  Do not use RIP.
-            var offsetList = memory.SigScan(inCombatSignature, inCombatSignatureOffsetOffset, false);
-            if (baseList != null && baseList.Count > 0 && offsetList != null && offsetList.Count > 0)
+            list = memory.SigScan(inCombatSignature, inCombatSignatureOffset, bRIP);
+
+            if (list != null && list.Count > 0)
             {
-                var baseAddress = baseList[0];
-                var offset = (int)(((UInt64)offsetList[0]) & 0xFFFFFFFF);
-                inCombatAddress = IntPtr.Add(baseAddress, offset);
+                inCombatAddress = list[0];
             }
             else
             {
@@ -210,7 +204,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             {
                 if (loggedScanErrors < 10)
                 {
-                    logger.Log(LogLevel.Error, "Failed to find enmity memory for 6.0: {0}.", String.Join(",", fail));
+                    logger.Log(LogLevel.Error, "Failed to find enmity memory for 6.1: {0}.", String.Join(",", fail));
                     loggedScanErrors++;
 
                     if (loggedScanErrors == 10)
@@ -221,7 +215,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             }
             else
             {
-                logger.Log(LogLevel.Info, "Found enmity memory for 6.0.");
+                logger.Log(LogLevel.Info, "Found enmity memory for 6.1.");
                 loggedScanErrors = 0;
             }
 
