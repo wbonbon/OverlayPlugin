@@ -25,7 +25,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private const string charmapSignature = "48c1ea0381faa9010000????8bc2488d0d";
         private const string targetSignature = "83E901740832C04883C4205BC3488D0D";
         private const string enmitySignature = "83f9ff7412448b048e8bd3488d0d";
-        private const string inCombatSignature = "4889742420574883ec200fb60233f68905";
+        private const string inCombatSignature = "803D????????000F95C04883C428";
         private const string enmityHudSignature = "48895C246048897C2470488B3D";
 
         // Offsets from the signature to find the correct address.
@@ -33,7 +33,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
         private const int targetSignatureOffset = 0;
         private const int enmitySignatureOffset = -2608;
         private const int aggroEnmityOffset = -2336;
-        private const int inCombatSignatureOffset = 0;
+        private const int inCombatSignatureOffset = -12;
+        private const int inCombatRIPOffset = 1;
         private const int enmityHudSignatureOffset = 0;
         private readonly int[] enmityHudPointerPath = new int[] { 0x30, 0x58, 0x98, 0x20 };
 
@@ -155,7 +156,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             }
 
             /// IN COMBAT
-            list = memory.SigScan(inCombatSignature, inCombatSignatureOffset, bRIP);
+            list = memory.SigScan(inCombatSignature, inCombatSignatureOffset, bRIP, inCombatRIPOffset);
 
             if (list != null && list.Count > 0)
             {
