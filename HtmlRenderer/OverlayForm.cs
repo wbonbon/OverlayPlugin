@@ -22,7 +22,6 @@ namespace RainbowMage.HtmlRenderer
     public partial class OverlayForm : Form, IWinFormsTarget
     {
         private DIBitmap surfaceBuffer;
-        private System.Threading.Timer zorderCorrector;
         private bool terminated = false;
 
         private const int WS_EX_TOPMOST = 0x00000008;
@@ -326,11 +325,6 @@ namespace RainbowMage.HtmlRenderer
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (zorderCorrector != null)
-            {
-                zorderCorrector.Dispose();
-            }
-            
             if (this.surfaceBuffer != null)
             {
                 this.surfaceBuffer.Dispose();

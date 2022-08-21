@@ -12,13 +12,8 @@ namespace RainbowMage.HtmlRenderer
 {
     public partial class OverlayControl : Control, IWinFormsTarget
     {
-        private bool terminated = false;
-
         private object surfaceLock = new object();
         private Bitmap surfaceBuffer;
-        private Bitmap popupBuffer;
-        private Rectangle popupPosition;
-        private bool popupVisible = false;
 
         public WinFormsRenderer Renderer { get; private set; }
 
