@@ -38,7 +38,7 @@ If you have not closed ACT after step 1, please close it now and reopen it.
 
 Go to `Plugins` -> `Plugin Listing`. 
 In the upper right corner of ACT, click `Get Plugins...`.
-Select `(77) Overlay Plugin`.
+Select `(86) Overlay Plugin`.
 Click `Download and Enable`.
 If successful, it will say `The plugin has been added and started.`
 Close the `Get Plugins` window.
@@ -62,4 +62,8 @@ click `Restart` or manually close and reopen ACT yourself one final time.
 ## Known Errors
 
 If OverlayPlugin prompts you for an update with a blank changelog and errors
-that says `The download was interrupted` and `"https://github.com/ngld/OverlayPlugin/releases/download/v0.19.0/OverlayPlugin-0.19.0.7z" failed with code: 404` then it is likely that you have partially updated.  Start again from step 1 above, make sure all OverlayPlugin.dll entries have been removed, and then make sure that you close ACT after this step.
+that says `The download was interrupted` and `"https://github.com/ngld/OverlayPlugin/releases/download/v0.19.1/OverlayPlugin-0.19.1.7z" failed with code: 404` then it is likely that you have partially updated.  Start again from step 1 above, make sure all OverlayPlugin.dll entries have been removed, and then make sure that you close ACT after this step.
+
+## Need Help?
+
+If you experience any issues or would like further assistance, please ask for help in the [ACT_FFXIV](https://discord.gg/hK523Pj) discord.
