@@ -108,6 +108,7 @@
     <Compile Include="MemoryProcessors\FFXIVMemory.cs" />
     <Compile Include="Integration\FFXIVExportVariables.cs" />
     <Compile Include="Integration\FFXIVRepository.cs" />
+    <Compile Include="Integration\FFXIVCustomLogLines.cs" />
     <Compile Include="JSApi\IApiBase.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="JSApi\MinimalApi.cs" />
@@ -500,6 +501,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\preview.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\reserved_log_lines.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
