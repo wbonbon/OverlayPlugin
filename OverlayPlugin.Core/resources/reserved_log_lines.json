@@ -13,7 +13,13 @@
         "Comment": "Line to be emitted when a new log line is registered"
     },
     {
-        "StartID": 257,
+        "ID": 257,
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "MapEffect data"
+    },
+    {
+        "StartID": 258,
         "EndID": 512,
         "Source": "OverlayPlugin",
         "Version": 0,

@@ -101,6 +101,7 @@
     <Compile Include="MemoryProcessors\EnmityMemory54.cs" />
     <Compile Include="MemoryProcessors\EnmityMemoryCommon.cs" />
     <Compile Include="NetworkProcessors\FateWatcher.cs" />
+    <Compile Include="NetworkProcessors\LineMapEffect.cs" />
     <Compile Include="MemoryProcessors\FFXIVProcess.cs" />
     <Compile Include="MemoryProcessors\FFXIVProcessCn.cs" />
     <Compile Include="MemoryProcessors\FFXIVProcessIntl.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="IEventReceiver.cs" />
     <Compile Include="EventSourceBase.cs" />
     <Compile Include="ConfigEventArgs.cs" />
+    <Compile Include="NetworkProcessors\OverlayPluginLogLines.cs" />
     <Compile Include="OverlayHider.cs" />
     <Compile Include="Overlays\LogParseConfigPanel.cs">
       <SubType>UserControl</SubType>
@@ -504,6 +506,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="resources\reserved_log_lines.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\opcodes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
