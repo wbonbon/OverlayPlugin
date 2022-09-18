@@ -343,8 +343,24 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         {
                             jObjCombatant["PartyType"] = GetPartyType(pluginCombatant);
                         }
+
+                        // Handle 0xFFFE (outofrange1) and 0xFFFF (outofrange2) values for WorldID
                         var WorldID = Convert.ToUInt32(jObjCombatant["WorldID"]);
-                        jObjCombatant["WorldName"] = GetWorldName(WorldID);
+                        string WorldName = null;
+                        if (WorldID < 0xFFFE)
+                        {
+                            WorldName = GetWorldName(WorldID);
+                        }
+                        jObjCombatant["WorldName"] = WorldName;
+
+                        // If the request is filtering properties, remove them here
+                        if (props.Count > 0)
+                        {
+                            jObjCombatant.Keys
+                                .Where(k => !props.Contains(k))
+                                .ToList()
+                                .ForEach(k => jObjCombatant.Remove(k));
+                        }
 
                         filteredCombatants.Add(jObjCombatant);
                     }
