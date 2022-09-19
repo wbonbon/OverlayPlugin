@@ -19,7 +19,13 @@
         "Comment": "MapEffect data"
     },
     {
-        "StartID": 258,
+        "ID": 258,
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "ActorControlSelf Fate data"
+    },
+    {
+        "StartID": 259,
         "EndID": 512,
         "Source": "OverlayPlugin",
         "Version": 0,

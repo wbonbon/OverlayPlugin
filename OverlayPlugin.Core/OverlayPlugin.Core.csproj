@@ -101,6 +101,7 @@
     <Compile Include="MemoryProcessors\EnmityMemory54.cs" />
     <Compile Include="MemoryProcessors\EnmityMemoryCommon.cs" />
     <Compile Include="NetworkProcessors\FateWatcher.cs" />
+    <Compile Include="NetworkProcessors\LineFateControl.cs" />
     <Compile Include="NetworkProcessors\LineMapEffect.cs" />
     <Compile Include="MemoryProcessors\FFXIVProcess.cs" />
     <Compile Include="MemoryProcessors\FFXIVProcessCn.cs" />
