@@ -25,7 +25,13 @@
         "Comment": "ActorControlSelf Fate data"
     },
     {
-        "StartID": 259,
+        "ID": 259,
+        "Source": "OverlayPlugin",
+        "Version": 1,
+        "Comment": "Critical Engagement data"
+    },
+    {
+        "StartID": 260,
         "EndID": 512,
         "Source": "OverlayPlugin",
         "Version": 0,

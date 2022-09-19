@@ -12,6 +12,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
             container.Register(new OverlayPluginLogLineConfig(container));
             container.Register(new LineMapEffect(container));
             container.Register(new LineFateControl(container));
+            container.Register(new LineCEDirector(container));
         }
     }
 
@@ -28,7 +29,7 @@ namespace RainbowMage.OverlayPlugin.NetworkProcessors
 
             var pluginDirectory = main.PluginDirectory;
 
-            var opcodesPath = Path.Combine(pluginDirectory, "resources", "opcodes.json");
+            var opcodesPath = Path.Combine(pluginDirectory, "resources", "opcodes.jsonc");
 
             try
             {
