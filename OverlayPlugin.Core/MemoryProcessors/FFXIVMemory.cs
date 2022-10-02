@@ -7,7 +7,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
 {
     public class FFXIVMemory
     {
-        public event EventHandler OnProcessChange;
+        private event EventHandler<Process> OnProcessChange;
 
         private ILogger logger;
         private Process process;
@@ -20,6 +20,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
             repository = container.Resolve<FFXIVRepository>();
 
             repository.RegisterProcessChangedHandler(UpdateProcess);
+        }
+
+        public void RegisterOnProcessChangeHandler(EventHandler<Process> handler)
+        {
+            OnProcessChange += handler;
+            handler.Invoke(this, process);
         }
 
         private void UpdateProcess(Process proc)
@@ -54,7 +60,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors
                 processHandle = IntPtr.Zero;
             }
 
-            OnProcessChange?.Invoke(this, null);
+            OnProcessChange?.Invoke(this, process);
         }
 
         private void CloseProcessHandle()
