@@ -28,8 +28,8 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud
             List<IEnmityHudMemory> candidates = new List<IEnmityHudMemory>();
             // For CN/KR, try the lang-specific candidate first, then fall back to intl
             if (
-                repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Chinese ||
-                repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
+                repository.GetMachinaRegion() == GameRegion.Chinese ||
+                repository.GetMachinaRegion() == GameRegion.Korean)
             {
                 candidates.Add(container.Resolve<IEnmityHudMemory60>());
             }

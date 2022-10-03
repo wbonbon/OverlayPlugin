@@ -27,7 +27,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
         {
             List<IInCombatMemory> candidates = new List<IInCombatMemory>();
             // For CN, try the lang-specific candidate first, then fall back to intl
-            if (repository.GetLanguage() == FFXIV_ACT_Plugin.Common.Language.Korean)
+            if (repository.GetMachinaRegion() == GameRegion.Korean)
             {
                 candidates.Add(container.Resolve<IInCombatMemory60>());
             }

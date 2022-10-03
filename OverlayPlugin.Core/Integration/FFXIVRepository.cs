@@ -57,6 +57,13 @@ namespace RainbowMage.OverlayPlugin
         Timer
     }
 
+    public enum GameRegion
+    {
+        Global = 1,
+        Chinese = 2,
+        Korean = 3
+    }
+
     class FFXIVRepository
     {
         private readonly ILogger logger;
@@ -299,6 +306,22 @@ namespace RainbowMage.OverlayPlugin
                 default:
                     return null;
             }
+        }
+
+        public GameRegion GetMachinaRegion()
+        {
+            try
+            {
+                var mach = Assembly.Load("Machina.FFXIV");
+                var opcode_manager_type = mach.GetType("Machina.FFXIV.Headers.Opcodes.OpcodeManager");
+                var opcode_manager = opcode_manager_type.GetProperty("Instance").GetValue(null);
+                var machina_region = opcode_manager_type.GetProperty("GameRegion").GetValue(opcode_manager).ToString();
+
+                if (Enum.TryParse<GameRegion>(machina_region, out var region))
+                    return region;
+            }
+            catch (Exception) { }
+            return GameRegion.Global;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

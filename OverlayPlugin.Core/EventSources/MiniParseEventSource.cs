@@ -88,10 +88,13 @@ namespace RainbowMage.OverlayPlugin.EventSources
             RegisterEventHandler("getLanguage", (msg) =>
             {
                 var lang = repository.GetLanguage();
+                var region = repository.GetMachinaRegion();
                 return JObject.FromObject(new
                 {
                     language = lang.ToString("g"),
                     languageId = lang.ToString("d"),
+                    region = region.ToString("g"),
+                    regionId = region.ToString("d"),
                 });
             });
             
