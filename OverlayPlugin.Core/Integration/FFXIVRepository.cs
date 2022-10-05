@@ -71,6 +71,7 @@ namespace RainbowMage.OverlayPlugin
         private IDataSubscription subscription;
         private MethodInfo logOutputWriteLineFunc;
         private object logOutput;
+        private Func<long, DateTime> machinaEpochToDateTimeWrapper;
 
         public FFXIVRepository(TinyIoCContainer container)
         {
@@ -324,8 +325,28 @@ namespace RainbowMage.OverlayPlugin
             return GameRegion.Global;
         }
 
+        public DateTime EpochToDateTime(long epoch)
+        {
+            if (machinaEpochToDateTimeWrapper == null)
+            {
+                try
+                {
+                    var mach = Assembly.Load("Machina");
+                    var conversionUtility = mach.GetType("Machina.Infrastructure.ConversionUtility");
+                    var epochToDateTime = conversionUtility.GetMethod("EpochToDateTime");
+                    machinaEpochToDateTimeWrapper = (e) => {
+                        return (DateTime)epochToDateTime.Invoke(null, new object[] { e });
+                    };
+                }
+                catch (Exception e) {
+                    logger.Log(LogLevel.Error, e.ToString());
+                }
+            }
+            return machinaEpochToDateTimeWrapper(epoch);
+        }
+
         [MethodImpl(MethodImplOptions.NoInlining)]
-        internal bool WriteLogLineImpl(uint ID, string line)
+        internal bool WriteLogLineImpl(uint ID, DateTime timestamp, string line)
         {
             if (logOutputWriteLineFunc == null)
             {
@@ -370,7 +391,7 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
 
-            logOutputWriteLineFunc.Invoke(logOutput, new object[] { (int)ID, DateTime.Now, line });
+            logOutputWriteLineFunc.Invoke(logOutput, new object[] { (int)ID, timestamp, line });
 
             return true;
         }
