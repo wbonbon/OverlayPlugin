@@ -73,6 +73,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
             return null;
         }
 
+        public override void Start()
+        {
+            timer.Change(0, Config.EnmityIntervalMs);
+        }
+
         public override void LoadConfig(IPluginConfig cfg)
         {
             Config = container.Resolve<BuiltinEventConfig>();
