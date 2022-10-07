@@ -342,7 +342,7 @@ namespace RainbowMage.OverlayPlugin
                     logger.Log(LogLevel.Error, e.ToString());
                 }
             }
-            return machinaEpochToDateTimeWrapper(epoch);
+            return machinaEpochToDateTimeWrapper(epoch).ToLocalTime();
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
