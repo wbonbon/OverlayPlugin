@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {
@@ -7,6 +8,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
     {
         List<AggroEntry> GetAggroList(List<Combatant.Combatant> combatantList);
 
+        void ScanPointers();
         bool IsValid();
     }
 
@@ -21,15 +23,29 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
             this.container = container;
             container.Register<IAggroMemory60, AggroMemory60>();
             repository = container.Resolve<FFXIVRepository>();
+
+            var memory = container.Resolve<FFXIVMemory>();
+            memory.RegisterOnProcessChangeHandler(FindMemory);
         }
 
-        private void FindMemory()
+        private void FindMemory(object sender, Process p)
+        {
+            memory = null;
+            if (p == null)
+            {
+                return;
+            }
+            ScanPointers();
+        }
+
+        public void ScanPointers()
         {
             List<IAggroMemory> candidates = new List<IAggroMemory>();
             candidates.Add(container.Resolve<IAggroMemory60>());
 
             foreach (var c in candidates)
             {
+                c.ScanPointers();
                 if (c.IsValid())
                 {
                     memory = c;
@@ -40,17 +56,12 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 
         public bool IsValid()
         {
-            if (memory == null)
-            {
-                FindMemory();
-            }
             if (memory == null || !memory.IsValid())
             {
                 return false;
             }
             return true;
         }
-
 
         public List<AggroEntry> GetAggroList(List<Combatant.Combatant> combatantList)
         {
