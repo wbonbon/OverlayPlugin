@@ -167,7 +167,7 @@ namespace RainbowMage.OverlayPlugin
 #if DEBUG
                 watch.Reset();
 #endif
-      
+
                 this.label.Text = "Init Phase 1: UI";
 
                 // Setup the UI
@@ -182,7 +182,7 @@ namespace RainbowMage.OverlayPlugin
                 this.wsTabPage = new TabPage("OverlayPlugin WSServer");
                 this.wsTabPage.Controls.Add(wsConfigPanel);
                 ((TabControl)this.tabPage.Parent).TabPages.Add(this.wsTabPage);
-                
+
                 _logger.Log(LogLevel.Info, "InitPlugin: Initialised.");
 
                 // Fire off the update check (which runs in the background)
@@ -193,22 +193,24 @@ namespace RainbowMage.OverlayPlugin
 
                 this.label.Text = "Init Phase 1: Presets";
                 // Load our presets
-                try {
+                try
+                {
 #if DEBUG
                     var presetFile = Path.Combine(PluginDirectory, "libs", "resources", "presets.json");
-    #else
+#else
                     var presetFile = Path.Combine(PluginDirectory, "resources", "presets.json");
-    #endif
+#endif
                     var presetData = "{}";
-                
+
                     try
                     {
                         presetData = File.ReadAllText(presetFile);
-                    } catch(Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         _logger.Log(LogLevel.Error, string.Format(Resources.ErrorCouldNotLoadPresets, ex));
                     }
-            
+
                     var presets = JsonConvert.DeserializeObject<Dictionary<string, OverlayPreset>>(presetData);
                     var registry = _container.Resolve<Registry>();
                     foreach (var pair in presets)
@@ -218,7 +220,8 @@ namespace RainbowMage.OverlayPlugin
                     }
 
                     wsConfigPanel.RebuildOverlayOptions();
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     _logger.Log(LogLevel.Error, string.Format("Failed to load presets: {0}", ex));
                 }
@@ -232,7 +235,8 @@ namespace RainbowMage.OverlayPlugin
                     {
                         // Something went really wrong.
                         initTimer.Stop();
-                    } else if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
+                    }
+                    else if (ActGlobals.oFormActMain.InitActDone && ActGlobals.oFormActMain.Handle != IntPtr.Zero)
                     {
                         try
                         {
@@ -286,7 +290,7 @@ namespace RainbowMage.OverlayPlugin
                                     InitializeOverlays();
                                     controlPanel.InitializeOverlayConfigTabs();
 
-                                    this.label.Text = "Init Phase 2: Overlay tasks";                                
+                                    this.label.Text = "Init Phase 2: Overlay tasks";
                                     _container.Register(new OverlayHider(_container));
                                     _container.Register(new OverlayZCorrector(_container));
 
@@ -304,7 +308,8 @@ namespace RainbowMage.OverlayPlugin
                                     this.label.Text = "Initialised";
                                     // Make the log small; startup was successful and there shouldn't be any error message to show.
                                     controlPanel.ResizeLog();
-                                } catch (Exception ex)
+                                }
+                                catch (Exception ex)
                                 {
                                     _logger.Log(LogLevel.Error, "InitPlugin: {0}", ex);
                                 }
@@ -351,7 +356,7 @@ namespace RainbowMage.OverlayPlugin
                 parameters["config"] = overlayConfig;
                 parameters["name"] = overlayConfig.Name;
 
-                var overlay = (IOverlay) _container.Resolve(overlayConfig.OverlayType, parameters);
+                var overlay = (IOverlay)_container.Resolve(overlayConfig.OverlayType, parameters);
                 if (overlay != null)
                 {
                     RegisterOverlay(overlay);
