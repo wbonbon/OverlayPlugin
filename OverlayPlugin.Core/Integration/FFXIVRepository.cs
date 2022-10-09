@@ -172,6 +172,11 @@ namespace RainbowMage.OverlayPlugin
             }
         }
 
+        public Version GetOverlayPluginVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version;
+        }
+
         public Version GetPluginVersion()
         {
             return typeof(IDataRepository).Assembly.GetName().Version;
