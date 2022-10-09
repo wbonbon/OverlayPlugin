@@ -1,25 +1,25 @@
-﻿using Advanced_Combat_Tracker;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using RainbowMage.HtmlRenderer;
-using System;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using Advanced_Combat_Tracker;
 using Newtonsoft.Json;
-using RainbowMage.OverlayPlugin.Overlays;
-using RainbowMage.OverlayPlugin.EventSources;
-using RainbowMage.OverlayPlugin.NetworkProcessors;
-using RainbowMage.OverlayPlugin.Integration;
+using RainbowMage.HtmlRenderer;
 using RainbowMage.OverlayPlugin.Controls;
+using RainbowMage.OverlayPlugin.EventSources;
+using RainbowMage.OverlayPlugin.Integration;
 using RainbowMage.OverlayPlugin.MemoryProcessors;
-using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
-using RainbowMage.OverlayPlugin.MemoryProcessors.Target;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Enmity;
 using RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud;
 using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Target;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
+using RainbowMage.OverlayPlugin.Overlays;
 
 namespace RainbowMage.OverlayPlugin
 {

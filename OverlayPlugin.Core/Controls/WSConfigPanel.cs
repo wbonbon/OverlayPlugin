@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Threading;
-using System.IO;
-using System.Windows.Forms;
-using System.Net;
 using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Forms;
 using Advanced_Combat_Tracker;
-using SharpCompress.Archives.Zip;
 using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin.Updater;
+using SharpCompress.Archives.Zip;
 
 namespace RainbowMage.OverlayPlugin
 {

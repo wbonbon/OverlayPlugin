@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RainbowMage.OverlayPlugin.Updater;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
 {

@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using System.Reflection;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using CefSharp;
+using CefSharp.Enums;
+using CefSharp.Internals;
 using CefSharp.OffScreen;
 using CefSharp.Structs;
-using CefSharp.Enums;
-using CefSharp;
-using CefSharp.Internals;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
 
 namespace RainbowMage.HtmlRenderer
 {

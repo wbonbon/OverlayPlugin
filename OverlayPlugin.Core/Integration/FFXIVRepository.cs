@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using System.Linq;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using Advanced_Combat_Tracker;
 using FFXIV_ACT_Plugin.Common;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace RainbowMage.OverlayPlugin
 {

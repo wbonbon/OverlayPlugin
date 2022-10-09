@@ -1,7 +1,7 @@
-﻿using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
 {

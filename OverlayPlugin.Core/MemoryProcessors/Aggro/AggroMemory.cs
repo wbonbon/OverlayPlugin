@@ -1,10 +1,10 @@
-﻿using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
-using RainbowMage.OverlayPlugin.MemoryProcessors.Enmity;
-using RainbowMage.OverlayPlugin.MemoryProcessors.Target;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Enmity;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Target;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Aggro
 {

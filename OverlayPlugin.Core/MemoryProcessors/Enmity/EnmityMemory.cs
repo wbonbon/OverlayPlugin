@@ -1,8 +1,8 @@
-﻿using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Enmity
 {

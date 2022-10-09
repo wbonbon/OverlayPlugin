@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using RainbowMage.OverlayPlugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin;
 
 namespace AddonExample
 {

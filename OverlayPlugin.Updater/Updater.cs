@@ -1,13 +1,13 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
 using Advanced_Combat_Tracker;
 using Markdig;
-using System.Runtime.CompilerServices;
-using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace RainbowMage.OverlayPlugin.Updater
 {

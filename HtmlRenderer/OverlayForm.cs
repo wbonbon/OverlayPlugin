@@ -1,5 +1,4 @@
-﻿using RainbowMage.HtmlRenderer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,8 +12,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp;
-using CefSharp.Structs;
 using CefSharp.Enums;
+using CefSharp.Structs;
+using RainbowMage.HtmlRenderer;
 using Point = System.Drawing.Point;
 
 namespace RainbowMage.HtmlRenderer

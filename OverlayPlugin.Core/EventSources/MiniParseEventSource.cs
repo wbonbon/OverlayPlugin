@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Advanced_Combat_Tracker;
 using System.Diagnostics;
-using System.Windows.Forms;
-using RainbowMage.OverlayPlugin.NetworkProcessors;
 using System.IO;
-using System.Runtime.CompilerServices;
-using FFXIV_ACT_Plugin.Common;
-using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
+using System.Linq;
 // For some reason this using is required by the github build?
 using System.Reflection;
-
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Advanced_Combat_Tracker;
+using FFXIV_ACT_Plugin.Common;
+using Newtonsoft.Json.Linq;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
+using RainbowMage.OverlayPlugin.NetworkProcessors;
 using PluginCombatant = FFXIV_ACT_Plugin.Common.Models.Combatant;
 
 namespace RainbowMage.OverlayPlugin.EventSources

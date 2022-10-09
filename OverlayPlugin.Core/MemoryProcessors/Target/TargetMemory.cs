@@ -1,7 +1,7 @@
-﻿using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using RainbowMage.OverlayPlugin.MemoryProcessors.Combatant;
 
 namespace RainbowMage.OverlayPlugin.MemoryProcessors.Target
 {

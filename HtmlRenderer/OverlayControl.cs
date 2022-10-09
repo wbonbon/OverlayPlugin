@@ -1,12 +1,12 @@
-﻿using RainbowMage.HtmlRenderer;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using CefSharp;
-using CefSharp.Structs;
 using CefSharp.Enums;
+using CefSharp.Structs;
+using RainbowMage.HtmlRenderer;
 
 namespace RainbowMage.HtmlRenderer
 {
