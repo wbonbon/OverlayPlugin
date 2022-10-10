@@ -68,7 +68,7 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.Combatant
                     Heading = mem.Heading,
                     Radius = mem.Radius,
                     // In-memory there are separate values for PC's current target and NPC's current target
-                    TargetID = mem.PCTargetID != 0xE0000000 ? mem.PCTargetID : mem.NPCTargetID,
+                    TargetID = (ObjectType)mem.Type == ObjectType.PC ? mem.PCTargetID : mem.NPCTargetID,
                     CurrentHP = mem.CurrentHP,
                     MaxHP = mem.MaxHP,
                     Effects = exceptEffects ? new List<EffectEntry>() : GetEffectEntries(mem.Effects, (ObjectType)mem.Type, mycharID),
