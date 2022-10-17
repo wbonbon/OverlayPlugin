@@ -379,7 +379,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
                         LogMessageType lineType = (LogMessageType)lineTypeInt;
                         if (lineType == LogMessageType.InCombat)
                         {
-                            var inACTCombat = Convert.ToUInt32(line[2], 16);
+                            var inACTCombat = Convert.ToUInt32(line[2]);
                             if (inACTCombat == 0)
                             {
                                 StopACTCombat();
