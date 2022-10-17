@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using RainbowMage.OverlayPlugin.EventSources;
 using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin.NetworkProcessors
