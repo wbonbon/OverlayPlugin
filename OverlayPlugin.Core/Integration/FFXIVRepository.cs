@@ -54,7 +54,13 @@ namespace RainbowMage.OverlayPlugin
         PacketDump,
         Version,
         Error,
-        Timer
+        Timer,
+        // OverlayPlugin lines
+        RegisterLogLine = 256,
+        MapEffect,
+        FateDirector,
+        CEDirector,
+        InCombat,
     }
 
     public enum GameRegion

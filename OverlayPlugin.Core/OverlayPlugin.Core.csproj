@@ -87,6 +87,7 @@
       <DependentUpon>RenameOverlayDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="EventSources\EnmityEventSource.cs" />
+    <Compile Include="EventSources\LineInCombat.cs" />
     <Compile Include="Integration\UnstableNewLogLines.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory60.cs" />

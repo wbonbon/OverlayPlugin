@@ -27,6 +27,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         private IAggroMemory aggroMemory;
         private IEnmityHudMemory enmityHudMemory;
 
+        private LineInCombat lineInCombat;
+
         // General information about the target, focus target, hover target.  Also, enmity entries for main target.
         private const string EnmityTargetDataEvent = "EnmityTargetData";
         // All of the mobs with aggro on the player.  Equivalent of the sidebar aggro list in game.
@@ -62,6 +64,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
             enmityMemory = container.Resolve<IEnmityMemory>();
             aggroMemory = container.Resolve<IAggroMemory>();
             enmityHudMemory = container.Resolve<IEnmityHudMemory>();
+
+            lineInCombat = new LineInCombat(container);
 
             RegisterEventTypes(new List<string> {
                 EnmityTargetDataEvent, EnmityAggroListEvent, TargetableEnemiesEvent
@@ -131,17 +135,15 @@ namespace RainbowMage.OverlayPlugin.EventSources
             }
             lastInGameCombat = inGameCombat;
 
-            if (HasSubscriber(InCombatEvent))
+            bool inACTCombat = Advanced_Combat_Tracker.ActGlobals.oFormActMain.InCombat;
+            if (sentCombatData == null || sentCombatData.inACTCombat != inACTCombat || sentCombatData.inGameCombat != inGameCombat)
             {
-                bool inACTCombat = Advanced_Combat_Tracker.ActGlobals.oFormActMain.InCombat;
-                if (sentCombatData == null || sentCombatData.inACTCombat != inACTCombat || sentCombatData.inGameCombat != inGameCombat)
-                {
-                    if (sentCombatData == null)
-                        sentCombatData = new InCombatDataObject();
-                    sentCombatData.inACTCombat = inACTCombat;
-                    sentCombatData.inGameCombat = inGameCombat;
-                    DispatchAndCacheEvent(JObject.FromObject(sentCombatData));
-                }
+                if (sentCombatData == null)
+                    sentCombatData = new InCombatDataObject();
+                sentCombatData.inACTCombat = inACTCombat;
+                sentCombatData.inGameCombat = inGameCombat;
+                lineInCombat.WriteLine(inACTCombat, inGameCombat);
+                DispatchAndCacheEvent(JObject.FromObject(sentCombatData));
             }
         }
 
