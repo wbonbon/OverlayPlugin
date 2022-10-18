@@ -32,7 +32,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public void WriteLine(bool inACTCombat, bool inGameCombat)
         {
             var line = $"{(inACTCombat ? 1 : 0)}|{(inGameCombat ? 1 : 0)}";
-            logWriter(line, ActGlobals.oFormActMain.LastEstimatedTime);
+            logWriter(line, ffxiv.GetServerTimestamp());
         }
     }
 }

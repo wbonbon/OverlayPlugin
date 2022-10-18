@@ -461,5 +461,10 @@ namespace RainbowMage.OverlayPlugin
                 }
             }
         }
+
+        public DateTime GetServerTimestamp()
+        {
+            return GetRepository()?.GetServerTimestamp() ?? DateTime.Now;
+        }
     }
 }
