@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Web.Services.Protocols;
+using Advanced_Combat_Tracker;
 using SharpCompress.Compressors.Xz;
 
 namespace RainbowMage.OverlayPlugin.EventSources
@@ -31,7 +32,7 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public void WriteLine(bool inACTCombat, bool inGameCombat)
         {
             var line = $"{(inACTCombat ? 1 : 0)}|{(inGameCombat ? 1 : 0)}";
-            logWriter(line, DateTime.Now);
+            logWriter(line, ActGlobals.oFormActMain.LastEstimatedTime);
         }
     }
 }
