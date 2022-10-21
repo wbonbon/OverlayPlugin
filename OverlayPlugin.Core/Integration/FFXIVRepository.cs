@@ -445,6 +445,13 @@ namespace RainbowMage.OverlayPlugin
                 sub.PartyListChanged += new PartyListChangedDelegate(handler);
         }
 
+        public void RegisterZoneChangeDelegate(Action<uint, string> handler)
+        {
+            var sub = GetSubscription();
+            if (sub != null)
+                sub.ZoneChanged += new ZoneChangedDelegate(handler);
+        }
+
         // ProcessChangedDelegate(Process process)
         public void RegisterProcessChangedHandler(Action<Process> handler)
         {
