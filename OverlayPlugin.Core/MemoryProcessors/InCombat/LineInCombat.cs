@@ -1,7 +1,7 @@
 ﻿using System;
-using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using RainbowMage.OverlayPlugin.MemoryProcessors.InCombat;
 using static RainbowMage.OverlayPlugin.EventSources.EnmityEventSource;
 
