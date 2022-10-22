@@ -15,19 +15,17 @@ using RainbowMage.OverlayPlugin.MemoryProcessors.Enmity;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Aggro;
 using RainbowMage.OverlayPlugin.MemoryProcessors.EnmityHud;
 using RainbowMage.OverlayPlugin.MemoryProcessors.Target;
+using static RainbowMage.OverlayPlugin.MemoryProcessors.InCombat.LineInCombat;
 
 namespace RainbowMage.OverlayPlugin.EventSources
 {
     public class EnmityEventSource : EventSourceBase
     {
-        private IInCombatMemory inCombatMemory;
         private ICombatantMemory combatantMemory;
         private ITargetMemory targetMemory;
         private IEnmityMemory enmityMemory;
         private IAggroMemory aggroMemory;
         private IEnmityHudMemory enmityHudMemory;
-
-        private LineInCombat lineInCombat;
 
         // General information about the target, focus target, hover target.  Also, enmity entries for main target.
         private const string EnmityTargetDataEvent = "EnmityTargetData";
@@ -45,32 +43,32 @@ namespace RainbowMage.OverlayPlugin.EventSources
             public bool inACTCombat = false;
             public bool inGameCombat = false;
         };
-        InCombatDataObject sentCombatData;
 
-        // Unlike "sentCombatData" which caches sent data, this variable caches each update.
-        private bool lastInGameCombat = false;
         private const int endEncounterOutOfCombatDelayMs = 5000;
         CancellationTokenSource endEncounterToken;
 
         public BuiltinEventConfig Config { get; set; }
 
-        public event EventHandler<CombatStatusChangedArgs> CombatStatusChanged;
+        public event Action EnmityTick;
 
         public EnmityEventSource(TinyIoCContainer container) : base(container)
         {
-            inCombatMemory = container.Resolve<IInCombatMemory>();
             combatantMemory = container.Resolve<ICombatantMemory>();
             targetMemory = container.Resolve<ITargetMemory>();
             enmityMemory = container.Resolve<IEnmityMemory>();
             aggroMemory = container.Resolve<IAggroMemory>();
             enmityHudMemory = container.Resolve<IEnmityHudMemory>();
 
-            lineInCombat = new LineInCombat(container);
-
             RegisterEventTypes(new List<string> {
                 EnmityTargetDataEvent, EnmityAggroListEvent, TargetableEnemiesEvent
             });
             RegisterCachedEventType(InCombatEvent);
+
+            var lineInCombat = container.Resolve<LineInCombat>();
+            lineInCombat.OnInCombatChanged += OnInCombatChanged;
+
+            EnmityTick += UpdateEnmity;
+            EnmityTick += lineInCombat.Update;
         }
 
         public override Control CreateConfigControl()
@@ -97,20 +95,24 @@ namespace RainbowMage.OverlayPlugin.EventSources
         {
         }
 
-        private void UpdateInCombat()
+        private void OnInCombatChanged(object sender, InCombatArgs args)
         {
-            if (!inCombatMemory.IsValid())
-                return;
+            var combatData = new InCombatDataObject();
+            combatData.inACTCombat = args.InACTCombat;
+            combatData.inGameCombat = args.InGameCombat;
+            DispatchAndCacheEvent(JObject.FromObject(combatData));
 
-            // Handle optional "end encounter of combat" logic.
-            bool inGameCombat = inCombatMemory.GetInCombat();
-            if (inGameCombat != lastInGameCombat)
+            if (!args.InGameCombatChanged)
             {
-                logger.Log(LogLevel.Debug, inGameCombat ? "Entered combat" : "Left combat");
+                return;
             }
 
+            // Handle optional "end encounter of combat" logic.
+            bool inGameCombat = args.InGameCombat;
+            logger.Log(LogLevel.Debug, inGameCombat ? "Entered combat" : "Left combat");
+
             // If we've transitioned to being out of combat, start a delayed task to end the ACT encounter.
-            if (Config.EndEncounterOutOfCombat && lastInGameCombat && !inGameCombat)
+            if (Config.EndEncounterOutOfCombat && !inGameCombat)
             {
                 endEncounterToken = new CancellationTokenSource();
                 Task.Run(async delegate
@@ -129,22 +131,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 endEncounterToken.Cancel();
                 endEncounterToken = null;
             }
-            if (lastInGameCombat != inGameCombat)
-            {
-                CombatStatusChanged?.Invoke(this, new CombatStatusChangedArgs(inGameCombat));
-            }
-            lastInGameCombat = inGameCombat;
-
-            bool inACTCombat = Advanced_Combat_Tracker.ActGlobals.oFormActMain.InCombat;
-            if (sentCombatData == null || sentCombatData.inACTCombat != inACTCombat || sentCombatData.inGameCombat != inGameCombat)
-            {
-                if (sentCombatData == null)
-                    sentCombatData = new InCombatDataObject();
-                sentCombatData.inACTCombat = inACTCombat;
-                sentCombatData.inGameCombat = inGameCombat;
-                lineInCombat.WriteLine(inACTCombat, inGameCombat);
-                DispatchAndCacheEvent(JObject.FromObject(sentCombatData));
-            }
         }
 
         private void UpdateEnmity()
@@ -155,35 +141,30 @@ namespace RainbowMage.OverlayPlugin.EventSources
             if (!targetData && !aggroList && !targetableEnemies)
                 return;
 
-            var combatants = combatantMemory.GetCombatantList();
-
-            combatants.RemoveAll((c) => c.Type != ObjectType.PC && c.Type != ObjectType.Monster);
-
-            if (targetData)
-            {
-                // See CreateTargetData() below
-                DispatchEvent(CreateTargetData(combatants));
-            }
-            if (aggroList)
-            {
-                DispatchEvent(CreateAggroList(combatants));
-            }
-            if (targetableEnemies)
-            {
-                DispatchEvent(CreateTargetableEnemyList(combatants));
-            }
-        }
-
-        protected override void Update()
-        {
             try
             {
 #if TRACE
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
 #endif
-                UpdateInCombat();
-                UpdateEnmity();
+
+                var combatants = combatantMemory.GetCombatantList();
+
+                combatants.RemoveAll((c) => c.Type != ObjectType.PC && c.Type != ObjectType.Monster);
+
+                if (targetData)
+                {
+                    // See CreateTargetData() below
+                    DispatchEvent(CreateTargetData(combatants));
+                }
+                if (aggroList)
+                {
+                    DispatchEvent(CreateAggroList(combatants));
+                }
+                if (targetableEnemies)
+                {
+                    DispatchEvent(CreateTargetableEnemyList(combatants));
+                }
 #if TRACE
                 Log(LogLevel.Trace, "UpdateEnmity: {0}ms", stopwatch.ElapsedMilliseconds);
 #endif
@@ -192,6 +173,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
             {
                 Log(LogLevel.Error, "UpdateEnmity: {0}", ex.ToString());
             }
+        }
+
+        protected override void Update()
+        {
+            EnmityTick.Invoke();
         }
 
         [Serializable]
@@ -320,16 +306,6 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 enemyList.Add(entry);
             }
             return enemyList;
-        }
-    }
-
-    public class CombatStatusChangedArgs : EventArgs
-    {
-        public bool InCombat { get; private set; }
-
-        public CombatStatusChangedArgs(bool status)
-        {
-            InCombat = status;
         }
     }
 
