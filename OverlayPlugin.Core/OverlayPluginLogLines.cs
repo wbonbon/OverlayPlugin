@@ -9,6 +9,8 @@ using RainbowMage.OverlayPlugin.Updater;
 
 namespace RainbowMage.OverlayPlugin
 {
+    using Opcodes = Dictionary<string, Dictionary<string, OpcodeConfigEntry>>;
+
     class OverlayPluginLogLines
     {
         public OverlayPluginLogLines(TinyIoCContainer container)
@@ -23,7 +25,8 @@ namespace RainbowMage.OverlayPlugin
 
     class OverlayPluginLogLineConfig
     {
-        private Dictionary<string, Dictionary<string, OpcodeConfigEntry>> opcodes = new Dictionary<string, Dictionary<string, OpcodeConfigEntry>>();
+        private Opcodes opcodesFile;
+        private Opcodes opcodesConfig;
         private ILogger logger;
         private FFXIVRepository repository;
         private PluginConfig config;
@@ -43,11 +46,8 @@ namespace RainbowMage.OverlayPlugin
             repository = container.Resolve<FFXIVRepository>();
             config = container.Resolve<PluginConfig>();
 
-            // TODO: should we fall back to the file if the remote cached config is somehow broken?
-            if (!LoadCachedOpcodesFromConfig())
-            {
-                LoadOpcodesFromFile();
-            }
+            LoadCachedOpcodesFromConfig();
+            LoadOpcodesFromFile();
         }
 
         private bool LoadCachedOpcodesFromConfig()
@@ -82,7 +82,7 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 // TODO: is there a better way to go JToken -> Dictionary here without a string intermediary?
-                opcodes = JsonConvert.DeserializeAnonymousType(config.CachedOpcodeFile.ToString(), opcodes);
+                opcodesConfig = JsonConvert.DeserializeObject<Opcodes>(config.CachedOpcodeFile.ToString());
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace RainbowMage.OverlayPlugin
                 var response = CurlWrapper.Get(remoteOpcodeUrl);
                 var jsonData = JObject.Parse(response);
                 // Validate that this can convert properly before storing it.
-                JsonConvert.DeserializeAnonymousType(response, opcodes);
+                JsonConvert.DeserializeObject<Opcodes>(response);
 
                 config.CachedOpcodeFile = jsonData;
                 config.CachedOpcodeOverlayPluginVersion = repository.GetOverlayPluginVersion().ToString();
@@ -138,7 +138,7 @@ namespace RainbowMage.OverlayPlugin
             try
             {
                 var jsonData = File.ReadAllText(opcodesPath);
-                opcodes = JsonConvert.DeserializeAnonymousType(jsonData, opcodes);
+                opcodesFile = JsonConvert.DeserializeObject<Opcodes>(jsonData);
                 logger.Log(LogLevel.Debug, "Loaded opcodes from file");
                 return true;
             }
@@ -157,6 +157,31 @@ namespace RainbowMage.OverlayPlugin
             logger.Log(LogLevel.Error, message);
         }
 
+        private IOpcodeConfigEntry GetOpcode(string name, Opcodes opcodes, string version, string opcodeType)
+        {
+            if (opcodes == null)
+                return null;
+
+            if (opcodes.ContainsKey(version))
+            {
+                var versionOpcodes = opcodes[version];
+                if (versionOpcodes.ContainsKey(name))
+                {
+                    return versionOpcodes[name];
+                }
+                else
+                {
+                    LogException($"No {opcodeType} opcode for game version {version}, opcode name {name}");
+                }
+            }
+            else
+            {
+                LogException($"No {opcodeType} opcodes for game version {version}");
+            }
+
+            return null;
+        }
+
         public IOpcodeConfigEntry this[string name]
         {
             get
@@ -168,32 +193,24 @@ namespace RainbowMage.OverlayPlugin
                     return null;
                 }
 
-                if (opcodes.ContainsKey(version))
+                IOpcodeConfigEntry opcode = null;
+                opcode = GetOpcode(name, opcodesConfig, version, "config");
+                if (opcode == null)
                 {
-                    var versionOpcodes = opcodes[version];
-                    if (versionOpcodes.ContainsKey(name))
+                    opcode = GetOpcode(name, opcodesFile, version, "file");
+
+                    // Try once to get this remotely, but only if this opcode or version is missing.
+                    // TODO: we could consider getting this once always too, but for now
+                    // if we ever have an incorrect (but present) opcode, another release is required.
+                    if (opcode == null && !haveAttemptedOpcodeDownload)
                     {
-                        return versionOpcodes[name];
+                        haveAttemptedOpcodeDownload = true;
+                        SaveRemoteOpcodesToConfig();
+                        return GetOpcode(name, opcodesConfig, version, "config");
                     }
-                    else
-                    {
-                        LogException($"No opcode for game version {version}, opcode name {name}");
-                    }
-                }
-                else
-                {
-                    LogException($"No opcodes for game version {version}");
                 }
 
-                // Try once to get this remotely if this opcode or version is missing.
-                if (!haveAttemptedOpcodeDownload)
-                {
-                    haveAttemptedOpcodeDownload = true;
-                    SaveRemoteOpcodesToConfig();
-                    return this[name];
-                }
-
-                return null;
+                return opcode;
             }
         }
     }
