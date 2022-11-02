@@ -73,7 +73,9 @@ namespace RainbowMage.OverlayPlugin.MemoryProcessors.InCombat
 
         public void WriteLine(bool inACTCombat, bool inGameCombat)
         {
-            var line = $"{(inACTCombat ? 1 : 0)}|{(inGameCombat ? 1 : 0)}";
+            var inACTCombatDecimal = inACTCombat ? 1 : 0;
+            var inGameCombatDecimal = inGameCombat ? 1 : 0;
+            var line = $"{inACTCombatDecimal}|{inGameCombatDecimal}";
             logWriter(line, ffxiv.GetServerTimestamp());
         }
     }
