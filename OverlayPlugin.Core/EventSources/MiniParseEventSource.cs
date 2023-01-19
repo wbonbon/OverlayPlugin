@@ -64,8 +64,8 @@ namespace RainbowMage.OverlayPlugin.EventSources
         public MiniParseEventSource(TinyIoCContainer container) : base(container)
         {
             Name = "MiniParse";
-            repository = container.Resolve<FFXIVRepository>();
-            combatantMemory = container.Resolve<ICombatantMemory>();
+            var haveRepository = container.TryResolve(out repository);
+            var haveCombatantMemory = container.TryResolve(out combatantMemory);
 
             // FileChanged isn't actually raised by this event source. That event is generated in MiniParseOverlay directly.
             RegisterEventTypes(new List<string> {
@@ -76,8 +76,11 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 BroadcastMessageEvent,
             });
 
-            // These events need to deliver cached values to new subscribers.
-            RegisterCachedEventTypes(new List<string> {
+            if (haveRepository && haveCombatantMemory)
+            {
+
+                // These events need to deliver cached values to new subscribers.
+                RegisterCachedEventTypes(new List<string> {
                 ChangePrimaryPlayerEvent,
                 ChangeZoneEvent,
                 ChangeMapEvent,
@@ -86,66 +89,67 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 PartyChangedEvent,
             });
 
-            RegisterEventHandler("getLanguage", (msg) =>
-            {
-                var lang = repository.GetLanguage();
-                var region = repository.GetMachinaRegion();
-                return JObject.FromObject(new
+                RegisterEventHandler("getLanguage", (msg) =>
                 {
-                    language = lang.ToString("g"),
-                    languageId = lang.ToString("d"),
-                    region = region.ToString("g"),
-                    regionId = region.ToString("d"),
-                });
-            });
-
-            RegisterEventHandler("getVersion", (msg) =>
-            {
-                var version = repository.GetOverlayPluginVersion();
-                return JObject.FromObject(new
-                {
-                    version = version.ToString()
-                });
-            });
-
-            RegisterEventHandler("getCombatants", (msg) =>
-            {
-                List<uint> ids = new List<uint>();
-
-                if (msg["ids"] != null)
-                {
-                    foreach (var id in ((JArray)msg["ids"]))
+                    var lang = repository.GetLanguage();
+                    var region = repository.GetMachinaRegion();
+                    return JObject.FromObject(new
                     {
-                        ids.Add(id.ToObject<uint>());
-                    }
-                }
-
-                List<string> names = new List<string>();
-
-                if (msg["names"] != null)
-                {
-                    foreach (var name in ((JArray)msg["names"]))
-                    {
-                        names.Add(name.ToString());
-                    }
-                }
-
-                List<string> props = new List<string>();
-
-                if (msg["props"] != null)
-                {
-                    foreach (var prop in ((JArray)msg["props"]))
-                    {
-                        props.Add(prop.ToString());
-                    }
-                }
-
-                var combatants = GetCombatants(ids, names, props);
-                return JObject.FromObject(new
-                {
-                    combatants
+                        language = lang.ToString("g"),
+                        languageId = lang.ToString("d"),
+                        region = region.ToString("g"),
+                        regionId = region.ToString("d"),
+                    });
                 });
-            });
+
+                RegisterEventHandler("getVersion", (msg) =>
+                {
+                    var version = repository.GetOverlayPluginVersion();
+                    return JObject.FromObject(new
+                    {
+                        version = version.ToString()
+                    });
+                });
+
+                RegisterEventHandler("getCombatants", (msg) =>
+                {
+                    List<uint> ids = new List<uint>();
+
+                    if (msg["ids"] != null)
+                    {
+                        foreach (var id in ((JArray)msg["ids"]))
+                        {
+                            ids.Add(id.ToObject<uint>());
+                        }
+                    }
+
+                    List<string> names = new List<string>();
+
+                    if (msg["names"] != null)
+                    {
+                        foreach (var name in ((JArray)msg["names"]))
+                        {
+                            names.Add(name.ToString());
+                        }
+                    }
+
+                    List<string> props = new List<string>();
+
+                    if (msg["props"] != null)
+                    {
+                        foreach (var prop in ((JArray)msg["props"]))
+                        {
+                            props.Add(prop.ToString());
+                        }
+                    }
+
+                    var combatants = GetCombatants(ids, names, props);
+                    return JObject.FromObject(new
+                    {
+                        combatants
+                    });
+                });
+            }
 
             RegisterEventHandler("saveData", (msg) =>
             {
@@ -254,26 +258,30 @@ namespace RainbowMage.OverlayPlugin.EventSources
                 return result;
             });
 
-            try
+            if (haveRepository && haveCombatantMemory)
             {
-                InitFFXIVIntegration();
-            }
-            catch (FileNotFoundException)
-            {
-                // The FFXIV plugin hasn't been loaded.
+                try
+                {
+                    InitFFXIVIntegration();
+                }
+                catch (FileNotFoundException)
+                {
+                    // The FFXIV plugin hasn't been loaded.
+                }
+
+                container.Resolve<NetworkParser>().OnOnlineStatusChanged += (o, e) =>
+                {
+                    var obj = new JObject();
+                    obj["type"] = OnlineStatusChangedEvent;
+                    obj["target"] = e.Target;
+                    obj["rawStatus"] = e.Status;
+                    obj["status"] = StatusMap.ContainsKey(e.Status) ? StatusMap[e.Status] : "Unknown";
+
+                    DispatchAndCacheEvent(obj);
+                };
             }
 
             ActGlobals.oFormActMain.BeforeLogLineRead += LogLineHandler;
-            container.Resolve<NetworkParser>().OnOnlineStatusChanged += (o, e) =>
-            {
-                var obj = new JObject();
-                obj["type"] = OnlineStatusChangedEvent;
-                obj["target"] = e.Target;
-                obj["rawStatus"] = e.Status;
-                obj["status"] = StatusMap.ContainsKey(e.Status) ? StatusMap[e.Status] : "Unknown";
-
-                DispatchAndCacheEvent(obj);
-            };
         }
 
         private void InitFFXIVIntegration()
