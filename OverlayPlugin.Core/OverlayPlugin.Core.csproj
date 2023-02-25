@@ -91,6 +91,8 @@
     </Compile>
     <Compile Include="EventSources\FFXIVClientStructsEventSource.cs" />
     <Compile Include="EventSources\EnmityEventSource.cs" />
+    <Compile Include="EventSources\FFXIVRequiredEventSource.cs" />
+    <Compile Include="EventSources\FFXIVOptionalEventSource.cs" />
     <Compile Include="Integration\UnstableNewLogLines.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory.cs" />
     <Compile Include="MemoryProcessors\Aggro\AggroMemory60.cs" />
