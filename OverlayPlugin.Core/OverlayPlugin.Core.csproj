@@ -226,7 +226,7 @@
       <DependentUpon>WSConfigPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="WebSocket\WSServer.cs" />
-    <Compile Include="Thirdparty\**\*.cs" />
+    <Compile Include="Thirdparty\FFXIVClientStructs\Transformed\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="resources\enmity\aggrolist.html">
@@ -314,7 +314,7 @@
     <Content Include="resources\targetbars\target_of_target.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Thirdparty\FFXIVClientStructs\Global\ida\data.yml">
+    <Content Include="Thirdparty\FFXIVClientStructs\Base\Global\ida\data.yml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TargetPath>resources\FFXIVClientStructs.Global.data.yml</TargetPath>
     </Content>
