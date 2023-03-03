@@ -19,7 +19,7 @@ namespace RainbowMage.OverlayPlugin.Updater {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -129,26 +129,6 @@ namespace RainbowMage.OverlayPlugin.Updater {
         public static string LaunchingInstallerFailed {
             get {
                 return ResourceManager.GetString("LaunchingInstallerFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] libcurl {
-            get {
-                object obj = ResourceManager.GetObject("libcurl", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] libcurl_x64 {
-            get {
-                object obj = ResourceManager.GetObject("libcurl_x64", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
