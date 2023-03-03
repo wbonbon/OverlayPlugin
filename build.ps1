@@ -124,6 +124,8 @@ try {
 
     if (Test-Path $archive) { rm $archive }
     7z a $archive OverlayPlugin
+
+    cd ..\..
 } catch {
     Write-Error $Error[0]
 }
