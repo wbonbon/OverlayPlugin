@@ -141,7 +141,7 @@ namespace RainbowMage.OverlayPlugin
 
         public void CopyToClipboard()
         {
-            string text = "";
+            string text = "```\n";
             if (warnings.Count > 1)
             {
                 text += TableToString(warnings);
@@ -153,6 +153,7 @@ namespace RainbowMage.OverlayPlugin
             text += TableToString(overlays);
             text += "\n\n";
             text += TableToString(settings);
+            text += "```\n";
 
             Clipboard.SetText(text);
         }
