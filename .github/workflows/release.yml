@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - '**/AssemblyInfo.cs'
+      - 'Directory.Build.props'
 
 jobs:
   validate_tag:
@@ -21,15 +21,9 @@ jobs:
         id: determine_version
         shell: pwsh
         run: |
-          $text = [System.IO.File]::ReadAllText("OverlayPlugin\Properties\AssemblyInfo.cs");
-          $regex = [regex]::New('\[assembly: AssemblyVersion\("([0-9]+\.[0-9]+\.[0-9]+)\.[0-9]+"\)');
-          $m = $regex.Match($text);
-          if (-not $m) {
-              echo "Error: Version number not found in the AssemblyInfo.cs!"
-              exit 1
-          }
-          $version = $m.Groups[1]
-          echo "::set-output name=version::$version"
+          [xml]$csprojcontents = Get-Content -Path "Directory.Build.props";
+          $version = $csprojcontents.Project.PropertyGroup.AssemblyVersion;
+          $version = ($version | Out-String).Trim()
 
       - name: Check Tag Exists
         shell: bash
@@ -39,22 +33,8 @@ jobs:
               exit 1
           fi
 
-  validate_version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Validate AssemblyInfo Versions
-        run: |
-          python tools/validate_versions.py
-
   create_release:
-    needs: [validate_tag, validate_version]
+    needs: [validate_tag]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -81,6 +61,10 @@ jobs:
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: |
           python .\tools\fetch_deps.py
+
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7'
 
       - name: Set up msbuild
         uses: microsoft/setup-msbuild@v1.0.2
