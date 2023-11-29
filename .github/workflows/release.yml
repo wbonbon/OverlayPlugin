@@ -24,6 +24,7 @@ jobs:
           [xml]$csprojcontents = Get-Content -Path "Directory.Build.props";
           $version = $csprojcontents.Project.PropertyGroup.AssemblyVersion;
           $version = ($version | Out-String).Trim()
+          echo "::set-output name=version::$version"
 
       - name: Check Tag Exists
         shell: bash
