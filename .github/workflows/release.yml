@@ -47,21 +47,15 @@ jobs:
           path: |
             ./Thirdparty
             ./OverlayPlugin.Core/Thirdparty
-          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.py', './DEPS.py') }}
+          key: ${{ runner.os }}-overlayplugin-${{ hashFiles('./tools/fetch_deps.ps1', './DEPS.json') }}
           restore-keys: |
             ${{ runner.os }}-overlayplugin-
-
       # Fetch dependencies only if cache-hit is false
-      - name: Set up Python 3.8
-        if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
       - name: Fetch dependencies
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        shell: pwsh
         run: |
-          python .\tools\fetch_deps.py
+          .\tools\fetch_deps.ps1
 
       - uses: actions/setup-dotnet@v3
         with:
