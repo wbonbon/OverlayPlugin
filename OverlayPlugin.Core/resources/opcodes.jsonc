@@ -83,19 +83,43 @@
         }
     },
     // KR region
-    "2023.12.18.0000.0000":{
-        // Version: 6.45
+    "2024.03.28.0000.0000":{
+        // Version: 6.5
         "MapEffect": {
-            "opcode": 978,
+            "opcode": 205,
             "size": 11
         },
         "CEDirector": {
-            "opcode": 540,
+            "opcode": 915,
             "size": 16
         },
         "RSVData": {
-            "opcode": 168,
+            "opcode": 463,
             "size": 1080
+        },
+        "NpcYell": {
+            "opcode": 136,
+            "size": 32
+        },
+        "BattleTalk2": {
+            "opcode": 674,
+            "size": 40
+        },
+        "Countdown": {
+            "opcode": 216,
+            "size": 48
+        },
+        "CountdownCancel": {
+            "opcode": 320,
+            "size": 40
+        },
+        "ActorMove": {
+            "opcode": 679,
+            "size": 16
+        },
+        "ActorSetPos": {
+            "opcode": 392,
+            "size": 24
         }
     }
 }
