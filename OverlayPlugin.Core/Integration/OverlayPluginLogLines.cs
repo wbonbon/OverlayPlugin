@@ -225,13 +225,13 @@ namespace RainbowMage.OverlayPlugin
                     LogException($"Could not detect game version from FFXIV_ACT_Plugin, defaulting to latest version for region {machinaRegion}");
 
                     var possibleVersions = new List<string>();
-                    if (opcodesFile.ContainsKey(machinaRegion))
+                    if (opcodesFile != null && opcodesFile.ContainsKey(machinaRegion))
                     {
                         foreach (var key in opcodesFile[machinaRegion].Keys)
                             possibleVersions.Add(key);
                     }
 
-                    if (opcodesConfig.ContainsKey(machinaRegion))
+                    if (opcodesConfig != null && opcodesConfig.ContainsKey(machinaRegion))
                     {
                         foreach (var key in opcodesConfig[machinaRegion].Keys)
                             possibleVersions.Add(key);
