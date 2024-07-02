@@ -99,7 +99,7 @@ namespace RainbowMage.OverlayPlugin
             if (disposing)
             {
                 components?.Dispose();
-                _generalTab?.Dispose();
+                //_generalTab?.Dispose();
                 _eventTab?.Dispose();
                 _registry.EventSourceRegistered -= AddEventSourceTab;
                 _logger.ClearListener();
