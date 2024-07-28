@@ -62,6 +62,7 @@
             this.hotkeyColHotkey = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.hotkeyColAction = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
+            this.textBoxZoom = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tbZoom = new System.Windows.Forms.TrackBar();
@@ -329,6 +330,7 @@
             // tabAdvanced
             // 
             resources.ApplyResources(this.tabAdvanced, "tabAdvanced");
+            this.tabAdvanced.Controls.Add(this.textBoxZoom);
             this.tabAdvanced.Controls.Add(this.label15);
             this.tabAdvanced.Controls.Add(this.tableLayoutPanel4);
             this.tabAdvanced.Controls.Add(this.checkLogConsoleMessages);
@@ -336,6 +338,12 @@
             this.tabAdvanced.Controls.Add(this.nudMaxFrameRate);
             this.tabAdvanced.Name = "tabAdvanced";
             this.tabAdvanced.UseVisualStyleBackColor = true;
+            // 
+            // textBoxZoom
+            // 
+            resources.ApplyResources(this.textBoxZoom, "textBoxZoom");
+            this.textBoxZoom.Name = "textBoxZoom";
+            this.textBoxZoom.ReadOnly = true;
             // 
             // label15
             // 
@@ -547,5 +555,6 @@
         private System.Windows.Forms.ComboBox applyPresetCombo;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox cbHideOutOfCombat;
+        private System.Windows.Forms.TextBox textBoxZoom;
     }
 }

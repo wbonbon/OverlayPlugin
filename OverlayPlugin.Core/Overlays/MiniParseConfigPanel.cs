@@ -52,6 +52,7 @@ namespace RainbowMage.OverlayPlugin.Overlays
             this.checkNoFocus.Checked = config.NoFocus;
             this.nudMaxFrameRate.Value = config.MaxFrameRate;
             this.checkLogConsoleMessages.Checked = config.LogConsoleMessages;
+            this.textBoxZoom.Text = config.Zoom.ToString();
             this.tbZoom.Value = config.Zoom;
             this.cbWhiteBg.Checked = config.ForceWhiteBackground;
             this.cbEnableOverlay.Checked = !config.Disabled;
@@ -260,13 +261,14 @@ namespace RainbowMage.OverlayPlugin.Overlays
                 // Don't change the zoom level if we don't want any zoom (see #152 for details).
                 return;
             }
-
+            this.textBoxZoom.Text = this.tbZoom.Value.ToString();
             this.config.Zoom = this.tbZoom.Value;
         }
 
         private void btnResetZoom_Click(object sender, EventArgs e)
         {
             this.config.Zoom = 0;
+            this.textBoxZoom.Text = this.tbZoom.Value.ToString();
         }
 
         private void btnAddHotkey_Click(object sender, EventArgs e)
